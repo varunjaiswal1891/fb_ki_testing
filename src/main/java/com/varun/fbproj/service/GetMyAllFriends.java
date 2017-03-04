@@ -22,12 +22,12 @@ public class GetMyAllFriends {
 	            }
 	           
 				PreparedStatement prepStatement = connect.con.prepareStatement("select friendEmailID from UserFriends "
-						+ "where myEmailID like ? and status like ?");
-				prepStatement.setString(1,"%"+myEmailID+"%");
-				prepStatement.setString(2,"%Accepted%");
+						+ "where myEmailID = ?");
+				prepStatement.setString(1,myEmailID);
+				//prepStatement.setString(2,"Accepted");
 				
 				ResultSet result = prepStatement.executeQuery();
-				if (result .next()) {
+				
 					while (result.next()) {
 				
 					String e1=result.getString("friendEmailID");	
@@ -37,7 +37,7 @@ public class GetMyAllFriends {
 					al_friends.add(u_obj);
 					
 				}
-			  }	//if ends	
+			  	
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

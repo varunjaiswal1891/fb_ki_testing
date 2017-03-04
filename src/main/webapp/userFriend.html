@@ -92,7 +92,7 @@ $(function () {
          	   if(response!=null){
                 var data =JSON.parse(JSON.stringify(response));  
                  var mayKnow;
-         	 
+         	 	alert(data);
              	for (var i=0; i < data.length; i++){
          		    mayKnow+="<div class="+"\"panel-body\""+">";
                		mayKnow+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"https://cdn4.iconfinder.com/data/icons/miu-flat-social/60/stackoverflow-128.png\""+" /></div>";
@@ -138,10 +138,12 @@ $(function () {
          	 
                
              	for (var i=0; i < data.length; i++){
-             		 allFriends+="<div class=\"pull-left col-sm-3\"><img class=\"img-responsive\" alt=\"logo\" src=\"https://cdn4.iconfinder.com/data/icons/miu-flat-social/60/stackoverflow-128.png\" /></div>";
+             		 allFriends+="<div class=\"panel-body\">";
+             		 allFriends+="<div class=\"pull-left col-sm-3\"><img class=\"img-responsive\" alt=\"logo\" src=\"https://cdn4.iconfinder.com/data/icons/miu-flat-social/60/stackoverflow-128.png\"></div>";
                      allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
-                     allFriends+="</div></div>";
+                     allFriends+="</div></div><br>";
          		}
+             	
          	
          	   $("#allFriends").html(allFriends);
         
@@ -394,7 +396,7 @@ $(function () {
 
 	<div class="panel panel-default">
   	<div class="panel-heading" >Friends List</div>
-  	<div class="panel-body">
+  	
 	
 	<!--  <div class="pull-left col-sm-3"><img class="img-responsive" alt="logo" src="https://cdn4.iconfinder.com/data/icons/miu-flat-social/60/stackoverflow-128.png" /></div>
        <div class="pull-left col-sm-9">Name of the friend</div>
