@@ -54,7 +54,7 @@ $(document).ready(function() {
 	$(function(){
 		var foo = $.cookie("ID");
 		//alert(foo);
-             	$.ajax({
+		 	$.ajax({
              		 type: "GET",
          	        contentType: "text/plain",  //send data to server in this format
          	        url:"http://localhost:8080/DemoFB/webapi/user/retrive",
@@ -86,6 +86,7 @@ $(document).ready(function() {
 		                    	   document.getElementById("hometown").defaultValue =obj.hometown;
 		                    	   document.getElementById("workcity").defaultValue =obj.cityOfWork;
 		                    	   document.getElementById("userName").innerHTML=obj.fname+" "+obj.lname;
+		                    	  
 	                       }  
 	                       
 	                       else
@@ -100,6 +101,7 @@ $(document).ready(function() {
 	          			}				
 	            
 	    	  });
+            
             	$.ajax({ 
                     url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
                     type: "GET",
@@ -173,27 +175,27 @@ $(document).ready(function() {
 	    	   	                    	 
 	    	                    	  // var obj = JSON.parse(JSON.stringify(resp));
 	    	                    	   //window.location.replace("timeLine1.html");
-	    	            	 var obj = JSON.parse(JSON.stringify(resp));
+	    	            	 var obj1 = JSON.parse(JSON.stringify(resp));
 	                    	   //alert(obj.emailID);
 	                    	   //alert(obj.fname);
-	                    	   //alert(obj.highschool);
-	                    	       document.getElementById("email").innerHTML=obj.emailID;
-	                    	       document.getElementById("School").innerHTML=obj.highschool;
-	                    	       document.getElementById("name").innerHTML=obj.fname+" "+obj.lname;;
-		                    	   document.getElementById("DOB").innerHTML= obj.date;
-		                    	   document.getElementById("Mob").innerHTML= obj.mob_no;
-		                    	   document.getElementById("college").innerHTML=obj.college;
-		                    	   document.getElementById("work").innerHTML=obj.placeOfWork;
-		                    	   document.getElementById("town").innerHTML=obj.hometown;
-		                    	   document.getElementById("workCity").innerHTML=obj.cityOfWork;
-		                    	   document.getElementById("School").innerHTML=obj.highschool;
-		                    	   document.getElementById("mob_no").defaultValue =obj.mob_no;
-		                    	   document.getElementById("college").defaultValue =obj.college;
-		                    	   document.getElementById("highschool").defaultValue =obj.highschool;
-		                    	   document.getElementById("workplace").defaultValue =obj.placeOfWork;
-		                    	   document.getElementById("hometown").defaultValue =obj.hometown;
-		                    	   document.getElementById("workcity").defaultValue =obj.cityOfWork;
-		                    	   $('#userInfo').load(document.URL +'#userInfo');
+	                    	  /*  alert(obj1);
+	                    	       document.getElementById("email").innerHTML=obj1.emailID;
+	                    	       document.getElementById("School").innerHTML=obj1.highschool;
+	                    	       document.getElementById("name").innerHTML=obj1.fname+" "+obj.lname;;
+		                    	   document.getElementById("DOB").innerHTML= obj1.date;
+		                    	   document.getElementById("Mob").innerHTML= obj1.mob_no;
+		                    	   document.getElementById("college").innerHTML=obj1.college;
+		                    	   document.getElementById("work").innerHTML=obj1.placeOfWork;
+		                    	   document.getElementById("town").innerHTML=obj1.hometown;
+		                    	   document.getElementById("workCity").innerHTML=obj1.cityOfWork;
+		                    	   document.getElementById("School").innerHTML=obj1.highschool;
+		                    	   document.getElementById("mob_no").defaultValue =obj1.mob_no;
+		                    	   document.getElementById("college").defaultValue =obj1.college;
+		                    	   document.getElementById("highschool").defaultValue =obj1.highschool;
+		                    	   document.getElementById("workplace").defaultValue =obj1.placeOfWork;
+		                    	   document.getElementById("hometown").defaultValue =obj1.hometown;
+		                    	   document.getElementById("workcity").defaultValue =obj1.cityOfWork;
+		                    	 */   window.location.replace("timeLine1.html");
 	    	                    	  
 	    	            }	
 	    	            else
