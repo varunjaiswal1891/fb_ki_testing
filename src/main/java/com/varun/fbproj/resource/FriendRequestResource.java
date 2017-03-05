@@ -111,8 +111,8 @@ public class FriendRequestResource {
 	@GET
     @Path("/giveMyRequests")
 	@Produces({MediaType.APPLICATION_JSON})
-    public static ArrayList<User> getMyALLRequests(@CookieParam("ID") String jwt,String friendEmailID
-    		) throws JsonParseException, JsonMappingException, IOException{
+    public static ArrayList<User> getMyALLRequests(@CookieParam("ID") String jwt)
+    		 throws JsonParseException, JsonMappingException, IOException{
 		//it returns all friend requests which came to me
 		ArrayList<User> al_requestList=new ArrayList<User>();
 		System.out.println("jwt="+ jwt);

@@ -60,10 +60,11 @@ public class FriendResource {
     	        throws JsonParseException, JsonMappingException, IOException{
 	//this method will return all users whose name we enter in find friend input box
 		System.out.println("find my friends resource");
-		//f1.getFriends(friendName);
-		friendName="amit trivedi";
+		String fn="tendulkar";
+		//fn=friendName;
+		
 		ArrayList<User> al_friends=new ArrayList<User>();
-        return SearchFriendService.searchFriends(al_friends, friendName);
+        return SearchFriendService.searchFriends(al_friends, fn);
 	 //we need to return list of user objects in json format	
 	
 	}//searchFriend method ends here

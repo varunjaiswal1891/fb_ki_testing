@@ -33,17 +33,19 @@ public class SearchFriendService {
 	            	prepStatement.setString(2,"%"+ splited[i] +"%");
 									
 					ResultSet result = prepStatement.executeQuery();
-					if (result .next()) {
+					
 						while (result.next()) {
+						String e1=result.getString("emailID");	
 						User u_obj=new User();
-						u_obj.setFname(result.getString("fname"));
+						u_obj=RetriveService.getUserAllData(e1);
+						/*u_obj.setFname(result.getString("fname"));
 						u_obj.setLname(result.getString("lname"));
 						u_obj.setUserID(result.getInt("userID"));
-						u_obj.setEmailID(result.getString("emailID"));
+						u_obj.setEmailID(result.getString("emailID"));*/
 						al_friends.add(u_obj);
 						
 					}
-				  }	//if ends
+				  
 					
 	            }//for ends here
 	            

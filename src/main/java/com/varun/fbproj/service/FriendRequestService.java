@@ -159,7 +159,7 @@ public class FriendRequestService {
 				prepStatement.setString(2,"Pending");
 				
 				ResultSet result = prepStatement.executeQuery();
-				if (result .next()) {
+				
 					while (result.next()) {
 				
 					String e1=result.getString("myEmailID");	
@@ -169,7 +169,7 @@ public class FriendRequestService {
 					al_requests.add(u_obj);
 					
 				}
-			  }	//if ends	
+			  	
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

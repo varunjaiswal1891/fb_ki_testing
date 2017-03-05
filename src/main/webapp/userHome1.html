@@ -53,6 +53,49 @@
      	        	
      	       
      	   });//logout button ends ends
+     	   
+     	   
+         	$.ajax({ 
+                url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
+                type: "GET",
+                dataType: "json",
+                contentType : "application/json",
+                crossDomain: true,
+                processData: true,
+                
+                
+                success: function(response){  
+             	   
+                    // we have the response  
+             	   if(response!=null){
+                    var data =JSON.parse(JSON.stringify(response));  
+                     var allFriends;
+             	 
+                   
+                 	for (var i=0; i < data.length; i++){
+                 		 allFriends+="<div class=\"panel-body\">";
+                 		 allFriends+="<div class=\"pull-left col-sm-3\"><img class=\"img-responsive\" alt=\"logo\" src=\"img_avatar1.png\"></div>";
+                         allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
+                         allFriends+="</div></div><br>";
+             		}
+                 	
+             	
+             	   $("#allFriends").html(allFriends);
+            
+                    }  
+                    
+                    else
+                 	   {
+                 	  alert("something wrong");
+                 	   }
+                  },
+    	    
+       			error: function(e){  
+         					alert('Error121212: ' + e);  
+         					alert(e.toString());
+       			}				
+         
+    	  });//ajax call get my all friends end
         	
 
         }); //document ready ends      
@@ -92,13 +135,13 @@
 							</form>
 							<ul class="nav navbar-nav navbar-center">
 							<li>
-								<a href="timeLine1.html"><i class="glyphicon glyphicon-user"></i> User Name</a>
+								<a href="timeLine2.html"><i class="glyphicon glyphicon-user"></i> User Name</a>
 							  </li>
 							  <li>
 								<a href="#"><i class="glyphicon glyphicon-home"></i> Home</a>
 							  </li>
 							  <li>
-								<a href="userFriend.html">Find Friends</a>
+								<a href="userFriend2.html">Find Friends</a>
 							  </li>
 							  
 							  <li>
@@ -138,25 +181,25 @@
 						<ul class="nav hidden-xs" id="xs-menu">
 							<li class="active"><a href="#featured"><i class="glyphicon glyphicon-user"></i>User Name</a></li>
 							<li><a href="#stories"><i class="glyphicon glyphicon-list"></i> News Feed</a></li>
-							<li><a href="#"><i class="glyphicon glyphicon-envelope"></i> Message</a></li>
+							<li><a href="todoPage.html"><i class="glyphicon glyphicon-envelope"></i> Message</a></li>
 						</ul>	
 							<b>Explore</b>
 							<ul class="nav hidden-xs see-more" id="xs-menu" >
 							<li><a href="#"><i class="glyphicon glyphicon-refresh"></i> Events</a></li>
 							<li><a href="#"><i class="glyphicon glyphicon-refresh"></i> Groups</a></li>
-							<li><a href="siteUnderConstruction.html"><i class="glyphicon glyphicon-refresh"></i> Pages</a></li>
+							<li><a href="todoPage.html"><i class="glyphicon glyphicon-refresh"></i> Pages</a></li>
 											</ul>
 							
 							<div class="accordion-group">
     							<div id="collapseTwo" class="accordion-body collapse">
      								 <div class="accordion-inner">
       									<ul class="nav hidden-xs see-more" id="xs-menu">
-      	    			  					<li><a href="siteUnderConstruction.html"><i class="glyphicon glyphicon-refresh"></i> Friend List</a></li>
-											<li><a href="siteUnderConstruction.html"><i class="glyphicon glyphicon-refresh"></i> Pokes</a></li>
-											<li><a href="siteUnderConstruction.html"><i class="glyphicon glyphicon-refresh"></i> On This Day</a></li>
-											<li><a href="#"><i class="glyphicon glyphicon-refresh"></i> Find Friends</a></li>
-											<li><a href="siteUnderConstruction.html"><i class="glyphicon glyphicon-refresh"></i> Games</a></li>
-											<li><a href="siteUnderConstruction.html"><i class="glyphicon glyphicon-refresh"></i> Suggested/Edit</a></li>
+      	    			  					<li><a href="todoPage.html"><i class="glyphicon glyphicon-refresh"></i> Friend List</a></li>
+											<li><a href="todoPage.html"><i class="glyphicon glyphicon-refresh"></i> Pokes</a></li>
+											<li><a href="todoPage.html"><i class="glyphicon glyphicon-refresh"></i> On This Day</a></li>
+											<li><a href="todoPage.html"><i class="glyphicon glyphicon-refresh"></i> Find Friends</a></li>
+											<li><a href="todoPage.html"><i class="glyphicon glyphicon-refresh"></i> Games</a></li>
+											<li><a href="todoPage.html"><i class="glyphicon glyphicon-refresh"></i> Suggested/Edit</a></li>
 										</ul>	
       
      								 </div>
@@ -174,8 +217,8 @@
 							<b>Create</b>
 							<br>
 							<ul class="nav hidden-xs" id="xs-menu">
-							<li><a href="siteUnderConstruction.html">Ad</a></li>
-							<li><a href="siteUnderConstruction.html">Page</a></li>
+							<li><a href="todoPage.html">Ad</a></li>
+							<li><a href="todoPage.html">Page</a></li>
 							<li><a href="#">Group</a></li>
 							<li><a href="#">Event</a></li>
 							
@@ -216,6 +259,10 @@
 										   <form class="form-horizontal" role="form">
 											<h4>What's New</h4>
 											 <div class="form-group" style="padding:14px;">
+											  <textarea class="form-control" placeholder="Update your status"></textarea>
+											</div>
+											<button class="btn btn-primary pull-right" type="button">Post</button><ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
+										 	<div class="form-group" style="padding:14px;">
 											  <textarea class="form-control" placeholder="Update your status"></textarea>
 											</div>
 											<button class="btn btn-primary pull-right" type="button">Post</button><ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
@@ -292,10 +339,12 @@
 								  
 								   <!-- main col right -->
 								  <div class="col-sm-2 col-xs-2" >
-									   
+									<div class="pre-scrollable" style="background-color: #d8dfea;margin-bottom:.5cm; margin-top:.5cm; min-height:95%;">   
 									   <div class="panel panel-default">
 										 <div class="panel-heading"><h4>My Friends</h4></div>
-										  <div class="panel-body">
+										 	<div id="allFriends"></div>
+  	                                            <p id="allFriends"></p>
+										<!--   <div class="panel-body">
 											<ul class="list-group">
 											<li class="list-group-item">Varun Jaiswal</li>
 											<li class="list-group-item">Vishal Bhurangi</li>
@@ -304,9 +353,9 @@
 											<li class="list-group-item">Shubham Kandoi</li>
 											
 											</ul>
-										  </div>
+										  </div> -->
 									   </div>
-									
+									</div>
 									   
 									
 								  </div>
