@@ -16,6 +16,39 @@
         
         $(document).ready(function() {
         	
+        	var foo = $.cookie("ID");
+    		//alert(foo);
+                 	$.ajax({
+                 		 type: "GET",
+             	        contentType: "text/plain",  //send data to server in this format
+             	        url:"http://localhost:8080/DemoFB/webapi/user/retrive",
+             	        dataType: "JSON",  //expect response of this type
+             	        data: foo,
+    	                   
+                           success: function(response){  
+    	                       // we have the response  
+    	                       if(response!=null){
+    	                    	  // alert("data fetched");
+    	                    	   var obj = JSON.parse(JSON.stringify(response));
+    	                    	   //alert(obj.emailID);
+    	                    	   //alert(obj.fname);
+    	                    	   //alert(obj.highschool);
+    	                        	   document.getElementById("userName").innerHTML=obj.fname+" "+obj.lname;
+    	                       }  
+    	                       
+    	                       else
+    	                    	   {
+    	                    	  	alert("data cannot be fetched");
+    	                    	   }
+    	                     },
+    	    	    
+    	          			error: function(e){  
+    	            					alert('Error121212: ' + e);  
+    	            					alert(e.toString());
+    	          			}				
+    	            
+    	    	  });
+            	
       	  $("#logoutButton1").click(function(e){
      		   var foo = $.cookie("ID");
      	    $.ajax({
@@ -79,7 +112,7 @@
                          allFriends+="</div></div><br>";
              		}
                  	
-             	
+             		allFriends=allFriends.replace("undefined","");
              	   $("#allFriends").html(allFriends);
             
                     }  
@@ -135,7 +168,7 @@
 							</form>
 							<ul class="nav navbar-nav navbar-center">
 							<li>
-								<a href="timeLine2.html"><i class="glyphicon glyphicon-user"></i> User Name</a>
+								<a href="timeLine1.html" id="userName"><i class="glyphicon glyphicon-user"></i> User Name</a>
 							  </li>
 							  <li>
 								<a href="#"><i class="glyphicon glyphicon-home"></i> Home</a>
@@ -304,7 +337,7 @@
 								  </div>
 								  
 								  <!-- main col center -->
-								  <div class="col-sm-3 col-xs-3">
+								  <div class="col-sm-2 col-xs-2">
 									   
 								
 
@@ -338,7 +371,7 @@
 								  
 								  
 								   <!-- main col right -->
-								  <div class="col-sm-2 col-xs-2" >
+								  <div class="col-sm-3 col-xs-3" >
 									<div class="pre-scrollable" style="background-color: #d8dfea;margin-bottom:.5cm; margin-top:.5cm; min-height:95%;">   
 									   <div class="panel panel-default">
 										 <div class="panel-heading"><h4>My Friends</h4></div>
