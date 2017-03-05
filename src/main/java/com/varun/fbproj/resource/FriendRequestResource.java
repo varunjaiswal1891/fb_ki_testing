@@ -32,7 +32,7 @@ public class FriendRequestResource {
 	@Produces({MediaType.TEXT_PLAIN})
     public static String addFriendRequest(@CookieParam("ID") String jwt,String friendEmailID
     		) throws JsonParseException, JsonMappingException, IOException{
-		
+		System.out.println("inside add friend");
 		System.out.println("jwt="+ jwt);
 		Claims claims = Jwts.parser()         
 			       .setSigningKey("secret".getBytes("UTF-8"))
@@ -48,7 +48,7 @@ public class FriendRequestResource {
 		
 	}//method ends here
 	
-	
+	@POST
 	@DELETE
     @Path("/removeFriend")
 	@Consumes({MediaType.TEXT_PLAIN})
@@ -91,7 +91,7 @@ public class FriendRequestResource {
 	@Produces({MediaType.TEXT_PLAIN})
     public static String deleteFriendRequest(@CookieParam("ID") String jwt,String friendEmailID
     		) throws JsonParseException, JsonMappingException, IOException{
-		
+		System.out.println("inside delete");
 		System.out.println("jwt="+ jwt);
 		Claims claims = Jwts.parser()         
 			       .setSigningKey("secret".getBytes("UTF-8"))
