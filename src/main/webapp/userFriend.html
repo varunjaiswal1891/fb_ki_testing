@@ -35,6 +35,39 @@ $(document).ready(function() {
 		window.location.replace("todoPage.html");
 	 });
 $(function () {
+	
+	var foo = $.cookie("ID");
+	//alert(foo);
+         	$.ajax({
+         		 type: "GET",
+     	        contentType: "text/plain",  //send data to server in this format
+     	        url:"http://localhost:8080/DemoFB/webapi/user/retrive",
+     	        dataType: "JSON",  //expect response of this type
+     	        data: foo,
+                   
+                   success: function(response){  
+                       // we have the response  
+                       if(response!=null){
+                    	  // alert("data fetched");
+                    	   var obj = JSON.parse(JSON.stringify(response));
+                    	   //alert(obj.emailID);
+                    	   //alert(obj.fname);
+                    	   //alert(obj.highschool);
+                        	   document.getElementById("userName").innerHTML=obj.fname+" "+obj.lname;
+                       }  
+                       
+                       else
+                    	   {
+                    	  	alert("data cannot be fetched");
+                    	   }
+                     },
+    	    
+          			error: function(e){  
+            					alert('Error121212: ' + e);  
+            					alert(e.toString());
+          			}				
+            
+    	  });
 	 	
        	$.ajax({ 
                    url: "http://localhost:8080/DemoFB/webapi/friend/suggestedFriends",
@@ -61,7 +94,7 @@ $(function () {
                       		suggest+="<a class="+"\"btn btn-primary\""+" id=\"remove"+data[i].emailID+"\""+" href=\"\""+" OnClick=\"rmv(this);\">Remove</a>"; 
                        		suggest+="<a class="+"\"btn btn-primary\""+" id="+"\"SentReq"+data[i].emailID+"\" href=\"\""+" style=\"visibility: hidden\";>Request Sent</a></div></div>";
                 		}
-                	
+                    	suggest=suggest.replace("undefined","");
                 	   $("#suggest").html(suggest);
                 	   
                
@@ -105,7 +138,7 @@ $(function () {
                		mayKnow+="<a class="+"\"btn btn-primary\""+" id="+"\"SentReq"+data[i].emailID+"\" href=\"\""+" style=\"visibility: hidden\";>Request Sent</a></div></div>";
                			
              	}
-         	
+               mayKnow=mayKnow.replace("undefined","");
          	   $("#mayKnow").html(mayKnow);
         
                 }  
@@ -141,11 +174,12 @@ $(function () {
                
              	for (var i=0; i < data.length; i++){
              		 allFriends+="<div class=\"panel-body\">";
-             		 allFriends+="<div class=\"pull-left col-sm-3\"><img class=\"img-responsive\" alt=\"logo\" src=\"img_avatar1.png\" style=\"width:60px\" /></div>";
+             		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"img_avatar1.png\""+" /></div>";
                      allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
                      allFriends+="</div>";
 					     	}
-         	
+             	
+             	allFriends=allFriends.replace("undefined","");
          	   $("#allFriends").html(allFriends);
         
                 }  
@@ -180,7 +214,7 @@ $(function () {
          	 
                
              	for (var i=0; i < data.length; i++){
-             		alert(data[i]);
+             		
          			Frequest+="<div class=\"panel-body\" id=\"div"+data[i].emailID+"\">";
 					Frequest+="<div class=\"pull-left col-sm-3\"><img class=\"img-responsive\" alt=\"logo\" src=\"img_avatar1.png\" /></div>";
 					Frequest+="<a href=\"#\">"+data[i].fname+" "+data[i].lname+"</span></a>";
@@ -190,6 +224,7 @@ $(function () {
 					Frequest+="<a class="+"\"btn btn-primary\""+" id="+"\"done"+data[i].emailID+"\" href=\"\""+" style=\"visibility: hidden\";>Cancelled</a></div></div>";
                		
              	}
+             	Frequest=Frequest.replace("undefined","");
          	
          	   $("#Frequest").html(Frequest);
         
@@ -436,10 +471,10 @@ $(function () {
 							</form>
 							<ul class="nav navbar-nav navbar-center">
 							<li>
-								<a href="timeLine1.html"><i class="glyphicon glyphicon-user"></i> User Name</a>
+								<a href="timeLine1.html" id="userName"><i class="glyphicon glyphicon-user"></i> User Name</a>
 							  </li>
 							  <li>
-								<a href="#"><i class="glyphicon glyphicon-home"></i> Home</a>
+								<a href="userHome1.html"><i class="glyphicon glyphicon-home"></i> Home</a>
 							  </li>
 							  <li>
 								<a href="userFriend.html">Find Friends</a>
@@ -480,7 +515,7 @@ $(function () {
 				
 								  
 								 <!-- main col left --> 
-								 <div class="col-sm-5 col-xs-5">
+								 <div class="col-sm-4 col-xs-4">
 								   
 									<!-- 	<div class="well"> 
 										   <form class="form-horizontal" role="form">
@@ -509,8 +544,8 @@ $(function () {
 								   
 								    <div class="panel panel-default">
 										<div class="panel-heading"> <h4>Friends Suggestions</h4></div>
-										 										  <div class="panel-body">
-										  	<div class="list-group">
+										<div class="list-group">
+										  	
 										  	<p id="suggest"></p>
  												<!--  <a href="todoPage.html" class="list-group-item">The Logical Indian</a>
   												 <a href="todoPage.html" class="list-group-item">C programming</a>
@@ -519,19 +554,19 @@ $(function () {
 
 										  </div>
 										
-									  </div>
-								   
+									
 								   
 									  <div class="panel panel-default">
 										<div class="panel-heading"><h4>Friend Request</h4></div>
-	
-										
+										<div class="list-group">
+										<div id="Frequest"></div>
 										<p id="Frequest"></p>
+									  </div>
 									  </div>
 								   
 								   <div class="panel panel-default">
 										<div class="panel-heading"> <h4>People You May Know</h4></div>
-										 										  <div class="panel-body">
+										 	
 										  	<div class="list-group">
 										  	<p id="mayKnow"></p>
  												<!--  <a href="todoPage.html" class="list-group-item">The Logical Indian</a>
@@ -541,7 +576,6 @@ $(function () {
 
 										  </div>
 										
-									  </div>
 								   
 									  
 								   
@@ -658,15 +692,15 @@ $(function () {
 								  
 								  
 								   <!-- main col right -->
-								  <div class="col-sm-2 col-xs-2" >
+								  <div class="col-sm-3 col-xs-3" >
 									   
 									   <div class="panel panel-default">
 										 <div class="panel-heading"><h4>My Friends</h4></div>
-										  <div id="allFriends"></div>
+										  <div class="list_group">
 										  <p id="allFriends"></p>
 										  	  </div>
 									   </div>
-									
+									</div>
 									   
 									
 								  </div>
