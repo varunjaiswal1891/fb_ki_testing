@@ -22,9 +22,9 @@ public class GetMyAllFriends {
 	            }
 	           
 				PreparedStatement prepStatement = connect.con.prepareStatement("select friendEmailID from UserFriends "
-						+ "where myEmailID = ?");
+						+ "where myEmailID = ? and status=?");
 				prepStatement.setString(1,myEmailID);
-				//prepStatement.setString(2,"Accepted");
+				prepStatement.setString(2,"Accepted");
 				
 				ResultSet result = prepStatement.executeQuery();
 				

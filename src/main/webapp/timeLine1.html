@@ -175,6 +175,10 @@ $(document).ready(function() {
 	   $("#findFriendButton").click(function(e){
 		   window.location.replace("userFriend.html");
 	   });
+	    	   
+	   $("#homeButton").click(function(e){
+		   window.location.replace("userHome1.html");
+	   }); 	   
 	
 	
 	
@@ -240,6 +244,7 @@ $(document).ready(function() {
       </form>
 
      <form class="navbar-form navbar-right" id="logoutForm">     
+        <button type="submit" class="btn btn-default" id="homeButton" style="margin-top:40px">Home</button>
         <button type="submit" class="btn btn-default" id="findFriendButton" style="margin-top:40px">Find Friends</button>
         <button type="submit" class="btn btn-default" id="logoutButton1" style="margin-top:40px">Logout</button>
         
