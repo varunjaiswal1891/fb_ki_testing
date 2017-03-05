@@ -48,7 +48,7 @@ public class FriendRequestResource {
 		
 	}//method ends here
 	
-	@POST
+	
 	@DELETE
     @Path("/removeFriend")
 	@Consumes({MediaType.TEXT_PLAIN})
