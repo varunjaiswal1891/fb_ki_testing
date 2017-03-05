@@ -168,6 +168,10 @@ public class FriendRequestService {
 					//adding user objects of my friends to arraylist
 					al_requests.add(u_obj);
 					
+
+				
+			  	
+
 				}
 			  	
 			} catch (Exception e) {
