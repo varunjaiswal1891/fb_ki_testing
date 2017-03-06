@@ -17,6 +17,10 @@
 $(document).ready(function() {
 	var x=$.cookie("ID");
 	
+	setTimeout(function(){
+		   window.location.reload(1);
+		}, 7000);
+	
 	//document.write(x);
 	$("#friendForm1").submit(function(e){
 	        e.preventDefault();
