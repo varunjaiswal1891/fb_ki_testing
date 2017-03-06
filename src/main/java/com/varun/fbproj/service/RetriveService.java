@@ -3,6 +3,7 @@ package com.varun.fbproj.service;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import com.varun.fbproj.model.Group;
 import com.varun.fbproj.model.User;
 
 public class RetriveService {
@@ -45,6 +46,44 @@ public class RetriveService {
 					
 					
 					
+					
+				}
+			}
+			else
+				return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+        return null;
+        
+    }//method ends here
+	
+	
+	public static Group getGroupAllData(String emailID)
+	{
+		
+		try {
+
+      	  DBAccess connect = new DBAccess();
+            boolean check=false;
+            while(check==false)
+            {
+            	check=connect.start();
+            	System.out.println("trying connection");
+            }
+			PreparedStatement prepStatement = connect.con
+					.prepareStatement("select * from UserGroup where emailID = ? ");
+			prepStatement.setString(1,emailID);
+
+			ResultSet result = prepStatement.executeQuery();
+			if (result != null) {
+				while (result.next()) {
+					Group g1=new Group();
+					g1.setGroup_name(result.getString(1));
+					g1.setEmailID(result.getString(2));
+					connect.stop();
+						return g1;				
 					
 				}
 			}
