@@ -17,13 +17,15 @@ public class IsMyFriendService {
 	            while(check==false)
 	            {
 	            	check=connect.start();
-	            	System.out.println("trying connection");
+	            	System.out.println("trying connection in isMyFriendService ");
 	            }
 	           // "select * from UserFriends where myEmailID="varun@gmail.com" and status="Accepted""
 				PreparedStatement prepStatement = connect.con.prepareStatement("select * from UserFriends "
-						+ "where myEmailID = ? and friendEmailID=?");
+						+ "where myEmailID = ? and friendEmailID=? and status=?" );
 				prepStatement.setString(1,emailID1);
 				prepStatement.setString(2,emailID2);
+				prepStatement.setString(3,"Accepted");
+				
 				
 				ResultSet result = prepStatement.executeQuery();
 				if (result.next()) {
