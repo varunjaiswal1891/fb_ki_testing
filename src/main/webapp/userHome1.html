@@ -20,6 +20,263 @@
         	
         	var foo = $.cookie("ID");
     		//alert(foo);
+    		
+    		
+    		
+    		
+    			$.ajax({ 
+                   url: "http://localhost:8080/DemoFB/webapi/status/getAllStatus",
+                   type: "GET",
+                   dataType: "json",
+                   contentType : "application/json",
+                   crossDomain: true,
+                   processData: true,
+                   
+                   
+                   success: function(response){  
+                	   
+                       // we have the response  
+                	   if(response!=null){
+                       var data =JSON.parse(JSON.stringify(response));  
+                       //alert(data[2].likes_count);
+                       
+                       
+                      // alert(data[0].status_desc);
+                       console.log(data);
+                       
+                       var st;
+                       var fname,lname;
+                       for (var i=0; i < data.length; i++){
+                    	   
+                    	   var email =data[i].emailID; 
+                    	  // alert(email);
+                    	   //alert(data[i].name);
+                    	                       	   
+                    	   //alert(fname);
+                    	   
+                    	   
+                    	   
+                    	   
+                    	   
+                    	   st+="<div class="+"\"panel panel-default\""+">";
+                    	   st+="<div class="+"\"panel-body\""+"id=\"forcomment\""+">";
+                    	   st+="<div class="+"\"row\""+">";
+                    	   st+="<div class="+"\"col-md-12\""+">";
+                    	   st+="<p><font color="+"\"blue\""+">"+data[i].name+"</font></p>" ;
+                    	   /* $(status_name).appendTo('#text_color');
+                    	   document.getElementById("forstatus").style.color="blue"; */
+                    	 	st+="<hr>";
+                    	   st+="<p id="+"\"forstatus\""+">"+data[i].status_desc+"</p>" ;
+                    	   st+="</div></div><hr>";
+                    	   st+="<div class="+"\"row\""+">";
+                    	   st+="<div class="+"\"col-md-12\""+">";
+                    	   st+="<ul class="+"\"list-inline\""+">";
+                    	   st+="<li>";
+                    	   st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+" OnClick=\"like(this);\"><span class="+"\"glyphicon glyphicon-thumbs-up\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Like</font></a>";
+                    	   st+="</li>";
+                    	   st+="<li>";
+                    	   st+= "<a href="+"\"#\""+ "id=\""+data[i].statusID+"\""+"><span class="+"\"glyphicon glyphicon-comment\"" +"style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Comment</font></a>";
+                    	   st+="</li></ul></div></div>";
+                    	   st+="</div>";
+                    	   st+="<div class="+"\"panel-footer\"" +"id="+"\"o\""+">";
+                    	   st+="<div class="+"\"row\""+">";
+                    	   st+="<div class="+"\"col-md-12\""+">";
+                    	   st+="<p id="+"\"likescount\""+">"+data[i].likesCount+"Liked"+"</p><br></div></div>";
+                    	   st+="<hr>";
+                    	   
+                    	   st+="<div class="+"\"pre-scrollable\""+" style="+"\"height:100px;\""+">";
+                    	   for(var j=0;j<data[i].a.length;j++)
+                		   {
+                    	   st+= "<p id="+"\"output\""+">"+data[i].a[j].comment_desc+"</p>";
+                    	   st+="<br>";
+                		   }
+                    	   st+="</div>";
+                		   
+                    	   st+="<ul>";
+                    	   st+="<li class="+"\"media\""+">";
+                    	   st+="<div class="+"\"media-body\""+">";
+                    	   st+="<div class="+"\"input-group\""+">";
+                    	   st+="<input type="+"\"text\""+" class="+"\"form-control\""+" id=\"comment_d"+data[i].statusID+"\""+" placeholder="+"\"Write a comment...\""+">";
+                           st+="<span class="+"\"input-group-btn\""+">";
+                       		st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].statusID+"\""+" OnClick=\"comment(this);\">Post Comment</button>";
+                       		st+="</span>";
+                       		st+="</div>";
+                       		st+="</div>";
+                       		st+="</li>";
+                       		st+="</ul>";
+                       		st+="</div>";
+                       		st+="</div>";
+                            
+                           
+                           
+                       }
+                       st=st.replace("undefined","");
+                	   $("#abcd").html(st);
+                       
+                	   }            
+                       
+                       
+                     /*    var suggest;
+                	 
+                    	for (var i=0; i < data.length; i++){
+                		    suggest+="<div class="+"\"panel-body\""+">";
+                      		suggest+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"img_avatar1.png\""+" /></div>";
+                      		suggest+="<a href="+"\"#\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
+                      		suggest+="<div class="+"\"text-right\""+">";
+                      		suggest+="<button type="+"\"button\""+" class="+"\"btn btn-primary\" id=\""+data[i].emailID+"\" OnClick=\"add(this);\">Add Friend<span class="+"\"glyphicon glyphicon-plus\""+"></span></button>";
+                      		suggest+="<a class="+"\"btn btn-primary\""+" id=\"remove"+data[i].emailID+"\""+" href=\"\""+" OnClick=\"rmv(this);\">Remove</a>"; 
+                       		suggest+="<a class="+"\"btn btn-primary\""+" id="+"\"SentReq"+data[i].emailID+"\" href=\"\""+" style=\"visibility: hidden\";>Request Sent</a></div></div>";
+                		}
+                    suggest=suggest.replace("undefined","");
+                	   $("#suggest").html(suggest);
+                	   
+                	 */   
+/*                   
+                                        
+                       
+                       
+                          
+                       </div> 
+                        
+                        <ul>
+                        <li class="media">
+                           <div class="media-body">
+                             <div class="input-group">
+                               <input type="text" class="form-control" id="comment_d" placeholder="Write a comment...">
+                               <span class="input-group-btn">
+                                 <button type="button" class="btn btn-primary pull-right" id="commentAdd">
+                                   Post Comment
+                                 </button>
+                               </span>
+                             </div>
+                           </div>
+                         </li>
+                        </ul>
+                        
+                       
+                      
+                       
+                     </div>
+                      
+                      
+                      
+                     </div> <!--  div of panel default for status update 1 -->
+
+                	 
+                	 
+                	 
+ */                	 
+                	 
+                	 
+                	 
+                	 
+                	 
+                	/*  $("#forstatus").html(data[0].status_desc);
+                       }  
+                     */   
+                       else
+                    	   {
+                    	  alert("something wrong");
+                    	   }
+                     },
+    	    
+          			error: function(e){  
+            					alert('Error121212: ' + e);  
+            					alert(e.toString());
+          			}				
+            
+    	  }); 
+       	
+    		
+    			 window.like = function(e1){
+    				 
+    				   var statusid= $(e1).attr('id');
+    				   var sid={statusID:statusid};
+    				   var myJSON=JSON.stringify(sid);
+    				   //alert(statusid);
+    				   
+    				   
+    				   $.ajax({ 
+                url: "http://localhost:8080/DemoFB/webapi/status/incrementLike",
+                type: "POST",
+                dataType: "text",
+                contentType : "application/json",
+                data : myJSON,
+                crossDomain: true,
+                processData: true,
+                
+                
+                success: function(response){  
+             	   
+                    // we have the response  
+             	   if(response!=null){
+            
+             		   alert(response);
+             	   }
+             	   else{
+             		   }
+             	   
+    			},
+    			error: function(e){  
+ 					alert('Error121212: ' + e);  
+ 					alert(e.toString());
+			}				
+ 
+}); 
+}
+    		
+
+    			 window.comment = function(e1){
+    				 
+    				   var statusid= $(e1).attr('id');
+    				   var chk="comment_d";
+    				   chk+=statusid;
+    				   alert(chk);
+    				   var comment_desc=document.getElementById(chk).value;
+    				   
+    				  /*  alert(statusid);*/
+    				   alert("comment"+comment_desc); 
+    				   var sid={statusID:statusid,comment_desc:comment_desc};
+    				   var myJSON=JSON.stringify(sid);
+    				   //alert(statusid);
+    				   
+    			   
+    				   $.ajax({ 
+                url: "http://localhost:8080/DemoFB/webapi/status/addComment",
+                type: "POST",
+                dataType: "text",
+                contentType : "application/json",
+                data : myJSON,
+                crossDomain: true,
+                processData: true,
+                
+                
+                success: function(response){  
+             	   
+                    // we have the response  
+             	   if(response!=null){
+             		  $('#comment_d').val('');
+             		   alert(response);
+             	   }
+             	   else{
+             		   }
+             	   
+    			},
+    			error: function(e){  
+ 					alert('Error121212: ' + e);  
+ 					alert(e.toString());
+			}				
+ 
+}); 
+}
+    		
+    		
+    		
+    		
+    		
+    		
+    		
+    		
                  	$.ajax({
                  		 type: "GET",
              	        contentType: "text/plain",  //send data to server in this format
@@ -51,6 +308,57 @@
     	            
     	    	  });
             	
+                 	 $("#postbutton").click(function(e){
+                 		 
+                 		 
+                 		var statusdesc= document.getElementById("posttext").value;
+                 		 //alert(x);
+                 		 $.ajax({
+     	        type: "POST",
+     	        contentType: "text/plain",  //send data to server in this format
+     	        url:"http://localhost:8080/DemoFB/webapi/status/addStatus",
+     	        dataType: "text",  //expect response of this type
+     	        data: statusdesc,
+     	       success: function(resp){
+     	    	   
+     	    	  if(resp!=null){
+     	    		  
+     	    		  alert(resp);
+     	    		 $('#posttext').val('');
+     	    		  
+     	    	  }
+     	    	  else{
+     	    		
+     	    		  alert("null");
+     	    	  }
+     	    	   
+     	       },
+     	       
+     	      error: function(jqXHR, textStatus, errorThrown){
+   	            alert('status posting error: ' + textStatus);
+   	        }	 
+                 		 
+                 		 
+                 		 });    		 
+                 		 
+                 	 });      	
+                 	
+                 	 
+                 	 
+                 	$("#comment").click(function(){
+                 	    /* $(this).next("#forcomment").slideToggle(200)
+                 	           .find("comment_d").focus(); */
+
+                 	           
+                 	           
+                 	    return false;
+                 	});
+                 	 
+                 	 
+                 	 
+                 	 
+                 	
+                 	
       	  $("#logoutButton1").click(function(e){
      		  alert("logout success");
          	  // var obj = JSON.parse(JSON.stringify(resp));
@@ -294,15 +602,92 @@
 										   <form class="form-horizontal" role="form">
 											<h4>What's New</h4>
 											 <div class="form-group" style="padding:14px;">
+											  <textarea class="form-control" placeholder="Update your status" id="posttext"></textarea>
+											</div>
+											<button class="btn btn-primary pull-right" type="button" id="postbutton">Post</button><ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
+										 	<!-- <div class="form-group" style="padding:14px;">
 											  <textarea class="form-control" placeholder="Update your status"></textarea>
 											</div>
 											<button class="btn btn-primary pull-right" type="button">Post</button><ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
-										 	<div class="form-group" style="padding:14px;">
-											  <textarea class="form-control" placeholder="Update your status"></textarea>
-											</div>
-											<button class="btn btn-primary pull-right" type="button">Post</button><ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
-										  </form>
+										   -->
+										   </form>
 									  </div>
+								   
+								   
+<div class="panel panel-default" id="abcd">
+  <div class="panel-body" id="forcomment">
+    <!-- Post metadata -->
+    <div class="row">
+      <div class="col-md-10">
+        <div class="media"><!-- for name pic  -->
+        </div>
+      </div>
+      </div>
+    <!-- Post content -->
+    <div class="row">
+      <div class="col-md-12">
+      <p id="status_name"></p>
+       <p id="forstatus"></p>  <!-- status text -->
+      </div>
+    </div>
+  <hr>  
+  <div class="row">
+ <div class="col-md-12">
+   <ul class="list-inline">
+     <li>
+     <a href="#thumbs-up"><span class="glyphicon glyphicon-thumbs-up" style="color:#3b5998"></span> <font color="#3b5998">Like</font></a>
+     </li>
+     <li>
+     <a href="#" id="comment"><span class="glyphicon glyphicon-comment" style="color:#3b5998"></span> <font color="#3b5998">Comment</font></a>
+     </li>
+     
+   </ul>
+ </div>
+  </div>
+ </div> <!--  div of panel body for status update 1 -->
+ <!-- panel body footer -->
+ <div class="panel-footer" id="o">
+ <div class="row">
+   <div class="col-md-12">  
+      <p id="likescount"></p>
+      <br>
+   </div> 
+   
+  </div>
+  
+  
+  <hr>
+  <div class="pre-scrollable" style="height:100px;">
+       <p id="output"></p>
+       <br>
+     
+  </div> 
+   
+   <ul>
+   <li class="media">
+      <div class="media-body">
+        <div class="input-group">
+          <input type="text" class="form-control" id="comment_d" placeholder="Write a comment...">
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-primary pull-right" id="commentAdd">
+              Post Comment
+            </button>
+          </span>
+        </div>
+      </div>
+    </li>
+   </ul>
+   
+  
+ 
+  
+</div>
+ 
+ 
+ 
+</div> <!--  div of panel default for status update 1 -->
+								   
+								   
 								   
 									
 									

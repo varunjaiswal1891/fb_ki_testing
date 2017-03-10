@@ -28,7 +28,7 @@ public class SuggestedFriendService {
 				prepStatement.setString(1,myEmailID);
 				ResultSet result = prepStatement.executeQuery();
 				
-				if (result .next()) {
+				//if (result .next()) {
 					while (result.next()) {
 				
 					String e1=result.getString("emailID");
@@ -37,7 +37,7 @@ public class SuggestedFriendService {
 					//adding user objects of my suggested to arraylist
 					al_friends.add(u_obj);
 					}
-				}//if ends	
+				//}//if ends	
 				
 				
 				for(int j=0;j<al_friends.size();j++)

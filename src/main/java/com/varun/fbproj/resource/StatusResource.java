@@ -47,14 +47,27 @@ public class StatusResource {
     /* this method working good*/
     @POST
     @Path("/addStatus")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public String addStatus(Status status)throws JsonParseException, JsonMappingException, IOException{
+    @Consumes({MediaType.TEXT_PLAIN})
+    @Produces({MediaType.TEXT_PLAIN})
+    public String addStatus(@CookieParam("ID") String jwt,String statusdesc)throws JsonParseException, JsonMappingException, IOException{
 
-    	status.setStatus_desc(status.getStatus_desc());
-       	status.setEmailID(status.getEmailID());
+    	
+    	System.out.println("token: "+jwt);
+    	System.out.println("desc: "+statusdesc);
+    	Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(jwt).getBody();
+			    System.out.println("Subject: " + claims.getSubject());
+			   // System.out.println("Expiration: " + claims.getExpiration());
+			  String myEmailID=claims.getSubject();
+			  
+			  Status status = new Status();
+			  
+    	status.setStatus_desc(statusdesc);
+       	status.setEmailID(myEmailID);
     	if(s1.addStatus(status)){
-    	    System.out.println("here");
-    		return "status posted";
+    	    System.out.println("post submitted properly");
+    		return "You posted";
     	}
     		return "status not posted";
     } // end of addStatus
@@ -64,11 +77,21 @@ public class StatusResource {
     @POST
     @Path("/addComment")
     @Consumes({MediaType.APPLICATION_JSON})
-    public String addComment(Comment cmt)throws JsonParseException, JsonMappingException, IOException{
+    public String addComment(@CookieParam("ID") String jwt,Comment cmt)throws JsonParseException, JsonMappingException, IOException{
     	
     	System.out.println("inside addComment");
+    	
+    	
+    	 Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(jwt).getBody();
+			    System.out.println("Subject: " + claims.getSubject());
+			    String myEmailID=claims.getSubject();
+    	
+    	System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaa"+cmt.getComment_desc());
+    	
     	cmt.setComment_desc(cmt.getComment_desc());
-    	cmt.setCommentID(cmt.getCommentID());
+    	cmt.setEmailID(myEmailID);
     	if(c1.addComment(cmt)){
     	   System.out.println("upto resource comment added successfully");
     		return "comment posted";
@@ -83,11 +106,22 @@ public class StatusResource {
     @Path("/incrementLike")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.TEXT_HTML})
-    public String incrementLike(Likes likeobj)throws JsonParseException, JsonMappingException, IOException{
+    public String incrementLike(@CookieParam("ID") String jwt,Status statusobj)throws JsonParseException, JsonMappingException, IOException{
     	 System.out.println("inside increment like resource");
-    	 likeobj.setStatusID(likeobj.getStatusID());
-     	 likeobj.setEmailID(likeobj.getEmailID());
-    	 if(l1.incrementLike(likeobj)==1){
+    	 
+    	 
+    	 Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(jwt).getBody();
+			    System.out.println("Subject: " + claims.getSubject());
+			    String myEmailID=claims.getSubject();
+  	
+			    Likes likeobj = new Likes();
+    	 
+    	 int sid=statusobj.getStatusID();
+     	 likeobj.setEmailID(myEmailID);
+    	 likeobj.setStatusID(sid);
+     	 if(l1.incrementLike(likeobj)==1){
     		 return "like incremented";
     	 }
     	 else 
@@ -122,13 +156,31 @@ public class StatusResource {
 		{
 			String e1=al_friends.get(i).getEmailID();
 			status_list.addAll(s1.getAllDetailsOfEachStatus(e1));
+			
 		}
-				 
+			System.out.println("likes = "+status_list.get(0).getLikesCount());	 
 		return status_list;
 		   
     }//getALLStatusByUser ends here
     
+    @GET
+    @Path("/getMyStatus")
+	@Produces({MediaType.APPLICATION_JSON})
+    public ArrayList<Status> getALLMyStatus(@CookieParam("ID") String jwt) throws JsonParseException, JsonMappingException, IOException
+    {
+    	System.out.println("Inside getALLMyStatus ");
+    	System.out.println("jwt="+ jwt);
+		Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(jwt).getBody();
+			    System.out.println("Subject: " + claims.getSubject());
+			    String myEmailID=claims.getSubject();
+    	
+    	ArrayList<Status> status_list= new ArrayList<Status>(); 
+    	//it gives mere all status
+		status_list.addAll(s1.getAllDetailsOfEachStatus(myEmailID)); 
     
-    
+		return status_list;
+    }
 
 }//Ststus resource class ends here
