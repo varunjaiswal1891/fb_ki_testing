@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javassist.bytecode.Descriptor.Iterator;
+
 import com.varun.fbproj.model.Comment;
 import com.varun.fbproj.model.Status;
 
@@ -110,6 +112,7 @@ public class StatusService {
 	 public ArrayList<Status> getAllDetailsOfEachStatus(String emailID)
 		{
 
+		 System.out.println("eamil ddd  "+emailID);
 			String rs1;
 			boolean check=false;
 		    
@@ -126,6 +129,15 @@ public class StatusService {
 				  ResultSet rs= pstmnt.executeQuery();
 				  ArrayList<Status> statusArrayList = new ArrayList<Status>();
 
+
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  
 		        while (rs.next())
 		        {   System.out.println("inside first result set");
 		        	Status status_obj = new Status();
@@ -137,6 +149,16 @@ public class StatusService {
 					//statusArrayList.add(status_obj);	
 
 		         
+					  String query11="select fname,lname from User where emailID=?";	   
+					  PreparedStatement pstmnt11=db.con.prepareStatement(query11);
+					  pstmnt11.setString(1,emailID); // user_id is the one sent in paramater
+					  ResultSet rs11= pstmnt11.executeQuery();
+					  rs11.next();
+					  status_obj.setName(rs11.getString("fname")+" "+ rs11.getString("lname"));
+					System.out.println("name =  "+status_obj.getName());
+					
+					
+					
 		            ArrayList<Comment> commentArrayList = new ArrayList<Comment>();
 		            Comment comment_obj;
 	                int stID=rs.getInt(1);
@@ -151,6 +173,7 @@ public class StatusService {
 		             while(rs3.next())
 		             {   System.out.println("Inside rs3. while ");
 		            	 status_obj.setLikesCount(rs3.getInt(1)); 
+		            	 System.out.println("likes............: "+status_obj.getLikesCount());
 		             }
 
 		             
@@ -187,6 +210,12 @@ public class StatusService {
 		            statusArrayList.add(status_obj);    
 		        }//outer while ends
 		        db.stop();
+		        
+		        java.util.Iterator<Status> itr=statusArrayList.iterator();  
+		        while(itr.hasNext()){  
+		        	System.out.println("inside iterator");
+		         System.out.println(itr.next());  
+		        }
 		        return statusArrayList;
 		    } 
 		    catch (SQLException e) 

@@ -31,6 +31,7 @@ import com.google.gson.*;
 import com.varun.fbproj.model.User;
 import com.varun.fbproj.service.LoginService;
 import com.varun.fbproj.service.LogoutService;
+import com.varun.fbproj.service.RetriveNameService;
 import com.varun.fbproj.service.RetriveService;
 import com.varun.fbproj.service.SignUpService;
 import com.varun.fbproj.service.TokenService;
@@ -211,6 +212,20 @@ public class UserResource {
     }//retrive method ends here
 	
 	
+    @GET
+    @Path("/retrivename/{email}")
+    @Consumes({MediaType.TEXT_PLAIN})
+	@Produces({MediaType.APPLICATION_JSON})
+    public User retrivename(@PathParam ("email") String myEmailID) throws JsonParseException, JsonMappingException, IOException 
+    {
+    	
+    	System.out.println("Inside retrive name method ");
+    		
+		User u1= RetriveNameService.getUserAllData(myEmailID);
+	
+		return u1;
+	 
+    }
 
 	
 }//class ends here

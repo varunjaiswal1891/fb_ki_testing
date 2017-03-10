@@ -9,17 +9,28 @@ public class Status {
 	   private String emailID;
 	   private int flag;  
 	   private int likes_count;
-	   ArrayList<Comment> a;
+	   private String name;
+	   
+	   
+	   
+	   public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	ArrayList<Comment> a;
 	   
 	   public Status(){
 		 
 	   }
-	   public Status(int statusID,String status_desc,String emailID,String created,int LikesCount){
+	   public Status(int statusID,String status_desc,String emailID,String created,int LikesCount,String name){
 		   this.statusID=statusID;
 		   this.status_desc=status_desc;
 		   this.emailID=emailID;
 		   this.created=created;
 		   flag=1;
+		   this.name=name;
 		   this.likes_count=LikesCount;
 		   a=new ArrayList<Comment>();
 		   }

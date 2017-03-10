@@ -19,7 +19,7 @@ $(document).ready(function() {
 	
 	setTimeout(function(){
 		   window.location.reload(1);
-		}, 7000);
+		}, 70000);
 	
 	//document.write(x);
 	$("#friendForm1").submit(function(e){
@@ -98,7 +98,7 @@ $(function () {
                       		suggest+="<a class="+"\"btn btn-primary\""+" id=\"remove"+data[i].emailID+"\""+" href=\"\""+" OnClick=\"rmv(this);\">Remove</a>"; 
                        		suggest+="<a class="+"\"btn btn-primary\""+" id="+"\"SentReq"+data[i].emailID+"\" href=\"\""+" style=\"visibility: hidden\";>Request Sent</a></div></div>";
                 		}
-                    	suggest=suggest.replace("undefined","");
+                    suggest=suggest.replace("undefined","");
                 	   $("#suggest").html(suggest);
                 	   
                
@@ -142,7 +142,7 @@ $(function () {
                		mayKnow+="<a class="+"\"btn btn-primary\""+" id="+"\"SentReq"+data[i].emailID+"\" href=\"\""+" style=\"visibility: hidden\";>Request Sent</a></div></div>";
                			
              	}
-               mayKnow=mayKnow.replace("undefined","");
+             mayKnow=mayKnow.replace("undefined","");
          	   $("#mayKnow").html(mayKnow);
         
                 }  
@@ -183,7 +183,7 @@ $(function () {
                      allFriends+="</div>";
 					     	}
              	
-             	allFriends=allFriends.replace("undefined","");
+             allFriends=allFriends.replace("undefined","");
          	   $("#allFriends").html(allFriends);
         
                 }  
@@ -224,7 +224,7 @@ $(function () {
 					Frequest+="<a href=\"#\">"+data[i].fname+" "+data[i].lname+"</span></a>";
 					Frequest+="<div class=\"text-right\">";
 					Frequest+="<button type=\"button\" class=\"btn btn-primary\" id=\""+data[i].emailID+"\" OnClick=\"accept(this);\">Confirm<span class=\"glyphicon glyphicon-plus\"></span></button>";
-					Frequest+="<a class=\"btn btn-primary\" id=\"delete"+data[i].emailID+"\" href=\"\" OnClick=\"del(this);\">Delete request</a>";
+					Frequest+="<a class="+"\"btn btn-primary\""+" id=\"delete"+data[i].emailID+"\" "+"href=\"\""+" OnClick=\"del(this);\">Delete request</a>";
 					Frequest+="<a class="+"\"btn btn-primary\""+" id="+"\"done"+data[i].emailID+"\" href=\"\""+" style=\"visibility: hidden\";>Cancelled</a></div></div>";
                		
              	}
@@ -284,6 +284,7 @@ $(function () {
 	        	
 	       
 	   });//logout button ends ends
+	   
 	   window.add = function(e1){
 		 
 		   var friendEmailID= $(e1).attr('id');
@@ -412,8 +413,8 @@ $(function () {
              	   if(response!=null){
                      
              		  $(e1).hide();
-						var chk="remove";
-						var req="SentReq";
+						var chk="delete";
+						var req="done";
 						chk+=friendEmailID;
 						req+=friendEmailID;
 						 document.getElementById(chk).style.visibility = 'hidden';
@@ -546,6 +547,7 @@ $(function () {
 									  </div> -->
 
 								   
+								   <div class="pre-scrollable" style="background-color: #d8dfea;height:250px ;margin-bottom:.5cm;margin-top:.5cm">
 								    <div class="panel panel-default">
 										<div class="panel-heading"> <h4>Friends Suggestions</h4></div>
 										<div class="list-group">
@@ -557,7 +559,7 @@ $(function () {
 											</div>
 
 										  </div>
-										
+										</div>
 									
 								   
 									  <div class="panel panel-default">
