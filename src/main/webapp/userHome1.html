@@ -52,8 +52,10 @@
     	    	  });
             	
       	  $("#logoutButton1").click(function(e){
-     		   var foo = $.cookie("ID");
-     	    $.ajax({
+     		  alert("logout success");
+         	  // var obj = JSON.parse(JSON.stringify(resp));
+         	   window.location.replace("appHome.html");
+     	   /* $.ajax({
      	        type: "DELETE",
      	        contentType: "text/plain",  //send data to server in this format
      	        url:"http://localhost:8080/DemoFB/webapi/user/logout",
@@ -65,9 +67,7 @@
      	            
      	            if(resp!=null){
      	            			
-     	                    	 alert("logout success");
-     	                    	  // var obj = JSON.parse(JSON.stringify(resp));
-     	                    	   window.location.replace("appHome.html");
+     	                    	
      	                    	   $.removeCookie("ID");
      	                    	  
      	            }	
@@ -83,7 +83,7 @@
      	        error: function(jqXHR, textStatus, errorThrown){
      	            alert('logout error: ' + textStatus);
      	        }
-     	    });
+     	    });*/
      	           	
      	        	
      	       
