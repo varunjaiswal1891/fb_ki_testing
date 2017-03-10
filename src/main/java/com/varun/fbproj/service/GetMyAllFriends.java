@@ -8,7 +8,7 @@ import com.varun.fbproj.model.User;
 
 public class GetMyAllFriends {
 
-	public static ArrayList<User> getMyFriends(ArrayList<User> al_friends,String myEmailID)
+	public static ArrayList<User> getMyFriends(ArrayList<User> al_friends,String myEmailID) //here myEmailID is fetched from jwt token
 	{
 		
 		try {

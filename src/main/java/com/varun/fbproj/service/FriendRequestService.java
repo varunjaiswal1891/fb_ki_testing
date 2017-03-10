@@ -30,10 +30,17 @@ public class FriendRequestService {
 	            PreparedStatement ps = connect.con.prepareStatement(query);
 	            ps.setString(1,myEmailID);
 				ps.setString(2,friendEmailID);
-				ps.setString(3,"Pending");
+				ps.setString(3,"Request Sent");
 	            
-	            ps.executeUpdate();		
-				connect.stop();
+	            ps.executeUpdate();
+	            String queryReceived= "insert into UserFriends(myEmailID,friendEmailID,status) values (?,?,?)"; 
+	            PreparedStatement psreceived= connect.con.prepareStatement(queryReceived);
+	            psreceived.setString(1,friendEmailID);
+	            psreceived.setString(2,myEmailID);
+				
+				psreceived.setString(3,"Request Received");
+				 psreceived.executeUpdate();
+	            connect.stop();
 				return true;
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -87,13 +94,13 @@ public class FriendRequestService {
 	            	System.out.println("trying connection for confriming friend request");
 	            }
 	            
-	            String query1 = "insert into UserFriends(myEmailID,friendEmailID,status) values (?,?,?)";
+	           // String query1 = "insert into UserFriends(myEmailID,friendEmailID,status) values (?,?,?)";
+	            String query1= "update UserFriends set status=? where myEmailID=? and friendEmailID=?";
 	            PreparedStatement ps1 = connect.con.prepareStatement(query1);
-	            ps1.setString(1,myEmailID);
-				ps1.setString(2,friendEmailID);
-				ps1.setString(3,"Accepted");
-	            ps1.executeUpdate();		
-	                        
+	            ps1.setString(1,"Accepted");
+	            ps1.setString(2,myEmailID);
+				ps1.setString(3,friendEmailID);
+	            ps1.executeUpdate();	
 	            connect.stop();
 				return true;
 			} catch (Exception e) {
@@ -117,7 +124,7 @@ public class FriendRequestService {
 	            	check=connect.start();
 	            	System.out.println("trying connection for deleting request");
 	            }
-	            /*delete from User_token where emailID="shubh@yahoo.com"*/
+	          
 	            
 	            String sql = "DELETE FROM UserFriends WHERE myEmailID=? and friendEmailID=?";
 	            
@@ -150,13 +157,13 @@ public class FriendRequestService {
 	            while(check==false)
 	            {
 	            	check=connect.start();
-	            	System.out.println("trying connection");
+	            	System.out.println("trying connection in getAllFriendrequest");
 	            }
-	           // "select * from UserFriends where myEmailID="varun@gmail.com" and status="Accepted""
+	       
 				PreparedStatement prepStatement = connect.con.prepareStatement("select * from UserFriends "
 						+ "where friendEmailID = ? and status=?");
 				prepStatement.setString(1,myEmailID);
-				prepStatement.setString(2,"Pending");
+				prepStatement.setString(2,"Request Sent");
 				
 				ResultSet result = prepStatement.executeQuery();
 				
@@ -164,7 +171,8 @@ public class FriendRequestService {
 				
 					String e1=result.getString("myEmailID");	
 					User u_obj=new User();	
-					u_obj=RetriveService.getUserAllData(e1);				
+					u_obj=RetriveService.getUserAllData(e1);
+					System.out.println("Request Came from :"+u_obj.getEmailID());
 					//adding user objects of my friends to arraylist
 					al_requests.add(u_obj);
 					
