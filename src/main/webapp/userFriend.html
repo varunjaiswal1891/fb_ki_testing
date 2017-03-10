@@ -17,9 +17,6 @@
 $(document).ready(function() {
 	var x=$.cookie("ID");
 	
-	setTimeout(function(){
-		   window.location.reload(1);
-		}, 70000);
 	
 	//document.write(x);
 	$("#friendForm1").submit(function(e){
@@ -80,7 +77,6 @@ $(function () {
                    contentType : "application/json",
                    crossDomain: true,
                    processData: true,
-                   
                    
                    success: function(response){  
                 	   
@@ -250,7 +246,10 @@ $(function () {
 	
 	$("#logoutButton1").click(function(e){
 		  var foo = $.cookie("ID");
-	    $.ajax({
+     	 alert("logout success");
+     	  // var obj = JSON.parse(JSON.stringify(resp));
+     	   window.location.replace("appHome.html");
+	    /*$.ajax({
 	        type: "DELETE",
 	        contentType: "text/plain",  //send data to server in this format
 	        url:"http://localhost:8080/DemoFB/webapi/user/logout",
@@ -279,7 +278,7 @@ $(function () {
 	        error: function(jqXHR, textStatus, errorThrown){
 	            alert('logout error: ' + textStatus);
 	        }
-	    });
+	    });*/
 	           	
 	        	
 	       

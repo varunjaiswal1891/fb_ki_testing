@@ -74,7 +74,7 @@ public class UserResource {
 				
 	           String token= createJWT(user.getEmailID());
 	           System.out.println("jwt is == "+ token); 
-	           TokenService.set_token(token, user);
+	           //TokenService.set_token(token, user);
 	           return token; 
 	           // Return the token on the response
 	            //return Response.ok(token).build();
@@ -122,7 +122,7 @@ public class UserResource {
 			System.out.println("retrun id is "+user_obj.getUserID());
 			String token= createJWT(user_obj.getEmailID());
 	           System.out.println("jwt is == "+ token); 
-	           TokenService.set_token(token, user_obj);
+	           //TokenService.set_token(token, user_obj);
 	           return token;
 		}
 		
@@ -131,7 +131,7 @@ public class UserResource {
 	}//loginuser method ends here
 	
 	
-	
+	/*
 	@DELETE
     @Path("/logout")
 	@Consumes({MediaType.TEXT_PLAIN})
@@ -149,7 +149,7 @@ public class UserResource {
 			return "logout_success";
 		}
 		return null;
-	}//logout method ends here
+	}//logout method ends here*/
 	
 	
 	
