@@ -27,6 +27,7 @@ public class Comment {
 		this.emailID=emailID;
 		this.comment_desc=comment_desc;
 		this.comment_Date=new Date();
+		this.name=name;
 	}
 
 	public Comment() {

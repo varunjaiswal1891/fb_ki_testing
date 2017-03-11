@@ -215,7 +215,6 @@ public class StatusService {
 						  ResultSet rs12= pstmnt12.executeQuery();
 						  rs12.next();
 						  comment_obj.setName(rs12.getString("fname")+" "+ rs12.getString("lname"));
-						System.out.println("comment_name =  "+comment_obj.getName());
 		                   
 		                commentArrayList.add(comment_obj);   
 		                for(Comment clist:commentArrayList){

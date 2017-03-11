@@ -24,10 +24,6 @@ $(document).ready(function() {
 	$("#logoutForm").submit(function(e){
 	        e.preventDefault();
 	 });
-	
-	setTimeout(function(){
-		   window.location.reload(1);
-		}, 70000);
 
 	$("#inviteButton").click(function(e){
 		window.location.replace("todoPage.html");
@@ -233,11 +229,12 @@ $(document).ready(function() {
 	
 	
 	  $("#logoutButton1").click(function(e){
-		 // var foo = $.cookie("ID",$("#JSESSIONID").val());
 		   var foo = $.cookie("ID");
-		  
-				//document.write(foo);
-	    $.ajax({
+      	// alert("logout success");
+      //	$.removeCookie("ID");
+   	   window.location.replace("appHome.html");	  
+			
+	   /* $.ajax({
 	        type: "DELETE",
 	        contentType: "text/plain",  //send data to server in this format
 	        url:"http://localhost:8080/DemoFB/webapi/user/logout",
@@ -267,7 +264,7 @@ $(document).ready(function() {
 	        error: function(jqXHR, textStatus, errorThrown){
 	            alert('logout error: ' + textStatus);
 	        }
-	    });
+	    });*/
 	           	
 	        	
 	       

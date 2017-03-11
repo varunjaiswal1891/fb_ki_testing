@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>app home</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
   <script type="text/javascript" src="Jquery/jquery-3.1.1.js"></script>
@@ -83,7 +84,7 @@ $("#loginForm").submit(function(e){
             
             if(resp!=null){
             			
-                    	 alert(resp);
+                    	 //alert(resp);
                     	  // var obj = JSON.parse(JSON.stringify(resp));
                     	  // window.location.replace("timeLine1.html");
                     	  window.location.replace("userHome1.html");
@@ -138,7 +139,7 @@ $("#loginForm").submit(function(e){
               success: function(resp){  
                   // we have the response  
                   if(resp!=null){
-                	  alert(resp);
+                	  //alert(resp);
                 	  $.cookie("ID",resp);
                 	  // var obj = JSON.parse(JSON.stringify(resp));
                 	   //window.location.replace("timeLine1.html");
