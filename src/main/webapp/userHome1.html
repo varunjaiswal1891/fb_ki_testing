@@ -205,7 +205,8 @@
                     // we have the response  
              	   if(response!=null){
             
-             		   alert(response);
+             		   //alert(response);
+             		  location.reload();
              	   }
              	   else{
              		   }
@@ -250,7 +251,8 @@
                     // we have the response  
              	   if(response!=null){
              		  $('#comment_d').val('');
-             		   alert(response);
+             		   //alert(response);
+             		  location.reload();
              	   }
              	   else{
              		   }
@@ -317,8 +319,9 @@
      	    	   
      	    	  if(resp!=null){
      	    		  
-     	    		  alert(resp);
+     	    		 // alert(resp);
      	    		 $('#posttext').val('');
+     	    		location.reload();
      	    		  
      	    	  }
      	    	  else{
@@ -354,7 +357,7 @@
                  	
                  	
       	  $("#logoutButton1").click(function(e){
-     		  alert("logout success");
+     		  //alert("logout success");
          	  // var obj = JSON.parse(JSON.stringify(resp));
          	   window.location.replace("appHome.html");
      	   /* $.ajax({

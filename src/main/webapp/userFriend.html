@@ -246,7 +246,7 @@ $(function () {
 	
 	$("#logoutButton1").click(function(e){
 		  var foo = $.cookie("ID");
-     	 alert("logout success");
+     	 //alert("logout success");
      	  // var obj = JSON.parse(JSON.stringify(resp));
      	   window.location.replace("appHome.html");
 	    /*$.ajax({
@@ -313,6 +313,7 @@ $(function () {
 						req+=friendEmailID;
 						 document.getElementById(chk).style.visibility = 'hidden';
 						 document.getElementById(req).style.visibility = 'visible';
+						 location.reload();
 						 
              		 
                     }  
@@ -356,7 +357,7 @@ $(function () {
 					req="done";
 					req+=friendEmailID;
 					 document.getElementById(req).style.visibility = 'visible';
-	
+					 location.reload();
 					/* 	var chk="div";
 						chk+=friendEmailID;
 					     document.getElementById(chk).style.visibility = 'hidden';
@@ -418,6 +419,7 @@ $(function () {
 						req+=friendEmailID;
 						 document.getElementById(chk).style.visibility = 'hidden';
 						 document.getElementById(req).style.visibility = 'visible';
+						 location.reload();
 						
                     }  
                     
