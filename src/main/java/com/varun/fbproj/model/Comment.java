@@ -9,11 +9,21 @@ public class Comment {
 	private int flag;
 	private String comment_desc;
 	private Date comment_Date;
+	private String name;
 	
-	public Comment(int commentID,int statusID,int flag,String comment_desc,String comment_Date,String emailID){
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Comment(int commentID,int statusID,int flag,String comment_desc,String comment_Date,String emailID,String name){
 		this.commentID=commentID;
 		this.statusID=statusID;
 		this.flag=flag;
+		this.name=name;
 		this.emailID=emailID;
 		this.comment_desc=comment_desc;
 		this.comment_Date=new Date();

@@ -197,6 +197,14 @@ public class StatusService {
 		                comment_obj.setEmailID(rs2.getString(3));
 						comment_obj.setComment_desc(rs2.getString(4));
 						comment_obj.setFlag(rs2.getInt(5));
+						
+						String query12="select fname,lname from User where emailID=?";	   
+						  PreparedStatement pstmnt12=db.con.prepareStatement(query12);
+						  pstmnt12.setString(1,comment_obj.getEmailID()); // user_id is the one sent in paramater
+						  ResultSet rs12= pstmnt12.executeQuery();
+						  rs12.next();
+						  comment_obj.setName(rs12.getString("fname")+" "+ rs12.getString("lname"));
+						System.out.println("comment_name =  "+comment_obj.getName());
 		                   
 		                commentArrayList.add(comment_obj);   
 		                for(Comment clist:commentArrayList){

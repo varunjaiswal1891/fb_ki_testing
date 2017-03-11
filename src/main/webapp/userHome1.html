@@ -86,9 +86,11 @@
                     	   
                     	   st+="<div class="+"\"pre-scrollable\""+" style="+"\"height:100px;\""+">";
                     	   for(var j=0;j<data[i].a.length;j++)
-                		   {
+                		   {st+= "<p id="+"\"output_name\""+"><font color="+"\"blue\""+">"+data[i].a[j].name+"</font></p>";
+                    			   
                     	   st+= "<p id="+"\"output\""+">"+data[i].a[j].comment_desc+"</p>";
                     	   st+="<br>";
+                    	   st+="<hr>";
                 		   }
                     	   st+="</div>";
                 		   
@@ -658,8 +660,11 @@
   
   <hr>
   <div class="pre-scrollable" style="height:100px;">
+        <p id="output_name"></p>
+        
        <p id="output"></p>
        <br>
+       <hr>
      
   </div> 
    
