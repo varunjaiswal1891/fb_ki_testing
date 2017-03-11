@@ -19,38 +19,48 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	var x=$.cookie("ID");
+	var x=$.cookie("ID");//current user logged in cookie
+	var y=$.cookie("ID1");//friend timeline ki cookie
 	//document.write(x);
 	$("#logoutForm").submit(function(e){
 	        e.preventDefault();
 	 });
 
-	$("#inviteButton").click(function(e){
-		window.location.replace("todoPage.html");
-	 });
+	//this ajax call to print user name on top logged in user row
+	//alert(foo);
+         	$.ajax({
+         		 type: "GET",
+     	        contentType: "text/plain",  //send data to server in this format
+     	        url:"http://localhost:8080/DemoFB/webapi/user/retrive",
+     	        dataType: "JSON",  //expect response of this type
+     	        data: foo,
+                   
+                   success: function(response){  
+                       // we have the response  
+                       if(response!=null){
+                    	  // alert("data fetched");
+                    	   var obj = JSON.parse(JSON.stringify(response));
+                    	   //alert(obj.emailID);
+                    	   //alert(obj.fname);
+                    	   //alert(obj.highschool);
+                        	   document.getElementById("userName").innerHTML=obj.fname+" "+obj.lname;
+                       }  
+                       
+                       else
+                    	   {
+                    	  	alert("data cannot be fetched");
+                    	   }
+                     },
+    	    
+          			error: function(e){  
+            					alert('Error121212: ' + e);  
+            					alert(e.toString());
+          			}				
+            
+    	  });  //ajax call ends here
 
-	$("#closeFriend").click(function(e){
-		window.location.replace("todoPage.html");
-	 });
 
-	$("#acq").click(function(e){
-		window.location.replace("todoPage.html");
-	 });
-
-	$("#family").click(function(e){
-		window.location.replace("todoPage.html");
-	 });
-
-	$("#restricted").click(function(e){
-		window.location.replace("todoPage.html");
-	 });
-	$("#suggestedPages").click(function(e){
-		window.location.replace("todoPage.html");
-	 });
-	$("#addMessage").click(function(e){
-		window.location.replace("todoPage.html");
-	 });
-	$(function(){
+         	//ajax call to fetch friend  personal info on going to his timeline
 		var foo = $.cookie("ID");
 		//alert(foo);
 		 	$.ajax({
@@ -99,8 +109,9 @@ $(document).ready(function() {
 	            					alert(e.toString());
 	          			}				
 	            
-	    	  });
+	    	  });//ajax call ends here
             
+            //ajax call to show my all friends on my friend ki timeline
             	$.ajax({ 
                     url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
                     type: "GET",
@@ -146,75 +157,9 @@ $(document).ready(function() {
              	///ajax call ends here*/
 	      
 	    
-	    	  $("#updateDetails").click(function(e){
-	    		  
-	              var mob_no=$("input#mob_no").val();
-	              var college=$("input#college").val();
-	              var placeOfWork=$("input#workplace").val();
-	              var hometown=$("input#hometown").val();
-	              var cityOfWork=$("input#workcity").val();
-	              var highschool=$("input#highschool").val();
-	              
-	              var obj = { mob_no:mob_no,college:college,placeOfWork:placeOfWork,
-	            		  hometown:hometown,cityOfWork:cityOfWork,highschool:highschool
-	            		  };  
-	          	var myJSON = JSON.stringify(obj);
-	              	
-	    			//document.write(myJSON);
-	    	    $.ajax({
-	    	        type: "PUT",
-	    	        contentType: "application/json",  //send data to server in this format
-	    	        url:"http://localhost:8080/DemoFB/webapi/user/updateAllData",
-	    	        dataType: "text",  //expect response of this type
-	    	        data: myJSON,
-	    	        success: function(resp){
-	    	            
-	    	            if(resp!=null){
-	    	   	                    	 //alert("update success");
-	    	   	                    	 
-	    	                    	  // var obj = JSON.parse(JSON.stringify(resp));
-	    	                    	   //window.location.replace("timeLine1.html");
-	    	            	 var obj1 = JSON.parse(JSON.stringify(resp));
-	                    	   //alert(obj.emailID);
-	                    	   //alert(obj.fname);
-	                    	  /*  alert(obj1);
-	                    	       document.getElementById("email").innerHTML=obj1.emailID;
-	                    	       document.getElementById("School").innerHTML=obj1.highschool;
-	                    	       document.getElementById("name").innerHTML=obj1.fname+" "+obj.lname;;
-		                    	   document.getElementById("DOB").innerHTML= obj1.date;
-		                    	   document.getElementById("Mob").innerHTML= obj1.mob_no;
-		                    	   document.getElementById("college").innerHTML=obj1.college;
-		                    	   document.getElementById("work").innerHTML=obj1.placeOfWork;
-		                    	   document.getElementById("town").innerHTML=obj1.hometown;
-		                    	   document.getElementById("workCity").innerHTML=obj1.cityOfWork;
-		                    	   document.getElementById("School").innerHTML=obj1.highschool;
-		                    	   document.getElementById("mob_no").defaultValue =obj1.mob_no;
-		                    	   document.getElementById("college").defaultValue =obj1.college;
-		                    	   document.getElementById("highschool").defaultValue =obj1.highschool;
-		                    	   document.getElementById("workplace").defaultValue =obj1.placeOfWork;
-		                    	   document.getElementById("hometown").defaultValue =obj1.hometown;
-		                    	   document.getElementById("workcity").defaultValue =obj1.cityOfWork;
-		                    	 */   window.location.replace("timeLine1.html");
-	    	                    	  
-	    	            }	
-	    	            else
-	    	            {
-	    	            	alert("update failed.. ")
-	    	            	window.location.replace("timeLine1.html");
-	    	            }	
-	    	            
 
-	    	            
-	    	        },
-	    	        error: function(jqXHR, textStatus, errorThrown){
-	    	            alert('logout error: ' + textStatus);
-	    	        }
-	    	    });
-	    	           	
-	    	        	
-	    	       
-	    	   });//update button ends ends
-	    	  
+
+
 	    	  
 	    	  
 
@@ -231,42 +176,7 @@ $(document).ready(function() {
 	  $("#logoutButton1").click(function(e){
 		   var foo = $.cookie("ID");
       	// alert("logout success");
-      //	$.removeCookie("ID");
    	   window.location.replace("appHome.html");	  
-			
-	   /* $.ajax({
-	        type: "DELETE",
-	        contentType: "text/plain",  //send data to server in this format
-	        url:"http://localhost:8080/DemoFB/webapi/user/logout",
-	        dataType: "text",  //expect response of this type
-	        data: foo,
-	        success: function(resp){
-	            //alert("succes done");
-	            //alert(data);
-	            
-	            if(resp!=null){
-	            			
-	                    	 alert("logout success");
-	                    	  // var obj = JSON.parse(JSON.stringify(resp));
-	                    	   window.location.replace("appHome.html");
-	                    	   $.removeCookie("ID");
-	                    	  
-	            }	
-	            else
-	            {
-	            	alert("logout failed.. ");
-	            	window.location.replace("appHome.html");
-	            }	
-	            
-
-	            
-	        },
-	        error: function(jqXHR, textStatus, errorThrown){
-	            alert('logout error: ' + textStatus);
-	        }
-	    });*/
-	           	
-	        	
 	       
 	   });//logout button ends ends
 	  

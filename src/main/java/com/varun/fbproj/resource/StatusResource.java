@@ -197,7 +197,7 @@ public class StatusResource {
     @GET
     @Path("/getMyStatus")
 	@Produces({MediaType.APPLICATION_JSON})
-    public ArrayList<Status> getALLMyStatus(@CookieParam("ID") String jwt) throws JsonParseException, JsonMappingException, IOException
+    public ArrayList<Status> getALLMyStatus(@CookieParam("ID1") String jwt) throws JsonParseException, JsonMappingException, IOException
     {
     	System.out.println("Inside getALLMyStatus ");
     	System.out.println("jwt="+ jwt);

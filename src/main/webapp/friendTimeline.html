@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
+        <meta charset="utf-8">
+        <title>Facebook</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link href="assets/css/bootstrap.css" rel="stylesheet">
+        <link href="assets/css/facebook.css" rel="stylesheet">
+        <script type="text/javascript" src="Jquery/jquery-3.1.1.js"></script>
+        <script type="text/javascript" src="Jquery/jquery.cookie.js"></script>
+        <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>  
+
+
+        <script type="text/javascript" src="assets/js/jquery.js"></script>
+        <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+        
+        
+        <script type="text/javascript">
+        $(document).ready(function() {
+
+              var foo = $.cookie("ID");
+            //alert(foo);
+             var x=$.cookie("ID");//current user logged in cookie
+             var y=$.cookie("ID1");//friend timeline ki cookie
+  
+  
+            $("#logoutForm").submit(function(e){
+                e.preventDefault();
+                      });
+            
+                 window.like = function(e1){
+                     
+                       var statusid= $(e1).attr('id');
+                       var sid={statusID:statusid};
+                       var myJSON=JSON.stringify(sid);
+                       //alert(statusid);
+                       
+                       
+                       $.ajax({ 
+                url: "http://localhost:8080/DemoFB/webapi/status/incrementLike",
+                type: "POST",
+                dataType: "text",
+                contentType : "application/json",
+                data : myJSON,
+                crossDomain: true,
+                processData: true,
+                
+                
+                success: function(response){  
+                   
+                    // we have the response  
+                   if(response!=null){
+            
+                       //alert(response);
+                      location.reload();
+                   }
+                   else{
+                       }
+                   
+                },
+                error: function(e){  
+                    alert('Error in like: ' + e);  
+                    alert(e.toString());
+            }               
+ 
+}); 
+}//like function ends here
+            
+
+                 window.comment = function(e1){
+                     
+                       var statusid= $(e1).attr('id');
+                       var chk="comment_d";
+                       chk+=statusid;
+                      // alert(chk);
+                       var comment_desc=document.getElementById(chk).value;
+                       
+                      /*  alert(statusid);*/
+                       //alert("comment"+comment_desc); 
+                       var sid={statusID:statusid,comment_desc:comment_desc};
+                       var myJSON=JSON.stringify(sid);
+                       //alert(statusid);
+                       
+                   
+                       $.ajax({ 
+                url: "http://localhost:8080/DemoFB/webapi/status/addComment",
+                type: "POST",
+                dataType: "text",
+                contentType : "application/json",
+                data : myJSON,
+                crossDomain: true,
+                processData: true,
+                
+                
+                success: function(response){  
+                   
+                    // we have the response  
+                   if(response!=null){
+                      $('#comment_d').val('');
+                       //alert(response);
+                      location.reload();
+                   }
+                   
+                   
+                },
+                error: function(e){  
+                    alert('Error121212: ' + e);  
+                    alert(e.toString());
+            }               
+ 
+}); 
+}//comment fun ends here
+
+
+          
+                     $("#postbutton").click(function(e){
+                         
+                         
+                        var statusdesc= document.getElementById("posttext").value;
+                         //alert(x);
+                         $.ajax({
+                type: "POST",
+                contentType: "text/plain",  //send data to server in this format
+                url:"http://localhost:8080/DemoFB/webapi/status/addStatus",
+                dataType: "text",  //expect response of this type
+                data: statusdesc,
+               success: function(resp){
+                   
+                  if(resp!=null){
+                      
+                     // alert(resp);
+                     $('#posttext').val('');
+                    location.reload();
+                      
+                  }
+                  else{
+                    
+                      alert("null");
+                  }
+                   
+               },
+               
+              error: function(jqXHR, textStatus, errorThrown){
+                alert('status posting error: ' + textStatus);
+              }    
+                         
+                         
+                         });             
+                         
+          });     //post button click ends here  
+
+
+
+
+                     
+          $("#comment").click(function(){
+                        /* $(this).next("#forcomment").slideToggle(200)
+                               .find("comment_d").focus(); */          
+                        return false;
+                    });
+                     
+                     
+                                   
+          $("#logoutButton1").click(function(e){
+              //alert("logout success");
+              // var obj = JSON.parse(JSON.stringify(resp));
+               window.location.replace("appHome.html");
+           
+               
+           });//logout button ends ends
+
+
+            //this ajax call to print user name on top logged in user row
+  //alert(foo);
+          $.ajax({
+             type: "GET",
+              contentType: "text/plain",  //send data to server in this format
+              url:"http://localhost:8080/DemoFB/webapi/user/retrive",
+              dataType: "JSON",  //expect response of this type
+              data: foo,
+                   
+                   success: function(response){  
+                       // we have the response  
+                       if(response!=null){
+                        // alert("data fetched");
+                         var obj = JSON.parse(JSON.stringify(response));
+                         //alert(obj.emailID);
+                         //alert(obj.fname);
+                         //alert(obj.highschool);
+                             document.getElementById("userName").innerHTML=obj.fname+" "+obj.lname;
+                       }  
+                       
+                       else
+                         {
+                          alert("data cannot be fetched");
+                         }
+                     },
+          
+                error: function(e){  
+                      alert('Error121212: ' + e);  
+                      alert(e.toString());
+                }       
+            
+        });  //ajax call ends here
+
+
+
+          //ajax call to fetch friend  personal info on going to his timeline
+    var foo = $.cookie("ID");
+    //alert(foo);
+      $.ajax({
+                 type: "GET",
+                  contentType: "text/plain",  //send data to server in this format
+                  url:"http://localhost:8080/DemoFB/webapi/user/retrive",
+                  dataType: "JSON",  //expect response of this type
+                  data: foo,
+                     
+                       success: function(response){  
+                         // we have the response  
+                         if(response!=null){
+                          // alert("data fetched");
+                           var obj = JSON.parse(JSON.stringify(response));
+                           //alert(obj.emailID);
+                           //alert(obj.fname);
+                           //alert(obj.highschool);
+                               document.getElementById("email").innerHTML=obj.emailID;
+                               document.getElementById("School").innerHTML=obj.highschool;
+                               document.getElementById("name").innerHTML=obj.fname+" "+obj.lname;
+                             document.getElementById("DOB").innerHTML= obj.date;
+                             document.getElementById("Mob").innerHTML= obj.mob_no;
+                             document.getElementById("college").innerHTML=obj.college;
+                             document.getElementById("work").innerHTML=obj.placeOfWork;
+                             document.getElementById("town").innerHTML=obj.hometown;
+                             document.getElementById("workCity").innerHTML=obj.cityOfWork;
+                             document.getElementById("School").innerHTML=obj.highschool;
+                             document.getElementById("mob_no").defaultValue =obj.mob_no;
+                             document.getElementById("college").defaultValue =obj.college;
+                             document.getElementById("highschool").defaultValue =obj.highschool;
+                             document.getElementById("workplace").defaultValue =obj.placeOfWork;
+                             document.getElementById("hometown").defaultValue =obj.hometown;
+                             document.getElementById("workcity").defaultValue =obj.cityOfWork;
+                             document.getElementById("userName").innerHTML=obj.fname+" "+obj.lname;
+                            
+                         }  
+                         
+                         else
+                           {
+                            alert("data cannot be fetched");
+                           }
+                       },
+            
+                  error: function(e){  
+                        alert('Error121212: ' + e);  
+                        alert(e.toString());
+                  }       
+              
+          });//ajax call ends here
+
+
+                    //ajax call to show my all friends on my friend ki timeline
+              $.ajax({ 
+                    url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
+                    type: "GET",
+                    dataType: "json",
+                    contentType : "application/json",
+                    crossDomain: true,
+                    processData: true,
+                    
+                    
+                    success: function(response){  
+                     
+                        // we have the response  
+                     if(response!=null){
+                        var data =JSON.parse(JSON.stringify(response));  
+                         var allFriends;
+                   
+                       
+                      for (var i=0; i < data.length; i++){
+                         allFriends+="<div class=\"panel-body\">";
+                         allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"img_avatar1.png\""+" /></div>";
+                             allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
+                             allFriends+="</div>";
+                        }
+                      
+                      allFriends=allFriends.replace("undefined","");
+                     $("#allFriends").html(allFriends);
+                
+                        }  
+                        
+                        else
+                         {
+                        alert("something wrong");
+                         }
+                      },
+              
+                error: function(e){  
+                      alert('Error121212: ' + e);  
+                      alert(e.toString());
+                }       
+             
+            });
+
+
+                //this ajax call to get all my status on my timeline page
+                        $.ajax({ 
+                   url: "http://localhost:8080/DemoFB/webapi/status/getMyStatus",
+                   type: "GET",
+                   dataType: "json",
+                   contentType : "application/json",
+                   crossDomain: true,
+                   processData: true,
+                   
+                   
+                   success: function(response){  
+                     
+                       // we have the response  
+                     if(response!=null){
+                       var data =JSON.parse(JSON.stringify(response));  
+                       
+                       console.log(data);
+                       
+                       var st;
+                       var fname,lname;
+                       for (var i=0; i < data.length; i++){
+                         
+                         var email =data[i].emailID; 
+                        
+                         
+                         
+                         st+="<div class="+"\"panel panel-default\""+">";
+                         st+="<div class="+"\"panel-body\""+"id=\"forcomment\""+">";
+                         st+="<div class="+"\"row\""+">";
+                         st+="<div class="+"\"col-md-12\""+">";
+                         st+="<p><font color="+"\"blue\""+">"+data[i].name+"</font></p>" ;
+                         /* $(status_name).appendTo('#text_color');
+                         document.getElementById("forstatus").style.color="blue"; */
+                        st+="<hr>";
+                         st+="<p id="+"\"forstatus\""+">"+data[i].status_desc+"</p>" ;
+                         st+="</div></div><hr>";
+                         st+="<div class="+"\"row\""+">";
+                         st+="<div class="+"\"col-md-12\""+">";
+                         st+="<ul class="+"\"list-inline\""+">";
+                         st+="<li>";
+                         st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+" OnClick=\"like(this);\"><span class="+"\"glyphicon glyphicon-thumbs-up\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Like</font></a>";
+                         st+="</li>";
+                         st+="<li>";
+                         st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+" OnClick=\"unlike(this);\""+"><span class="+"\"glyphicon glyphicon-thumbs-down\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Unlike</font></a>";
+                         st+="</li>";
+                         st+="<li>";
+                         st+= "<a href="+"\"#\""+ "id=\""+data[i].statusID+"\""+"><span class="+"\"glyphicon glyphicon-comment\"" +"style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Comment</font></a>";
+                         st+="</li></ul></div></div>";
+                         st+="</div>";
+                         st+="<div class="+"\"panel-footer\"" +"id="+"\"o\""+">";
+                         st+="<div class="+"\"row\""+">";
+                         st+="<div class="+"\"col-md-12\""+">";
+                         st+="<p id="+"\"likescount\""+">"+data[i].likesCount+"Likes"+"  "+data[i].unlikes_count+"Unlikes"+"</p><br></div></div>";
+                         
+                         st+="<hr>";
+                         
+                         st+="<div class="+"\"pre-scrollable\""+" style="+"\"height:100px;\""+">";
+                         for(var j=0;j<data[i].a.length;j++)
+                       {
+                             
+                       {
+                           st+= "<p id="+"\"outputname\""+"><font color="+"\"blue\""+">"+data[i].a[j].name+"</font></p>"; 
+                         st+= "<p id="+"\"output\""+">"+data[i].a[j].comment_desc+"</p>";
+                         st+="<br>";
+                         st+="<hr>";
+                       }
+                         st+="</div>";
+                       
+                         st+="<ul>";
+                         st+="<li class="+"\"media\""+">";
+                         st+="<div class="+"\"media-body\""+">";
+                         st+="<div class="+"\"input-group\""+">";
+                         st+="<input type="+"\"text\""+" class="+"\"form-control\""+" id=\"comment_d"+data[i].statusID+"\""+" placeholder="+"\"Write a comment...\""+">";
+                           st+="<span class="+"\"input-group-btn\""+">";
+                          st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].statusID+"\""+" OnClick=\"comment(this);\">Post Comment</button>";
+                          st+="</span>";
+                          st+="</div>";
+                          st+="</div>";
+                          st+="</li>";
+                          st+="</ul>";
+                          st+="</div>";
+                          st+="</div>";
+                            
+                           
+                           
+                       }//inner for ends
+                       st=st.replace("undefined","");
+                     $("#abcd").html(st);
+                       
+                     }    //outer for ends        
+                     }//if ends 
+                     },//success ends  
+
+                   
+          error: function(e){  
+          alert('Error121212: ' + e);  
+          alert(e.toString());
+      }   
+            
+        }); //ajax call ends
+
+
+
+
+        });//document ready ends here
+         </script> 
+
+
+
+
+    </head>
+    
+    <body>
+        
+        <div class="wrapper">
+            <div class="box">
+                  <div class="row row-offcanvas row-offcanvas-right">
+                 
+                
+                    <!-- main right col -->
+                    <div class="column col-sm-12 col-xs-12" id="main">
+                        
+                        <!-- top nav -->
+                        <div class="navbar navbar-blue navbar-static-top">  
+                            <div class="navbar-header">
+                              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="sr-only">Toggle</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                              </button>
+                              <a href="#" class="navbar-brand logo">f</a>
+                            </div>
+                            <nav class="collapse navbar-collapse " role="navigation" align="center">
+                            <form class="navbar-form navbar-left">
+                                <div class="input-group input-group-sm" style="max-width:480px;">
+                                  <input class="form-control" placeholder="Search" name="srch-term" id="srch-term" type="text">
+                                  <div class="input-group-btn">
+                                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                  </div>
+                                </div>
+                            </form>
+                            <ul class="nav navbar-nav navbar-center">
+                            <li>
+                                <a href="timeLine1.html" id="userName"><i class="glyphicon glyphicon-user"></i> User Name</a>
+                              </li>
+                              <li>
+                                <a href="#"><i class="glyphicon glyphicon-home"></i> Home</a>
+                              </li>
+                              
+                              <li>
+                                <a href="todoPage.html" title="Friend Requests"><i class="glyphicon glyphicon-user"></i><span class="badge">9</span></a>
+                              </li>
+                                <li>
+                                <a href="todoPage.html" title="Mesages"><i class="glyphicon glyphicon-envelope"></i><span class="badge">3</span></a>
+                              </li>
+                              <li>
+                                <a href="todoPage.html" title="Notifications"><i class="glyphicon glyphicon-cloud"></i><span class="badge">5</span></a>
+                              </li>
+                              <li>
+                                <button type="submit" class="btn btn-default" id="logoutButton1" ">Logout</button>
+                              </li>
+                            </ul>
+                            
+                            </nav>
+                        </div>
+                        <!-- /top nav -->
+                
+                      
+                      
+                        <div class="padding">
+                            <div class="full col-sm-12">
+                              
+                                <!-- content --> 
+                        <div class="row">
+
+                          <div class="column col-sm-9 col-xs-9 "   style="background-color: #E9EAED">
+
+                                  
+                                    <div class="panel panel-default" id="coverPhoto">
+                                      <div class="panel-body" style="max-height:10;">
+                                        <img src="/home/varun/Desktop/Extraas/Images/Kamshet/v22.jpg" alt=""   class=""  width="800" height="400"/>
+                                      </div>
+                                     </div> 
+                                     
+
+                          </div>
+                          <div class="column col-sm-3 col-xs-3 "   style="background-color: #E9EAED">
+                               <div class="pre-scrollable" style="background-color: #d8dfea;margin-bottom:.5cm; margin-top:.5cm; min-height:95%;">   
+                                       <div class="panel panel-default">
+                                         <div class="panel-heading"><h4>My Friends</h4></div>
+                                            <div id="allFriends"></div>
+                                                <p id="allFriends"></p>
+                                        
+                                       </div>
+                                    </div>
+                          </div>
+
+                        </div><!-- row ends here -->
+
+
+
+                                <div class="row">
+                
+                                
+                                    <!-- sidebar -->
+                    <div class="column col-sm-4 col-xs-4 "   style="background-color: #E9EAED">
+                   
+                         <ul class="nav">
+                            <li><a href="#" data-toggle="offcanvas" class="visible-xs text-center"><i class="glyphicon glyphicon-chevron-right"></i></a></li>
+                        </ul> 
+                        
+                                            <div class="panel panel-default">
+                    <div class="panel-heading"><h4>Intro</h4></div>
+                    
+                      <div class="panel-body">
+                      
+                      <div class="media">
+                          <div class="media-left">
+                            <img src="img_avatar1.png" class="media-object" style="width:60px">
+                          </div>
+                          <div class="media-right">
+                          <h4 class="media-heading" id="name"></h4>
+       
+                          </div>
+                        </div>
+                      
+      
+
+                      <div class="list-group">
+                        <!--  <a href="http://usebootstrap.com/theme/facebook" class="list-group-item">Modal / Dialog</a>
+                        <a href="http://usebootstrap.com/theme/facebook" class="list-group-item">Datetime Examples</a>
+                        <a href="http://usebootstrap.com/theme/facebook" class="list-group-item">Data Grids</a>
+                        -->
+                        <div class="control-group">
+                          <div class="controls readonly">
+                            <pre width="5" class="media-left">EmailID :</pre><p id="email" class="media-right"></p><br>
+                            <pre class="media-left">High School :</pre><p id="School" class="media-right"></p><br>
+                            <pre class="media-left">DOB :</pre><p id="DOB" class="media-right"></p><br>
+                            <pre class="media-left">Mobile :</pre><p id="Mob" class="media-right"></p>      <br>   
+                            <pre class="media-left">College :</pre><p id="college" class="media-right"></p><br>     
+                            <pre class="media-left">Work Place :</pre><p id="work" class="media-right"></p> <br>    
+                            <pre class="media-left">HomeTown :</pre><p id="town" class="media-right"></p>     <br>
+                            <pre class="media-left">City of Work :</pre><p id="workCity" class="media-right"></p> <br>
+                          </div>
+                      
+                      </div>
+                      </div>
+
+
+                      </div>
+                    </div>
+                        
+                      
+                    </div>
+                    <!-- /sidebar -->
+                  
+                
+                
+                
+                                  
+                                 <!-- main col left --> 
+                                 <div class="col-sm-6 col-xs-6">
+                                    
+                                        <div class="well"> 
+                                           <form class="form-horizontal" role="form">
+                                            <h4>Post on friend's wall</h4>
+                                             <div class="form-group" style="padding:14px;">
+                                              <textarea class="form-control" placeholder="post on wall here" id="posttext"></textarea>
+                                            </div>
+                                            <button class="btn btn-primary pull-right" type="button" id="postbutton">Post</button>
+
+                                           </form>
+                                        </div>   
+                                      
+                                   
+                                   
+<div class="panel panel-default" id="abcd">
+  <div class="panel-body" id="forcomment">
+    <!-- Post metadata -->
+    <div class="row">
+      <div class="col-md-10">
+        <div class="media"><!-- for name pic  -->
+        </div>
+      </div>
+      </div>
+    <!-- Post content -->
+    <div class="row">
+      <div class="col-md-12">
+      <p id="status_name"></p>
+       <p id="forstatus"></p>  <!-- status text -->
+      </div>
+    </div>
+  <hr>  
+  <div class="row">
+ <div class="col-md-12">
+   <ul class="list-inline">
+     <li>
+     <a href="#thumbs-up"><span class="glyphicon glyphicon-thumbs-up" style="color:#3b5998"></span> <font color="#3b5998">Like</font></a>
+     </li>
+     <li>
+     <a href="#" id="comment"><span class="glyphicon glyphicon-comment" style="color:#3b5998"></span> <font color="#3b5998">Comment</font></a>
+     </li>
+     
+   </ul>
+ </div>
+  </div>
+ </div> <!--  div of panel body for status update 1 -->
+ <!-- panel body footer -->
+ <div class="panel-footer" id="o">
+ <div class="row">
+   <div class="col-md-12">  
+      <p id="likescount"></p>
+      <br>
+   </div> 
+   
+  </div>
+  
+  
+  <hr>
+  <div class="pre-scrollable" style="height:100px;">
+       <p id="outputname"></p>
+       <p id="output"></p>
+       <br>
+       <hr>
+     
+  </div> 
+   
+   <ul>
+   <li class="media">
+      <div class="media-body">
+        <div class="input-group">
+          <input type="text" class="form-control" id="comment_d" placeholder="Write a comment...">
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-primary pull-right" id="commentAdd">
+              Post Comment
+            </button>
+          </span>
+        </div>
+      </div>
+    </li>
+   </ul>
+   
+  
+ 
+  
+</div>
+ 
+ 
+ 
+</div> <!--  div of panel default for status update 1 -->
+                                   
+                            
+               
+                                                                            
+                                   
+                                  </div>
+                                  
+                                  <!-- main col center -->
+                                  
+                                  
+                                  
+                                  
+                                   <!-- main col right -->
+                                  
+                                  
+                                  
+                                  
+                               </div><!--/row-->
+                              
+                              
+                              
+                            </div><!-- /col-9 -->
+                        </div><!-- /padding -->
+                    </div>
+                    <!-- /main -->
+                  
+                </div>
+            </div>
+        </div>
+
+
+        <!--post modal-->
+         <div id="postModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+             
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Hide</button>
+                    Update Status
+              </div>
+              <div class="modal-body">
+                  <form class="form center-block">
+                    <div class="form-group">
+                      <textarea class="form-control input-lg" autofocus="" placeholder="What do you want to share?"></textarea>
+                    </div>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                  <div>
+                  <button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Post</button>
+                    <ul class="pull-left list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
+                  </div>    
+              </div>
+          </div>
+          </div>
+        </div> 
+        
+        
+        
+        
+</body>
+
+</html>
