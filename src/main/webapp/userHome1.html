@@ -49,13 +49,7 @@
                        for (var i=0; i < data.length; i++){
                     	   
                     	   var email =data[i].emailID; 
-                    	  // alert(email);
-                    	   //alert(data[i].name);
-                    	                       	   
-                    	   //alert(fname);
-                    	   
-                    	   
-                    	   
+                    	  
                     	   
                     	   
                     	   st+="<div class="+"\"panel panel-default\""+">";
@@ -181,7 +175,7 @@
                      },
     	    
           			error: function(e){  
-            					alert('Error121212: ' + e);  
+            					alert('Error in status: ' + e);  
             					alert(e.toString());
           			}				
             
@@ -211,19 +205,20 @@
                     // we have the response  
              	   if(response!=null){
             
-             		   alert(response);
+             		   //alert(response);
+             		  location.reload();
              	   }
              	   else{
              		   }
              	   
     			},
     			error: function(e){  
- 					alert('Error121212: ' + e);  
+ 					alert('Error in like: ' + e);  
  					alert(e.toString());
 			}				
  
 }); 
-}
+}//like function ends here
     		
 
     			 window.comment = function(e1){
@@ -231,11 +226,11 @@
     				   var statusid= $(e1).attr('id');
     				   var chk="comment_d";
     				   chk+=statusid;
-    				   alert(chk);
+    				  // alert(chk);
     				   var comment_desc=document.getElementById(chk).value;
     				   
     				  /*  alert(statusid);*/
-    				   alert("comment"+comment_desc); 
+    				   //alert("comment"+comment_desc); 
     				   var sid={statusID:statusid,comment_desc:comment_desc};
     				   var myJSON=JSON.stringify(sid);
     				   //alert(statusid);
@@ -256,7 +251,8 @@
                     // we have the response  
              	   if(response!=null){
              		  $('#comment_d').val('');
-             		   alert(response);
+             		   //alert(response);
+             		  location.reload();
              	   }
              	   else{
              		   }
@@ -323,8 +319,9 @@
      	    	   
      	    	  if(resp!=null){
      	    		  
-     	    		  alert(resp);
+     	    		 // alert(resp);
      	    		 $('#posttext').val('');
+     	    		location.reload();
      	    		  
      	    	  }
      	    	  else{
@@ -360,7 +357,7 @@
                  	
                  	
       	  $("#logoutButton1").click(function(e){
-     		  alert("logout success");
+     		  //alert("logout success");
          	  // var obj = JSON.parse(JSON.stringify(resp));
          	   window.location.replace("appHome.html");
      	   /* $.ajax({
@@ -687,39 +684,9 @@
  
 </div> <!--  div of panel default for status update 1 -->
 								   
-								   
-								   
-									
-									
-									  <div class="panel panel-default">
-										<div class="panel-thumbnail"><img src="assets/img/bg_5.jpg" class="img-responsive"></div>
-										<div class="panel-body">
-										  <p class="lead">Urbanization</p>
-										  <p>45 Followers, 13 Posts</p>
-										  
-										  <p>
-											<img src="assets/img/uFp_tsTJboUY7kue5XAsGAs28.png" height="28px" width="28px">
-										  </p>
-										</div>
-									  </div>
-
-								   
-									  <div class="panel panel-default">
-										<div class="panel-heading"><a href="#" class="pull-right">View all</a> <h4>Bootstrap Examples</h4></div>
-										  <div class="panel-body">
-											<div class="list-group">
-											  <a href="http://usebootstrap.com/theme/facebook" class="list-group-item">Modal / Dialog</a>
-											  <a href="http://usebootstrap.com/theme/facebook" class="list-group-item">Datetime Examples</a>
-											  <a href="http://usebootstrap.com/theme/facebook" class="list-group-item">Data Grids</a>
-											</div>
-										  </div>
-									  </div>
-								   
-									  
-								   
-									  
-
-										
+							
+		  	   
+									 										
 								   
 								  </div>
 								  

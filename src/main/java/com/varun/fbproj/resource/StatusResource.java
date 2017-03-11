@@ -158,7 +158,7 @@ public class StatusResource {
 			status_list.addAll(s1.getAllDetailsOfEachStatus(e1));
 			
 		}
-			System.out.println("likes = "+status_list.get(0).getLikesCount());	 
+			//System.out.println("likes = "+status_list.get(0).getLikesCount());	 
 		return status_list;
 		   
     }//getALLStatusByUser ends here
