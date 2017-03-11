@@ -165,7 +165,7 @@ public class StatusService {
 	                System.out.println("*****"+stID+"***");
 	                
 	                /**********LIKES************************/
-		            String query3="select count(likeID) from likes where statusID=?"; 
+		            String query3="select count(likeID) from likes where statusID=? and flag=1"; 
 					  PreparedStatement pstmnt3=db.con.prepareStatement(query3);
 					  pstmnt3.setInt(1,stID); // user_id is the one sent in paramater
 					  ResultSet rs3= pstmnt3.executeQuery();
@@ -176,6 +176,17 @@ public class StatusService {
 		            	 System.out.println("likes............: "+status_obj.getLikesCount());
 		             }
 
+		             /**********UNLIKES************************/
+			            String query31="select count(likeID) from likes where statusID=? and flag=0"; 
+						  PreparedStatement pstmnt31=db.con.prepareStatement(query31);
+						  pstmnt31.setInt(1,stID); // user_id is the one sent in paramater
+						  ResultSet rs31= pstmnt31.executeQuery();
+						  
+			             while(rs31.next())
+			             {   System.out.println("Inside rs31. while ");
+			            	 status_obj.setUnlikes_count(rs31.getInt(1)); 
+			            	 System.out.println("unlikes............: "+status_obj.getUnlikes_count());
+			             }
 		             
 	                /*********Comments************/
 		            String query2 = "select * from comments where statusID = ?";
@@ -204,8 +215,6 @@ public class StatusService {
 						  ResultSet rs12= pstmnt12.executeQuery();
 						  rs12.next();
 						  comment_obj.setName(rs12.getString("fname")+" "+ rs12.getString("lname"));
-						System.out.println("name =  "+comment_obj.getName());
-						
 		                   
 		                commentArrayList.add(comment_obj);   
 		                for(Comment clist:commentArrayList){

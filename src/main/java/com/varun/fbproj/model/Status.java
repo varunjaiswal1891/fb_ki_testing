@@ -9,7 +9,18 @@ public class Status {
 	   private String emailID;
 	   private int flag;  
 	   private int likes_count;
-	   private String name;
+	   private int unlikes_count;
+	   
+	   
+	   
+	   
+	   public int getUnlikes_count() {
+		return unlikes_count;
+	}
+	public void setUnlikes_count(int unlikes_count) {
+		this.unlikes_count = unlikes_count;
+	}
+	private String name;
 	   
 	   
 	   

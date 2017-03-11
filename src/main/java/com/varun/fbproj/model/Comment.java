@@ -11,7 +11,6 @@ public class Comment {
 	private Date comment_Date;
 	private String name;
 	
-	
 	public String getName() {
 		return name;
 	}
@@ -24,6 +23,7 @@ public class Comment {
 		this.commentID=commentID;
 		this.statusID=statusID;
 		this.flag=flag;
+		this.name=name;
 		this.emailID=emailID;
 		this.comment_desc=comment_desc;
 		this.comment_Date=new Date();
