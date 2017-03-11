@@ -19,6 +19,36 @@
         	
         	
         	var foo = $.cookie("ID");
+         	$.ajax({
+        		 type: "GET",
+    	        contentType: "text/plain",  //send data to server in this format
+    	        url:"http://localhost:8080/DemoFB/webapi/user/retrive",
+    	        dataType: "JSON",  //expect response of this type
+    	        data: foo,
+                  
+                  success: function(response){  
+                      // we have the response  
+                      if(response!=null){
+                   	  // alert("data fetched");
+                   	   var obj = JSON.parse(JSON.stringify(response));
+                   	   //alert(obj.emailID);
+                   	   //alert(obj.fname);
+                   	   //alert(obj.highschool);
+                       	   document.getElementById("userName").innerHTML=obj.fname+" "+obj.lname;
+                      }  
+                      
+                      else
+                   	   {
+                   	  	alert("data cannot be fetched");
+                   	   }
+                    },
+   	    
+         			error: function(e){  
+           					alert('Error121212: ' + e);  
+           					alert(e.toString());
+         			}				
+           
+   	  });
     		//alert(foo);
     		
     		
@@ -38,10 +68,7 @@
                        // we have the response  
                 	   if(response!=null){
                        var data =JSON.parse(JSON.stringify(response));  
-                       //alert(data[2].likes_count);
                        
-                       
-                      // alert(data[0].status_desc);
                        console.log(data);
                        
                        var st;
@@ -84,7 +111,7 @@
                     	   
                     	   st+="<div class="+"\"pre-scrollable\""+" style="+"\"height:100px;\""+">";
                     	   for(var j=0;j<data[i].a.length;j++)
-                		   {st+= "<p id="+"\"output_name\""+"><font color="+"\"blue\""+">"+data[i].a[j].name+"</font></p>";
+                		   {
                     			   
                 		   {
                     		   st+= "<p id="+"\"outputname\""+"><font color="+"\"blue\""+">"+data[i].a[j].name+"</font></p>"; 
@@ -111,83 +138,21 @@
                             
                            
                            
-                       }
+                       }//inner for ends
                        st=st.replace("undefined","");
                 	   $("#abcd").html(st);
                        
-                	   }            
-                       
-                       
-                     /*    var suggest;
-                	 
-                    	for (var i=0; i < data.length; i++){
-                		    suggest+="<div class="+"\"panel-body\""+">";
-                      		suggest+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"img_avatar1.png\""+" /></div>";
-                      		suggest+="<a href="+"\"#\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
-                      		suggest+="<div class="+"\"text-right\""+">";
-                      		suggest+="<button type="+"\"button\""+" class="+"\"btn btn-primary\" id=\""+data[i].emailID+"\" OnClick=\"add(this);\">Add Friend<span class="+"\"glyphicon glyphicon-plus\""+"></span></button>";
-                      		suggest+="<a class="+"\"btn btn-primary\""+" id=\"remove"+data[i].emailID+"\""+" href=\"\""+" OnClick=\"rmv(this);\">Remove</a>"; 
-                       		suggest+="<a class="+"\"btn btn-primary\""+" id="+"\"SentReq"+data[i].emailID+"\" href=\"\""+" style=\"visibility: hidden\";>Request Sent</a></div></div>";
-                		}
-                    suggest=suggest.replace("undefined","");
-                	   $("#suggest").html(suggest);
-                	   
-                	 */   
-/*                   
-                                        
-                       
-                       
-                          
-                       </div> 
-                        
-                        <ul>
-                        <li class="media">
-                           <div class="media-body">
-                             <div class="input-group">
-                               <input type="text" class="form-control" id="comment_d" placeholder="Write a comment...">
-                               <span class="input-group-btn">
-                                 <button type="button" class="btn btn-primary pull-right" id="commentAdd">
-                                   Post Comment
-                                 </button>
-                               </span>
-                             </div>
-                           </div>
-                         </li>
-                        </ul>
-                        
-                       
-                      
-                       
-                     </div>
-                      
-                      
-                      
-                     </div> <!--  div of panel default for status update 1 -->
+                	   }    //outer for ends        
+                	   }//if ends 
+                	   },//success ends  
 
                 	 
-                	 
-                	 
- */                	 
-                	 
-                	 
-                	 
-                	 
-                	 
-                	/*  $("#forstatus").html(data[0].status_desc);
-                       }  
-                     */   
-                       else
-                    	   {
-                    	  alert("something wrong");
-                    	   }
-                     },
-    	    
-          			error: function(e){  
-            					alert('Error in status: ' + e);  
-            					alert(e.toString());
-          			}				
+    			error: function(e){  
+					alert('Error121212: ' + e);  
+					alert(e.toString());
+			}		
             
-    	  }); 
+    	  }); //ajax call ends
        	
     		
     			 window.like = function(e1){
@@ -227,7 +192,7 @@
  
 }); 
 
-}
+}//like fun ends
 
     			 
     			 window.unlike = function(e1){
@@ -254,13 +219,8 @@
            	   if(response!=null){
           
            		   alert(response);
-
-
-           		   
-           		   
            	   }
-           	   else{
-           		   }
+           	   
            	   
   			},
   			error: function(e){  
@@ -269,13 +229,11 @@
 			}				
 
 }); 
-}
+}//unlike fun ends
 
     			 
     			 
     			 
-   
-}//like function ends here
    
 
     			 window.comment = function(e1){
@@ -323,12 +281,7 @@
 }); 
 }
     		
-    		
-    		
-    		
-    		
-    		
-    		
+    			
     		
                  	$.ajax({
                  		 type: "GET",
