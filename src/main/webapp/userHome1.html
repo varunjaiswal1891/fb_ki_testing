@@ -75,13 +75,17 @@
                     	   st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+" OnClick=\"like(this);\"><span class="+"\"glyphicon glyphicon-thumbs-up\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Like</font></a>";
                     	   st+="</li>";
                     	   st+="<li>";
+                    	   st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+" OnClick=\"unlike(this);\""+"><span class="+"\"glyphicon glyphicon-thumbs-down\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Unlike</font></a>";
+                    	   st+="</li>";
+                    	   st+="<li>";
                     	   st+= "<a href="+"\"#\""+ "id=\""+data[i].statusID+"\""+"><span class="+"\"glyphicon glyphicon-comment\"" +"style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Comment</font></a>";
                     	   st+="</li></ul></div></div>";
                     	   st+="</div>";
                     	   st+="<div class="+"\"panel-footer\"" +"id="+"\"o\""+">";
                     	   st+="<div class="+"\"row\""+">";
                     	   st+="<div class="+"\"col-md-12\""+">";
-                    	   st+="<p id="+"\"likescount\""+">"+data[i].likesCount+"Liked"+"</p><br></div></div>";
+                    	   st+="<p id="+"\"likescount\""+">"+data[i].likesCount+"Likes"+"  "+data[i].unlikes_count+"Unlikes"+"</p><br></div></div>";
+                    	   
                     	   st+="<hr>";
                     	   
                     	   st+="<div class="+"\"pre-scrollable\""+" style="+"\"height:100px;\""+">";
@@ -193,6 +197,7 @@
     			 window.like = function(e1){
     				 
     				   var statusid= $(e1).attr('id');
+    				   alert("cccacacaca"+statusid);
     				   var sid={statusID:statusid};
     				   var myJSON=JSON.stringify(sid);
     				   //alert(statusid);
@@ -214,6 +219,8 @@
              	   if(response!=null){
             
              		   alert(response);
+             		   
+
              	   }
              	   else{
              		   }
@@ -226,7 +233,54 @@
  
 }); 
 }
-    		
+
+    			 
+    			 window.unlike = function(e1){
+    				 
+  				   var statusid= $(e1).attr('id');
+  				   var sid={statusID:statusid};
+  				   var myJSON=JSON.stringify(sid);
+  				   //alert(statusid);
+  				   
+  				   
+  				   $.ajax({ 
+              url: "http://localhost:8080/DemoFB/webapi/status/decrementLike",
+              type: "POST",
+              dataType: "text",
+              contentType : "application/json",
+              data : myJSON,
+              crossDomain: true,
+              processData: true,
+              
+              
+              success: function(response){  
+           	   
+                  // we have the response  
+           	   if(response!=null){
+          
+           		   alert(response);
+
+
+           		   
+           		   
+           	   }
+           	   else{
+           		   }
+           	   
+  			},
+  			error: function(e){  
+					alert('Error121212: ' + e);  
+					alert(e.toString());
+			}				
+
+}); 
+}
+
+    			 
+    			 
+    			 
+    			 
+    			 
 
     			 window.comment = function(e1){
     				 
@@ -639,6 +693,9 @@
      <li>
      <a href="#thumbs-up"><span class="glyphicon glyphicon-thumbs-up" style="color:#3b5998"></span> <font color="#3b5998">Like</font></a>
      </li>
+      <li>
+     <a href="#thumbs-up"><span class="glyphicon glyphicon-thumbs-down" style="color:#3b5998"></span> <font color="#3b5998">Unlike</font></a>
+     </li>
      <li>
      <a href="#" id="comment"><span class="glyphicon glyphicon-comment" style="color:#3b5998"></span> <font color="#3b5998">Comment</font></a>
      </li>
@@ -652,6 +709,7 @@
  <div class="row">
    <div class="col-md-12">  
       <p id="likescount"></p>
+      
       <br>
    </div> 
    

@@ -118,6 +118,7 @@ public class StatusResource {
   	
 			    Likes likeobj = new Likes();
     	 
+			    System.out.println("status id in resource: "+statusobj.getStatusID());
     	 int sid=statusobj.getStatusID();
      	 likeobj.setEmailID(myEmailID);
     	 likeobj.setStatusID(sid);
@@ -127,6 +128,36 @@ public class StatusResource {
     	 else 
     	     return "like not updated";
     }
+    
+
+    @POST
+    @Path("/decrementLike")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.TEXT_HTML})
+    public String decrementLike(@CookieParam("ID") String jwt,Status statusobj)throws JsonParseException, JsonMappingException, IOException{
+    	 System.out.println("inside increment like resource");
+    	 
+    	 
+    	 Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(jwt).getBody();
+			    System.out.println("Subject: " + claims.getSubject());
+			    String myEmailID=claims.getSubject();
+  	
+			    Likes likeobj = new Likes();
+    	 
+			    System.out.println("status id in resource: "+statusobj.getStatusID());
+    	 int sid=statusobj.getStatusID();
+     	 likeobj.setEmailID(myEmailID);
+    	 likeobj.setStatusID(sid);
+     	 if(l1.decrementLike(likeobj)==1){
+    		 return "like decremented";
+    	 }
+    	 else 
+    	     return "like not decremented";
+    }
+
+    
     
     
     //this method gives all mere and my frineds k status to be shown n userhome page
