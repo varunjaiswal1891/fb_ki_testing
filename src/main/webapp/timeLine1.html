@@ -19,38 +19,48 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	var x=$.cookie("ID");
+	var x=$.cookie("ID");//current user logged in cookie
+	var y=$.cookie("ID1");//friend timeline ki cookie
 	//document.write(x);
 	$("#logoutForm").submit(function(e){
 	        e.preventDefault();
 	 });
 
-	$("#inviteButton").click(function(e){
-		window.location.replace("todoPage.html");
-	 });
+	//this ajax call to print user name on top logged in user row
+	//alert(foo);
+         	$.ajax({
+         		 type: "GET",
+     	        contentType: "text/plain",  //send data to server in this format
+     	        url:"http://localhost:8080/DemoFB/webapi/user/retrive",
+     	        dataType: "JSON",  //expect response of this type
+     	        data: foo,
+                   
+                   success: function(response){  
+                       // we have the response  
+                       if(response!=null){
+                    	  // alert("data fetched");
+                    	   var obj = JSON.parse(JSON.stringify(response));
+                    	   //alert(obj.emailID);
+                    	   //alert(obj.fname);
+                    	   //alert(obj.highschool);
+                        	   document.getElementById("userName").innerHTML=obj.fname+" "+obj.lname;
+                       }  
+                       
+                       else
+                    	   {
+                    	  	alert("data cannot be fetchedii99009");
+                    	   }
+                     },
+    	    
+          			error: function(e){  
+            					alert('Error121212: ' + e);  
+            					alert(e.toString());
+          			}				
+            
+    	  });  //ajax call ends here
 
-	$("#closeFriend").click(function(e){
-		window.location.replace("todoPage.html");
-	 });
 
-	$("#acq").click(function(e){
-		window.location.replace("todoPage.html");
-	 });
-
-	$("#family").click(function(e){
-		window.location.replace("todoPage.html");
-	 });
-
-	$("#restricted").click(function(e){
-		window.location.replace("todoPage.html");
-	 });
-	$("#suggestedPages").click(function(e){
-		window.location.replace("todoPage.html");
-	 });
-	$("#addMessage").click(function(e){
-		window.location.replace("todoPage.html");
-	 });
-	$(function(){
+         	//ajax call to fetch friend  personal info on going to his timeline
 		var foo = $.cookie("ID");
 		//alert(foo);
 		 	$.ajax({
@@ -99,8 +109,9 @@ $(document).ready(function() {
 	            					alert(e.toString());
 	          			}				
 	            
-	    	  });
+	    	  });//ajax call ends here
             
+            //ajax call to show my all friends on my friend ki timeline
             	$.ajax({ 
                     url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
                     type: "GET",
@@ -121,7 +132,7 @@ $(document).ready(function() {
                      	for (var i=0; i < data.length; i++){
                      		 allFriends+="<div class=\"panel-body\">";
                      		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"img_avatar1.png\""+" /></div>";
-                             allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
+                             allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID+"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
                              allFriends+="</div>";
         					     	}
                      	
@@ -142,79 +153,19 @@ $(document).ready(function() {
            			}				
              
         	  });
-	});  	
-             	///ajax call ends here*/
+  		///ajax call ends here*/
 	      
 	    
-	    	  $("#updateDetails").click(function(e){
-	    		  
-	              var mob_no=$("input#mob_no").val();
-	              var college=$("input#college").val();
-	              var placeOfWork=$("input#workplace").val();
-	              var hometown=$("input#hometown").val();
-	              var cityOfWork=$("input#workcity").val();
-	              var highschool=$("input#highschool").val();
-	              
-	              var obj = { mob_no:mob_no,college:college,placeOfWork:placeOfWork,
-	            		  hometown:hometown,cityOfWork:cityOfWork,highschool:highschool
-	            		  };  
-	          	var myJSON = JSON.stringify(obj);
-	              	
-	    			//document.write(myJSON);
-	    	    $.ajax({
-	    	        type: "PUT",
-	    	        contentType: "application/json",  //send data to server in this format
-	    	        url:"http://localhost:8080/DemoFB/webapi/user/updateAllData",
-	    	        dataType: "text",  //expect response of this type
-	    	        data: myJSON,
-	    	        success: function(resp){
-	    	            
-	    	            if(resp!=null){
-	    	   	                    	 //alert("update success");
-	    	   	                    	 
-	    	                    	  // var obj = JSON.parse(JSON.stringify(resp));
-	    	                    	   //window.location.replace("timeLine1.html");
-	    	            	 var obj1 = JSON.parse(JSON.stringify(resp));
-	                    	   //alert(obj.emailID);
-	                    	   //alert(obj.fname);
-	                    	  /*  alert(obj1);
-	                    	       document.getElementById("email").innerHTML=obj1.emailID;
-	                    	       document.getElementById("School").innerHTML=obj1.highschool;
-	                    	       document.getElementById("name").innerHTML=obj1.fname+" "+obj.lname;;
-		                    	   document.getElementById("DOB").innerHTML= obj1.date;
-		                    	   document.getElementById("Mob").innerHTML= obj1.mob_no;
-		                    	   document.getElementById("college").innerHTML=obj1.college;
-		                    	   document.getElementById("work").innerHTML=obj1.placeOfWork;
-		                    	   document.getElementById("town").innerHTML=obj1.hometown;
-		                    	   document.getElementById("workCity").innerHTML=obj1.cityOfWork;
-		                    	   document.getElementById("School").innerHTML=obj1.highschool;
-		                    	   document.getElementById("mob_no").defaultValue =obj1.mob_no;
-		                    	   document.getElementById("college").defaultValue =obj1.college;
-		                    	   document.getElementById("highschool").defaultValue =obj1.highschool;
-		                    	   document.getElementById("workplace").defaultValue =obj1.placeOfWork;
-		                    	   document.getElementById("hometown").defaultValue =obj1.hometown;
-		                    	   document.getElementById("workcity").defaultValue =obj1.cityOfWork;
-		                    	 */   window.location.replace("timeLine1.html");
-	    	                    	  
-	    	            }	
-	    	            else
-	    	            {
-	    	            	alert("update failed.. ")
-	    	            	window.location.replace("timeLine1.html");
-	    	            }	
-	    	            
+window.go = function(e1){
+		 
+		   var friendUserID= $(e1).attr('id');
+		   $.cookie("ID1",friendUserID);
+		   //window.location.replace("friendTimeline.html");
+    	  
+		
+	   }
 
-	    	            
-	    	        },
-	    	        error: function(jqXHR, textStatus, errorThrown){
-	    	            alert('logout error: ' + textStatus);
-	    	        }
-	    	    });
-	    	           	
-	    	        	
-	    	       
-	    	   });//update button ends ends
-	    	  
+
 	    	  
 	    	  
 
@@ -231,44 +182,86 @@ $(document).ready(function() {
 	  $("#logoutButton1").click(function(e){
 		   var foo = $.cookie("ID");
       	// alert("logout success");
-      //	$.removeCookie("ID");
    	   window.location.replace("appHome.html");	  
-			
-	   /* $.ajax({
-	        type: "DELETE",
-	        contentType: "text/plain",  //send data to server in this format
-	        url:"http://localhost:8080/DemoFB/webapi/user/logout",
+	       
+	   });//logout button ends ends
+	   $("#search").click(function(e){
+	 		  
+           var key=$("input#srch-term").val();
+          
+           $.cookie("key",key);
+          
+            
+ 	   });//search button ends ends
+ 	   
+ 	   
+ 	  $("#updateDetails").click(function(e){
+		  
+          var mob_no=$("input#mob_no").val();
+          var college=$("input#college").val();
+          var placeOfWork=$("input#workplace").val();
+          var hometown=$("input#hometown").val();
+          var cityOfWork=$("input#workcity").val();
+          var highschool=$("input#highschool").val();
+          
+          var obj = { mob_no:mob_no,college:college,placeOfWork:placeOfWork,
+        		  hometown:hometown,cityOfWork:cityOfWork,highschool:highschool
+        		  };  
+      	var myJSON = JSON.stringify(obj);
+          	
+			//document.write(myJSON);
+	    $.ajax({
+	        type: "PUT",
+	        contentType: "application/json",  //send data to server in this format
+	        url:"http://localhost:8080/DemoFB/webapi/user/updateAllData",
 	        dataType: "text",  //expect response of this type
-	        data: foo,
+	        data: myJSON,
 	        success: function(resp){
-	            //alert("succes done");
-	            //alert(data);
 	            
 	            if(resp!=null){
-	            			
-	                    	 alert("logout success");
+	   	                    	 //alert("update success");
+	   	                    	 
 	                    	  // var obj = JSON.parse(JSON.stringify(resp));
-	                    	   window.location.replace("appHome.html");
-	                    	   $.removeCookie("ID");
+	                    	   //window.location.replace("timeLine1.html");
+	            	 var obj1 = JSON.parse(JSON.stringify(resp));
+                	   //alert(obj.emailID);
+                	   //alert(obj.fname);
+                	  /*  alert(obj1);
+                	       document.getElementById("email").innerHTML=obj1.emailID;
+                	       document.getElementById("School").innerHTML=obj1.highschool;
+                	       document.getElementById("name").innerHTML=obj1.fname+" "+obj.lname;;
+                    	   document.getElementById("DOB").innerHTML= obj1.date;
+                    	   document.getElementById("Mob").innerHTML= obj1.mob_no;
+                    	   document.getElementById("college").innerHTML=obj1.college;
+                    	   document.getElementById("work").innerHTML=obj1.placeOfWork;
+                    	   document.getElementById("town").innerHTML=obj1.hometown;
+                    	   document.getElementById("workCity").innerHTML=obj1.cityOfWork;
+                    	   document.getElementById("School").innerHTML=obj1.highschool;
+                    	   document.getElementById("mob_no").defaultValue =obj1.mob_no;
+                    	   document.getElementById("college").defaultValue =obj1.college;
+                    	   document.getElementById("highschool").defaultValue =obj1.highschool;
+                    	   document.getElementById("workplace").defaultValue =obj1.placeOfWork;
+                    	   document.getElementById("hometown").defaultValue =obj1.hometown;
+                    	   document.getElementById("workcity").defaultValue =obj1.cityOfWork;
+                    	 */   window.location.replace("timeLine1.html");
 	                    	  
 	            }	
 	            else
 	            {
-	            	alert("logout failed.. ");
-	            	window.location.replace("appHome.html");
+	            	alert("update failed.. ")
+	            	window.location.replace("timeLine1.html");
 	            }	
 	            
-
 	            
 	        },
 	        error: function(jqXHR, textStatus, errorThrown){
 	            alert('logout error: ' + textStatus);
 	        }
-	    });*/
+	    });
 	           	
 	        	
 	       
-	   });//logout button ends ends
+	   });//update button ends ends
 	  
 	});//document ready ends
 
@@ -300,11 +293,11 @@ $(document).ready(function() {
 							  <a href="#" class="navbar-brand logo">f</a>
 							</div>
 							<nav class="collapse navbar-collapse " role="navigation" align="center">
-							<form class="navbar-form navbar-left">
+							<form class="navbar-form navbar-left" action="Search.html">
 								<div class="input-group input-group-sm" style="max-width:480px;">
 								  <input class="form-control" placeholder="Search" name="srch-term" id="srch-term" type="text">
 								  <div class="input-group-btn">
-									<button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+									<button class="btn btn-default" type="submit" id="search" "><i class="glyphicon glyphicon-search"></i></button>
 								  </div>
 								</div>
 							</form>
