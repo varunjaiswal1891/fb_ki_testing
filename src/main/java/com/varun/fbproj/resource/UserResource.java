@@ -33,6 +33,7 @@ import com.varun.fbproj.service.LoginService;
 import com.varun.fbproj.service.LogoutService;
 import com.varun.fbproj.service.RetriveNameService;
 import com.varun.fbproj.service.RetriveService;
+import com.varun.fbproj.service.SearchFriendService;
 import com.varun.fbproj.service.SignUpService;
 import com.varun.fbproj.service.TokenService;
 import com.varun.fbproj.service.UpdateService;
@@ -131,25 +132,7 @@ public class UserResource {
 	}//loginuser method ends here
 	
 	
-	/*
-	@DELETE
-    @Path("/logout")
-	@Consumes({MediaType.TEXT_PLAIN})
-	@Produces({MediaType.TEXT_PLAIN})
-    public String userLogout(String jwt) throws JsonParseException, JsonMappingException, IOException{
-		
-		System.out.println("Inside logout resource");
-		Claims claims = Jwts.parser().setSigningKey("secret".getBytes("UTF-8")).parseClaimsJws(jwt).getBody();
-			    System.out.println("Subject: " + claims.getSubject());
-			    System.out.println("Expiration: " + claims.getExpiration());
-			  String emailID=claims.getSubject();
-		if(LogoutService.logoutUserService(emailID))
-		{	
-			System.out.println("logout done in resource");
-			return "logout_success";
-		}
-		return null;
-	}//logout method ends here*/
+
 	
 	
 	
@@ -210,8 +193,57 @@ public class UserResource {
 		return u1;
 	 
     }//retrive method ends here
+    
+    
+    @GET
+    @Path("/retrive_other")
+    @Consumes({MediaType.TEXT_PLAIN})
+	@Produces({MediaType.APPLICATION_JSON})
+    public User retrive_friendData(@CookieParam("ID1") int userID) throws JsonParseException, JsonMappingException, IOException 
+    {
+    	
+    	System.out.println("friend user id ="+ userID);
+    	/*System.out.println("jwt string other="+ femail);
+    	Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(femail).getBody();
+    	System.out.println("Subject: " + claims.getSubject());	
+		String emailID=claims.getSubject();		*/
+    	User u1=RetriveService.getUserAllDataByUserID(userID);
+		
 	
+		return u1;
+	 
+    }//retrive other method ends here
+    
+    
+    
+    
 	
+    @GET
+    @Path("/search")
+    @Consumes({MediaType.TEXT_PLAIN})
+	@Produces({MediaType.APPLICATION_JSON})
+    public ArrayList<User> SearchPeople(@CookieParam("ID") String jwt,@CookieParam("key") String key) throws JsonParseException, JsonMappingException, IOException 
+    {
+    	
+    	System.out.println("Inside search method ");
+    	System.out.println("jwt string ="+ jwt);
+    	Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(jwt).getBody();
+    	System.out.println("Subject: " + claims.getSubject());	
+		String emailID=claims.getSubject();	
+		
+		ArrayList<User> u1 = new ArrayList<User>();
+		System.out.println("searching "+key);
+		if(!key.isEmpty())u1=SearchFriendService.searchFriends(emailID, key);
+		else return null;
+		return u1;
+	 
+    }// method ends here
+    
+    
     @GET
     @Path("/retrivename/{email}")
     @Consumes({MediaType.TEXT_PLAIN})

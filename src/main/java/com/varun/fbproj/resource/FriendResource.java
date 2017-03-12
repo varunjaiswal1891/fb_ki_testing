@@ -220,5 +220,34 @@ public class FriendResource {
 
 	
 	
+	@GET
+    @Path("/myFriendOrNot")
+	@Produces({MediaType.APPLICATION_JSON})
+    public static User MyFriendorNot(@CookieParam("ID") String jwt,
+    		@CookieParam("ID1") int userID
+    		) throws JsonParseException, JsonMappingException, IOException{
+	
+		System.out.println("inside my friend or not");
+		Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(jwt).getBody();
+			    System.out.println("Subject: " + claims.getSubject());
+			    String myEmailID=claims.getSubject();
+		User u1=RetriveService.getUserAllDataByUserID(userID);
+		String other_emailID=u1.getEmailID();
+		if(IsMyFriendService.isMyFriend(myEmailID, other_emailID))
+		{
+			u1.setMob_no("1");//yes already my friend
+			
+		}
+		else
+		{
+			u1.setMob_no("0");
+		}
+		return u1;
+	
+	}//findMyFriend method ends here
+	
+	
 	
 }//class ends here

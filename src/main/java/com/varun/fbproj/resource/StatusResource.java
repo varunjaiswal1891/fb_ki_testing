@@ -21,6 +21,7 @@ import com.varun.fbproj.model.User;
 import com.varun.fbproj.service.CommentService;
 import com.varun.fbproj.service.GetMyAllFriends;
 import com.varun.fbproj.service.LikeService;
+import com.varun.fbproj.service.RetriveService;
 import com.varun.fbproj.service.StatusService;
 
 import java.io.*;
@@ -212,6 +213,22 @@ public class StatusResource {
 		status_list.addAll(s1.getAllDetailsOfEachStatus(myEmailID)); 
     
 		return status_list;
+    }//method ends here
+    
+    @GET
+    @Path("/getOtherAllStatus")
+	@Produces({MediaType.APPLICATION_JSON})
+    public ArrayList<Status> getOtherKeAllStatus(@CookieParam("ID1") int userID) throws JsonParseException, JsonMappingException, IOException
+    {
+    	User u1=RetriveService.getUserAllDataByUserID(userID);
+    	
+    	ArrayList<Status> status_list= new ArrayList<Status>(); 
+    	//it gives mere all status
+		status_list.addAll(s1.getAllDetailsOfEachStatus(u1.getEmailID())); 
+    
+		return status_list;
     }
+    
+    
 
 }//Ststus resource class ends here
