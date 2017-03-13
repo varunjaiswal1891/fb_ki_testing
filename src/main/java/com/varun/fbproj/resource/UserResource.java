@@ -10,6 +10,7 @@ import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
 import javax.jws.WebMethod;
@@ -37,11 +38,14 @@ import com.varun.fbproj.service.SearchFriendService;
 import com.varun.fbproj.service.SignUpService;
 import com.varun.fbproj.service.TokenService;
 import com.varun.fbproj.service.UpdateService;
+import com.varun.fbproj.service.UserImageService;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 @WebService()
 @Path("/user")
 public class UserResource {
@@ -132,6 +136,35 @@ public class UserResource {
 	}//loginuser method ends here
 	
 	
+	@POST
+	@Path("/uploadProfilePic")
+	@Produces(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	public Response updateProfilePic(
+			
+	        @FormDataParam("file") InputStream fileInputStream,
+	        @FormDataParam("file") FormDataContentDisposition fileFormDataContentDisposition,@CookieParam("ID") String token) throws UnsupportedJwtException, MalformedJwtException, SignatureException, IllegalArgumentException, UnsupportedEncodingException {
+	    // local variables
+		
+	    String fileName = null;
+	    String uploadFilePath = null;
+	    System.out.print("backend");
+	    System.out.print(token);
+	    System.out.println("jwt="+ token);
+		Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(token).getBody();
+			    System.out.println("Subject: " + claims.getSubject());
+			    System.out.println("Expiration: " + claims.getExpiration());
+			  String emailID=claims.getSubject();
+	    //System.out.print(userId);
+	    fileName = fileFormDataContentDisposition.getFileName();
+	    uploadFilePath = new UserImageService().uploadProfilePic(fileInputStream, fileName,token,emailID);
+	    if(uploadFilePath==null)
+	    return Response.notModified().build();
+	    
+	    return Response.ok().entity(uploadFilePath).build();    
+	}
 
 	
 	
