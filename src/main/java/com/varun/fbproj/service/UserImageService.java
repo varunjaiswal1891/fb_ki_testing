@@ -1,6 +1,8 @@
 package com.varun.fbproj.service;
 
 
+
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -16,7 +18,6 @@ import javax.swing.ImageIcon;
 
 public class UserImageService {
 
-	
 	public String uploadProfilePic(InputStream fileInputStream,
 			String fileName, String token,String emailID) {
 			OutputStream outputStream=null;
@@ -25,9 +26,14 @@ public class UserImageService {
 			//String email=s1.getemailId(token);
 			fileName=""+Calendar.getInstance().getTimeInMillis()+fileName;
 			//InputStream buffer=toBufferedImage(fileInputStream,100,100);
+
 			String path="/home/varun/git/newWK_6march/fb_ki_testing/src/main/webapp/users/"+emailID+"/images/";
 			//System.out.print("/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/images/");
 			String profilePicPath="/home/varun/git/newWK_6march/fb_ki_testing/src/main/webapp/users/"+emailID+"/";
+			String path="/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/images/";
+			System.out.print("/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/images/");
+			String profilePicPath="/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/";
+
 			try{
 			outputStream=new FileOutputStream(new File(path+fileName));
 			outputStream1=new FileOutputStream(new File(profilePicPath+"profilePic.jpg"));
@@ -41,6 +47,9 @@ public class UserImageService {
 			                
 			}outputStream.close();outputStream1.close();
 			ImageIcon icon = new ImageIcon("/home/varun/git/newWK_6march/fb_ki_testing/src/main/webapp/users/"+emailID+"/profilePic.jpg");
+
+			ImageIcon icon = new ImageIcon("/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/profilePic.jpg");
+
 			BufferedImage bi = new BufferedImage(
 				    icon.getIconWidth(),
 				    icon.getIconHeight(),
@@ -52,7 +61,11 @@ public class UserImageService {
 				bi=resize(bi, 200, 200);
 
 
+
 File outputfile = new File("/home/varun/git/newWK_6march/fb_ki_testing/src/main/webapp/users/"+emailID+"/tn.jpg");
+
+File outputfile = new File("/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/tn.jpg");
+
 ImageIO.write(bi, "jpg", outputfile);
 
 
@@ -82,5 +95,8 @@ ImageIO.write(bi, "jpg", outputfile);
         g.dispose();  
         return dimg;  
     }  
+
 	
 }//class ends here
+}
+

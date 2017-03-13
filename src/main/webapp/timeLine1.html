@@ -26,7 +26,7 @@ $(document).ready(function() {
 	$("#logoutForm").submit(function(e){
 	        e.preventDefault();
 	 });
-
+    var email;
 	//this ajax call to print user name on top logged in user row
 	//alert(foo);
          	$.ajax({
@@ -96,12 +96,19 @@ $(document).ready(function() {
 		                    	   document.getElementById("hometown").defaultValue =obj.hometown;
 		                    	   document.getElementById("workcity").defaultValue =obj.cityOfWork;
 		                    	   document.getElementById("userName").innerHTML=obj.fname+" "+obj.lname;
+
 		                    	   var email=obj.emailID;
 		                           var path="users/"+email+"/tn.jpg";
 		                           //alert(path);
 		                           $("#image").attr('src', path);
 		                           //window.location.replace("timeLine1.html");
 		                    	  
+
+		                           var email=obj.emailID;
+		                           var path="users/"+email+"/tn.jpg"
+		                           alert(path);
+		                           $("#image").attr('src', path);
+
 	                       }  
 	                       
 	                       else
@@ -267,8 +274,8 @@ window.go = function(e1){
 	        }
 	    });
 	           	
+
 	        	
-	    
 	    var modalform1 = $('#uploadPic');
 		  modalform1.submit(function() {
 		  var fd1 = new FormData($('#uploadPic')[0]);
@@ -280,6 +287,7 @@ window.go = function(e1){
 		  data : fd1,
 		  enctype : 'multipart/form-data',
 		  processData : false, // Important!
+
 		  contentType : "text",
 		  cache : false,
 		  success : function(data) {
@@ -288,18 +296,30 @@ window.go = function(e1){
 			  alert("runin");
 		  window.location.replace("timeLine1.html");
    
+		  contentType : false,
+		  cache : false,
+		  success : function(data) {
+		  console.log(data);
+		  if (data) {
+
+		alert(data)  
+     
+
 		  } else {
 		  alert("Try Again");
 		  }
 		  }
+
 		  
 		  });  		
 		  });
 	    
 	    
 	    
-	    
-	       
+	   
+		  });  		
+		  });
+
 	   });//update button ends ends
 	  
 	});//document ready ends
@@ -386,36 +406,10 @@ window.go = function(e1){
 								
 									 <!-- main col sidebar left --> 
 								 <div class="col-sm-3 col-xs-3">
-								   
-										<!-- <div class="well"> 
-										   <form class="form-horizontal" role="form">
-											<h4>What's New</h4>
-											 <div class="form-group" style="padding:14px;">
-											  <textarea class="form-control" placeholder="Update your status"></textarea>
-											</div>
-											<button class="btn btn-primary pull-right" type="button">Post</button><ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
-										  </form>
-									  </div>
-								   
-									
-									
-									  <div class="panel panel-default">
-										<div class="panel-thumbnail"><img src="assets/img/bg_5.jpg" class="img-responsive"></div>
-										<div class="panel-body">
-										  <p class="lead">Urbanization</p>
-										  <p>45 Followers, 13 Posts</p>
-										  
-										  <p>
-											<img src="assets/img/uFp_tsTJboUY7kue5XAsGAs28.png" height="28px" width="28px">
-										  </p>
-										</div>
-									  </div> -->
-
-								   
-									  <div class="panel panel-default">
+								 	  <div class="panel panel-default">
 										<div class="panel-heading"><h4>Personal Information</h4></div>
 										
-										  <div class="panel-body">
+										    <div class="panel-body">
 											
 											<div class="media">
       										<div class="media-left">
@@ -437,12 +431,6 @@ window.go = function(e1){
                                                </form>
       										</div>
     										</div>
-											
-											<div class="list-group">
-											  <!--  <a href="http://usebootstrap.com/theme/facebook" class="list-group-item">Modal / Dialog</a>
-											  <a href="http://usebootstrap.com/theme/facebook" class="list-group-item">Datetime Examples</a>
-											  <a href="http://usebootstrap.com/theme/facebook" class="list-group-item">Data Grids</a>
-											  -->
 											<pre width="5" class="media-left">EmailID :</pre><p id="email" class="media-right"></p><br>
       <pre class="media-left">High School :</pre><p id="School" class="media-right"></p><br>
       <pre class="media-left">DOB :</pre><p id="DOB" class="media-right"></p><br>
@@ -465,7 +453,7 @@ window.go = function(e1){
 
 										
 								   
-								  </div>
+								  
 				
 				
 				

@@ -77,7 +77,10 @@ public class SignUpService {
 						
 						//System.out.println("YES");
             check=connect.stop();
+
             new File("/home/varun/git/newWK_6march/fb_ki_testing/src/main/webapp/users/"+u1.getEmailID()+"/images/").mkdirs();
+
+            new File("/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+u1.getEmailID()+"/images/").mkdirs();
             return true;
         }}
         }
