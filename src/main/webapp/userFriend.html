@@ -174,8 +174,11 @@ $(function () {
                	for (var i=0; i < data.length; i++){
              		 allFriends+="<div class=\"panel-body\">";
              		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"img_avatar1.png\""+" /></div>";
-                     allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID+"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
+             		allFriends+="<a href="+" \"#\" " +  " data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>"
+             		
+             		//  allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID+"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
                      allFriends+="</div>";
+             		allFriends+="</div>";
 					     	}
              	
              allFriends=allFriends.replace("undefined","");
@@ -455,6 +458,10 @@ $(function () {
             
  	   });//search button ends ends
 });//document ready ends here
+
+jQuery(document).ajaxComplete(function () {
+	 $('[data-toggle="popover"]').popover({placement:'left'})  
+	}); 
 </script>
 
 
