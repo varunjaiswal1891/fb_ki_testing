@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Case</title>
+  <title>Search results</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
  <script type="text/javascript" src="Jquery/jquery-3.1.1.js"></script>
@@ -80,6 +80,8 @@ $(document).ready(function() {
                       	
                       	if(data[i].mob_no=="0")
                       		{
+                      		//allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID+"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
+                      		
                   		    SearchResult+="<div class="+"\"panel-body\""+">";
                   		    SearchResult+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"img_avatar1.png\""+" /></div>";
                   			SearchResult+="<a href="+"\"#\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
@@ -177,7 +179,7 @@ $(document).ready(function() {
 	
 	  $("#logoutButton1").click(function(e){
 		   var foo = $.cookie("ID");
-      	 alert("logout success");
+      	 //alert("logout success");
    	   window.location.replace("appHome.html");	  
 			
 	   /* $.ajax({
@@ -308,7 +310,7 @@ $(document).ready(function() {
 								<a href="timeLine1.html" id="userName"><i class="glyphicon glyphicon-user"></i> User Name</a>
 							  </li>
 							  <li>
-								<a href="#"><i class="glyphicon glyphicon-home"></i> Home</a>
+								<a href="userHome1.html"><i class="glyphicon glyphicon-home"></i> Home</a>
 							  </li>
 							  <li>
 								<a href="userFriend.html">Find Friends</a>
@@ -349,7 +351,7 @@ $(document).ready(function() {
 						</ul> 
 					    
 						<ul class="nav hidden-xs" id="xs-menu">
-							<li class="active"><a href="#featured"><i class="glyphicon glyphicon-user"></i>User Name</a></li>
+							
 							<li><a href="#stories"><i class="glyphicon glyphicon-list"></i> News Feed</a></li>
 							<li><a href="todoPage.html"><i class="glyphicon glyphicon-envelope"></i> Message</a></li>
 						</ul>	
@@ -421,7 +423,7 @@ $(document).ready(function() {
 				<div class="col-sm-7 col-xs-7">
 				<form >
 								<div class="input-group input-group-sm" >
-								  <input class="form-control" placeholder="Search" name="srch-term" id="srch-term" type="text">
+								  
 								  <div class="input-group-btn">
 									<button class="btn btn-default" type="submit" id="search"><i class="glyphicon glyphicon-search"></i></button>
 								  </div>
