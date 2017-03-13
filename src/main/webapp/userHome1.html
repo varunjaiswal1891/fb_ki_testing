@@ -81,7 +81,7 @@
                     	   st+="<div class="+"\"panel-body\""+"id=\"forcomment\""+">";
                     	   st+="<div class="+"\"row\""+">";
                     	   st+="<div class="+"\"col-md-12\""+">";
-                    	   st+="<p><font color="+"\"blue\""+">"+data[i].name+"</font></p>" ;
+                    	   st+="<p><font size="+"\"5\""+"color="+"\"blue\""+">"+data[i].name+"</font></p>" ;
                     	   /* $(status_name).appendTo('#text_color');
                     	   document.getElementById("forstatus").style.color="blue"; */
                     	 	st+="<hr>";
@@ -109,10 +109,10 @@
                     	   
                     	   st+="<div class="+"\"pre-scrollable\""+" style="+"\"height:100px;\""+">";
                     	   for(var j=0;j<data[i].a.length;j++)
-                		   {
+                		  
                     			   
                 		   {
-                    		   st+= "<p id="+"\"outputname\""+"><font color="+"\"blue\""+">"+data[i].a[j].name+"</font></p>"; 
+                    		   st+= "<p id="+"\"outputname\""+"><font size="+"\"3\""+"color="+"\"blue\""+">"+data[i].a[j].name+"</font></p>"; 
                     	   st+= "<p id="+"\"output\""+">"+data[i].a[j].comment_desc+"</p>";
                     	   st+="<br>";
                     	   st+="<hr>";
@@ -136,7 +136,7 @@
                             
                            
                            
-                       }//inner for ends
+                      
                        st=st.replace("undefined","");
                 	   $("#abcd").html(st);
                        
@@ -216,7 +216,7 @@
                   // we have the response  
            	   if(response!=null){
           
-           		   alert(response);
+           		   //alert(response);
            	   }
            	   
            	   
@@ -403,7 +403,7 @@
      	   });//logout button ends ends
      	   
      	   
-         	$.ajax({ 
+     	   	$.ajax({ 
                 url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
                 type: "GET",
                 dataType: "json",
@@ -419,16 +419,17 @@
                     var data =JSON.parse(JSON.stringify(response));  
                      var allFriends;
              	 
-
-                  	for (var i=0; i < data.length; i++){
-                  		 allFriends+="<div class=\"panel-body\">";
-                  		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"img_avatar1.png\""+" /></div>";
-                          allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID+"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
-                          allFriends+="</div>";
-     					     	}
-                  	
+                   	for (var i=0; i < data.length; i++){
+                 		 allFriends+="<div class=\"panel-body\">";
+                 		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/tn.jpg\""+" /></div>";
+                 		allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>";
+               // allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  " data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>"; 		
+                 		//  allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID+"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
+                         allFriends+="</div>";
+                 		allFriends+="</div>";
+    					     	}
                  	
-             		allFriends=allFriends.replace("undefined","");
+                 allFriends=allFriends.replace("undefined","");
              	   $("#allFriends").html(allFriends);
             
                     }  
@@ -444,7 +445,7 @@
          					alert(e.toString());
        			}				
          
-    	  });//ajax call get my all friends end
+    	  });//ajax call end
     	  
          	window.go = function(e1){
        		 
@@ -462,7 +463,12 @@
                     
     	   });//search button ends ends
 
-        }); //document ready ends      
+        }); //document ready ends 
+        
+        jQuery(document).ajaxComplete(function () {
+       	 $('[data-toggle="popover"]').popover({placement:'left'})  
+       	}); 
+        
         </script>
         
     </head>
@@ -635,7 +641,7 @@
 									  </div>
 								   
 								   
-<div class="panel panel-default" id="abcd">
+<div id="abcd">
   <div class="panel-body" id="forcomment">
     <!-- Post metadata -->
     <div class="row">

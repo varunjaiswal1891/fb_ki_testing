@@ -87,7 +87,7 @@ $(function () {
                 	 
                     	for (var i=0; i < data.length; i++){
                 		    suggest+="<div class="+"\"panel-body\""+">";
-                      		suggest+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"img_avatar1.png\""+" /></div>";
+                      		suggest+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/tn.jpg\""+" /></div>";
                       		suggest+="<a href="+"\"#\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
                       		suggest+="<div class="+"\"text-right\""+">";
                       		suggest+="<button type="+"\"button\""+" class="+"\"btn btn-primary\" id=\""+data[i].emailID+"\" OnClick=\"add(this);\">Add Friend<span class="+"\"glyphicon glyphicon-plus\""+"></span></button>";
@@ -130,7 +130,7 @@ $(function () {
          	 
              	for (var i=0; i < data.length; i++){
          		    mayKnow+="<div class="+"\"panel-body\""+">";
-               		mayKnow+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"img_avatar1.png\""+" /></div>";
+               		mayKnow+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/tn.jpg\""+" /></div>";
                		mayKnow+="<a href="+"\"#\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
                		mayKnow+="<div class="+"\"text-right\""+">";
                		mayKnow+="<button type="+"\"button\""+" class="+"\"btn btn-primary\" id=\""+data[i].emailID+"\" OnClick=\"add(this);\""+" \">Add Friend<span class="+"\"glyphicon glyphicon-plus\""+"></span></button>";
@@ -173,9 +173,9 @@ $(function () {
          	 
                	for (var i=0; i < data.length; i++){
              		 allFriends+="<div class=\"panel-body\">";
-             		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"img_avatar1.png\""+" /></div>";
-             		allFriends+="<a href="+" \"#\" " +  " data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>"
-             		
+             		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/tn.jpg\""+" /></div>";
+             		allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>";
+           // allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  " data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>"; 		
              		//  allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID+"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
                      allFriends+="</div>";
              		allFriends+="</div>";
@@ -228,7 +228,7 @@ $(function () {
              	for (var i=0; i < data.length; i++){
              		
          			Frequest+="<div class=\"panel-body\" id=\"div"+data[i].emailID+"\">";
-					Frequest+="<div class=\"pull-left col-sm-3\"><img class=\"img-responsive\" alt=\"logo\" src=\"img_avatar1.png\" /></div>";
+					Frequest+="<div class=\"pull-left col-sm-3\"><img class=\"img-responsive\" alt=\"logo\" src=\"users/"+data[i].emailID+"/tn.jpg\" /></div>";
 					Frequest+="<a href=\"#\">"+data[i].fname+" "+data[i].lname+"</span></a>";
 					Frequest+="<div class=\"text-right\">";
 					Frequest+="<button type=\"button\" class=\"btn btn-primary\" id=\""+data[i].emailID+"\" OnClick=\"accept(this);\">Confirm<span class=\"glyphicon glyphicon-plus\"></span></button>";

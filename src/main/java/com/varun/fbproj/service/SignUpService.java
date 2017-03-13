@@ -1,5 +1,6 @@
 package com.varun.fbproj.service;
 
+import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -70,12 +71,13 @@ public class SignUpService {
 			prepStatement.setString(1,u1.getEmailID());
 			ResultSet result = prepStatement.executeQuery();
 			if (result != null) {
-				while (result.next()) {
+				if(result.next()){
 						u1.setUserID(result.getInt(1));
 						System.out.println("SignUp success");
 						
 						//System.out.println("YES");
             check=connect.stop();
+            new File("/home/varun/git/newWK_6march/fb_ki_testing/src/main/webapp/users/"+u1.getEmailID()+"/images/").mkdirs();
             return true;
         }}
         }

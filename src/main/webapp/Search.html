@@ -78,25 +78,23 @@ $(document).ready(function() {
                         
                       	for (var i=0; i < data.length; i++){
                       	
-                      	if(data[i].mob_no=="0")
+                      		if(data[i].mob_no=="0")
                       		{
-                      		//allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID+"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
-                      		
                   		    SearchResult+="<div class="+"\"panel-body\""+">";
                   		    SearchResult+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"img_avatar1.png\""+" /></div>";
-                  			SearchResult+="<a href="+"\"#\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
+                  			SearchResult+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
                   			SearchResult+="<div class="+"\"text-right\""+">";
                   			SearchResult+="<button type="+"\"button\""+" class="+"\"btn btn-primary\" id=\""+data[i].emailID+"\" OnClick=\"add(this);\""+" \">Add Friend<span class="+"\"glyphicon glyphicon-plus\""+"></span></button>";
-                  			SearchResult+="<a class="+"\"btn btn-primary\""+" id="+"\"SentReq"+data[i].emailID+"\" href=\"\""+" style=\"visibility: hidden\";>Request Sent</a></div></div>";
+                  			SearchResult+="<a class="+"\"btn btn-primary\""+" id="+"\"SentReq"+data[i].emailID+"\" "+" style=\"visibility: hidden\";>Request Sent</a></div></div>";
                    			
                       		}
                       	else{
                       		SearchResult+="<div class="+"\"panel-body\""+">";
                   		    SearchResult+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"img_avatar1.png\""+" /></div>";
-                  			SearchResult+="<a href="+"\"#\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
+                  			SearchResult+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
                   			SearchResult+="<div class="+"\"text-right\""+">";
-                  			SearchResult+="<button type="+"\"button\""+" class="+"\"btn btn-primary\">Friends<span class="+"\"glyphicon glyphicon-plus\""+"></span></button>";
-                      			
+                  			SearchResult+="<button type="+"\"button\""+" class="+"\"btn btn-primary\">Friends<span class="+"\"glyphicon glyphicon-plus\""+"></span></button></div></div>";
+                  				
                       	}
                       	}
                       	
@@ -125,7 +123,14 @@ $(document).ready(function() {
    	  }); //ajacx ends
 	});//fun ends
    
-         	  
+	window.go = function(e1){
+ 		 
+		   var friendUserID= $(e1).attr('id');
+		   $.cookie("ID1",friendUserID);
+		   //window.location.replace("friendTimeline.html");
+   	  
+		
+	   }
 		 	  window.add = function(e1){
 		 		 
 				   var friendEmailID= $(e1).attr('id');
@@ -224,7 +229,7 @@ $(document).ready(function() {
            
             
  	   });//search button ends ends
- 		$.ajax({ 
+ 	   	$.ajax({ 
             url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
             type: "GET",
             dataType: "json",
@@ -240,15 +245,17 @@ $(document).ready(function() {
                 var data =JSON.parse(JSON.stringify(response));  
                  var allFriends;
          	 
-               
-             	for (var i=0; i < data.length; i++){
+               	for (var i=0; i < data.length; i++){
              		 allFriends+="<div class=\"panel-body\">";
-             		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"img_avatar1.png\""+" /></div>";
-                     allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].emailID+"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
+             		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/tn.jpg\""+" /></div>";
+             		allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>";
+           // allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  " data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>"; 		
+             		//  allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID+"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
                      allFriends+="</div>";
+             		allFriends+="</div>";
 					     	}
              	
-             	allFriends=allFriends.replace("undefined","");
+             allFriends=allFriends.replace("undefined","");
          	   $("#allFriends").html(allFriends);
         
                 }  
@@ -264,10 +271,14 @@ $(document).ready(function() {
      					alert(e.toString());
    			}				
      
-	  });
+	  });//ajax call end
 	///ajax call ends here*/
 	  
 	});//document ready ends
+	
+	jQuery(document).ajaxComplete(function () {
+		 $('[data-toggle="popover"]').popover({placement:'right'})  
+		}); 
 
 </script>
 
@@ -421,18 +432,11 @@ $(document).ready(function() {
 					<!-- /sidebar -->
 				  
 				<div class="col-sm-7 col-xs-7">
-				<form >
-								<div class="input-group input-group-sm" >
-								  
-								  <div class="input-group-btn">
-									<button class="btn btn-default" type="submit" id="search"><i class="glyphicon glyphicon-search"></i></button>
-								  </div>
-								</div>
-							</form>
+				
 					<div class="panel panel-default">
 										<div class="panel-heading"><h4>Search Result:</h4></div>
-										<div class="list-group">
-										<div id="SearchResult"></div>
+										 <div class="list-group">
+										<div id="SearchResult"></div> 
 										<p id="SearchResult"></p>
 									  </div>
 									  </div>		
