@@ -80,6 +80,15 @@
     <version>2.4.1.1</version>
 </dependency>
         
+        
+        <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.media/jersey-media-multipart -->
+<dependency>
+    <groupId>org.glassfish.jersey.media</groupId>
+    <artifactId>jersey-media-multipart</artifactId>
+    <version>2.25.1</version>
+</dependency>
+        
+        
     <dependency>
   <groupId>com.fasterxml.jackson.jaxrs</groupId>
   <artifactId>jackson-jaxrs-json-provider</artifactId>
@@ -98,6 +107,8 @@
     <artifactId>jjwt</artifactId>
     <version>0.2</version>
 </dependency>
+
+
 
        
       <!-- https://mvnrepository.com/artifact/org.bitbucket.b_c/jose4j -->

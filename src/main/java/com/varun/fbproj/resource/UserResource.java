@@ -228,6 +228,36 @@ public class UserResource {
     }//retrive method ends here
     
     
+    @POST
+	@Path("/uploadProfilePic")
+	@Produces(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	public boolean updateProfilePic(
+			
+	        @FormDataParam("file") InputStream fileInputStream,
+	        @FormDataParam("file") FormDataContentDisposition fileFormDataContentDisposition,@CookieParam("ID") String token) throws UnsupportedJwtException, MalformedJwtException, SignatureException, IllegalArgumentException, UnsupportedEncodingException {
+	    // local variables
+		
+	    String fileName = null;
+	    String uploadFilePath = null;
+	    System.out.print("backend");
+	    System.out.print(token);
+	    System.out.println("jwt="+ token);
+		Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(token).getBody();
+			    System.out.println("Subject: " + claims.getSubject());
+			    System.out.println("Expiration: " + claims.getExpiration());
+			  String emailID=claims.getSubject();
+	    //System.out.print(userId);
+	    fileName = fileFormDataContentDisposition.getFileName();
+	    uploadFilePath = new UserImageService().uploadProfilePic(fileInputStream, fileName,token,emailID);
+	   return true;
+	}
+    
+    
+    
+    
     @GET
     @Path("/retrive_other")
     @Consumes({MediaType.TEXT_PLAIN})

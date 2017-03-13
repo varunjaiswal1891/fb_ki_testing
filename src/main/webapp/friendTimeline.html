@@ -240,13 +240,10 @@
                              document.getElementById("town").innerHTML=obj.hometown;
                              document.getElementById("workCity").innerHTML=obj.cityOfWork;
                              document.getElementById("School").innerHTML=obj.highschool;
-                             //document.getElementById("mob_no").defaultValue =obj.mob_no;
-                             document.getElementById("college").defaultValue =obj.college;
-                             document.getElementById("highschool").defaultValue =obj.highschool;
-                             document.getElementById("workplace").defaultValue =obj.placeOfWork;
-                             document.getElementById("hometown").defaultValue =obj.hometown;
-                             document.getElementById("workcity").defaultValue =obj.cityOfWork;
-                             document.getElementById("userName").innerHTML=obj.fname+" "+obj.lname;
+                             var path="users/"+obj.emailID+"/tn.jpg";
+	                           //alert(path);
+	                           $("#image").attr('src', path);
+                            
                             
                          }  
                          
@@ -271,13 +268,16 @@
  	        dataType: "text",  //expect response of this type
  	       success: function(response){  
                // we have the response  
+               if(response!=null)
+            	   {
                var data =JSON.parse(JSON.stringify(response));
                //document.write(data);
+               //alert(data);
                var SearchResult;
                if(data.mob_no=="0")
-               {   SearchResult+="<div class="+"\"panel-body\""+">";
+               {   SearchResult="<div class="+"\"panel-body\""+">";
          		    //SearchResult+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"img_avatar1.png\""+" /></div>";
-         			SearchResult+="<a href="+"\"#\""+">"+data.fname+" "+data.lname+"</span></a>";
+         			
          			SearchResult+="<div class="+"\"text-right\""+">";
          			SearchResult+="<button type="+"\"button\""+" class="+"\"btn btn-primary\" id=\""+data.emailID+"\" OnClick=\"add(this);\""+" \">Add Friend<span class="+"\"glyphicon glyphicon-plus\""+"></span></button>";
          			SearchResult+="<a class="+"\"btn btn-primary\""+" id="+"\"SentReq"+data.emailID+"\" href=\"\""+" style=\"visibility: hidden\";>Request Sent</a></div></div>";
@@ -286,17 +286,17 @@
                }
                else
             	{
-            	   SearchResult+="<div class="+"\"panel-body\""+">";
+            	   SearchResult="<div class="+"\"panel-body\""+">";
          		    //SearchResult+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"img_avatar1.png\""+" /></div>";
-         			SearchResult+="<a href="+"\"#\""+">"+data.fname+" "+data.lname+"</span></a>";
+         			
          			SearchResult+="<div class="+"\"text-right\""+">";
          			//SearchResult+="<button type="+"\"button\""+" class="+"\"btn btn-primary\">Friends<span class="+"\"glyphicon glyphicon-plus\""+"></span></button>";
          			SearchResult+="<button type="+"\"button\""+" class="+"\"btn btn-primary\">Friend<span class="+"\"\""+"></span></button>";
              		
             	}
-           	SearchResult=SearchResult.replace("undefined",""); 
+           
        	   $("#SearchResult").html(SearchResult);
-       	   
+            	   }
  	       },
  	       
  	      error: function(e){  
@@ -310,47 +310,49 @@
           
 
                     //ajax call to show my all friends on my friend ki timeline
-              $.ajax({ 
-                    url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
-                    type: "GET",
-                    dataType: "json",
-                    contentType : "application/json",
-                    crossDomain: true,
-                    processData: true,
-                    
-                    
-                    success: function(response){  
-                     
-                        // we have the response  
-                     if(response!=null){
-                        var data =JSON.parse(JSON.stringify(response));  
-                         var allFriends;
-                   
-                         for (var i=0; i < data.length; i++){
-                     		 allFriends+="<div class=\"panel-body\">";
-                     		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"img_avatar1.png\""+" /></div>";
-                             allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID+"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
-                             allFriends+="</div>";
-        					     	}
-                     	
-                      
-                      allFriends=allFriends.replace("undefined","");
-                     $("#allFriends").html(allFriends);
+   	$.ajax({ 
+                url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
+                type: "GET",
+                dataType: "json",
+                contentType : "application/json",
+                crossDomain: true,
+                processData: true,
                 
-                        }  
-                        
-                        else
-                         {
-                        alert("something wrong");
-                         }
-                      },
-              
-                error: function(e){  
-                      alert('Error121212: ' + e);  
-                      alert(e.toString());
-                }       
-             
-            });//ajax call end to get my all friends
+                
+                success: function(response){  
+             	   
+                    // we have the response  
+             	   if(response!=null){
+                    var data =JSON.parse(JSON.stringify(response));  
+                     var allFriends;
+             	 
+                   	for (var i=0; i < data.length; i++){
+                 		 allFriends+="<div class=\"panel-body\">";
+                 		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/tn.jpg\""+" /></div>";
+                 		allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>";
+               // allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  " data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>"; 		
+                 		//  allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID+"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
+                         allFriends+="</div>";
+                 		allFriends+="</div>";
+    					     	}
+                 	
+                 allFriends=allFriends.replace("undefined","");
+             	   $("#allFriends").html(allFriends);
+            
+                    }  
+                    
+                    else
+                 	   {
+                 	  alert("something wrong");
+                 	   }
+                  },
+    	    
+       			error: function(e){  
+         					alert('Error121212: ' + e);  
+         					alert(e.toString());
+       			}				
+         
+    	  });//ajax call end
             
              	window.go = function(e1){
              		 
@@ -472,6 +474,13 @@
         
 
         });//document ready ends here
+        
+        
+        
+        jQuery(document).ajaxComplete(function () {
+       	 $('[data-toggle="popover"]').popover({placement:'right'})  
+       	}); 
+        
          </script> 
 
 
@@ -550,6 +559,14 @@
                                       <div class="panel-body" style="max-height:10;">
                                         <img src="cover1.jpg" alt=""   class=""  width="800" height="400"/>
                                       </div>
+                                      <div class="row">
+							 
+										<div id="SearchResult"></div>
+										<p id="SearchResult"></p>
+									 
+							   
+							</div>
+                                      
                                      </div> 
                                      
 
@@ -567,17 +584,7 @@
 
                         </div><!-- row ends here -->
 							
-							<div class="row">
-							   <div class="panel panel-default">
-										<div class="panel-heading"><h4>Friend or not:</h4></div>
-										<div class="list-group">
-										<div id="SearchResult"></div>
-										<p id="SearchResult"></p>
-									  </div>
-									  </div>
-							   
-							</div>
-
+							
 
                                 <div class="row">
                 
@@ -596,7 +603,8 @@
                       
                       <div class="media">
                           <div class="media-left">
-                            <img src="img_avatar1.png" class="media-object" style="width:60px">
+                          
+                            <img id="image" class="media-object" style="width:60px">
                           </div>
                           <div class="media-right">
                           <h4 class="media-heading" id="name"></h4>
