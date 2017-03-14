@@ -24,10 +24,11 @@ public class StatusService {
 			 String  status_desc=s1.getStatus_desc(); 
 			 String emailID=s1.getEmailID();
 			 
-			 String query = "insert into status(status_desc,emailID) values(?, ?)";
+			 String query = "insert into status(status_desc,emailID,group_name) values(?,?,?)";
 			 PreparedStatement pstmnt = db.con.prepareStatement(query);
 			 pstmnt.setString(1,status_desc);
 			 pstmnt.setString(2,emailID);
+			 pstmnt.setString(3, s1.getGroup_name());
 			 pstmnt.executeUpdate();
 			 db.stop();
 			 return true;
@@ -127,15 +128,7 @@ public class StatusService {
 				  PreparedStatement pstmnt=db.con.prepareStatement(query1);
 				  pstmnt.setString(1,emailID); // user_id is the one sent in paramater
 				  ResultSet rs= pstmnt.executeQuery();
-				  ArrayList<Status> statusArrayList = new ArrayList<Status>();
-
-
-				  
-				  
-				  
-				  
-				  
-				  
+				  ArrayList<Status> statusArrayList = new ArrayList<Status>();				  
 				  
 				  
 		        while (rs.next())
