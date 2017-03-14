@@ -135,7 +135,7 @@ public class UserResource {
 
 	}//loginuser method ends here
 	
-	
+	/*
 	@POST
 	@Path("/uploadProfilePic")
 	@Produces(MediaType.TEXT_PLAIN)
@@ -166,7 +166,7 @@ public class UserResource {
 	    return Response.ok().entity(uploadFilePath).build();    
 	}
 
-	
+	*/
 	
 	
 

@@ -273,55 +273,46 @@ window.go = function(e1){
 	            alert('logout error: ' + textStatus);
 	        }
 	    });
-	           	
-
-	        	
+	    
+	    
+	    
 	    var modalform1 = $('#uploadPic');
-		  modalform1.submit(function() {
-		  var fd1 = new FormData($('#uploadPic')[0]);
-		  console.log(fd1);
-		  alert("uploading");
-		  $.ajax({
-		  type : modalform1.attr('method'),
-		  url : modalform1.attr('action'),
-		  data : fd1,
-		  enctype : 'multipart/form-data',
-		  processData : false, // Important!
+	       modalform1.submit(function() {
+	       var fd1 = new FormData($('#uploadPic')[0]);
+	       console.log(fd1);
+	       //alert("uploading");
+	       $.ajax({
+	       type : modalform1.attr('method'),
+	       url : modalform1.attr('action'),
+	       data : fd1,
+	       enctype : 'multipart/form-data',
+	       processData : false, // Important!
+	       contentType : false,
+	       cache : false,
+	       success : function(data) {
+	       console.log(data);
+	       if (data) {
 
-		  contentType : "text",
-		  cache : false,
-		  success : function(data) {
-		 
-		  if (data) {
-			  alert("runin");
-		  window.location.replace("timeLine1.html");
-   
-		  contentType : false,
-		  cache : false,
-		  success : function(data) {
-		  console.log(data);
-		  if (data) {
-
-		alert(data)  
-     
-
-		  } else {
-		  alert("Try Again");
-		  }
-		  }
-
-		  
-		  });  		
-		  });
+	     alert(data);  
 	    
-	    
-	    
-	   
-		  });  		
-		  });
+	       } else {
+	       alert("Try Again");
+	       }
+	       
+	       }//success
+	       });  //ajax call ends
+	       }); //modal fun ends
 
+	    
+
+    
 	   });//update button ends ends
-	  
+
+	   
+   	
+	    	   
+	   
+	   
 	});//document ready ends
 	
 	
