@@ -11,6 +11,7 @@ public class Status {
 	   private int likes_count;
 	   private int unlikes_count;
 	   private String group_name;
+	   private  ArrayList<Comment> a;
 	   
 	   
 	   
@@ -43,7 +44,7 @@ public class Status {
 	public void setName(String name) {
 		this.name = name;
 	}
-	ArrayList<Comment> a;
+	
 	   
 	   public Status(){
 		 

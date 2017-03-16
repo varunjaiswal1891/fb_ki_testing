@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
+        <meta charset="utf-8">
+        <title>Facebook</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link href="assets/css/bootstrap.css" rel="stylesheet">
+        <link href="assets/css/facebook.css" rel="stylesheet">
+        <script type="text/javascript" src="Jquery/jquery-3.1.1.js"></script>
+ 		<script type="text/javascript" src="Jquery/jquery.cookie.js"></script>
+  		<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>  
+        
+        
+        <script type="text/javascript">
+        
+        $(document).ready(function() {
+        	
+        	
+        	var foo = $.cookie("ID");
+         	$.ajax({
+        		 type: "GET",
+    	        contentType: "text/plain",  //send data to server in this format
+    	        url:"http://localhost:8080/DemoFB/webapi/user/retrive",
+    	        dataType: "JSON",  //expect response of this type
+    	        data: foo,
+                  
+                  success: function(response){  
+                      // we have the response  
+                      if(response!=null){
+                   	  // alert("data fetched");
+                   	   var obj = JSON.parse(JSON.stringify(response));
+                   	   //alert(obj.emailID);
+                   	   //alert(obj.fname);
+                   	   //alert(obj.highschool);
+                       	   document.getElementById("userName").innerHTML=obj.fname+" "+obj.lname;
+                      }  
+                      
+                      else
+                   	   {
+                   	  	alert("data cannot be fetched");
+                   	   }
+                    },
+   	    
+         			error: function(e){  
+           					alert('Error121212: ' + e);  
+           					alert(e.toString());
+         			}				
+           
+   	  });
+
+                 	 
+                 	 
+                 	 
+                 	
+                 	
+      	  $("#logoutButton1").click(function(e){
+     		  //alert("logout success");
+         	  // var obj = JSON.parse(JSON.stringify(resp));
+         	   window.location.replace("appHome.html");
+     	           	   	        	
+     	       
+     	   });//logout button ends ends
+     	   
+     	   
+     	   	$.ajax({ 
+                url: "http://localhost:8080/DemoFB/webapi/group/show_my_groups",
+                type: "GET",
+                dataType: "json",
+                contentType : "application/json",
+                crossDomain: true,
+                processData: true,
+                
+                
+                success: function(response){  
+             	   
+                    // we have the response  
+             	   if(response!=null){
+                    var data =JSON.parse(JSON.stringify(response));  
+                     var myGroups;
+             	 
+                   	for (var i=0; i < data.length; i++){
+                   		myGroups+="<div class=\"panel-body\">"; 
+                   		//myGroups+="<a OnClick=\"go_group(this);\">"+data[i].group_name+"</a>";
+                   		myGroups+="<a href=\"groupPage.html\" OnClick=\"go_group(this);\" id=\""+data[i].group_name +"\">"+   data[i].group_name+"</a>"	
+                   		myGroups+="</div>";
+    					     	}
+                 	
+                   	myGroups=myGroups.replace("undefined","");
+                   	alert(myGroups);
+             	   $("#myGroups").html(myGroups);
+            
+                    }  
+                    
+                    else
+                 	   {
+                 	  alert("something wrong");
+                 	   }
+                  },
+    	    
+       			error: function(e){  
+         					alert('Error121212: ' + e);  
+         					alert(e.toString());
+       			}				
+         
+    	  });//ajax call end for get my all groups list
+     	   
+    	  
+     	   window.go_group = function(e1){
+         		 
+     		   var groupID= $(e1).attr('id');
+     		   $.cookie("ID_group",groupID);  
+     		
+     	   }
+    	  
+     	   
+     	   	$.ajax({ 
+                url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
+                type: "GET",
+                dataType: "json",
+                contentType : "application/json",
+                crossDomain: true,
+                processData: true,
+                
+                
+                success: function(response){  
+             	   
+                    // we have the response  
+             	   if(response!=null){
+                    var data =JSON.parse(JSON.stringify(response));  
+                     var allFriends;
+             	 
+                   	for (var i=0; i < data.length; i++){
+                 		 allFriends+="<div class=\"panel-body\">";
+                 		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/tn.jpg\""+" /></div>";
+                 		allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>";
+               // allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  " data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>"; 		
+                 		//  allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID+"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
+                         allFriends+="</div>";
+                 		allFriends+="</div>";
+    					     	}
+                 	
+                 allFriends=allFriends.replace("undefined","");
+             	   $("#allFriends").html(allFriends);
+            
+                    }  
+                    
+                    else
+                 	   {
+                 	  alert("something wrong");
+                 	   }
+                  },
+    	    
+       			error: function(e){  
+         					alert('Error121212: ' + e);  
+         					alert(e.toString());
+       			}				
+         
+    	  });//ajax call end for get my all friends
+    	  
+         	window.go = function(e1){
+       		 
+     		   var friendUserID= $(e1).attr('id');
+     		   $.cookie("ID1",friendUserID);
+     		   //window.location.replace("friendTimeline.html");
+         	  
+     		
+     	   }
+
+    	  
+    	  $("#search").click(function(e){
+     	    var key=$("input#srch-term").val();
+            $.cookie("key",key);
+                    
+    	   });//search button ends ends
+    	   
+
+     	  $("#createGroup").click(function(e){
+      	  
+            // window.location.replace("todoPage.html");
+             var group_name=$("input#group_name").val();
+             $.ajax({
+     	        type: "POST",
+     	        contentType: "text/plain",  //send data to server in this format
+     	        url:"http://localhost:8080/DemoFB/webapi/group/create_group",
+     	        dataType: "text",  //expect response of this type
+     	        data: group_name,
+     	        success: function(resp){
+     	            
+     	            if(resp!=null){
+     	   	                    	 alert("group created");
+     	                    	   window.location.replace("todoPage.html");
+     	            }	
+     	            else
+     	            {
+     	            	alert("group creation failed ");
+     	            	window.location.replace("userHome1.html");
+     	            }	
+     	            
+     	            
+     	        },
+     	        error: function(jqXHR, textStatus, errorThrown){
+     	            alert('logout error: ' + textStatus);
+     	        }
+     	    });
+     	    
+             
+             
+             
+             
+                     
+     	   });//create group button ends ends
+     	    
+    	   
+    	   
+    	   
+    	   
+    	 /*  $("a#openGroupForm").click(function(e) {
+    		      e.preventDefault();
+    		      $("#myModal").dialog({height:300});
+    	   });*/
+    	   
+
+        }); //document ready ends 
+        
+        jQuery(document).ajaxComplete(function () {
+       	 $('[data-toggle="popover"]').popover({placement:'left'})  
+       	}); 
+        
+        </script>
+        
+    </head>
+    
+    <body>
+        
+        <div class="wrapper">
+			<div class="box">
+				  <div class="row row-offcanvas row-offcanvas-right">
+				 
+				
+					<!-- main right col -->
+					<div class="column col-sm-12 col-xs-12" id="main">
+						
+						<!-- top nav -->
+						<div class="navbar navbar-blue navbar-static-top">  
+							<div class="navbar-header">
+							  <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+								<span class="sr-only">Toggle</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							  </button>
+							  <a href="#" class="navbar-brand logo">f</a>
+							</div>
+							<nav class="collapse navbar-collapse " role="navigation" align="center">
+							<form class="navbar-form navbar-left" action="Search.html">
+								<div class="input-group input-group-sm" style="max-width:480px;">
+								  <input class="form-control" placeholder="Search" name="srch-term" id="srch-term" type="text">
+								  <div class="input-group-btn">
+									<button class="btn btn-default" type="submit" id="search" ><i class="glyphicon glyphicon-search"></i></button>
+								  </div>
+								</div>
+							</form>
+							<ul class="nav navbar-nav navbar-center">
+							<li>
+								<a href="timeLine1.html" id="userName"><i class="glyphicon glyphicon-user"></i> User Name</a>
+							  </li>
+							  <li>
+								<a href="userHome1.html"><i class="glyphicon glyphicon-home"></i> Home</a>
+							  </li>
+							  <li>
+								<a href="userFriend.html">Find Friends</a>
+							  </li>
+							  
+							  <li>
+								<a href="todoPage.html" title="Friend Requests"><i class="glyphicon glyphicon-user"></i><span class="badge">9</span></a>
+							  </li>
+							    <li>
+								<a href="todoPage.html" title="Mesages"><i class="glyphicon glyphicon-envelope"></i><span class="badge">3</span></a>
+							  </li>
+							  <li>
+								<a href="todoPage.html" title="Notifications"><i class="glyphicon glyphicon-cloud"></i><span class="badge">5</span></a>
+							  </li>
+							  <li>
+							 	<button type="submit" class="btn btn-default" id="logoutButton1" ">Logout</button>
+							  </li>
+							</ul>
+							
+							</nav>
+						</div>
+						<!-- /top nav -->
+				
+					  
+					  
+						<div class="padding">
+							<div class="full col-sm-12">
+							  
+								<!-- content -->
+								<div class="row">
+				
+								
+									<!-- sidebar -->
+				 	<div class="column col-sm-2 col-xs-2 "   style="background-color: #E9EAED">
+				   
+						 <ul class="nav">
+							<li><a href="#" data-toggle="offcanvas" class="visible-xs text-center"><i class="glyphicon glyphicon-chevron-right"></i></a></li>
+						</ul> 
+					    
+						<ul class="nav hidden-xs" id="xs-menu">
+							
+							<li><a href="todoPage.html"><i class="glyphicon glyphicon-list"></i> News Feed</a></li>
+							<li><a href="todoPage.html"><i class="glyphicon glyphicon-envelope"></i> Message</a></li>
+						</ul>	
+							<b>Explore</b>
+							<ul class="nav hidden-xs see-more" id="xs-menu" >
+							<li><a href="#"><i class="glyphicon glyphicon-refresh"></i> Events</a></li>
+							<li><a href="myGroups.html"><i class="glyphicon glyphicon-refresh"></i> Groups</a></li>
+							<li><a href="todoPage.html"><i class="glyphicon glyphicon-refresh"></i> Pages</a></li>
+											</ul>
+							
+							<div class="accordion-group">
+    							<div id="collapseTwo" class="accordion-body collapse">
+     								 <div class="accordion-inner">
+      									<ul class="nav hidden-xs see-more" id="xs-menu">
+      	    			  					<li><a href="todoPage.html"><i class="glyphicon glyphicon-refresh"></i> Friend List</a></li>
+											<li><a href="todoPage.html"><i class="glyphicon glyphicon-refresh"></i> Pokes</a></li>
+											<li><a href="todoPage.html"><i class="glyphicon glyphicon-refresh"></i> On This Day</a></li>
+											<li><a href="todoPage.html"><i class="glyphicon glyphicon-refresh"></i> Find Friends</a></li>
+											<li><a href="todoPage.html"><i class="glyphicon glyphicon-refresh"></i> Games</a></li>
+											<li><a href="todoPage.html"><i class="glyphicon glyphicon-refresh"></i> Suggested/Edit</a></li>
+										</ul>	
+      
+     								 </div>
+    							</div>
+    							<div class="accordion-heading">
+      								<ul class="nav hidden-xs see-more" id="xs-menu">
+      								<li><a class="accordion-toggle" id = "see-more" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo"> See More ...
+      								</a>
+      								</li>
+      								</ul>
+      								
+    							</div>
+  							</div>
+							<br>
+							
+							<b>Create</b>
+							<br>
+							<ul class="nav hidden-xs" id="xs-menu">
+							
+				<input type="button" id ="popup1" class="btn btn-primary" value="Ad" data-toggle="modal" data-target="">	</br>		
+				<input type="button" id ="popup2" class="btn btn-primary" value="Page" data-toggle="modal" data-target=""></br>
+				<input type="button" id ="popup3" class="btn btn-primary" value="Group" data-toggle="modal" data-target="#groupModal"></br>
+				<input type="button" id ="popup4" class="btn btn-primary" value="Event" data-toggle="modal" data-target="">
+							
+							
+						</ul>
+						<!-- <ul class="list-unstyled hidden-xs" id="sidebar-footer" style="background-color: #E9EAED">
+							<li>
+							  <a href="http://usebootstrap.com/theme/facebook"><h3>Bootstrap</h3> <i class="glyphicon glyphicon-heart-empty"></i> Bootply</a>
+							</li>
+						</ul> -->
+					  
+						<!-- tiny only nav-->
+					   <ul class="nav visible-xs" id="lg-menu">
+							<li><a href="#featured" class="text-center"><i class="glyphicon glyphicon-list-alt"></i></a></li>
+							<li><a href="#stories" class="text-center"><i class="glyphicon glyphicon-list"></i></a></li>
+							<li><a href="#" class="text-center"><i class="glyphicon glyphicon-paperclip"></i></a></li>
+							<li><a href="#" class="text-center"><i class="glyphicon glyphicon-refresh"></i></a></li>
+							<li><a href="#" class="text-center"><i class="glyphicon glyphicon-refresh"></i></a></li>
+							<li><a href="#" class="text-center"><i class="glyphicon glyphicon-refresh"></i></a></li>
+							<li><a href="#" class="text-center"><i class="glyphicon glyphicon-refresh"></i></a></li>
+							<li><a href="#" class="text-center"><i class="glyphicon glyphicon-refresh"></i></a></li>
+							<li><a href="#" class="text-center"><i class="glyphicon glyphicon-refresh"></i></a></li>
+							<li><a href="#" class="text-center"><i class="glyphicon glyphicon-refresh"></i></a></li>
+							<li><a href="#" class="text-center"><i class="glyphicon glyphicon-refresh"></i></a></li>
+							<li><a href="#" class="text-center"><i class="glyphicon glyphicon-refresh"></i></a></li>
+						</ul>
+					  
+					</div>
+					<!-- /sidebar -->
+				  
+				
+				
+				
+								  
+								 <!-- main col left --> 
+								 <div class="col-sm-7 col-xs-7">
+								   <div class="pre-scrollable" style="background-color: #d8dfea;margin-bottom:.5cm; margin-top:.5cm; min-height:95%;">   
+									   <div class="panel panel-default">
+										 <div class="panel-heading"><h4>My Groups</h4></div>
+										 	<div id="myGroups"></div>
+  	                                            
+										
+									   </div>
+									</div>
+									 										
+								   
+								  </div>
+								  
+								  
+								  
+								  
+								  
+								   <!-- main col right -->
+								  <div class="col-sm-3 col-xs-3" >
+									<div class="pre-scrollable" style="background-color: #d8dfea;margin-bottom:.5cm; margin-top:.5cm; min-height:95%;">   
+									   <div class="panel panel-default">
+										 <div class="panel-heading"><h4>My Friends</h4></div>
+										 	<div id="allFriends"></div>
+  	                                            <p id="allFriends"></p>
+										
+									   </div>
+									</div>
+									   
+									
+								  </div>
+								  
+								  
+								  
+							   </div><!--/row-->
+							  
+							  
+							  
+							</div><!-- /col-9 -->
+						</div><!-- /padding -->
+					</div>
+					<!-- /main -->
+				  
+				</div>
+			</div>
+		</div>
+
+
+		<!--post modal-->
+		 <div id="postModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog">
+		  <div class="modal-content">
+			  <div class="modal-header">
+			 
+				  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Hide</button>
+					Update Status
+			  </div>
+			  <div class="modal-body">
+				  <form class="form center-block">
+					<div class="form-group">
+					  <textarea class="form-control input-lg" autofocus="" placeholder="What do you want to share?"></textarea>
+					</div>
+				  </form>
+			  </div>
+			  <div class="modal-footer">
+				  <div>
+				  <button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Post</button>
+					<ul class="pull-left list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
+				  </div>	
+			  </div>
+		  </div>
+		  </div>
+		</div> 
+		
+		
+		        <div id="groupModal" class="modal fade" role="dialog">
+  <div class="modal-dialog" >
+
+    <!-- Modal content-->
+<form action="" id="updateInfo">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Create group here</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+        <br>
+        <div class="form-group">
+          <label for="group_name" >Group Name:</label>
+          <input type="text"  id="group_name" style="margin-left:10px;">
+        </div>
+        <br>     
+    </div>
+       
+      <div class="modal-footer">
+       <input type="button" id ="createGroup" class="btn btn-primary" value="Create group" data-dismiss="modal" >
+       <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+      </div>
+    
+       </form>
+    </div>
+
+  </div>
+		
+		
+        
+        <script type="text/javascript" src="assets/js/jquery.js"></script>
+        <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function() {
+			$('[data-toggle=offcanvas]').click(function() {
+				$(this).toggleClass('visible-xs text-center');
+				$(this).find('i').toggleClass('glyphicon-chevron-right glyphicon-chevron-left');
+				$('.row-offcanvas').toggleClass('active');
+				$('#lg-menu').toggleClass('hidden-xs').toggleClass('visible-xs');
+				$('#xs-menu').toggleClass('visible-xs').toggleClass('hidden-xs');
+				$('#btnShow').toggle();
+				
+			});
+			
+			 $("#see-more").click(function() {
+		            $(this).hide();
+		        });
+        });
+        
+        
+        </script>
+</body></html>

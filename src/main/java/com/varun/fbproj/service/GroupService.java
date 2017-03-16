@@ -1,9 +1,12 @@
+
 package com.varun.fbproj.service;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.varun.fbproj.model.Comment;
 import com.varun.fbproj.model.Group;
 import com.varun.fbproj.model.Status;
 import com.varun.fbproj.model.User;
@@ -223,45 +226,132 @@ public class GroupService {
 	
 	
 	 public  static ArrayList<Status> getStatusByGroup(String group_name){
-    
-		 String result;
 		 DBAccess db= new DBAccess();
-	boolean check=false;
-	try{
-	  while(check!=true){
-		  System.out.println("trying connection in getStatusByUser");
-		 check= db.start();
-	  }
-	  String sql="select * from status where group_name= ?";
-	 
-	  PreparedStatement pstmnt=db.con.prepareStatement(sql);
-	  pstmnt.setString(1,group_name); // user_id is the one sent in paramater
-	  ResultSet rs= pstmnt.executeQuery();
-	  ArrayList<Status> status_list= new ArrayList<Status>();
-	  if(rs!=null){
-		  
-		  while (rs.next()) {
-				Status status_obj = new Status();
-				status_obj.setStatusID(rs.getInt(1));
-				status_obj.setStatus_desc(rs.getString(2));
-				status_obj.setCreated(String.valueOf(rs.getTimestamp(3)));
-				status_obj.setEmailID(rs.getString(4));
-				status_obj.setFlag(rs.getInt(5));
-				status_obj.setGroup_name(rs.getString(6));
-				status_list.add(status_obj);	
-			}
-	  }
-	  else{
-		  System.out.println("resultset empty");
-	  }
-	  db.stop();
-	  return status_list;
-	}
-	catch(Exception e){
-		
-	}
+		 
+		 //group_name="patel ka group";
+			String rs1;
+			boolean check=false;
+		    String emailID="";
+
+		    try{
+				  while(check!=true){
+					  System.out.println("trying connection in getStatus");
+					 check= db.start();
+				  }
+		    
+				  String query1="select * from status where group_name= ?";	   
+				  PreparedStatement pstmnt=db.con.prepareStatement(query1);
+				  pstmnt.setString(1,group_name); // user_id is the one sent in paramater
+				  ResultSet rs= pstmnt.executeQuery();
+				  ArrayList<Status> statusArrayList = new ArrayList<Status>();				  
+				  
+				  
+		        while (rs.next())
+		        {   System.out.println("inside first result set");
+		        	Status status_obj = new Status();
+					status_obj.setStatusID(rs.getInt(1));
+					status_obj.setStatus_desc(rs.getString(2));
+					status_obj.setCreated(String.valueOf(rs.getTimestamp(3)));
+					emailID=rs.getString(4);
+					status_obj.setEmailID(rs.getString(4));
+					status_obj.setFlag(rs.getInt(5));
+					//statusArrayList.add(status_obj);	
+					status_obj.setGroup_name(rs.getString(6));	
+		         
+					  String query11="select fname,lname from User where emailID=?";	   
+					  PreparedStatement pstmnt11=db.con.prepareStatement(query11);
+					  pstmnt11.setString(1,emailID); // user_id is the one sent in paramater
+					  ResultSet rs11= pstmnt11.executeQuery();
+					  rs11.next();
+					  status_obj.setName(rs11.getString("fname")+" "+ rs11.getString("lname"));
+					System.out.println("name =  "+status_obj.getName());
+					
+					
+					
+		            ArrayList<Comment> commentArrayList = new ArrayList<Comment>();
+		            Comment comment_obj;
+	                int stID=rs.getInt(1);
+	                System.out.println("*****"+stID+"***");
+	                
+	                /**********LIKES************************/
+		            String query3="select count(likeID) from likes where statusID=? and flag=1"; 
+					  PreparedStatement pstmnt3=db.con.prepareStatement(query3);
+					  pstmnt3.setInt(1,stID); // user_id is the one sent in paramater
+					  ResultSet rs3= pstmnt3.executeQuery();
+					  
+		             while(rs3.next())
+		             {   System.out.println("Inside rs3. while ");
+		            	 status_obj.setLikesCount(rs3.getInt(1)); 
+		            	 System.out.println("likes............: "+status_obj.getLikesCount());
+		             }
+
+		             /**********UNLIKES************************/
+			            String query31="select count(likeID) from likes where statusID=? and flag=0"; 
+						  PreparedStatement pstmnt31=db.con.prepareStatement(query31);
+						  pstmnt31.setInt(1,stID); // user_id is the one sent in paramater
+						  ResultSet rs31= pstmnt31.executeQuery();
+						  
+			             while(rs31.next())
+			             {   System.out.println("Inside rs31. while ");
+			            	 status_obj.setUnlikes_count(rs31.getInt(1)); 
+			            	 System.out.println("unlikes............: "+status_obj.getUnlikes_count());
+			             }
+		             
+	                /*********Comments************/
+		            String query2 = "select * from comments where statusID = ?";
+
+		            PreparedStatement pstmnt2=db.con.prepareStatement(query2);
+					 pstmnt2.setInt(1,stID); // user_id is the one sent in paramater
+					 ResultSet rs2= pstmnt2.executeQuery();
+					 rs2.last();
+					 int rows = rs2.getRow();
+					 rs2.beforeFirst();
+					 System.out.println("row count:"+rows);
 	
-	 return  null;
+		            while (rs2.next())
+		            {   
+		            	comment_obj=new Comment();
+		            	System.out.println("inside second result set");
+		                
+		                comment_obj.setCommentID(rs2.getInt(1));
+		                comment_obj.setEmailID(rs2.getString(3));
+						comment_obj.setComment_desc(rs2.getString(4));
+						comment_obj.setFlag(rs2.getInt(5));
+						
+						String query12="select fname,lname from User where emailID=?";	   
+						  PreparedStatement pstmnt12=db.con.prepareStatement(query12);
+						  pstmnt12.setString(1,comment_obj.getEmailID()); // user_id is the one sent in paramater
+						  ResultSet rs12= pstmnt12.executeQuery();
+						  rs12.next();
+						  comment_obj.setName(rs12.getString("fname")+" "+ rs12.getString("lname"));
+		                   
+		                commentArrayList.add(comment_obj);   
+		                for(Comment clist:commentArrayList){
+		                	System.out.print("comment list contains "+clist.getComment_desc()+" "+clist.getCommentID()+",");
+		                }
+		                System.out.println();
+		            }//inner while ends
+		           
+	                System.out.println("Caling comment class method");
+		            status_obj.setA(commentArrayList);		          
+		            statusArrayList.add(status_obj);    
+		        }//outer while ends
+		        db.stop();
+		        
+		        java.util.Iterator<Status> itr=statusArrayList.iterator();  
+		        while(itr.hasNext()){  
+		        	System.out.println("inside iterator");
+		         System.out.println(itr.next());  
+		        }
+		        return statusArrayList;
+		    } 
+		    catch (SQLException e) 
+		    {
+		        e.printStackTrace();
+		    }
+		   
+
+		    return null;
  }//method getStatusByGroup ends here
 
 	

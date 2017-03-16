@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
  <script type="text/javascript" src="Jquery/jquery-3.1.1.js"></script>
  <script type="text/javascript" src="Jquery/jquery.cookie.js"></script>
-  <link href="bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/css/bootstrap.css" rel="stylesheet">
         <link href="assets/css/facebook.css" rel="stylesheet">
         
@@ -14,6 +14,26 @@
   <script type="text/javascript" src="Jquery/jquery.popupoverlay.js"></script>
   <style>
   label { width: 100px; }
+ .img-container {
+        position: absolute;
+    top: 160px; bottom: 10px; left: 10px; right: 10px; //to place it as you want.
+
+}
+.img-container1 {
+        position: absolute;
+    top: 300px; bottom: 10px; left:660px; right: 10px; //to place it as you want.
+
+}
+.img-container2 {
+        position: absolute;
+    top: 300px; bottom: 10px; left:230px; right: 10px; //to place it as you want.
+
+}
+
+.img-text {
+    width: 100%;
+    display: block;
+}
   </style>
   
 
@@ -74,12 +94,12 @@ $(document).ready(function() {
                        success: function(response){  
 	                       // we have the response  
 	                       if(response!=null){
-	                    	  // alert("data fetched");
+	                    	  /// alert("data fetched");
 	                    	   var obj = JSON.parse(JSON.stringify(response));
-	                    	   //alert(obj.emailID);
+	                    	  // alert(obj.emailID);
 	                    	   //alert(obj.fname);
-	                    	   //alert(obj.highschool);
-	                    	       document.getElementById("email").innerHTML=obj.emailID;
+	                    	//   alert(obj.highschool);
+	                    	        document.getElementById("email").innerHTML=obj.emailID;
 	                    	       document.getElementById("School").innerHTML=obj.highschool;
 	                    	       document.getElementById("name").innerHTML=obj.fname+" "+obj.lname;
 		                    	   document.getElementById("DOB").innerHTML= obj.date;
@@ -96,18 +116,18 @@ $(document).ready(function() {
 		                    	   document.getElementById("hometown").defaultValue =obj.hometown;
 		                    	   document.getElementById("workcity").defaultValue =obj.cityOfWork;
 		                    	   document.getElementById("userName").innerHTML=obj.fname+" "+obj.lname;
-
+									 //alert(obj.emailID);
 		                    	   var email=obj.emailID;
-		                           var path="users/"+email+"/tn.jpg";
+		                           var path="users/"+email+"/profilePic.jpg";
 		                           //alert(path);
 		                           $("#image").attr('src', path);
 		                           //window.location.replace("timeLine1.html");
 		                    	  
 
-		                           var email=obj.emailID;
-		                           var path="users/"+email+"/tn.jpg"
-		                           alert(path);
-		                           $("#image").attr('src', path);
+		                           
+		                           var path1="users/"+email+"/cover.jpg"
+		                           //alert(path1);
+		                           $("#cover").attr('src', path1);
 
 	                       }  
 	                       
@@ -143,7 +163,7 @@ $(document).ready(function() {
          	 
                	for (var i=0; i < data.length; i++){
              		 allFriends+="<div class=\"panel-body\">";
-             		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/tn.jpg\""+" /></div>";
+             		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
              		allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>";
            // allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  " data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>"; 		
              		//  allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID+"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
@@ -264,7 +284,7 @@ window.go = function(e1){
 	            else
 	            {
 	            	alert("update failed.. ")
-	            	window.location.replace("timeLine1.html");
+	            	window.location.replace("tm.html");
 	            }	
 	            
 	            
@@ -273,52 +293,328 @@ window.go = function(e1){
 	            alert('logout error: ' + textStatus);
 	        }
 	    });
-	    
-	    
-	    
-	    var modalform1 = $('#uploadPic');
-	       modalform1.submit(function() {
-	       var fd1 = new FormData($('#uploadPic')[0]);
-	       console.log(fd1);
-	       //alert("uploading");
-	       $.ajax({
-	       type : modalform1.attr('method'),
-	       url : modalform1.attr('action'),
-	       data : fd1,
-	       enctype : 'multipart/form-data',
-	       processData : false, // Important!
-	       contentType : false,
-	       cache : false,
-	       success : function(data) {
-	       console.log(data);
-	       if (data) {
+	           	
 
-	     alert(data);  
+	        	
+	    	    
 	    
-	       } else {
-	       alert("Try Again");
-	       }
-	       
-	       },//success
-	       });  //ajax call ends
-	       }); //modal fun ends
-
 	    
+	   
 
-    
 	   });//update button ends ends
+	   var modalform1 = $('#uploadPic');
+		  modalform1.submit(function() {
+		  var fd1 = new FormData($('#uploadPic')[0]);
+		  console.log(fd1);
+		  alert("uploading");
+		  $.ajax({
+		  type : modalform1.attr('method'),
+		  url : modalform1.attr('action'),
+		  data : fd1,
+		  enctype : 'multipart/form-data',
+		  processData : false, // Important!
 
-	   
-   	
+		  contentType : "text",
+		  cache : false,
+		  success : function(data) {
+		 
+		  if (data) {
+			  alert("runin");
+		  window.location.replace("timeLine1.html");
+
+  
+
+		  } else {
+		  alert("Try Again");
+		  }
+		  },
+
+		  
+		  });  		
+		  });
+		  $.ajax({ 
+              url: "http://localhost:8080/DemoFB/webapi/status/getAllStatus",
+              type: "GET",
+              dataType: "json",
+              contentType : "application/json",
+              crossDomain: true,
+              processData: true,
+              
+              
+              success: function(response){  
+           	   
+                  // we have the response  
+           	   if(response!=null){
+                  var data =JSON.parse(JSON.stringify(response));  
+                  
+                  //console.log(data);
+                  
+                  var st;
+                  var fname,lname;
+                  for (var i=0; i < data.length; i++){
+               	   
+               	   var email =data[i].emailID; 
+               	  
+               	   
+               	   
+               	   st+="<div class="+"\"panel panel-default\""+">";
+               	   st+="<div class="+"\"panel-body\""+"id=\"forcomment\""+">";
+               	   st+="<div class="+"\"row\""+">";
+               	   st+="<div class="+"\"col-md-12\""+">";
+               	   
+               	   st+="<p><font size="+"\"5\""+"color="+"\"blue\""+">"+data[i].name+"</font></p>" ;
+               	   /* $(status_name).appendTo('#text_color');
+               	   document.getElementById("forstatus").style.color="blue"; */
+               	 	st+="<hr>";
+               	   st+="<p id="+"\"forstatus\""+">"+data[i].status_desc+"</p>" ;
+               	   st+="</div></div><hr>";
+               	   st+="<div class="+"\"row\""+">";
+               	   st+="<div class="+"\"col-md-12\""+">";
+               	   st+="<ul class="+"\"list-inline\""+">";
+               	   st+="<li>";
+               	   st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+" OnClick=\"like(this);\"><span class="+"\"glyphicon glyphicon-thumbs-up\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Like</font></a>";
+               	   st+="</li>";
+               	   st+="<li>";
+               	   st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+" OnClick=\"unlike(this);\""+"><span class="+"\"glyphicon glyphicon-thumbs-down\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Unlike</font></a>";
+               	   st+="</li>";
+               	   st+="<li>";
+               	   st+= "<a href="+"\"#\""+ "id=\""+data[i].statusID+"\""+"><span class="+"\"glyphicon glyphicon-comment\"" +"style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Comment</font></a>";
+               	   st+="</li></ul></div></div>";
+               	   st+="</div>";
+               	   st+="<div class="+"\"panel-footer\"" +"id="+"\"o\""+">";
+               	   st+="<div class="+"\"row\""+">";
+               	   st+="<div class="+"\"col-md-12\""+">";
+               	   st+="<p id="+"\"likescount\""+">"+data[i].likesCount+"Likes"+"  "+data[i].unlikes_count+"Unlikes"+"</p><br></div></div>";
+               	   
+               	   st+="<hr>";
+               	   
+               	   st+="<div class="+"\"pre-scrollable\""+" style="+"\"height:100px;\""+">";
+               	   for(var j=0;j<data[i].a.length;j++)
+           		  
+               			   
+           		   {
+               		   st+= "<p id="+"\"outputname\""+"><font size="+"\"3\""+"color="+"\"blue\""+">"+data[i].a[j].name+"</font></p>"; 
+               	   st+= "<p id="+"\"output\""+">"+data[i].a[j].comment_desc+"</p>";
+               	   st+="<br>";
+               	   st+="<hr>";
+           		   }
+               	   st+="</div>";
+           		   
+               	   st+="<ul>";
+               	   st+="<li class="+"\"media\""+">";
+               	   st+="<div class="+"\"media-body\""+">";
+               	   st+="<div class="+"\"input-group\""+">";
+               	   st+="<input type="+"\"text\""+" class="+"\"form-control\""+" id=\"comment_d"+data[i].statusID+"\""+" placeholder="+"\"Write a comment...\""+">";
+                      st+="<span class="+"\"input-group-btn\""+">";
+                  		st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].statusID+"\""+" OnClick=\"comment(this);\">Post Comment</button>";
+                  		st+="</span>";
+                  		st+="</div>";
+                  		st+="</div>";
+                  		st+="</li>";
+                  		st+="</ul>";
+                  		st+="</div>";
+                  		st+="</div>";
+                       
+                      
+                      
+                 
+                  st=st.replace("undefined","");
+           	   $("#abcd").html(st);
+                  
+           	   }    //outer for ends        
+           	   }//if ends 
+           	   },//success ends  
+
+           	 
+			error: function(e){  
+				alert('Error121212: ' + e);  
+				alert(e.toString());
+		}		
+       
+	  }); //ajax call ends
+  	
+		
+			 window.like = function(e1){
+				 
+				   var statusid= $(e1).attr('id');
+				   alert("cccacacaca"+statusid);
+				   var sid={statusID:statusid};
+				   var myJSON=JSON.stringify(sid);
+				   //alert(statusid);
+				   
+				   
+				   $.ajax({ 
+           url: "http://localhost:8080/DemoFB/webapi/status/incrementLike",
+           type: "POST",
+           dataType: "text",
+           contentType : "application/json",
+           data : myJSON,
+           crossDomain: true,
+           processData: true,
+           
+           
+           success: function(response){  
+        	   
+               // we have the response  
+        	   if(response!=null){
+       
+
+        	   }
+        	   else{
+        		   }
+        	   
+			},
+			error: function(e){  
+				alert('Error in like: ' + e);  
+				alert(e.toString());
+		}				
+
+}); 
+
+}//like fun ends
+
+			 
+			 window.unlike = function(e1){
+				 
+				   var statusid= $(e1).attr('id');
+				   var sid={statusID:statusid};
+				   var myJSON=JSON.stringify(sid);
+				   //alert(statusid);
+				   
+				   
+				   $.ajax({ 
+         url: "http://localhost:8080/DemoFB/webapi/status/decrementLike",
+         type: "POST",
+         dataType: "text",
+         contentType : "application/json",
+         data : myJSON,
+         crossDomain: true,
+         processData: true,
+         
+         
+         success: function(response){  
+      	   
+             // we have the response  
+      	   if(response!=null){
+     
+      		   //alert(response);
+      	   }
+      	   
+      	   
+			},
+			error: function(e){  
+				alert('Error121212: ' + e);  
+				alert(e.toString());
+		}				
+
+}); 
+}//unlike fun ends
+
+			 
+			 
+			 
+
+
+			 window.comment = function(e1){
+				 
+				   var statusid= $(e1).attr('id');
+				   var chk="comment_d";
+				   chk+=statusid;
+				  // alert(chk);
+				   var comment_desc=document.getElementById(chk).value;
+				   
+				  /*  alert(statusid);*/
+				   //alert("comment"+comment_desc); 
+				   var sid={statusID:statusid,comment_desc:comment_desc};
+				   var myJSON=JSON.stringify(sid);
+				   //alert(statusid);
+				   
+			   
+				   $.ajax({ 
+           url: "http://localhost:8080/DemoFB/webapi/status/addComment",
+           type: "POST",
+           dataType: "text",
+           contentType : "application/json",
+           data : myJSON,
+           crossDomain: true,
+           processData: true,
+           
+           
+           success: function(response){  
+        	   
+               // we have the response  
+        	   if(response!=null){
+        		  $('#comment_d').val('');
+        		   //alert(response);
+        		  location.reload();
+        	   }
+        	   else{
+        		   }
+        	   
+			},
+			error: function(e){  
+				alert('Error121212: ' + e);  
+				alert(e.toString());
+		}				
+
+}); 
+}
+	     	 $("#postbutton").click(function(e){
+         		 
+         		 
+          		var statusdesc= document.getElementById("posttext").value;
+          		 //alert(x);
+          		 $.ajax({
+	        type: "POST",
+	        contentType: "text/plain",  //send data to server in this format
+	        url:"http://localhost:8080/DemoFB/webapi/status/addStatus",
+	        dataType: "text",  //expect response of this type
+	        data: statusdesc,
+	       success: function(resp){
 	    	   
-	   
-	   
+	    	  if(resp!=null){
+	    		  
+	    		 // alert(resp);
+	    		 $('#posttext').val('');
+	    		location.reload();
+	    		  
+	    	  }
+	    	  else{
+	    		
+	    		  alert("null");
+	    	  }
+	    	   
+	       },
+	       
+	      error: function(jqXHR, textStatus, errorThrown){
+            alert('status posting error: ' + textStatus);
+        }	 
+          		 
+          		 
+          		 });    		 
+          		 
+          	 });      	
+          	
+          	 
+          	 
+          	$("#comment").click(function(){
+          	    /* $(this).next("#forcomment").slideToggle(200)
+          	           .find("comment_d").focus(); */
+
+          	           
+          	           
+          	    return false;
+          	});
+          	 
+
+
 	});//document ready ends
 	
 	
 	jQuery(document).ajaxComplete(function () {
 		 $('[data-toggle="popover"]').popover({placement:'left'})  
 		}); 
+	
 
 </script>
 
@@ -327,102 +623,147 @@ window.go = function(e1){
 
 </head>
 <body> 
+<div class="container-fluid ">
 
-<div class="wrapper">
-			<div class="box">
-				  <div class="row row-offcanvas row-offcanvas-right">
-				 
-				
-					<!-- main right col -->
-					<div class="column col-sm-12 col-xs-12" id="main">
+<div class="row row-fluid">
+<div class=" col-sm-12 col-xs-12 " id="main">
 						
 						<!-- top nav -->
-						<div class="navbar navbar-blue navbar-static-top">  
-							<div class="navbar-header">
-							  <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
-								<span class="sr-only">Toggle</span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-							  </button>
-							  <a href="#" class="navbar-brand logo">f</a>
-							</div>
-							<nav class="collapse navbar-collapse " role="navigation" align="center">
-							<form class="navbar-form navbar-left" action="Search.html">
-								<div class="input-group input-group-sm" style="max-width:480px;">
-								  <input class="form-control" placeholder="Search" name="srch-term" id="srch-term" type="text">
-								  <div class="input-group-btn">
-									<button class="btn btn-default" type="submit" id="search" "><i class="glyphicon glyphicon-search"></i></button>
-								  </div>
-								</div>
-							</form>
-							<ul class="nav navbar-nav navbar-center">
-							<li>
-								<a href="timeLine1.html" id="userName"><i class="glyphicon glyphicon-user" ></i></a>
-							  </li>
-							  <li>
-								<a href="userHome1.html"><i class="glyphicon glyphicon-home"></i> Home</a>
-							  </li>
-							  <li>
-								<a href="userFriend.html">Find Friends</a>
-							  </li>
-							  
-							  <li>
-								<a href="todoPage.html" title="Friend Requests"><i class="glyphicon glyphicon-user"></i><span class="badge">9</span></a>
-							  </li>
-							    <li>
-								<a href="todoPage.html" title="Mesages"><i class="glyphicon glyphicon-envelope"></i><span class="badge">3</span></a>
-							  </li>
-							  <li>
-								<a href="todoPage.html" title="Notifications"><i class="glyphicon glyphicon-cloud"></i><span class="badge">5</span></a>
-							  </li>
-							</ul>
-							<ul class="nav navbar-nav navbar-right">
-							<li>
-							<button type="submit" class="btn btn-primary" id="logoutButton1">Logout</button>
+						   <div class="navbar navbar-blue navbar-static-top">  
+                            <div class="navbar-header">
+                              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="sr-only">Toggle</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                              </button>
+                              <a href="#" class="navbar-brand logo">f</a>
+                            </div>
+                            <nav class="collapse navbar-collapse " role="navigation" align="center">
+                            <form class="navbar-form navbar-left" action="Search.html">
+                                <div class="input-group input-group-sm" style="max-width:480px;">
+                                  <input class="form-control" placeholder="Search" name="srch-term" id="srch-term" type="text">
+                                  <div class="input-group-btn">
+                                    <button class="btn btn-default" type="submit" id="search"><i class="glyphicon glyphicon-search"></i></button>
+                                  </div>
+                                </div>
+                            </form>
+                            <ul class="nav navbar-nav navbar-center">
+                            <li>
+                                <a href="timeLine1.html" id="userName"><i class="glyphicon glyphicon-user"></i> User Name</a>
+                              </li>
+                              <li>
+                                <a href="userHome1.html"><i class="glyphicon glyphicon-home"></i> Home</a>
+                              </li>
+                              <li>
+                                <a href="userFriend.html"><i class="glyphicon glyphicon-user"></i> Find Friends</a>
+                              </li>
+                              <li>
+                                <a href="todoPage.html" title="Friend Requests"><i class="glyphicon glyphicon-user"></i><span class="badge">9</span></a>
+                              </li>
+                                <li>
+                                <a href="todoPage.html" title="Mesages"><i class="glyphicon glyphicon-envelope"></i><span class="badge">3</span></a>
+                              </li>
+                              <li>
+                                <a href="todoPage.html" title="Notifications"><i class="glyphicon glyphicon-cloud"></i><span class="badge">5</span></a>
+                              </li>
+                             
+							 <li role="separator" class="divider"></li>
+   
+							<li> <div class="dropdown">
+  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+  <span class="caret"></span></button>
+  <ul class="dropdown-menu">
+    
+    <li><a type="submit" class="" id="logoutButton1">Logout</a></li>
+  </ul>
+</div> 
+							
 							</li>
 							</ul>
-							</nav>
+                           
+                            
+                            </nav>
+                        </div>
+							
+						
 						</div>
-						<!-- /top nav -->
-				
-					  
-					  
-						<div class="padding">
-							<div class="full col-sm-12">
-							  
-								<!-- content -->                      
-								<div class="row">
-				
-								
-									 <!-- main col sidebar left --> 
-								 <div class="col-sm-3 col-xs-3">
+</div>
+
+<div class="row row-fluid">
+<div class=" col-sm-9 col-xs-9" >
+<div class="media ">
+  	<div class="media-left">
+	
+<div class="panel panel-default">
+<div class="panel-body">       										
+<div class="carousel-inner">
+            <div class="item active">
+
+                    <img id="cover" src=""  class=" img-responsive" width="1000" height="400" style="float:left;">    
+                <div class='img-container'>
+                    <div class='img-text'>
+                        <img  class="img-thumbnail" id="image" src="" alt="..."  width="300px" height="300px"/>
+                       
+                    </div>
+
+                </div>  
+                  
+                
+  	<div class="img-container2" >
+  	<div class="img-text offset4">
+  	<div class="dropup">
+  	<button class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  	<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Chnage
+  	<span class="caret"></span>  
+  </button>
+  <ul class="dropdown-menu">
+    <li>
+    <form id="uploadPic"action="http://localhost:8080/DemoFB/webapi/user/uploadProfilePic" method="post" enctype="multipart/form-data">
+		<p id="uploadPhoto">
+		Change profile pic:<input type="file" name="file" size="45" onchange="this.form.submit()" class="filestyle" data-classButton="btn btn-primary" data-input="false" data-classIcon="icon-plus" data-buttonText="Your label here."/>
+		</p>
+		<input type="text" name="userId" id="PhotoId"  style="display: none;">
+		
+    </form>
+    </li>
+   
+    </ul>
+  	</div></div></div>
+  	<div class="img-container1" >
+  	<div class="img-text offset4">
+  	<a class="btn btn-default active" href="timeLine1.html">TimeLine</a>
+  	<a class="btn btn-default" href="todoPage.html">About</a>
+  	<a class="btn btn-default" href="todoPage.html">Photos</a>
+  	</div></div></div>
+  </div>  </div>    </div>    </div>
+    </div></div></div>
+    <!-- cover pic profile pic ends here -->
+    <div class=" col-sm-3 col-xs-3 affix" style="float:right; left:970px; top:20px;" >
+    	 <br>
+	   <div class="panel panel-default" style="float:right; left:970px; top:30px; min-height: 2000px">
+	   <div class="panel-heading"><h4>My Friends</h4></div>
+		<div class="pre-scrollable" style="max-height:580px;overflow-y: scroll;">   
+		<p id="allFriends"></p>
+			</div>
+		  </div>			    
+		</div>
+    <!-- friends ends here -->
+    <div class="row row-fluid">
+     <div class="col-sm-3 col-xs-3">
 								 	  <div class="panel panel-default">
 										<div class="panel-heading"><h4>Personal Information</h4></div>
 										
 										    <div class="panel-body">
 											
 											<div class="media">
-      										<div class="media-left">
-        										 <img id="image" src=" "  class="media-object" style="width:100px"> 
-      										</div>
       										<div class="media-right">
       										<h4 class="media-heading" id="name"></h4>
        
       										
-											
-										    	 <form id="uploadPic"action="http://localhost:8080/DemoFB/webapi/user/uploadProfilePic" method="post" enctype="multipart/form-data">
-												<p id="uploadPhoto">
-												Select a file : <input type="file" name="file" size="45" />
-												</p>
-												<input type="text" name="userId" id="PhotoId"  style="display: none;">
-												<input type="hidden" id="email">
-												<input type="submit" value="Change">
-												
-                                               </form>
-      										</div>
+											</div>
     										</div>
-											<pre width="5" class="media-left">EmailID :</pre><p id="email" class="media-right"></p><br>
+	  <pre width="5" class="media-left">EmailID :</pre><p id="email"></p><br>
       <pre class="media-left">High School :</pre><p id="School" class="media-right"></p><br>
       <pre class="media-left">DOB :</pre><p id="DOB" class="media-right"></p><br>
 	  <pre class="media-left">Mobile :</pre><p id="Mob" class="media-right"></p>      <br>   
@@ -437,192 +778,121 @@ window.go = function(e1){
 											</div>
 										  </div>
 									  </div>
-								   
-									  
-								   
-									  
-
-										
-								   
-								  
-				
-				
-				
-								  
-								 <!-- main col left --> 
-								 <div class="col-sm-3 col-xs-3">
-								   
-									<!-- 	<div class="well"> 
-										   <form class="form-horizontal" role="form">
-											<h4>What's New</h4>
-											 <div class="form-group" style="padding:14px;">
-											  <textarea class="form-control" placeholder="Update your status"></textarea>
-											</div>
-											<button class="btn btn-primary pull-right" type="button">Post</button><ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
-										  </form>
-									  </div>
-								   
-									
-									
-									  <div class="panel panel-default">
-										<div class="panel-thumbnail"><img src="assets/img/bg_5.jpg" class="img-responsive"></div>
-										<div class="panel-body">
-										  <p class="lead">Urbanization</p>
-										  <p>45 Followers, 13 Posts</p>
-										  
-										  <p>
-											<img src="assets/img/uFp_tsTJboUY7kue5XAsGAs28.png" height="28px" width="28px">
-										  </p>
-										</div>
-									  </div> -->
-
-								   
-									  <div class="panel panel-default">
-										<div class="panel-heading"><h4>Friends Categorized</h4></div>
-										  <div class="panel-body">
-											<div class="list-group">
-											  <!-- <a href="http://usebootstrap.com/theme/facebook" class="list-group-item">Modal / Dialog</a>
-											  <a href="http://usebootstrap.com/theme/facebook" class="list-group-item">Datetime Examples</a>
-											  <a href="http://usebootstrap.com/theme/facebook" class="list-group-item">Data Grids</a>
-											 -->
-											 <button type="button" class="btn btn-primary" id="closeFriend">Close friends</button><br>
-         									 <button type="button" class="btn btn-primary" id="acq">Acquaintances</button><br>
-          										<button type="button" class="btn btn-primary" id="family">Family</button><br>
-          										<button type="button" class="btn btn-primary" id="restricted">Restricted</button><br>
-											 
-											 </div>
-										  </div>
-									  </div>
-								   
-								   <div class="panel panel-default">
-										<div class="panel-heading"> <h4>Messenger Window</h4></div>
-										 										  <div class="panel-body">
-										  	<div class="list-group">
- 												<!--  <a href="todoPage.html" class="list-group-item">The Logical Indian</a>
-  												 <a href="todoPage.html" class="list-group-item">C programming</a>
-  												 -->	 <button type="button" class="btn btn-primary" id="addMessage">Add message</button>
-											</div>
-
-										  </div>
-										
-									  </div>
-								   
-									  
-								   
-									  
-
-										
-								   
-								  </div>
-								  
-								  <!-- main col center -->
-								  <div class="col-sm-3 col-xs-3">
-									   
-								
-
-									   <!-- <div class="panel panel-default">
-										 <div class="panel-heading"> <h4>Trending</h4></div>
-										  <div class="panel-body">
-										  	<div class="list-group">
- 												 <a href="todoPage.html" class="list-group-item">Virat Kohli</a>
-  												 <a href="todoPage.html" class="list-group-item">Varun Dhawan</a>
-  												 <a href="todoPage.html" class="list-group-item">David Guetta</a>
-											</div>
-
-										  </div>
-									   </div> -->
-									
-									   <div class="panel panel-default">
-										<div class="panel-heading"> <h4>Suggested Pages</h4></div>
-										 										  <div class="panel-body">
-										  	<div class="list-group">
- 												<!--  <a href="todoPage.html" class="list-group-item">The Logical Indian</a>
-  												 <a href="todoPage.html" class="list-group-item">C programming</a>
-  												 -->	<button type="button" class="btn btn-primary" id="suggestedPages" >See pages Suggested</button>
-											</div>
-
-										  </div>
-										
-									  </div>
-									  
-									  
-									  <div class="panel panel-default">
-										<div class="panel-heading"> <h4>Top Suggestions</h4></div>
-										 										  <div class="panel-body">
-										  	<div class="list-group">
- 												<!--  <a href="todoPage.html" class="list-group-item">The Logical Indian</a>
-  												 <a href="todoPage.html" class="list-group-item">C programming</a>
-  												 -->	<button type="button" class="btn btn-primary" id="inviteButton" >Invites</button>
-											</div>
-
-										  </div>
-										
-									  </div>
-									
-								  </div>
-								  
-								  
-								  
-								   <!-- main col right -->
-								  <div class="col-sm-3 col-xs-3" >
-									   
-									   <div class="panel panel-default">
-										 <div class="panel-heading"><h4>My Friends</h4></div>
-										  <div class="panel-body">
-											<div class="list-group">
-										  <p id="allFriends"></p>
-										  	  </div>
-									   	  </div>
-									   </div>
-									
-									   
-									
-								  </div>
-								  
-								  
-								  
-							   </div><!--/row-->
-							  
-							  
-							  
-							</div><!-- /col-9 -->
-						</div><!-- /padding -->
-					</div>
-					<!-- /main -->
-				  
-				</div>
+	<!-- personal info ends here -->
+	
+	 <div class="col-sm-6 col-xs-6">
+	 							   
+		<div class="well"> 
+		   <form class="form-horizontal" role="form">
+											
+			 <div class="form-group" style="padding:14px;">
+			  <textarea class="form-control" placeholder="What's on your mind!" id="posttext"></textarea>
 			</div>
-		</div>
-
-
-		<!--post modal-->
-		 <div id="postModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-		  <div class="modal-dialog">
-		  <div class="modal-content">
-			  <div class="modal-header">
-			 
-				  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Hide</button>
-					Update Status
-			  </div>
-			  <div class="modal-body">
-				  <form class="form center-block">
-					<div class="form-group">
-					  <textarea class="form-control input-lg" autofocus="" placeholder="What do you want to share?"></textarea>
-					</div>
-				  </form>
-			  </div>
-			  <div class="modal-footer">
-				  <div>
-				  <button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Post</button>
-					<ul class="pull-left list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
-				  </div>	
-			  </div>
+			<button class="btn btn-primary pull-right" type="button" id="postbutton">Post</button><ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
+		   </form>
 		  </div>
-		  </div>
-		</div> 
+								   
+								   
+<div id="abcd">
+  <div class="panel-body" id="forcomment">
+    <!-- Post metadata -->
+    <div class="row">
+      <div class="col-md-10">
+        <div class="media"><!-- for name pic  -->
+        </div>
+      </div>
+      </div>
+    <!-- Post content -->
+    <div class="row">
+      <div class="col-md-12">
+      <p id="status_name"></p>
+       <p id="forstatus"></p>  <!-- status text -->
+      </div>
+    </div>
+  <hr>  
+  <div class="row">
+ <div class="col-md-12">
+   <ul class="list-inline">
+     <li>
+     <a href="#thumbs-up"><span class="glyphicon glyphicon-thumbs-up" style="color:#3b5998"></span> <font color="#3b5998">Like</font></a>
+     </li>
+      <li>
+     <a href="#thumbs-up"><span class="glyphicon glyphicon-thumbs-down" style="color:#3b5998"></span> <font color="#3b5998">Unlike</font></a>
+     </li>
+     <li>
+     <a href="#" id="comment"><span class="glyphicon glyphicon-comment" style="color:#3b5998"></span> <font color="#3b5998">Comment</font></a>
+     </li>
+     
+   </ul>
+ </div>
+  </div>
+ </div> <!--  div of panel body for status update 1 -->
+ <!-- panel body footer -->
+ <div class="panel-footer" id="o">
+ <div class="row">
+   <div class="col-md-12">  
+      <p id="likescount"></p>
+      
+      <br>
+   </div> 
+   
+  </div>
+  
+  
+  <hr>
+  <div class="pre-scrollable" style="height:100px;">
+
+        <p id="output_name"></p>
         
+       <p id="outputname"></p>
+
+       <p id="output"></p>
+       <br>
+       <hr>
+     
+  </div> 
+   
+   <ul>
+   <li class="media">
+      <div class="media-body">
+        <div class="input-group">
+          <input type="text" class="form-control" id="comment_d" placeholder="Write a comment...">
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-primary pull-right" id="commentAdd">
+              Post Comment
+            </button>
+          </span>
+        </div>
+      </div>
+    </li>
+   </ul>
+   
+  
+ 
+  
+</div>
+ 
+ 
+ 
+</div> 
+</div>
+								  
+								   
+    
+    </div>
+    
+    
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
         
-        <div id="myModal" class="modal fade" role="dialog">
+<div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog" >
 
     <!-- Modal content-->
@@ -715,318 +985,6 @@ window.go = function(e1){
         </script>
 
 
-<!-- 
-<div class="row">
-  <nav class="navbar navbar-default" style="background-color:#3b5998; min-height:80px;">
-  <div class="container-fluid">
-    <form class="navbar-form navbar-left">
-        <div class="form-group">
-          <img src="Facebook-logo.jpg" alt="facebook_logo" width="200" height="100" style="margin-left:200px">
-        </div>
-      </form>
-
-     <form class="navbar-form navbar-right" id="logoutForm">     
-        <button type="submit" class="btn btn-default" id="findFriendButton" style="margin-top:40px">Find Friends</button>
-        <button type="submit" class="btn btn-default" id="logoutButton1" style="margin-top:40px">Logout</button>
-        
-      </form>
-    </div>
-
-</nav>
-
-</div>
-
-
-
-1st row ends here
-
-<div class="row col-xs-12" >
-  <div class="col-xs-4">
-<div class="container">
-  <div class="panel panel-default">
-    <div class="panel-body">
-      
-      <nav class="navbar navbar-default" style="background-color:white;min-height:500px; background-color:#e1e8ed;">
-      <h3 style="color: black; margin-right:6em; margin-top:0px"><i class="fa fa-shield"></i>Personal info</h3>
-  <div class="container-fluid">
-    
-      Left-aligned
-    <div class="media">
-      <div class="media-left">
-        <img src="img_avatar1.png" class="media-object" style="width:60px">
-      </div>
-      <div class="media-right">
-      <h4 class="media-heading" id="name"></h4>
-       
-      </div>
-    </div>
-      
-      <div class="media-body" id="userInfo">
-      
-      <br><br>
-     
-      <pre class="media-left">EmailID     :</pre><p id="email" class="media-right"></p><br>
-      <pre class="media-left">High School :</pre><p id="School" class="media-right"></p><br>
-      <pre class="media-left">DOB         :</pre><p id="DOB" class="media-right"></p><br>
-	  <pre class="media-left">Mobile      :</pre><p id="Mob" class="media-right"></p>      <br>   
-	  <pre class="media-left">College     :</pre><p id="college" class="media-right"></p><br>	    
-	  <pre class="media-left">Work Place  :</pre><p id="work" class="media-right"></p>	<br>    
-	  <pre class="media-left">HomeTown    :</pre><p id="town" class="media-right"></p>	    <br>
-	  <pre class="media-left">City of Work:</pre><p id="workCity" class="media-right"></p>	<br>
-	   <input type="button" id ="popup" class="btn btn-primary" value="Update Info" style="height:30px; width:10%;" data-toggle="modal" data-target="#myModal">
-
-  </div></div>
-</nav>
-
-    </div>
-  </div>
-</div>
-</div>
-
-
-2nd row 1st column ends
-
-<div class="col-xs-3">
-<div class="container">
-  <div class="panel panel-default">
-    <div class="panel-body">
-      
-      <nav class="navbar navbar-default" style="background-color:white;min-height:500px; background-color:#e1e8ed;">
-      <h3 style="color: black; margin-right:6em; margin-top:0px"><i class="fa fa-shield"></i>Friends categorized</h3>
-  <div class="container-fluid">
-    
-    <form class="navbar-form navbar-left" action="#" id="updateForm">
-    <div class="container">
-
-        
-    <div class="row">
-        <div class="col-xs-12">
-        <div class="container">
-          <button type="button" class="btn btn-primary" id="closeFriend">Close friends</button><br>
-          <button type="button" class="btn btn-primary" id="acq">Acquaintances</button><br>
-          <button type="button" class="btn btn-primary" id="family">Family</button><br>
-          <button type="button" class="btn btn-primary" id="restricted">Restricted</button><br>
-
-        </div>
-        </div>
-        inner column ends    
-    </div>
-    inner 1st row ends    
-
-
-
-    </div>
-    </form>
-
-    </div>
-</nav>
-
-    </div>
-  </div>
-</div>
-</div>
-
-2nd row 2nd column ends
-
-
-<div class="col-xs-3">
-<div class="container">
-  <div class="panel panel-default">
-    <div class="panel-body">
-      
-      <nav class="navbar navbar-default" style="background-color:white;min-height:500px; background-color:#e1e8ed;">
-      <h3 style="color: black; margin-right:6em; margin-top:0px"><i class="fa fa-shield"></i>Suggested Pages</h3>
-  <div class="container-fluid">
-     <form class="navbar-form navbar-left" action="#" id="suggestedPages">
-    <div class="container">
-
-    <button type="button" class="btn btn-primary" id="suggestedPages" >See pages Suggested</button>
-
-    </div>
-    </form>
-
-    </div>
-</nav>
-
-    </div>
-  </div>
-</div>
-</div>
-
-
-2nd row 3rd column ends
-
-
-<div class="col-xs-2">
-<div class="container">
-  <div class="panel panel-default">
-    <div class="panel-body">
-      
-      <nav class="navbar navbar-default" style="background-color:white;min-height:500px; background-color:#e1e8ed;">
-      <h3 style="color: black; margin-right:6em; margin-top:0px"><i class="fa fa-shield"></i>Your friends</h3>
-  <div class="container-fluid" style="margin-right:20px;">
-    
-      
-
-
-    <form class="navbar-form navbar-left" action="#" id="friendList">
-    <div class="container">
-
-        
-
-
-    </div>
-    </form>
-
-    </div>
-</nav>
-
-    </div>
-  </div>
-</div>
-</div>
-
-2nd row 4th column ends
-
-
-</div>
-
-
-2nd row ends here
-
-
-
-<div class="row">
-  
-
-<div class="col-xs-8">
-<div class="container">
-  <div class="panel panel-default">
-    <div class="panel-body">
-      
-      <nav class="navbar navbar-default" style="background-color:white;min-height:500px; background-color:#e1e8ed;">
-      <h3 style="color: black; margin-right:6em; margin-top:0px"><i class="fa fa-shield"></i>Top suggestions</h3>
-  <div class="container-fluid" style="margin-right:20px;">
-    
-
-    <form class="navbar-form navbar-left" action="#" id="suggestions">
-    <div class="container">     
-
-           <button type="button" class="btn btn-primary" id="inviteButton" >Invites</button>
-    </div>
-    </form>
-
-    </div>
-</nav>
-
-    </div>
-  </div>
-</div>
-</div>
-
-3rd row 1st column ends  
-
-
-
-<div class="col-xs-4">
-<div class="container">
-  <div class="panel panel-default">
-    <div class="panel-body">
-      
-      <nav class="navbar navbar-default" style="background-color:white;min-height:500px; background-color:#e1e8ed;">
-      <h3 style="color: black; margin-right:6em; margin-top:0px"><i class="fa fa-shield"></i>Messenger window</h3>
-  <div class="container-fluid" style="margin-right:20px;">
-    
-
-    <form class="navbar-form navbar-left" action="#" id="messenger">
-    <div class="container">     
-
-      <button type="button" class="btn btn-primary" id="addMessage">Add message</button>
-    </div>
-    </form>
-
-    </div>
-</nav>
-
-    </div>
-  </div>
-</div>
-</div>
-
-3rd row 2nd column ends  
-
-</div>
-
-
-
-3rd row ends here
-
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog" >
-
-    Modal content
-<form action="" id="updateInfo">
-    <div class="modal-content">
-
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Edit Your Info</h4>
-      </div>
-      <div class="modal-body">
-        <div class="container">
-
-        
-        <br>
-        <div class="form-group">
-          <label for="mob_no" >Mobile No:</label>
-          <input type="text"  id="mob_no" style="margin-left:10px;">
-        </div>
-        <br> 
-      <h4 style="color: black; margin-right:6em; margin-top:0px"><i class="fa fa-shield"></i>Background info</h4>
-      <div class="form-group">
-          <label for="college" >College:</label>
-          <input type="text"  id="college" style="margin-left:10px;">
-        </div>
-             <br>
-            <div class="form-group">
-          <label for="workplace" >Place of work:</label>
-          <input type="text"  id="workplace" style="margin-left:10px;">
-        </div>
-             <br>
-             <div class="form-group">
-          <label for="hometown" >Home town:</label>
-          <input type="text"  id="hometown" style="margin-left:10px;">
-        </div>
-             <br>
-      <div class="form-group">
-          <label for="workcity" >Workplace city:</label>
-          <input type="text"  id="workcity" style="margin-left:10px;">
-        </div>
-             <br>
-
-      <div class="form-group">
-          <label for="highschool" >HighSchool:</label>
-          <input type="text"  id="highschool" style="margin-left:10px;">
-        </div>
-             <br>
-       
-    </div>
-    
-
-     
-      <div class="modal-footer">
-       <input type="button" id ="updateDetails" class="btn btn-primary" value="Update Info" data-dismiss="modal" >
-       <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-      </div>
-    
-       </form>
-    </div>
-
-  </div>
-
- -->
 
 
 </body>
