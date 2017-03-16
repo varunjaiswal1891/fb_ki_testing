@@ -25,7 +25,7 @@
 }
 .img-container1 {
         position: absolute;
-    top: 300px; bottom: 10px; left:660px; right: 10px; //to place it as you want.
+    top: 300px; bottom: 10px; left:540px; right: 10px; //to place it as you want.
 
 }
 .img-container2 {
@@ -52,6 +52,194 @@
                 e.preventDefault();
                       });
             
+             
+
+            $("#suggestfriendsbutton").click(function(e){
+                
+            	
+            	
+                 $.ajax({
+        type: "POST",
+        contentType: "text/plain",  //send data to server in this format
+        url:"http://localhost:8080/DemoFB/webapi/friend/getmyemail",
+        dataType: "text",  //expect response of this type
+        data: x,
+       success: function(resp){
+           
+          if(resp!=null){
+        	  //resp contains email id of logged in user
+           
+              //alert(resp);
+              //alert(y);
+              var email=resp;
+              var obj={userID:y};
+              var myjson=JSON.stringify(obj);
+              
+              $.ajax({
+      	        type: "POST",
+      	        contentType: "application/json",  //send data to server in this format
+      	        url:"http://localhost:8080/DemoFB/webapi/friend/getfriendemail",
+      	        dataType: "text",  //expect response of this type
+      	        data: myjson,
+      	       success: function(resp){
+      	           
+      	          if(resp!=null){
+      	           
+      	        	  //resp contains email id of friend
+      	             // alert("uemailid"+email);
+      	             // alert("femailid"+resp);
+      	        	getSuggestedFriends(email,resp);
+      	              }
+      	          else{
+      	            
+      	              alert("null");
+      	          }
+      	           
+      	       },
+      	       
+      	      error: function(jqXHR, textStatus, errorThrown){
+      	        alert('inside status posting error: ' + textStatus);
+      	      }    
+      	                 
+      	                 
+      	                 });             
+
+              
+              
+              
+          }
+          else{
+            
+              alert("null");
+          }
+           
+       },
+       
+      error: function(jqXHR, textStatus, errorThrown){
+        alert('status posting error: ' + textStatus);
+      }    
+                 
+                 
+                 });             
+                 
+  });     //suggestedfriendsbutton ends here  
+             
+             
+             
+
+        	function getSuggestedFriends(myID,fID){
+        	 /*  
+        	  alert(myID);
+        	  alert(fID); */
+        	  
+        	  var obj={firstemailid:myID,secondemailid:fID};
+        	  var j=JSON.stringify(obj);
+        	  /* alert(obj.firstemailid);
+        	  alert(obj.secondemailid); */
+        	  $.ajax({
+        	        type:"POST",
+        	        contentType: "application/json",  //send data to server in this format
+        	        url:"http://localhost:8080/DemoFB/webapi/friend/suggestedFriends",
+        	        dataType: "json",  //expect response of this type
+        	        data: j,
+        	       success: function(resp){
+        	           
+        	          if(resp!=null){
+        	           
+        	        	  var data =JSON.parse(JSON.stringify(resp));  
+                          
+                          console.log(data);
+        					 first=obj.firstemailid;
+        					 second = obj.secondemailid;
+                          
+                         //alert(first);
+                         //alert(second);
+                          
+                          
+                          var st;
+                          for (var i=0; i < data.length; i++){
+                        	st+="<div>";
+                        	st+="<font size="+"\"4\">"+data[i].fname+data[i].lname+"</font>";
+                        	 st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].emailID+"\""+" OnClick=\"suggest(this)"+";\">Suggest</button>";
+                        	// st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].emailID+"\""+" OnClick=\"suggestignore(this);\">Ignore</button>";
+                        	 st+="</div>"; 
+                        	 st+="<hr>";
+                         
+                        	 st=st.replace("undefined","");
+                        	 $("#showsuggestedfriends").html(st);
+                          }
+        	        	   
+                        
+                          
+                          
+        	        	  
+        	              }
+        	          else{
+        	            
+        	              alert("null");
+        	          }
+        	           
+        	       },
+        	       
+        	      error: function(jqXHR, textStatus, errorThrown){
+        	        alert('inside getSuggested Friends ' + textStatus);
+        	      }    
+        	                 
+        	                 
+        	                 });             
+        	                 
+          
+
+        	  
+        	  
+        	  
+          }//fun ends here
+          
+          
+          
+        	window.suggest = function(e1){
+           	 
+           	 var suggestemailid= $(e1).attr('id');
+           	 	var obj1={firstemailid:first,secondemailid:second,suggestedemailid:suggestemailid};
+           	 var jsonobj=JSON.stringify(obj1);
+           	 $.ajax({ 
+                    url: "http://localhost:8080/DemoFB/webapi/friend/confirmsuggestion",
+                    type: "POST",
+                    dataType: "text",
+                    contentType : "application/json",
+                    data : jsonobj,
+                    crossDomain: true,
+                    processData: true,
+                    
+                    
+                    success: function(response){  
+                       
+                        // we have the response  
+                       if(response!=null){
+                
+                           alert(response);
+                          location.reload();
+                       }
+                       else{
+                           }
+                       
+                    },
+                    error: function(e){  
+                        alert('Error in like: ' + e);  
+                        alert(e.toString());
+                }               
+     
+    });
+           	 
+           	 
+            }//suggest fun ends here
+          
+          
+          
+  
+  
+             
+             
                  window.like = function(e1){
                      
                        var statusid= $(e1).attr('id');
@@ -604,6 +792,7 @@
   	<a class="btn btn-default active" href="friendTimeline.html">TimeLine</a>
   	<a class="btn btn-default" href="todoPage.html">About</a>
   	<a class="btn btn-default" href="todoPage.html">Photos</a>
+  	<a href="#postModal" role="button" data-toggle="modal" id="suggestfriendsbutton" class="btn btn-default pull-right"> Suggest Friends</a>
   	</div></div></div>
   </div>  </div>    </div>    </div>
     </div></div></div>
@@ -752,6 +941,29 @@
     
     </div>
     
+    
+    
+    <!--post modal-->
+         <div id="postModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+             
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Close</button>
+                    Suggest Friends
+              </div>
+              <div class="modal-body">
+                  <form class="form center-block">
+                    <div class="form-group" id="showsuggestedfriends">
+                    
+                    
+                    </div>
+                  </form>
+              </div>
+              
+          </div>
+          </div>
+        </div> 
     
     
     

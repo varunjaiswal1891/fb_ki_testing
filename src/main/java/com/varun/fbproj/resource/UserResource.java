@@ -251,7 +251,7 @@ public class UserResource {
 			  String emailID=claims.getSubject();
 	    //System.out.print(userId);
 	    fileName = fileFormDataContentDisposition.getFileName();
-	    uploadFilePath = new UserImageService().uploadProfilePic(fileInputStream, fileName,token,emailID);
+	    uploadFilePath=new UserImageService().uploadProfilePic(fileInputStream, fileName,token,emailID);
 	   return true;
 	}
     
