@@ -19,13 +19,34 @@ import javax.ws.rs.core.MediaType;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.varun.fbproj.model.Comment;
 import com.varun.fbproj.model.Group;
+import com.varun.fbproj.model.Likes;
+import com.varun.fbproj.model.Status;
 import com.varun.fbproj.model.User;
+import com.varun.fbproj.model.UserGroup;
+import com.varun.fbproj.service.CommentService;
 import com.varun.fbproj.service.GroupService;
+import com.varun.fbproj.service.LikeService;
+import com.varun.fbproj.service.StatusService;
 
 @WebService()
 @Path("/group")
 public class GroupResource {
+	
+	
+	private StatusService s1;
+	private CommentService c1;
+    private LikeService l1;
+   
+   
+    public GroupResource() {
+    	s1=new StatusService();
+    	c1=new CommentService();
+    	l1=new LikeService();
+    
+	}
+	
 	
 	@POST
     @Path("/create_group")
@@ -44,17 +65,18 @@ public class GroupResource {
 			return "group created";
 		}
 		
-		return "group not created";
+		return null;
 	}//method create group ends here
 	
 	@POST
     @Path("/addUser_group")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.TEXT_PLAIN})
-    public String addUserToGroup(Group g1) throws JsonParseException, JsonMappingException, IOException{
+    public String addUserToGroup(UserGroup g1) throws JsonParseException, JsonMappingException, IOException{
 	
 		String group_name=g1.getGroup_name();
 		String emailID=g1.getEmailID();
+		
 		if(GroupService.addUserGroup(group_name, emailID))
 		{
 			return "user added in group";
@@ -66,8 +88,8 @@ public class GroupResource {
 
 	@GET
     @Path("/show_my_groups")
-	@Produces({MediaType.TEXT_PLAIN})
-    public ArrayList<String> showMyAllGroups(@CookieParam("ID") String jwt) throws IOException{
+	@Produces({MediaType.APPLICATION_JSON})
+    public ArrayList<Group> showMyAllGroups(@CookieParam("ID") String jwt) throws IOException{
 	
 		System.out.println("jwt="+ jwt);
 		Claims claims = Jwts.parser()         
@@ -75,7 +97,7 @@ public class GroupResource {
 			       .parseClaimsJws(jwt).getBody();
 			    System.out.println("Subject: " + claims.getSubject());
 			  String myEmailID=claims.getSubject();
-			  ArrayList<String> al_groups=new ArrayList<String>();
+			  ArrayList<Group> al_groups=new ArrayList<Group>();
 			  al_groups=GroupService.getMyAllGroups(myEmailID, al_groups);
 			  System.out.println("Group list1="+al_groups);
 		return al_groups;
@@ -93,12 +115,180 @@ public class GroupResource {
 		Claims claims = Jwts.parser()         
 			       .setSigningKey("secret".getBytes("UTF-8"))
 			       .parseClaimsJws(jwt).getBody();
-			    System.out.println("Subject: " + claims.getSubject());
-			  String myEmailID=claims.getSubject();
-	//serivce needs to be coded
-	//abhi nhi likha hu delete group ki service		  
-		return  null;
-	}//show my groups ends here
+	    System.out.println("Subject: " + claims.getSubject());
+	    String myEmailID=claims.getSubject();
+		if(GroupService.deleteGroup(group_name, myEmailID))
+		{
+			return "Group deleted";
+		}
+		return  "Not authorized to delete group";
+	}// delete a group ends here
+	
+	
+	
+	@DELETE
+    @Path("/delete_user_from_group")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.TEXT_PLAIN})
+    public String deleteUserFromGroup(@CookieParam("ID") String jwt,UserGroup ug1) throws IOException{
+	//deletes the specified group if he is the owner of that group otherwise false
+		System.out.println("jwt="+ jwt);
+		Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(jwt).getBody();
+	    System.out.println("Subject: " + claims.getSubject());
+	    String owner=claims.getSubject();
+		if(GroupService.deleteUserFromGroup(ug1.getGroup_name(),owner,ug1.getEmailID()))
+		{
+			return "user deleted from group";
+		}
+		return  "Not authorized to delete user";
+	}// delete a group ends here
+	
+	
+	
+	    @POST
+	    @Path("/addStatus")
+	    @Consumes({MediaType.APPLICATION_JSON})
+	    @Produces({MediaType.TEXT_PLAIN})
+	    public String addStatus(@CookieParam("ID") String jwt,Status status)throws JsonParseException, JsonMappingException, IOException{
+
+	    	
+	    	System.out.println("token: "+jwt);
+	    	System.out.println("desc: "+status.getStatus_desc());
+	    	Claims claims = Jwts.parser()         
+				       .setSigningKey("secret".getBytes("UTF-8"))
+				       .parseClaimsJws(jwt).getBody();
+				    System.out.println("Subject: " + claims.getSubject());
+				   // System.out.println("Expiration: " + claims.getExpiration());
+				  String myEmailID=claims.getSubject();
+				  
+				  
+	       	status.setEmailID(myEmailID);
+	       	
+	       
+	    	if(s1.addStatus(status)){
+	    	    System.out.println("post submitted properly in group");
+	    		return "You posted in group";
+	    	}
+	    		return "status not posted";
+	    } // end of addStatus
+	    
+	    
+	    /* this method working good*/
+	    @POST
+	    @Path("/addComment")
+	    @Consumes({MediaType.APPLICATION_JSON})
+	    public String addComment(@CookieParam("ID") String jwt,Comment cmt)throws JsonParseException, JsonMappingException, IOException{
+	    	
+	    	System.out.println("inside addComment");
+	    	
+	    	
+	    	 Claims claims = Jwts.parser()         
+				       .setSigningKey("secret".getBytes("UTF-8"))
+				       .parseClaimsJws(jwt).getBody();
+				    System.out.println("Subject: " + claims.getSubject());
+				    String myEmailID=claims.getSubject();
+	    	
+	    	System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaa"+cmt.getComment_desc());
+	    	
+	    	cmt.setComment_desc(cmt.getComment_desc());
+	    	cmt.setEmailID(myEmailID);
+	    	if(c1.addComment(cmt)){
+	    	   System.out.println("upto resource comment added successfully");
+	    		return "comment posted";
+	    	}
+	    	
+	    	return "comment NOT posted";
+	     }//addComment ends here
+	    
+	    
+	    /* this method working good*/
+	    @POST
+	    @Path("/incrementLike")
+	    @Consumes({MediaType.APPLICATION_JSON})
+	    @Produces({MediaType.TEXT_HTML})
+	    public String incrementLike(@CookieParam("ID") String jwt,Status statusobj)throws JsonParseException, JsonMappingException, IOException{
+	    	 System.out.println("inside increment like resource");
+	    	 
+	    	 
+	    	 Claims claims = Jwts.parser()         
+				       .setSigningKey("secret".getBytes("UTF-8"))
+				       .parseClaimsJws(jwt).getBody();
+				    System.out.println("Subject: " + claims.getSubject());
+				    String myEmailID=claims.getSubject();
+	  	
+				    Likes likeobj = new Likes();
+	    	 
+				    System.out.println("status id in resource: "+statusobj.getStatusID());
+	    	 int sid=statusobj.getStatusID();
+	     	 likeobj.setEmailID(myEmailID);
+	    	 likeobj.setStatusID(sid);
+	     	 if(l1.incrementLike(likeobj)==1){
+	    		 return "like incremented";
+	    	 }
+	    	 else 
+	    	     return "like not updated";
+	    }
+	    
+
+	    @POST
+	    @Path("/decrementLike")
+	    @Consumes({MediaType.APPLICATION_JSON})
+	    @Produces({MediaType.TEXT_HTML})
+	    public String decrementLike(@CookieParam("ID") String jwt,Status statusobj)throws JsonParseException, JsonMappingException, IOException{
+	    	 System.out.println("inside increment like resource");
+	    	 
+	    	 
+	    	 Claims claims = Jwts.parser()         
+				       .setSigningKey("secret".getBytes("UTF-8"))
+				       .parseClaimsJws(jwt).getBody();
+				    System.out.println("Subject: " + claims.getSubject());
+				    String myEmailID=claims.getSubject();
+	  	
+				    Likes likeobj = new Likes();
+	    	 
+				    System.out.println("status id in resource: "+statusobj.getStatusID());
+	    	 int sid=statusobj.getStatusID();
+	     	 likeobj.setEmailID(myEmailID);
+	    	 likeobj.setStatusID(sid);
+	     	 if(l1.decrementLike(likeobj)==1){
+	    		 return "like decremented";
+	    	 }
+	    	 else 
+	    	     return "like not decremented";
+	    }//method ends here
+
+
+	    
+	    @GET
+	    @Path("/getGroupAllStatus")
+		@Produces({MediaType.APPLICATION_JSON})
+	    public ArrayList<Status> getGroupAllStatus(@CookieParam("ID2") String group_name) throws JsonParseException, JsonMappingException, IOException
+	    {
+	    	System.out.println("Inside getGroupAllStatus ");
+			
+	    	ArrayList<Status> status_list= new ArrayList<Status>(); 
+	    	//it gives mere all status
+			status_list.addAll(GroupService.getStatusByGroup(group_name)); 
+	    
+			return status_list;
+	    }//method ends here
+	    
+	
+	    
+	    @GET
+	    @Path("/getGroupMembers")
+		@Produces({MediaType.APPLICATION_JSON})
+	    public ArrayList<User> getMembersOfGroup(@CookieParam("ID2") String group_name) throws JsonParseException, JsonMappingException, IOException
+	    {
+	    	System.out.println("Inside getGroupMembers ");
+	    	ArrayList<User> user_list= new ArrayList<User>(); 
+	    	user_list=GroupService.getGroupMembers("sanjay ka group second");
+			return user_list;
+			
+	    }//method ends here
+	
 	
 	
 }//class ends

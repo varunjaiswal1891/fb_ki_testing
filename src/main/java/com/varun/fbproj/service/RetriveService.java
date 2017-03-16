@@ -116,7 +116,7 @@ public class RetriveService {
     }//method ends here
 	
 	
-	public static Group getGroupAllData(String emailID)
+	public static Group getGroupAllData(String group_name)
 	{
 		
 		try {
@@ -129,15 +129,15 @@ public class RetriveService {
             	System.out.println("trying connection");
             }
 			PreparedStatement prepStatement = connect.con
-					.prepareStatement("select * from UserGroup where emailID = ? ");
-			prepStatement.setString(1,emailID);
+					.prepareStatement("select * from Group1 where group_name = ? ");
+			prepStatement.setString(1,group_name);
 
 			ResultSet result = prepStatement.executeQuery();
 			if (result != null) {
 				while (result.next()) {
 					Group g1=new Group();
 					g1.setGroup_name(result.getString(1));
-					g1.setEmailID(result.getString(2));
+					g1.setOwner(result.getString(2));
 					connect.stop();
 						return g1;				
 					

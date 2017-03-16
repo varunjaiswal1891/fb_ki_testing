@@ -368,37 +368,7 @@
      		  //alert("logout success");
          	  // var obj = JSON.parse(JSON.stringify(resp));
          	   window.location.replace("appHome.html");
-     	   /* $.ajax({
-     	        type: "DELETE",
-     	        contentType: "text/plain",  //send data to server in this format
-     	        url:"http://localhost:8080/DemoFB/webapi/user/logout",
-     	        dataType: "text",  //expect response of this type
-     	        data: foo,
-     	        success: function(resp){
-     	            //alert("succes done");
-     	            //alert(data);
-     	            
-     	            if(resp!=null){
-     	            			
-     	                    	
-     	                    	   $.removeCookie("ID");
-     	                    	  
-     	            }	
-     	            else
-     	            {
-     	            	alert("logout failed.. ")
-     	            	window.location.replace("appHome.html");
-     	            }	
-     	            
-
-     	            
-     	        },
-     	        error: function(jqXHR, textStatus, errorThrown){
-     	            alert('logout error: ' + textStatus);
-     	        }
-     	    });*/
-     	           	
-     	        	
+     	           	   	        	
      	       
      	   });//logout button ends ends
      	   
@@ -462,6 +432,53 @@
             $.cookie("key",key);
                     
     	   });//search button ends ends
+    	   
+
+     	  $("#createGroup").click(function(e){
+      	  
+            // window.location.replace("todoPage.html");
+             var group_name=$("input#group_name").val();
+             $.ajax({
+     	        type: "POST",
+     	        contentType: "text/plain",  //send data to server in this format
+     	        url:"http://localhost:8080/DemoFB/webapi/group/create_group",
+     	        dataType: "text",  //expect response of this type
+     	        data: group_name,
+     	        success: function(resp){
+     	            
+     	            if(resp!=null){
+     	   	                    	 alert("group created");
+     	                    	   window.location.replace("groupPage.html");
+     	            }	
+     	            else
+     	            {
+     	            	alert("group creation failed ");
+     	            	window.location.replace("userHome1.html");
+     	            }	
+     	            
+     	            
+     	        },
+     	        error: function(jqXHR, textStatus, errorThrown){
+     	            alert('logout error: ' + textStatus);
+     	        }
+     	    });
+     	    
+             
+             
+             
+             
+                     
+     	   });//create group button ends ends
+     	    
+    	   
+    	   
+    	   
+    	   
+    	 /*  $("a#openGroupForm").click(function(e) {
+    		      e.preventDefault();
+    		      $("#myModal").dialog({height:300});
+    	   });*/
+    	   
 
         }); //document ready ends 
         
@@ -587,10 +604,12 @@
 							<b>Create</b>
 							<br>
 							<ul class="nav hidden-xs" id="xs-menu">
-							<li><a href="todoPage.html">Ad</a></li>
-							<li><a href="todoPage.html">Page</a></li>
-							<li><a href="#">Group</a></li>
-							<li><a href="#">Event</a></li>
+							
+				<input type="button" id ="popup1" class="btn btn-primary" value="Ad" data-toggle="modal" data-target="">	</br>		
+				<input type="button" id ="popup2" class="btn btn-primary" value="Page" data-toggle="modal" data-target=""></br>
+				<input type="button" id ="popup3" class="btn btn-primary" value="Group" data-toggle="modal" data-target="#groupModal"></br>
+				<input type="button" id ="popup4" class="btn btn-primary" value="Event" data-toggle="modal" data-target="">
+							
 							
 						</ul>
 						<!-- <ul class="list-unstyled hidden-xs" id="sidebar-footer" style="background-color: #E9EAED">
@@ -828,6 +847,42 @@
 		  </div>
 		  </div>
 		</div> 
+		
+		
+		        <div id="groupModal" class="modal fade" role="dialog">
+  <div class="modal-dialog" >
+
+    <!-- Modal content-->
+<form action="" id="updateInfo">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Create group here</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+        <br>
+        <div class="form-group">
+          <label for="group_name" >Group Name:</label>
+          <input type="text"  id="group_name" style="margin-left:10px;">
+        </div>
+        <br>     
+    </div>
+       
+      <div class="modal-footer">
+       <input type="button" id ="createGroup" class="btn btn-primary" value="Create group" data-dismiss="modal" >
+       <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+      </div>
+    
+       </form>
+    </div>
+
+  </div>
+		
+		
         
         <script type="text/javascript" src="assets/js/jquery.js"></script>
         <script type="text/javascript" src="assets/js/bootstrap.js"></script>

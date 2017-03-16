@@ -10,6 +10,7 @@ public class Status {
 	   private int flag;  
 	   private int likes_count;
 	   private int unlikes_count;
+	   private String group_name;
 	   
 	   
 	   
@@ -24,7 +25,19 @@ public class Status {
 	   
 	   
 	   
-	   public String getName() {
+	   public int getLikes_count() {
+		return likes_count;
+	}
+	public void setLikes_count(int likes_count) {
+		this.likes_count = likes_count;
+	}
+	public String getGroup_name() {
+		return group_name;
+	}
+	public void setGroup_name(String group_name) {
+		this.group_name = group_name;
+	}
+	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
