@@ -17,6 +17,8 @@
 $(document).ready(function() {
 	var x=$.cookie("ID");
 	
+	var firstemail;
+	var secondemail;
 	
 	//document.write(x);
 	$("#friendForm1").submit(function(e){
@@ -71,28 +73,33 @@ $(function () {
     	  });
 	 	
        	$.ajax({ 
-                   url: "http://localhost:8080/DemoFB/webapi/friend/suggestedFriends",
-                   type: "GET",
+                   url: "http://localhost:8080/DemoFB/webapi/friend/retrivesuggestedFriends",
+                   type: "POST",
                    dataType: "json",
-                   contentType : "application/json",
+                   contentType : "text/plain",
                    crossDomain: true,
                    processData: true,
+                   data: x,
                    
                    success: function(response){  
                 	   
                        // we have the response  
                 	   if(response!=null){
                        var data =JSON.parse(JSON.stringify(response));  
-                        var suggest;
+                       console.log(data);
+                       var suggest;
                 	 
                     	for (var i=0; i < data.length; i++){
+                    		firstemail = data[i].firstemail;
+                    		secondemail= data[i].secondemail;
                 		    suggest+="<div class="+"\"panel-body\""+">";
-                      		suggest+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/tn.jpg\""+" /></div>";
-                      		suggest+="<a href="+"\"#\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
+                      		suggest+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].suggestemail+"/tn.jpg\""+" /></div>";
+                      		suggest+="<a href="+"\"#\""+">"+data[i].suggestfname+" "+data[i].suggestlname+"</span></a>";
+                      		suggest+="<p>Suggested By: "+data[i].firstfname+" "+data[i].firstlname+"</p>";
                       		suggest+="<div class="+"\"text-right\""+">";
-                      		suggest+="<button type="+"\"button\""+" class="+"\"btn btn-primary\" id=\""+data[i].emailID+"\" OnClick=\"add(this);\">Add Friend<span class="+"\"glyphicon glyphicon-plus\""+"></span></button>";
-                      		suggest+="<a class="+"\"btn btn-primary\""+" id=\"remove"+data[i].emailID+"\""+" href=\"\""+" OnClick=\"rmv(this);\">Remove</a>"; 
-                       		suggest+="<a class="+"\"btn btn-primary\""+" id="+"\"SentReq"+data[i].emailID+"\" href=\"\""+" style=\"visibility: hidden\";>Request Sent</a></div></div>";
+                      		suggest+="<button type="+"\"button\""+" class="+"\"btn btn-primary\" id=\""+data[i].suggestemail+"\" OnClick=\"addSuggest(this);\">Add Friend<span class="+"\"glyphicon glyphicon-plus\""+"></span></button>";
+                      		suggest+="<a class="+"\"btn btn-primary\""+" id=\"remove"+data[i].suggestemail+"\""+" href=\"\""+" OnClick=\"rmv(this);\">Remove</a>"; 
+                       		suggest+="<a class="+"\"btn btn-primary\""+" id="+"\"SentReq"+data[i].suggestemail+"\" href=\"\""+" style=\"visibility: hidden\";>Request Sent</a></div></div>";
                 		}
                     suggest=suggest.replace("undefined","");
                 	   $("#suggest").html(suggest);
@@ -112,6 +119,64 @@ $(function () {
           			}				
             
     	  }); 
+       	
+       	
+       	
+       	window.addSuggest = function(e1){
+   		 
+ 		   var suggestemail= $(e1).attr('id');
+ 		   var obj={firstemail:firstemail,secondemail:secondemail,suggestemail:suggestemail};
+ 		   var myjson=JSON.stringify(obj);
+ 		   //alert(friendEmailID);
+ 			$.ajax({ 
+                 url: "http://localhost:8080/DemoFB/webapi/friendRequest/addFriendSuggestion",
+                 type: "POST",
+                 dataType: "text",
+                 contentType : "application/json",
+                 data : myjson,
+                 crossDomain: true,
+                 processData: true,
+                 
+                 
+                 success: function(response){  
+              	   
+                     // we have the response  
+              	   if(response!=null){
+                      
+ 						//alert("done");
+ 						
+ 						$(e1).hide();
+ 						var chk="remove";
+ 						var req="SentReq";
+ 						chk+=friendEmailID;
+ 						req+=friendEmailID;
+ 						 document.getElementById(chk).style.visibility = 'hidden';
+ 						 document.getElementById(req).style.visibility = 'visible';
+ 						 location.reload();
+ 						 
+              		 
+                     }  
+                     
+                     else
+                  	   {
+                  	  alert("something wrong");
+                  	   }
+                   },
+  	    
+        			error: function(e){  
+          					alert('Error121212: ' + e);  
+          					alert(e.toString());
+        			}				
+          
+  	  }); 
+ 	   }
+       	
+       	
+       	
+       	
+       	
+       	
+       	
        	$.ajax({ 
             url: "http://localhost:8080/DemoFB/webapi/friend/peopleYouMay_KnowMutualFriends",
             type: "GET",
