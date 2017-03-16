@@ -123,7 +123,7 @@ public class StatusService {
 					 check= db.start();
 				  }
 		    
-				  String query1="select * from status where emailID= ?";	   
+				  String query1="select * from status where emailID= ? order by status_desc";	   
 				  PreparedStatement pstmnt=db.con.prepareStatement(query1);
 				  pstmnt.setString(1,emailID); // user_id is the one sent in paramater
 				  ResultSet rs= pstmnt.executeQuery();

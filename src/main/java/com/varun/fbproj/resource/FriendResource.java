@@ -38,7 +38,7 @@ public class FriendResource {
 	@Produces({MediaType.APPLICATION_JSON})
     public static ArrayList<User> getAllMyFriend(@CookieParam("ID") String jwt
     		) throws JsonParseException, JsonMappingException, IOException{
-	
+	   System.out.println("-----------inside this -----------");
 		System.out.println("inside get my all friends");
 		System.out.println("jwt="+ jwt);
 		Claims claims = Jwts.parser()         
@@ -47,7 +47,7 @@ public class FriendResource {
 			    System.out.println("Subject: " + claims.getSubject());
 			   // System.out.println("Expiration: " + claims.getExpiration());
 			  String myEmailID=claims.getSubject();
-		
+		System.out.println("my email is is ----"+myEmailID);
 		ArrayList<User> al_friends=new ArrayList<User>();
          System.out.println("fetching all my friends list");
 		

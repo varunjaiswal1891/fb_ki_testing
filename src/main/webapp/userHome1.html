@@ -11,11 +11,17 @@
         <script type="text/javascript" src="Jquery/jquery-3.1.1.js"></script>
  		<script type="text/javascript" src="Jquery/jquery.cookie.js"></script>
   		<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>  
-        
-        
+       <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+           <link rel="stylesheet" href="/resources/demos/style.css">
+          
+           <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+            <script type="text/javascript" src="Jquery/jquery.popupoverlay.js"></script>
+          <style>
+  label { width: 100px; }
+  </style>
         <script type="text/javascript">
         
-        $(document).ready(function() {
+        $(document).ready(function() { 
         	
         	
         	var foo = $.cookie("ID");
@@ -67,11 +73,12 @@
                 	   if(response!=null){
                        var data =JSON.parse(JSON.stringify(response));  
                        
-                       console.log(data);
+                    //   console.log(data);
                        
                        var st;
                        var fname,lname;
-                       for (var i=0; i < data.length; i++){
+                        
+   for (var i=0; i < data.length; i++){
                     	   
                     	   var email =data[i].emailID; 
                     	  
@@ -100,7 +107,8 @@
                     	   st+= "<a href="+"\"#\""+ "id=\""+data[i].statusID+"\""+"><span class="+"\"glyphicon glyphicon-comment\"" +"style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Comment</font></a>";
                     	   st+="</li></ul></div></div>";
                     	   st+="</div>";
-                    	   st+="<div class="+"\"panel-footer\"" +"id="+"\"o\""+">";
+                    	   st+="<div class="+"\"panel-footer\"" +"id="+"\"o\""+">";   
+        
                     	   st+="<div class="+"\"row\""+">";
                     	   st+="<div class="+"\"col-md-12\""+">";
                     	   st+="<p id="+"\"likescount\""+">"+data[i].likesCount+"Likes"+"  "+data[i].unlikes_count+"Unlikes"+"</p><br></div></div>";
@@ -140,7 +148,8 @@
                        st=st.replace("undefined","");
                 	   $("#abcd").html(st);
                        
-                	   }    //outer for ends        
+                	   }    //outer for ends    
+                       
                 	   }//if ends 
                 	   },//success ends  
 
@@ -358,12 +367,53 @@
                  	           
                  	    return false;
                  	});
-                 	 
-                 	 
-                 	 
-                 	 
-                 	
-                 	
+                 	  $("#createEvent").click(function(e){
+                		  
+                          var ename=$("input#eventname").val();
+                          var hname=$("input#hostname").val();
+                          var loc=$("input#location").val();
+                          var esd=$("input#datepicker").val();
+                          var eed=$("input#datepicker1").val();
+                         
+                          var obj = { ename:ename,hname:hname,location:loc,
+                        		  event_date:esd,event_end_date:eed
+                        		  };  
+                      	var myJSON = JSON.stringify(obj);
+                          	//alert(myJSON);
+                 			//document.write(myJSON);
+                 	   
+                 			 $.ajax({
+                     	        type: "PUT",
+                     	        contentType: "application/json",  //send data to server in this format
+                     	        url:"http://localhost:8080/DemoFB/webapi/event/create_event",
+                     	        dataType: "text",  //expect response of this type
+                     	        data: myJSON,
+                     	        success: function(resp){
+                     	            
+                     	            if(resp!=null){
+                     	   	                    	
+                     	            	 var obj1 = JSON.parse(JSON.stringify(resp));
+                                     	 // alert(obj1);
+                                     	window.location.replace("Event.html");
+                     	            	//  location.reload();
+                     	            }	
+                     	            else
+                     	            {
+                     	            	alert("update failed.. ")
+                     	            	//window.location.replace("timeLine1.html");
+                     	            }	
+                     	            
+
+                     	            
+                     	        },
+                     	        error: function(jqXHR, textStatus, errorThrown){
+                     	            alert('logout error: ' + textStatus);
+                     	        }
+                     	    });
+                 	        	
+                 	       
+                 	   }); // create ajax call end
+                 	           	
       	  $("#logoutButton1").click(function(e){
      		  //alert("logout success");
          	  // var obj = JSON.parse(JSON.stringify(resp));
@@ -555,7 +605,7 @@
 						</ul>	
 							<b>Explore</b>
 							<ul class="nav hidden-xs see-more" id="xs-menu" >
-							<li><a href="#"><i class="glyphicon glyphicon-refresh"></i> Events</a></li>
+							<li><a href="Event.html"  ><i class="glyphicon glyphicon-refresh"></i> Events</a></li>
 							<li><a href="#"><i class="glyphicon glyphicon-refresh"></i> Groups</a></li>
 							<li><a href="todoPage.html"><i class="glyphicon glyphicon-refresh"></i> Pages</a></li>
 											</ul>
@@ -590,7 +640,7 @@
 							<li><a href="todoPage.html">Ad</a></li>
 							<li><a href="todoPage.html">Page</a></li>
 							<li><a href="#">Group</a></li>
-							<li><a href="#">Event</a></li>
+							<li><a href="#"  data-toggle="modal" data-target="#myModalevent">Event</a></li>
 							
 						</ul>
 						<!-- <ul class="list-unstyled hidden-xs" id="sidebar-footer" style="background-color: #E9EAED">
@@ -828,6 +878,94 @@
 		  </div>
 		  </div>
 		</div> 
+     
+     
+     
+     
+     
+     
+ <div id="myModalevent" class="modal fade" role="dialog">
+  <div class="modal-dialog" >
+
+    <!-- Modal content-->
+<form action="" id="updateevent">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Create Event</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+
+        
+        <br>
+        <div class="form-group">
+          <label for="event-name" >Event name:</label>
+          <input type="text"  id="eventname" style="margin-left:10px;">
+        </div>
+     <br>
+      <div class="form-group">
+          <label for="Host-name" >Hostname:</label>
+          <input type="text"  id="hostname" style="margin-left:10px;">
+        </div>
+             <br>
+             <div class="form-group">
+          <label for="Location" >Location:</label>
+          <input type="text"  id="location" style="margin-left:10px;">
+        </div>
+             <br>
+
+      
+        <div class="form-group">
+          <label for="Event-date" >Event-start-date:</label>
+          <input type="text"  id="datepicker" placeholder="yyyy-mm-dd" style="margin-left:10px;">
+        </div>
+             <br>
+             <div class="form-group">
+          <label for="Event-date" >Event-end-date:</label>
+          <input type="text" placeholder="yyyy-mm-dd"  id="datepicker1" style="margin-left:10px;">
+        </div>
+             <br>
+    </div>
+    
+
+     
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+       <input type="button" id ="createEvent" class="btn btn-primary" value="CreatenewEvent" data-dismiss="modal" >
+     
+      </div>
+    </div>
+      </div>
+    
+       </form>
+    </div>
+
+  </div>
+     
+     
+     
+     
+     
+     
+     
+             <script>
+  $( function() {
+    $( "#datepicker" ).datepicker({dateFormat: "yy-mm-dd"});
+  } );
+  $( function() {
+	    $( "#datepicker1" ).datepicker({dateFormat: "yy-mm-dd"});
+	  } );
+  </script>
+     
+		
+     
+     
+     
+     
+     
+     
         
         <script type="text/javascript" src="assets/js/jquery.js"></script>
         <script type="text/javascript" src="assets/js/bootstrap.js"></script>

@@ -154,4 +154,40 @@ public class RetriveService {
     }//method ends here
 	
 	
+	public static int uidfromEmailID(String myEmailID) {
+
+		try {
+
+      	  DBAccess connect = new DBAccess();
+            boolean check=false;
+            while(check==false)
+            {
+            	check=connect.start();
+            	System.out.println("trying connection");
+            }
+            PreparedStatement prepStatement = connect.con
+					.prepareStatement("select userID from User where emailID = ? ");
+			prepStatement.setString(1,myEmailID);
+			
+			
+			ResultSet result = prepStatement.executeQuery();
+			int id=-1;
+			if(result!=null){
+			if(result.next())
+		    id =result.getInt(1);
+			  connect.stop();
+			}
+			else {
+				connect.stop();
+				return 0;
+			}
+            connect.stop();
+            return id;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
 }//class ends here

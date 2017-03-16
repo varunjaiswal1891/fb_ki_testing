@@ -157,6 +157,7 @@ public class UserResource {
 			    System.out.println("Subject: " + claims.getSubject());
 			    System.out.println("Expiration: " + claims.getExpiration());
 			  String emailID=claims.getSubject();
+			  System.out.println("in the uploadprofile pic method");
 	    //System.out.print(userId);
 	    fileName = fileFormDataContentDisposition.getFileName();
 	    uploadFilePath = new UserImageService().uploadProfilePic(fileInputStream, fileName,token,emailID);
@@ -228,7 +229,7 @@ public class UserResource {
     }//retrive method ends here
     
     
-    @POST
+   /* @POST
 	@Path("/uploadProfilePic")
 	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -253,7 +254,7 @@ public class UserResource {
 	    fileName = fileFormDataContentDisposition.getFileName();
 	    uploadFilePath = new UserImageService().uploadProfilePic(fileInputStream, fileName,token,emailID);
 	   return true;
-	}
+	} */
     
     
     
@@ -307,7 +308,7 @@ public class UserResource {
     }// method ends here
     
     
-    @GET
+    @PUT
     @Path("/retrivename/{email}")
     @Consumes({MediaType.TEXT_PLAIN})
 	@Produces({MediaType.APPLICATION_JSON})
