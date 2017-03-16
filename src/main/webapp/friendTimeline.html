@@ -24,12 +24,195 @@
             //alert(foo);
              var x=$.cookie("ID");//current user logged in cookie
              var y=$.cookie("ID1");//friend timeline ki cookie
-  
+  				var first;
+             	var second;
   
             $("#logoutForm").submit(function(e){
                 e.preventDefault();
                       });
+  
+             
+            $("#suggestfriendsbutton").click(function(e){
+                
+            	
+            	
+                 $.ajax({
+        type: "POST",
+        contentType: "text/plain",  //send data to server in this format
+        url:"http://localhost:8080/DemoFB/webapi/friend/getmyemail",
+        dataType: "text",  //expect response of this type
+        data: x,
+       success: function(resp){
+           
+          if(resp!=null){
+        	  //resp contains email id of logged in user
+           
+              //alert(resp);
+              //alert(y);
+              var email=resp;
+              var obj={userID:y};
+              var myjson=JSON.stringify(obj);
+              
+              $.ajax({
+      	        type: "POST",
+      	        contentType: "application/json",  //send data to server in this format
+      	        url:"http://localhost:8080/DemoFB/webapi/friend/getfriendemail",
+      	        dataType: "text",  //expect response of this type
+      	        data: myjson,
+      	       success: function(resp){
+      	           
+      	          if(resp!=null){
+      	           
+      	        	  //resp contains email id of friend
+      	             // alert("uemailid"+email);
+      	             // alert("femailid"+resp);
+      	        	getSuggestedFriends(email,resp);
+      	              }
+      	          else{
+      	            
+      	              alert("null");
+      	          }
+      	           
+      	       },
+      	       
+      	      error: function(jqXHR, textStatus, errorThrown){
+      	        alert('inside status posting error: ' + textStatus);
+      	      }    
+      	                 
+      	                 
+      	                 });             
+
+              
+              
+              
+          }
+          else{
             
+              alert("null");
+          }
+           
+       },
+       
+      error: function(jqXHR, textStatus, errorThrown){
+        alert('status posting error: ' + textStatus);
+      }    
+                 
+                 
+                 });             
+                 
+  });     //suggestedfriendsbutton ends here  
+
+
+	function getSuggestedFriends(myID,fID){
+	 /*  
+	  alert(myID);
+	  alert(fID); */
+	  
+	  var obj={firstemailid:myID,secondemailid:fID};
+	  var j=JSON.stringify(obj);
+	  /* alert(obj.firstemailid);
+	  alert(obj.secondemailid); */
+	  $.ajax({
+	        type:"POST",
+	        contentType: "application/json",  //send data to server in this format
+	        url:"http://localhost:8080/DemoFB/webapi/friend/suggestedFriends",
+	        dataType: "json",  //expect response of this type
+	        data: j,
+	       success: function(resp){
+	           
+	          if(resp!=null){
+	           
+	        	  var data =JSON.parse(JSON.stringify(resp));  
+                  
+                  console.log(data);
+					 first=obj.firstemailid;
+					 second = obj.secondemailid;
+                  
+                 //alert(first);
+                 //alert(second);
+                  
+                  
+                  var st;
+                  for (var i=0; i < data.length; i++){
+                	st+="<div>";
+                	st+="<font size="+"\"4\">"+data[i].fname+data[i].lname+"</font>";
+                	 st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].emailID+"\""+" OnClick=\"suggest(this)"+";\">Suggest</button>";
+                	// st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].emailID+"\""+" OnClick=\"suggestignore(this);\">Ignore</button>";
+                	 st+="</div>"; 
+                	 st+="<hr>";
+                 
+                	 st=st.replace("undefined","");
+                	 $("#showsuggestedfriends").html(st);
+                  }
+	        	   
+                
+                  
+                  
+	        	  
+	              }
+	          else{
+	            
+	              alert("null");
+	          }
+	           
+	       },
+	       
+	      error: function(jqXHR, textStatus, errorThrown){
+	        alert('inside getSuggested Friends ' + textStatus);
+	      }    
+	                 
+	                 
+	                 });             
+	                 
+  
+
+	  
+	  
+	  
+  }
+             
+             window.suggest = function(e1){
+            	 
+            	 var suggestemailid= $(e1).attr('id');
+            	 	var obj1={firstemailid:first,secondemailid:second,suggestedemailid:suggestemailid};
+            	 var jsonobj=JSON.stringify(obj1);
+            	 $.ajax({ 
+                     url: "http://localhost:8080/DemoFB/webapi/friend/confirmsuggestion",
+                     type: "POST",
+                     dataType: "text",
+                     contentType : "application/json",
+                     data : jsonobj,
+                     crossDomain: true,
+                     processData: true,
+                     
+                     
+                     success: function(response){  
+                        
+                         // we have the response  
+                        if(response!=null){
+                 
+                            alert(response);
+                           location.reload();
+                        }
+                        else{
+                            }
+                        
+                     },
+                     error: function(e){  
+                         alert('Error in like: ' + e);  
+                         alert(e.toString());
+                 }               
+      
+     });
+            	 
+            	 
+             }
+             
+  
+  
+  
+             
+             
                  window.like = function(e1){
                      
                        var statusid= $(e1).attr('id');
@@ -560,10 +743,13 @@
                                         <img src="cover1.jpg" alt=""   class=""  width="800" height="400"/>
                                       </div>
                                       <div class="row">
-							 
+							
 										<div id="SearchResult"></div>
 										<p id="SearchResult"></p>
-									 
+								<div id="suggest-friends">
+								<a href="#postModal" role="button" data-toggle="modal" id="suggestfriendsbutton" class="btn btn-primary pull-right"> Suggest Friends</a>
+							 <!-- <button class="btn btn-primary pull-right" type="button" id="suggestfriendsbutton">Suggest Friends</button>
+							  --></div>
 							   
 							</div>
                                       
@@ -773,22 +959,18 @@
           <div class="modal-content">
               <div class="modal-header">
              
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Hide</button>
-                    Update Status
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Close</button>
+                    Suggest Friends
               </div>
               <div class="modal-body">
                   <form class="form center-block">
-                    <div class="form-group">
-                      <textarea class="form-control input-lg" autofocus="" placeholder="What do you want to share?"></textarea>
+                    <div class="form-group" id="showsuggestedfriends">
+                    
+                    
                     </div>
                   </form>
               </div>
-              <div class="modal-footer">
-                  <div>
-                  <button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Post</button>
-                    <ul class="pull-left list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
-                  </div>    
-              </div>
+              
           </div>
           </div>
         </div> 
