@@ -12,12 +12,15 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.CookieParam;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.varun.fbproj.model.Suggest;
+import com.varun.fbproj.model.SuggestUser;
 import com.varun.fbproj.model.User;
 import com.varun.fbproj.service.GetMyAllFriends;
 import com.varun.fbproj.service.IsMyFriendService;
@@ -26,6 +29,8 @@ import com.varun.fbproj.service.IsRequestAlreadySentService;
 import com.varun.fbproj.service.RetriveService;
 import com.varun.fbproj.service.SearchFriendService;
 import com.varun.fbproj.service.SuggestedFriendService;
+import com.varun.fbproj.service.Suggestservice;
+import com.varun.fbproj.service.getfriendemailidservice;
 
 import java.util.*;
 
@@ -193,31 +198,97 @@ public class FriendResource {
 
 	
 	
-	@GET
+	@POST
     @Path("/suggestedFriends")
-	@Produces({MediaType.APPLICATION_JSON})
-    public static ArrayList<User> getSuggestedFriends(@CookieParam("ID") String jwt
-    		) throws JsonParseException, JsonMappingException, IOException{
+	@Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public static ArrayList<User> getSuggestedFriends(Suggest sobj) throws JsonParseException, JsonMappingException, IOException{
 	
-		System.out.println("jwt="+ jwt);
+		
+		
+		         return Suggestservice.getSuggestedFriends(sobj);	
+		
+			
+	
+	}//suggestedFriend method ends here
+	
+	
+	@POST
+    @Path("/retrivesuggestedFriends")
+	@Consumes({MediaType.TEXT_PLAIN})
+    @Produces({MediaType.APPLICATION_JSON})
+    public static ArrayList<SuggestUser> retriveSuggestedFriends(String jwt) throws JsonParseException, JsonMappingException, IOException{
+	
+		System.out.println("aakhri padav");
 		Claims claims = Jwts.parser()         
 			       .setSigningKey("secret".getBytes("UTF-8"))
 			       .parseClaimsJws(jwt).getBody();
 			    System.out.println("Subject: " + claims.getSubject());
-			   // System.out.println("Expiration: " + claims.getExpiration());
-			  String myEmailID=claims.getSubject();
+			    String myEmailID=claims.getSubject();
 		
-		ArrayList<User> al_friends=new ArrayList<User>();
-         System.out.println("IN RESOURCE:::fetching all my suggested friends list");
-         for(User u:al_friends){
-        	 System.out.println(u.getEmailID());
-         }
-         al_friends=SuggestedFriendService.getSuggestedFriends(al_friends, myEmailID);	
+		         return Suggestservice.retriveSuggestedFriends(myEmailID);	
 		
-		return al_friends;	
+			
 	
 	}//suggestedFriend method ends here
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@POST
+    @Path("/confirmsuggestion")
+	@Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.TEXT_PLAIN})
+    public static String confirmfriendsuggestion(Suggest sobj) throws JsonParseException, JsonMappingException, IOException{
+	
+		
+		
+		          if(Suggestservice.confirmSuggestedFriends(sobj))
+		        	  return "confirmed_suggestion";
+		          else
+		        	  return "confirmed_suggestion_unsuccessful";
+		
+			
+	
+	}
+	
+	@POST
+    @Path("/getfriendemail")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.TEXT_PLAIN})
+    public static String getFriendEmail(User u) throws JsonParseException, JsonMappingException, IOException{
+	
+		int uid=u.getUserID();
+			    String myEmailID=getfriendemailidservice.getfriendemailid(uid);
+		return myEmailID;
+	
+	}//findMyFriend method ends here
+	
+	
 
+	
+	@POST
+    @Path("/getmyemail")
+	@Consumes({MediaType.TEXT_PLAIN})
+	@Produces({MediaType.APPLICATION_JSON})
+    public static String getEmail(String jwt) throws JsonParseException, JsonMappingException, IOException{
+	
+		Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(jwt).getBody();
+			    System.out.println("Subject: " + claims.getSubject());
+			    String myEmailID=claims.getSubject();
+		return myEmailID;
+	
+	}//findMyFriend method ends here
+	
+	
+	
 	
 	
 	@GET

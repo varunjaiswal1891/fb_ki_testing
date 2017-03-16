@@ -18,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.varun.fbproj.model.SuggestUser;
 import com.varun.fbproj.model.User;
 import com.varun.fbproj.service.FriendRequestService;
 
@@ -41,6 +42,21 @@ public class FriendRequestResource {
 			   // System.out.println("Expiration: " + claims.getExpiration());
 			  String myEmailID=claims.getSubject();
 		if(FriendRequestService.addFriendRequest(myEmailID, friendEmailID))
+		{
+			return "Request sent";
+		}
+		return "Request not sent";
+		
+	}//method ends here
+	
+	@POST
+    @Path("/addFriendSuggestion")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.TEXT_PLAIN})
+    public static String addFriendRequest(SuggestUser su
+    		) throws JsonParseException, JsonMappingException, IOException{
+		
+		if(FriendRequestService.addFriendSuggestion(su))
 		{
 			return "Request sent";
 		}
