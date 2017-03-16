@@ -4,7 +4,7 @@
 		
         <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
         <meta charset="utf-8">
-        <title>Facebook</title>
+        <title>Facebook Group page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <link href="assets/css/bootstrap.css" rel="stylesheet">
         <link href="assets/css/facebook.css" rel="stylesheet">
@@ -50,10 +50,98 @@
            
    	  });
     		//alert(foo);
+    		
+    		
+    			  $.ajax({
+    				  url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
+    	                type: "GET",
+    	                dataType: "json",
+    	                contentType : "application/json",
+    	                crossDomain: true,
+    	                processData: true,
+    	                
+
+    	                
+    	                success: function(response){  
+    	             	   
+    	                    // we have the response  
+    	             	   if(response!=null){
+    	                    var data =JSON.parse(JSON.stringify(response));  
+    	                     var allFriends;
+    	             	 
+    	                   	for (var i=0; i < data.length; i++){
+    	                 		 allFriends+="<div class=\"panel-body\">";
+    	                 		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/tn.jpg\""+" /></div>";
+    	                 		allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>";
+    	                 		allFriends+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].emailID+"\""+" OnClick=\"addMember(this)"+";\">Add</button>";
+    	                 		allFriends+="</div>";
+    	                 		allFriends+="</div>";
+    	    					     	}
+    	                 	
+    	                 allFriends=allFriends.replace("undefined","");
+    	             	   $("#showsuggestedfriends").html(allFriends);
+    	            
+    	                    }  
+    	                    
+    	                    else
+    	                 	   {
+    	                 	  alert("something wrong in adding member");
+    	                 	   }
+    	                  },
+	       
+	      error: function(jqXHR, textStatus, errorThrown){
+	        alert('inside getSuggested Friends ' + textStatus);
+	      }    
+	                 
+	                 
+	                 });       //ajax call ends
+    		
+    		
+	                 
+	                 
+    	          window.addMember = function(e1){
+    	            	 
+    	            	 var emailid= $(e1).attr('id');
+    	            	 	var obj1={emailID:emailid};
+    	            	 var jsonobj=JSON.stringify(obj1);
+    	            	 $.ajax({ 
+    	                     url: "http://localhost:8080/DemoFB/webapi/group/addUser_group",
+    	                     type: "POST",
+    	                     dataType: "text",
+    	                     contentType : "application/json",
+    	                     data : jsonobj,
+    	                     crossDomain: true,
+    	                     processData: true,
+    	                     
+    	                     
+    	                     success: function(response){  
+    	                        
+    	                         // we have the response  
+    	                        if(response!=null){
+    	                 
+    	                            alert(response);
+    	                           location.reload();
+    	                        }
+    	                        else{
+    	                            }
+    	                        
+    	                     },
+    	                     error: function(e){  
+    	                         alert('Error in add member to group: ' + e);  
+    	                         alert(e.toString());
+    	                 }               
+    	      
+    	     });
+    	            	 
+    	            	 
+    	             }
+    	             
+	                 
+	                 
     		 		
     		
     			$.ajax({ 
-                   url: "http://localhost:8080/DemoFB/webapi/status/getAllStatus",
+                   url: "http://localhost:8080/DemoFB/webapi/group/getGroupAllStatus",
                    type: "GET",
                    dataType: "json",
                    contentType : "application/json",
@@ -75,15 +163,14 @@
                     	   
                     	   var email =data[i].emailID; 
                     	  
-                    	   
+                    	   console.log(email);
                     	   
                     	   st+="<div class="+"\"panel panel-default\""+">";
                     	   st+="<div class="+"\"panel-body\""+"id=\"forcomment\""+">";
                     	   st+="<div class="+"\"row\""+">";
                     	   st+="<div class="+"\"col-md-12\""+">";
-                    	   st+="<p><font size="+"\"5\""+"color="+"\"blue\""+">"+data[i].name+"</font></p>" ;
-                    	   /* $(status_name).appendTo('#text_color');
-                    	   document.getElementById("forstatus").style.color="blue"; */
+                    	   st+="<p><font size="+"\"5\""+"color="+"\"blue\""+">"+data[i].emailID+"</font></p>" ;
+                    	   
                     	 	st+="<hr>";
                     	   st+="<p id="+"\"forstatus\""+">"+data[i].status_desc+"</p>" ;
                     	   st+="</div></div><hr>";
@@ -103,14 +190,14 @@
                     	   st+="<div class="+"\"panel-footer\"" +"id="+"\"o\""+">";
                     	   st+="<div class="+"\"row\""+">";
                     	   st+="<div class="+"\"col-md-12\""+">";
-                    	   st+="<p id="+"\"likescount\""+">"+data[i].likesCount+"Likes"+"  "+data[i].unlikes_count+"Unlikes"+"</p><br></div></div>";
+                    	   st+="<p id="+"\"likescount\""+">"+data[i].likes_count+"Likes"+"  "+data[i].unlikes_count+"Unlikes"+"</p><br></div></div>";
                     	   
                     	   st+="<hr>";
                     	   
                     	   st+="<div class="+"\"pre-scrollable\""+" style="+"\"height:100px;\""+">";
                     	   for(var j=0;j<data[i].a.length;j++)
-                		  
-                    			   
+                     		  
+                			   
                 		   {
                     		   st+= "<p id="+"\"outputname\""+"><font size="+"\"3\""+"color="+"\"blue\""+">"+data[i].a[j].name+"</font></p>"; 
                     	   st+= "<p id="+"\"output\""+">"+data[i].a[j].comment_desc+"</p>";
@@ -123,7 +210,7 @@
                     	   st+="<li class="+"\"media\""+">";
                     	   st+="<div class="+"\"media-body\""+">";
                     	   st+="<div class="+"\"input-group\""+">";
-                    	   st+="<input type="+"\"text\""+" class="+"\"form-control\""+" id=\"comment_d"+data[i].statusID+"\""+" placeholder="+"\"Write a comment...\""+">";
+                    	   st+="<input type="+"\"text\""+" class="+"\"form-control\""+" id=\"comment_d"+data[i].statusID+"\""+" placeholder="+"\"Write a comment here xx...\""+">";
                            st+="<span class="+"\"input-group-btn\""+">";
                        		st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].statusID+"\""+" OnClick=\"comment(this);\">Post Comment</button>";
                        		st+="</span>";
@@ -139,6 +226,7 @@
                       
                        st=st.replace("undefined","");
                 	   $("#abcd").html(st);
+                	   console.log($("#abcd").html());
                        
                 	   }    //outer for ends        
                 	   }//if ends 
@@ -156,14 +244,14 @@
     			 window.like = function(e1){
     				 
     				   var statusid= $(e1).attr('id');
-    				   alert("cccacacaca"+statusid);
+    				  // alert("cccacacaca"+statusid);
     				   var sid={statusID:statusid};
     				   var myJSON=JSON.stringify(sid);
     				   //alert(statusid);
     				   
     				   
     				   $.ajax({ 
-                url: "http://localhost:8080/DemoFB/webapi/status/incrementLike",
+                url: "http://localhost:8080/DemoFB/webapi/group/incrementLike",
                 type: "POST",
                 dataType: "text",
                 contentType : "application/json",
@@ -202,7 +290,7 @@
   				   
   				   
   				   $.ajax({ 
-              url: "http://localhost:8080/DemoFB/webapi/status/decrementLike",
+              url: "http://localhost:8080/DemoFB/webapi/group/decrementLike",
               type: "POST",
               dataType: "text",
               contentType : "application/json",
@@ -231,8 +319,6 @@
 
     			 
     			 
-    			 
-   
 
     			 window.comment = function(e1){
     				 
@@ -242,15 +328,13 @@
     				  // alert(chk);
     				   var comment_desc=document.getElementById(chk).value;
     				   
-    				  /*  alert(statusid);*/
-    				   //alert("comment"+comment_desc); 
-    				   var sid={statusID:statusid,comment_desc:comment_desc};
-    				   var myJSON=JSON.stringify(sid);
+    				   var cobj={statusID:statusid,comment_desc:comment_desc};
+    				   var myJSON=JSON.stringify(cobj);
     				   //alert(statusid);
     				   
     			   
     				   $.ajax({ 
-                url: "http://localhost:8080/DemoFB/webapi/status/addComment",
+                url: "http://localhost:8080/DemoFB/webapi/group/addComment",
                 type: "POST",
                 dataType: "text",
                 contentType : "application/json",
@@ -279,7 +363,7 @@
 }); 
 }
     		
-    			
+		
     		
                  	$.ajax({
                  		 type: "GET",
@@ -320,7 +404,7 @@
                  		 $.ajax({
      	        type: "POST",
      	        contentType: "text/plain",  //send data to server in this format
-     	        url:"http://localhost:8080/DemoFB/webapi/status/addStatus",
+     	        url:"http://localhost:8080/DemoFB/webapi/group/addStatus",
      	        dataType: "text",  //expect response of this type
      	        data: statusdesc,
      	       success: function(resp){
@@ -346,7 +430,7 @@
                  		 
                  		 });    		 
                  		 
-                 	 });      	
+                 	 });    //post button   	
                  	
                  	 
                  	 
@@ -371,6 +455,12 @@
      	           	   	        	
      	       
      	   });//logout button ends ends
+     	   
+     	   
+     	   
+     	   
+     	   
+     	   
      	   
      	   
      	   	$.ajax({ 
@@ -427,11 +517,61 @@
      	   }
 
     	  
+    	  
+     	   	$.ajax({ 
+                url: "http://localhost:8080/DemoFB/webapi/group/getGroupMembers",
+                type: "GET",
+                dataType: "json",
+                contentType : "application/json",
+                crossDomain: true,
+                processData: true,
+                
+                
+                success: function(response){  
+             	   
+                    // we have the response  
+             	   if(response!=null){
+                    var data =JSON.parse(JSON.stringify(response));  
+                     var groupMembers;
+             	 
+                   	for (var i=0; i < data.length; i++){
+                   		groupMembers+="<div class=\"panel-body\">";
+                   		groupMembers+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/tn.jpg\""+" /></div>";
+                   		groupMembers+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>";
+                         groupMembers+="</div>";
+                         groupMembers+="</div>";
+    					     	}
+                 	
+                   	groupMembers=groupMembers.replace("undefined","");
+             	   $("#groupMembers").html(groupMembers);
+            
+                    }  
+                    
+                    else
+                 	   {
+                 	  alert("something wrong");
+                 	   }
+                  },
+    	    
+       			error: function(e){  
+         					alert('Error121212: ' + e);  
+         					alert(e.toString());
+       			}				
+         
+    	  });//ajax call end for getting all group members
+
+    	      	  
+    	  
     	  $("#search").click(function(e){
      	    var key=$("input#srch-term").val();
             $.cookie("key",key);
-                    
+            
     	   });//search button ends ends
+    	   
+    	   
+    	   
+    	   
+    	   
     	   
 
      	  $("#createGroup").click(function(e){
@@ -470,14 +610,6 @@
                      
      	   });//create group button ends ends
      	    
-    	   
-    	   
-    	   
-    	   
-    	 /*  $("a#openGroupForm").click(function(e) {
-    		      e.preventDefault();
-    		      $("#myModal").dialog({height:300});
-    	   });*/
     	   
 
         }); //document ready ends 
@@ -525,7 +657,7 @@
 								<a href="timeLine1.html" id="userName"><i class="glyphicon glyphicon-user"></i> User Name</a>
 							  </li>
 							  <li>
-								<a href="#"><i class="glyphicon glyphicon-home"></i> Home</a>
+								<a href="userHome1.html"><i class="glyphicon glyphicon-home"></i> Home</a>
 							  </li>
 							  <li>
 								<a href="userFriend.html">Find Friends</a>
@@ -573,7 +705,7 @@
 							<b>Explore</b>
 							<ul class="nav hidden-xs see-more" id="xs-menu" >
 							<li><a href="#"><i class="glyphicon glyphicon-refresh"></i> Events</a></li>
-							<li><a href="#"><i class="glyphicon glyphicon-refresh"></i> Groups</a></li>
+							<li><a href="myGroups.html"><i class="glyphicon glyphicon-refresh"></i> Groups</a></li>
 							<li><a href="todoPage.html"><i class="glyphicon glyphicon-refresh"></i> Pages</a></li>
 											</ul>
 							
@@ -646,16 +778,12 @@
 								   
 										<div class="well"> 
 										   <form class="form-horizontal" role="form">
-											<h4>What's New</h4>
+											<h4>Post in group</h4>
 											 <div class="form-group" style="padding:14px;">
-											  <textarea class="form-control" placeholder="Update your status" id="posttext"></textarea>
+											  <textarea class="form-control" placeholder="post in group here please" id="posttext"></textarea>
 											</div>
 											<button class="btn btn-primary pull-right" type="button" id="postbutton">Post</button><ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
-										 	<!-- <div class="form-group" style="padding:14px;">
-											  <textarea class="form-control" placeholder="Update your status"></textarea>
-											</div>
-											<button class="btn btn-primary pull-right" type="button">Post</button><ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
-										   -->
+										 	
 										   </form>
 									  </div>
 								   
@@ -723,10 +851,10 @@
    <li class="media">
       <div class="media-body">
         <div class="input-group">
-          <input type="text" class="form-control" id="comment_d" placeholder="Write a comment...">
+          <input type="text" class="form-control" id="comment_d" placeholder="Write a comment here varun...">
           <span class="input-group-btn">
             <button type="button" class="btn btn-primary pull-right" id="commentAdd">
-              Post Comment
+              Post Comment varun
             </button>
           </span>
         </div>
@@ -756,26 +884,29 @@
 
 									   <div class="panel panel-default">
 										 <div class="panel-heading"> <h4>Group members</h4></div>
-										  <div class="panel-body">
-										  	<div class="list-group">
- 												 <a href="todoPage.html" class="list-group-item">Virat Kohli</a>
-  												 <a href="todoPage.html" class="list-group-item">Varun Dhawan</a>
-  												 <a href="todoPage.html" class="list-group-item">David Guetta</a>
-											</div>
-
-										  </div>
+ 												<div id="groupMembers"></div>
+  	                                            <p id="groupMembers"></p>
+										
 									   </div>
 									
 									
 							        <div class="panel panel-default">
 										<div class="panel-heading"> <h4>Add Members</h4></div>
 										  <div class="panel-body">
-										  	<div class="list-group">
- 												 <a href="todoPage.html" class="list-group-item">The Logical Indian</a>
-  												 <a href="todoPage.html" class="list-group-item">C programming</a>
-  												
-											</div>
-
+										  	<form class="navbar-form navbar-left" action="#">
+												<div class="input-group input-group-sm" style="max-width:200px;">
+								  				
+								  				<div class="input-group-btn">
+												
+												<a href="#postModal" role="button" data-toggle="modal" id="addMemberbutton" class="btn btn-primary pull-right"> Add member</a>
+								  				</div>
+								  				<div class="list-group">
+													<div id="SearchResult"></div> 
+													<p id="SearchResult"></p>
+									 			 </div>
+												</div>
+											</form>
+												
 										  </div>
 										
 									  </div>
@@ -815,34 +946,9 @@
 		</div>
 
 
-		<!--post modal-->
-		 <div id="postModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-		  <div class="modal-dialog">
-		  <div class="modal-content">
-			  <div class="modal-header">
-			 
-				  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Hide</button>
-					Update Status
-			  </div>
-			  <div class="modal-body">
-				  <form class="form center-block">
-					<div class="form-group">
-					  <textarea class="form-control input-lg" autofocus="" placeholder="What do you want to share?"></textarea>
-					</div>
-				  </form>
-			  </div>
-			  <div class="modal-footer">
-				  <div>
-				  <button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Post</button>
-					<ul class="pull-left list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
-				  </div>	
-			  </div>
-		  </div>
-		  </div>
-		</div> 
+
 		
-		
-		        <div id="groupModal" class="modal fade" role="dialog">
+ <div id="groupModal" class="modal fade" role="dialog">
   <div class="modal-dialog" >
 
     <!-- Modal content-->
@@ -874,6 +980,30 @@
     </div>
 
   </div>
+		
+		
+		
+		
+		<div id="postModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+             
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Close</button>
+                    Suggest Friends
+              </div>
+              <div class="modal-body">
+                  <form class="form center-block">
+                    <div class="form-group" id="showsuggestedfriends">
+                    
+                    
+                    </div>
+                  </form>
+              </div>
+              
+          </div>
+          </div>
+        </div> 
 		
 		
         

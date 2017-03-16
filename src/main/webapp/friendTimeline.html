@@ -16,7 +16,29 @@
         <script type="text/javascript" src="assets/js/jquery.js"></script>
         <script type="text/javascript" src="assets/js/bootstrap.js"></script>
         
-        
+        <style>
+  label { width: 100px; }
+ .img-container {
+        position: absolute;
+    top: 160px; bottom: 10px; left: 10px; right: 10px; //to place it as you want.
+
+}
+.img-container1 {
+        position: absolute;
+    top: 300px; bottom: 10px; left:660px; right: 10px; //to place it as you want.
+
+}
+.img-container2 {
+        position: absolute;
+    top: 300px; bottom: 10px; left:230px; right: 10px; //to place it as you want.
+
+}
+
+.img-text {
+    width: 100%;
+    display: block;
+}
+  </style>
         <script type="text/javascript">
         $(document).ready(function() {
 
@@ -24,195 +46,12 @@
             //alert(foo);
              var x=$.cookie("ID");//current user logged in cookie
              var y=$.cookie("ID1");//friend timeline ki cookie
-  				var first;
-             	var second;
+  
   
             $("#logoutForm").submit(function(e){
                 e.preventDefault();
                       });
-  
-             
-            $("#suggestfriendsbutton").click(function(e){
-                
-            	
-            	
-                 $.ajax({
-        type: "POST",
-        contentType: "text/plain",  //send data to server in this format
-        url:"http://localhost:8080/DemoFB/webapi/friend/getmyemail",
-        dataType: "text",  //expect response of this type
-        data: x,
-       success: function(resp){
-           
-          if(resp!=null){
-        	  //resp contains email id of logged in user
-           
-              //alert(resp);
-              //alert(y);
-              var email=resp;
-              var obj={userID:y};
-              var myjson=JSON.stringify(obj);
-              
-              $.ajax({
-      	        type: "POST",
-      	        contentType: "application/json",  //send data to server in this format
-      	        url:"http://localhost:8080/DemoFB/webapi/friend/getfriendemail",
-      	        dataType: "text",  //expect response of this type
-      	        data: myjson,
-      	       success: function(resp){
-      	           
-      	          if(resp!=null){
-      	           
-      	        	  //resp contains email id of friend
-      	             // alert("uemailid"+email);
-      	             // alert("femailid"+resp);
-      	        	getSuggestedFriends(email,resp);
-      	              }
-      	          else{
-      	            
-      	              alert("null");
-      	          }
-      	           
-      	       },
-      	       
-      	      error: function(jqXHR, textStatus, errorThrown){
-      	        alert('inside status posting error: ' + textStatus);
-      	      }    
-      	                 
-      	                 
-      	                 });             
-
-              
-              
-              
-          }
-          else{
             
-              alert("null");
-          }
-           
-       },
-       
-      error: function(jqXHR, textStatus, errorThrown){
-        alert('status posting error: ' + textStatus);
-      }    
-                 
-                 
-                 });             
-                 
-  });     //suggestedfriendsbutton ends here  
-
-
-	function getSuggestedFriends(myID,fID){
-	 /*  
-	  alert(myID);
-	  alert(fID); */
-	  
-	  var obj={firstemailid:myID,secondemailid:fID};
-	  var j=JSON.stringify(obj);
-	  /* alert(obj.firstemailid);
-	  alert(obj.secondemailid); */
-	  $.ajax({
-	        type:"POST",
-	        contentType: "application/json",  //send data to server in this format
-	        url:"http://localhost:8080/DemoFB/webapi/friend/suggestedFriends",
-	        dataType: "json",  //expect response of this type
-	        data: j,
-	       success: function(resp){
-	           
-	          if(resp!=null){
-	           
-	        	  var data =JSON.parse(JSON.stringify(resp));  
-                  
-                  console.log(data);
-					 first=obj.firstemailid;
-					 second = obj.secondemailid;
-                  
-                 //alert(first);
-                 //alert(second);
-                  
-                  
-                  var st;
-                  for (var i=0; i < data.length; i++){
-                	st+="<div>";
-                	st+="<font size="+"\"4\">"+data[i].fname+data[i].lname+"</font>";
-                	 st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].emailID+"\""+" OnClick=\"suggest(this)"+";\">Suggest</button>";
-                	// st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].emailID+"\""+" OnClick=\"suggestignore(this);\">Ignore</button>";
-                	 st+="</div>"; 
-                	 st+="<hr>";
-                 
-                	 st=st.replace("undefined","");
-                	 $("#showsuggestedfriends").html(st);
-                  }
-	        	   
-                
-                  
-                  
-	        	  
-	              }
-	          else{
-	            
-	              alert("null");
-	          }
-	           
-	       },
-	       
-	      error: function(jqXHR, textStatus, errorThrown){
-	        alert('inside getSuggested Friends ' + textStatus);
-	      }    
-	                 
-	                 
-	                 });             
-	                 
-  
-
-	  
-	  
-	  
-  }
-             
-             window.suggest = function(e1){
-            	 
-            	 var suggestemailid= $(e1).attr('id');
-            	 	var obj1={firstemailid:first,secondemailid:second,suggestedemailid:suggestemailid};
-            	 var jsonobj=JSON.stringify(obj1);
-            	 $.ajax({ 
-                     url: "http://localhost:8080/DemoFB/webapi/friend/confirmsuggestion",
-                     type: "POST",
-                     dataType: "text",
-                     contentType : "application/json",
-                     data : jsonobj,
-                     crossDomain: true,
-                     processData: true,
-                     
-                     
-                     success: function(response){  
-                        
-                         // we have the response  
-                        if(response!=null){
-                 
-                            alert(response);
-                           location.reload();
-                        }
-                        else{
-                            }
-                        
-                     },
-                     error: function(e){  
-                         alert('Error in like: ' + e);  
-                         alert(e.toString());
-                 }               
-      
-     });
-            	 
-            	 
-             }
-             
-  
-  
-  
-             
-             
                  window.like = function(e1){
                      
                        var statusid= $(e1).attr('id');
@@ -423,9 +262,11 @@
                              document.getElementById("town").innerHTML=obj.hometown;
                              document.getElementById("workCity").innerHTML=obj.cityOfWork;
                              document.getElementById("School").innerHTML=obj.highschool;
-                             var path="users/"+obj.emailID+"/tn.jpg";
+                             var path="users/"+obj.emailID+"/profilePic.jpg";
+                             var path1="users/"+obj.emailID+"/cover.jpg";
 	                           //alert(path);
 	                           $("#image").attr('src', path);
+	                           $("#cover").attr('src', path1);
                             
                             
                          }  
@@ -673,16 +514,13 @@
     
     <body>
         
-        <div class="wrapper">
-            <div class="box">
-                  <div class="row row-offcanvas row-offcanvas-right">
-                 
-                
-                    <!-- main right col -->
-                    <div class="column col-sm-12 col-xs-12" id="main">
-                        
-                        <!-- top nav -->
-                        <div class="navbar navbar-blue navbar-static-top">  
+      <div class="container-fluid ">
+
+<div class="row row-fluid">
+<div class=" col-sm-12 col-xs-12 " id="main">
+						
+						<!-- top nav -->
+						   <div class="navbar navbar-blue navbar-static-top">  
                             <div class="navbar-header">
                               <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
                                 <span class="sr-only">Toggle</span>
@@ -708,7 +546,9 @@
                               <li>
                                 <a href="userHome1.html"><i class="glyphicon glyphicon-home"></i> Home</a>
                               </li>
-                              
+                              <li>
+                                <a href="userFriend.html"><i class="glyphicon glyphicon-user"></i> Find Friends</a>
+                              </li>
                               <li>
                                 <a href="todoPage.html" title="Friend Requests"><i class="glyphicon glyphicon-user"></i><span class="badge">9</span></a>
                               </li>
@@ -718,137 +558,110 @@
                               <li>
                                 <a href="todoPage.html" title="Notifications"><i class="glyphicon glyphicon-cloud"></i><span class="badge">5</span></a>
                               </li>
-                              <li>
-                                <button type="submit" class="btn btn-default" id="logoutButton1" ">Logout</button>
-                              </li>
-                            </ul>
+                             
+							 <li role="separator" class="divider"></li>
+   
+							<li> <div class="dropdown">
+  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+  <span class="caret"></span></button>
+  <ul class="dropdown-menu">
+    
+    <li><a type="submit" class="" id="logoutButton1">Logout</a></li>
+  </ul>
+</div> 
+							
+							</li>
+							</ul>
+                           
                             
                             </nav>
                         </div>
-                        <!-- /top nav -->
-                
-                      
-                      
-                        <div class="padding">
-                            <div class="full col-sm-12">
-                              
-                                <!-- content --> 
-                        <div class="row">
+</div>
+</div>
+<div class="row row-fluid">
+<div class=" col-sm-9 col-xs-9" >
+<div class="media ">
+  	<div class="media-left">
+	
+<div class="panel panel-default">
+<div class="panel-body">       										
+<div class="carousel-inner">
+            <div class="item active">
 
-                          <div class="column col-sm-9 col-xs-9 "   style="background-color: #E9EAED">
-
-                                  
-                                    <div class="panel panel-default" id="coverPhoto">
-                                      <div class="panel-body" style="max-height:10;">
-                                        <img src="cover1.jpg" alt=""   class=""  width="800" height="400"/>
-                                      </div>
-                                      <div class="row">
-							
-										<div id="SearchResult"></div>
-										<p id="SearchResult"></p>
-								<div id="suggest-friends">
-								<a href="#postModal" role="button" data-toggle="modal" id="suggestfriendsbutton" class="btn btn-primary pull-right"> Suggest Friends</a>
-							 <!-- <button class="btn btn-primary pull-right" type="button" id="suggestfriendsbutton">Suggest Friends</button>
-							  --></div>
-							   
-							</div>
-                                      
-                                     </div> 
-                                     
-
-                          </div>
-                          <div class="column col-sm-3 col-xs-3 "   style="background-color: #E9EAED">
-                               <div class="pre-scrollable" style="background-color: #d8dfea;margin-bottom:.5cm; margin-top:.5cm; min-height:95%;">   
-                                       <div class="panel panel-default">
-                                         <div class="panel-heading"><h4>My Friends</h4></div>
-                                            <div id="allFriends"></div>
-                                                <p id="allFriends"></p>
-                                        
-                                       </div>
-                                    </div>
-                          </div>
-
-                        </div><!-- row ends here -->
-							
-							
-
-                                <div class="row">
-                
-                                
-                                    <!-- sidebar -->
-                    <div class="column col-sm-4 col-xs-4 "   style="background-color: #E9EAED">
-                   
-                         <ul class="nav">
-                            <li><a href="#" data-toggle="offcanvas" class="visible-xs text-center"><i class="glyphicon glyphicon-chevron-right"></i></a></li>
-                        </ul> 
-                        
-                                            <div class="panel panel-default">
-                    <div class="panel-heading"><h4>Intro</h4></div>
-                    
-                      <div class="panel-body">
-                      
-                      <div class="media">
-                          <div class="media-left">
-                          
-                            <img id="image" class="media-object" style="width:60px">
-                          </div>
-                          <div class="media-right">
-                          <h4 class="media-heading" id="name"></h4>
-       
-                          </div>
-                        </div>
-                      
-      
-
-                      <div class="list-group">
-                        <!--  <a href="http://usebootstrap.com/theme/facebook" class="list-group-item">Modal / Dialog</a>
-                        <a href="http://usebootstrap.com/theme/facebook" class="list-group-item">Datetime Examples</a>
-                        <a href="http://usebootstrap.com/theme/facebook" class="list-group-item">Data Grids</a>
-                        -->
-                        <div class="control-group">
-                          <div class="controls readonly">
-                            <pre width="5" class="media-left">EmailID :</pre><p id="email" class="media-right"></p><br>
-                            <pre class="media-left">High School :</pre><p id="School" class="media-right"></p><br>
-                            <pre class="media-left">DOB :</pre><p id="DOB" class="media-right"></p><br>
-                               
-                            <pre class="media-left">College :</pre><p id="college" class="media-right"></p><br>     
-                            <pre class="media-left">Work Place :</pre><p id="work" class="media-right"></p> <br>    
-                            <pre class="media-left">HomeTown :</pre><p id="town" class="media-right"></p>     <br>
-                            <pre class="media-left">City of Work :</pre><p id="workCity" class="media-right"></p> <br>
-                          </div>
-                      
-                      </div>
-                      </div>
-
-
-                      </div>
+                    <img id="cover" src=""  class=" img-responsive" width="1000" height="400" style="float:left;">    
+                <div class='img-container'>
+                    <div class='img-text'>
+                        <img class="img-thumbnail" id="image"  src="" alt="..." width="250px" height="250px" />
+                       
                     </div>
-                        
-                      
-                    </div>
-                    <!-- /sidebar -->
+
+                </div>  
                   
                 
-                
-                
-                                  
-                                 <!-- main col left --> 
-                                 <div class="col-sm-6 col-xs-6">
-                                    
-                                        <div class="well"> 
-                                           <form class="form-horizontal" role="form">
-                                            <h4>Post on friend's wall</h4>
-                                             <div class="form-group" style="padding:14px;">
-                                              <textarea class="form-control" placeholder="post on wall here" id="posttext"></textarea>
-                                            </div>
-                                            <button class="btn btn-primary pull-right" type="button" id="postbutton">Post</button>
-
-                                           </form>
-                                        </div>   
-                                      
-                                   
-                                   
-<div class="panel panel-default" id="abcd">
+  	
+  	<div class="img-container1" >
+  	<div class="img-text offset4">
+  	<a class="btn btn-default active" href="friendTimeline.html">TimeLine</a>
+  	<a class="btn btn-default" href="todoPage.html">About</a>
+  	<a class="btn btn-default" href="todoPage.html">Photos</a>
+  	</div></div></div>
+  </div>  </div>    </div>    </div>
+    </div></div></div>
+    <!-- cover pic profile pic ends here -->
+    <div class=" col-sm-3 col-xs-3 affix" style="float:right; left:970px; top:20px;" >
+    	 <br>
+	   <div class="panel panel-default" style="float:right; left:970px; top:30px; min-height: 2000px">
+	   <div class="panel-heading"><h4>My Friends</h4></div>
+		<div class="pre-scrollable" style="max-height:580px;overflow-y: scroll;">   
+		<p id="allFriends"></p>
+			</div>
+		  </div>			    
+		</div>
+    <!-- friends ends here -->
+    <div class="row row-fluid">
+     <div class="col-sm-3 col-xs-3">
+								 	  <div class="panel panel-default">
+										<div class="panel-heading"><h4>Personal Information</h4></div>
+										
+										    <div class="panel-body">
+											
+											<div class="media">
+      										<div class="media-right">
+      										<h4 class="media-heading" id="name"></h4>
+       
+      										
+											</div>
+    										</div>
+	  <pre width="5" class="media-left">EmailID :</pre><p id="email"></p><br>
+      <pre class="media-left">High School :</pre><p id="School" class="media-right"></p><br>
+      <pre class="media-left">DOB :</pre><p id="DOB" class="media-right"></p><br>
+	  <pre class="media-left">Mobile :</pre><p id="Mob" class="media-right"></p>      <br>   
+	  <pre class="media-left">College :</pre><p id="college" class="media-right"></p><br>	    
+	  <pre class="media-left">Work Place :</pre><p id="work" class="media-right"></p>	<br>    
+	  <pre class="media-left">HomeTown :</pre><p id="town" class="media-right"></p>	    <br>
+	  <pre class="media-left">City of Work :</pre><p id="workCity" class="media-right"></p>	<br>
+	  									
+											
+											
+											</div>
+										  </div>
+									  </div>
+	<!-- personal info ends here -->
+	
+	 <div class="col-sm-6 col-xs-6">
+	 							   
+		<div class="well"> 
+		   <form class="form-horizontal" role="form">
+											
+			 <div class="form-group" style="padding:14px;">
+			  <textarea class="form-control" placeholder="What's on your mind!" id="posttext"></textarea>
+			</div>
+			<button class="btn btn-primary pull-right" type="button" id="postbutton">Post</button><ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
+		   </form>
+		  </div>
+								   
+								   
+<div id="abcd">
   <div class="panel-body" id="forcomment">
     <!-- Post metadata -->
     <div class="row">
@@ -871,6 +684,9 @@
      <li>
      <a href="#thumbs-up"><span class="glyphicon glyphicon-thumbs-up" style="color:#3b5998"></span> <font color="#3b5998">Like</font></a>
      </li>
+      <li>
+     <a href="#thumbs-up"><span class="glyphicon glyphicon-thumbs-down" style="color:#3b5998"></span> <font color="#3b5998">Unlike</font></a>
+     </li>
      <li>
      <a href="#" id="comment"><span class="glyphicon glyphicon-comment" style="color:#3b5998"></span> <font color="#3b5998">Comment</font></a>
      </li>
@@ -884,6 +700,7 @@
  <div class="row">
    <div class="col-md-12">  
       <p id="likescount"></p>
+      
       <br>
    </div> 
    
@@ -892,7 +709,11 @@
   
   <hr>
   <div class="pre-scrollable" style="height:100px;">
+
+        <p id="output_name"></p>
+        
        <p id="outputname"></p>
+
        <p id="output"></p>
        <br>
        <hr>
@@ -921,60 +742,19 @@
  
  
  
-</div> <!--  div of panel default for status update 1 -->
-                                   
-                            
-               
-                                                                            
-                                   
-                                  </div>
-                                  
-                                  <!-- main col center -->
-                                  
-                                  
-                                  
-                                  
-                                   <!-- main col right -->
-                                  
-                                  
-                                  
-                                  
-                               </div><!--/row-->
-                              
-                              
-                              
-                            </div><!-- /col-9 -->
-                        </div><!-- /padding -->
-                    </div>
-                    <!-- /main -->
-                  
-                </div>
-            </div>
-        </div>
-
-
-        <!--post modal-->
-         <div id="postModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-          <div class="modal-dialog">
-          <div class="modal-content">
-              <div class="modal-header">
-             
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Close</button>
-                    Suggest Friends
-              </div>
-              <div class="modal-body">
-                  <form class="form center-block">
-                    <div class="form-group" id="showsuggestedfriends">
-                    
-                    
-                    </div>
-                  </form>
-              </div>
-              
-          </div>
-          </div>
-        </div> 
-        
+</div> 
+</div>
+								  
+								   
+    
+    </div>
+    
+    
+    </div>
+    
+    
+    
+    
         
         
         

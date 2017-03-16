@@ -72,11 +72,13 @@ public class GroupResource {
     @Path("/addUser_group")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.TEXT_PLAIN})
-    public String addUserToGroup(UserGroup g1) throws JsonParseException, JsonMappingException, IOException{
+    public String addUserToGroup(UserGroup g1,@CookieParam("ID_group") String group_name) throws JsonParseException, JsonMappingException, IOException{
 	
-		String group_name=g1.getGroup_name();
+		String gname=group_name.replaceAll("%20", " ");
+		g1.setGroup_name(gname);
 		String emailID=g1.getEmailID();
-		
+		System.out.println("email here="+emailID);
+		System.out.println("group name here="+gname);
 		if(GroupService.addUserGroup(group_name, emailID))
 		{
 			return "user added in group";
@@ -149,13 +151,13 @@ public class GroupResource {
 	
 	    @POST
 	    @Path("/addStatus")
-	    @Consumes({MediaType.APPLICATION_JSON})
+	    @Consumes({MediaType.TEXT_PLAIN})
 	    @Produces({MediaType.TEXT_PLAIN})
-	    public String addStatus(@CookieParam("ID") String jwt,Status status)throws JsonParseException, JsonMappingException, IOException{
+	    public String addStatus(@CookieParam("ID") String jwt,String status_desc,@CookieParam("ID_group") String group_name)throws JsonParseException, JsonMappingException, IOException{
 
-	    	
+	    	String gname=group_name.replaceAll("%20", " ");
 	    	System.out.println("token: "+jwt);
-	    	System.out.println("desc: "+status.getStatus_desc());
+	    	//System.out.println("desc: "+status.getStatus_desc());
 	    	Claims claims = Jwts.parser()         
 				       .setSigningKey("secret".getBytes("UTF-8"))
 				       .parseClaimsJws(jwt).getBody();
@@ -163,11 +165,11 @@ public class GroupResource {
 				   // System.out.println("Expiration: " + claims.getExpiration());
 				  String myEmailID=claims.getSubject();
 				  
-				  
-	       	status.setEmailID(myEmailID);
-	       	
-	       
-	    	if(s1.addStatus(status)){
+		 Status sobj=new Status();
+		 sobj.setEmailID(myEmailID);
+		 sobj.setGroup_name(gname);
+		 sobj.setStatus_desc(status_desc);
+	    	if(s1.addStatus(sobj)){
 	    	    System.out.println("post submitted properly in group");
 	    		return "You posted in group";
 	    	}
@@ -179,22 +181,22 @@ public class GroupResource {
 	    @POST
 	    @Path("/addComment")
 	    @Consumes({MediaType.APPLICATION_JSON})
-	    public String addComment(@CookieParam("ID") String jwt,Comment cmt)throws JsonParseException, JsonMappingException, IOException{
+	    public String addComment(@CookieParam("ID") String jwt,@CookieParam("ID_group") String group_name,Comment cobj)throws JsonParseException, JsonMappingException, IOException{
 	    	
 	    	System.out.println("inside addComment");
-	    	
+	    	String gname=group_name.replaceAll("%20", " ");
 	    	
 	    	 Claims claims = Jwts.parser()         
 				       .setSigningKey("secret".getBytes("UTF-8"))
 				       .parseClaimsJws(jwt).getBody();
 				    System.out.println("Subject: " + claims.getSubject());
 				    String myEmailID=claims.getSubject();
-	    	
-	    	System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaa"+cmt.getComment_desc());
-	    	
-	    	cmt.setComment_desc(cmt.getComment_desc());
-	    	cmt.setEmailID(myEmailID);
-	    	if(c1.addComment(cmt)){
+				
+					 cobj.setEmailID(myEmailID);
+					 cobj.setGroup_name(gname);
+					 //cobj.setComment_desc(comment_desc);
+					 
+	    	if(c1.addComment(cobj)){
 	    	   System.out.println("upto resource comment added successfully");
 	    		return "comment posted";
 	    	}
@@ -264,13 +266,14 @@ public class GroupResource {
 	    @GET
 	    @Path("/getGroupAllStatus")
 		@Produces({MediaType.APPLICATION_JSON})
-	    public ArrayList<Status> getGroupAllStatus(@CookieParam("ID2") String group_name) throws JsonParseException, JsonMappingException, IOException
+	    public ArrayList<Status> getGroupAllStatus(@CookieParam("ID_group") String group_name) throws JsonParseException, JsonMappingException, IOException
 	    {
-	    	System.out.println("Inside getGroupAllStatus ");
-			
+	    	System.out.println("Inside getGroupAllStatus ="+group_name);
+	    	String gname=group_name.replaceAll("%20", " ");
+	    	System.out.println("new string varun = "+gname);
 	    	ArrayList<Status> status_list= new ArrayList<Status>(); 
 	    	//it gives mere all status
-			status_list.addAll(GroupService.getStatusByGroup(group_name)); 
+			status_list.addAll(GroupService.getStatusByGroup(gname)); 
 	    
 			return status_list;
 	    }//method ends here
@@ -280,11 +283,12 @@ public class GroupResource {
 	    @GET
 	    @Path("/getGroupMembers")
 		@Produces({MediaType.APPLICATION_JSON})
-	    public ArrayList<User> getMembersOfGroup(@CookieParam("ID2") String group_name) throws JsonParseException, JsonMappingException, IOException
+	    public ArrayList<User> getMembersOfGroup(@CookieParam("ID_group") String group_name) throws JsonParseException, JsonMappingException, IOException
 	    {
+	    	String gname=group_name.replaceAll("%20", " ");
 	    	System.out.println("Inside getGroupMembers ");
 	    	ArrayList<User> user_list= new ArrayList<User>(); 
-	    	user_list=GroupService.getGroupMembers("sanjay ka group second");
+	    	user_list=GroupService.getGroupMembers(gname);
 			return user_list;
 			
 	    }//method ends here

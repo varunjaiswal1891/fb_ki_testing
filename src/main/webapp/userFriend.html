@@ -3,15 +3,17 @@
 <head>
   <title>Friends page</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script type="text/javascript" src="Jquery/jquery-3.1.1.js"></script>
- <script type="text/javascript" src="Jquery/jquery.cookie.js"></script>
- <link href="assets/css/bootstrap.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link href="assets/css/bootstrap.css" rel="stylesheet">
         <link href="assets/css/facebook.css" rel="stylesheet">
-  <link href="bootstrap/bootstrap.min.css" rel="stylesheet">
-  <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>  
-  <script type="text/javascript" src="Jquery/jquery.popupoverlay.js"></script>
+        <script type="text/javascript" src="Jquery/jquery-3.1.1.js"></script>
+        <script type="text/javascript" src="Jquery/jquery.cookie.js"></script>
+        <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>  
 
+
+        <script type="text/javascript" src="assets/js/jquery.js"></script>
+        <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+        
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -546,61 +548,66 @@ jQuery(document).ajaxComplete(function () {
 					<div class="column col-sm-12 col-xs-12" id="main">
 						
 						<!-- top nav -->
-						<div class="navbar navbar-blue navbar-static-top">  
-							<div class="navbar-header">
-							  <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
-								<span class="sr-only">Toggle</span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-							  </button>
-							  <a href="#" class="navbar-brand logo">f</a>
-							</div>
-							<nav class="collapse navbar-collapse " role="navigation" align="center">
-							<form class="navbar-form navbar-left" action="Search.html">
-								<div class="input-group input-group-sm" style="max-width:480px;">
-								  <input class="form-control" placeholder="Search" name="srch-term" id="srch-term" type="text">
-								  <div class="input-group-btn">
-									<button class="btn btn-default" type="submit" id="search"><i class="glyphicon glyphicon-search"></i></button>
-								  </div>
-								</div>
-							</form>
-							<ul class="nav navbar-nav navbar-center">
-							<li>
-								<a href="timeLine1.html" id="userName"><i class="glyphicon glyphicon-user"></i> User Name</a>
-							  </li>
-							  <li>
-								<a href="userHome1.html"><i class="glyphicon glyphicon-home"></i> Home</a>
-							  </li>
-							  <li>
-								<a href="userFriend.html">Find Friends</a>
-							  </li>
-							  
-							  <li>
-								<a href="todoPage.html" title="Friend Requests"><i class="glyphicon glyphicon-user"></i><span class="badge">9</span></a>
-							  </li>
-							    <li>
-								<a href="todoPage.html" title="Mesages"><i class="glyphicon glyphicon-envelope"></i><span class="badge">3</span></a>
-							  </li>
-							  <li>
-								<a href="todoPage.html" title="Notifications"><i class="glyphicon glyphicon-cloud"></i><span class="badge">5</span></a>
-							  </li>
-							</ul>
-							<ul class="nav navbar-nav navbar-right">
-							<li>
-							 <button type="submit" class="btn btn-primary" id="backButton">Back</button>
+						  <div class="navbar navbar-blue navbar-static-top">  
+                            <div class="navbar-header">
+                              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="sr-only">Toggle</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                              </button>
+                              <a href="#" class="navbar-brand logo">f</a>
+                            </div>
+                            <nav class="collapse navbar-collapse " role="navigation" align="center">
+                            <form class="navbar-form navbar-left" action="Search.html">
+                                <div class="input-group input-group-sm" style="max-width:480px;">
+                                  <input class="form-control" placeholder="Search" name="srch-term" id="srch-term" type="text">
+                                  <div class="input-group-btn">
+                                    <button class="btn btn-default" type="submit" id="search"><i class="glyphicon glyphicon-search"></i></button>
+                                  </div>
+                                </div>
+                            </form>
+                            <ul class="nav navbar-nav navbar-center">
+                            <li>
+                                <a href="timeLine1.html" id="userName"><i class="glyphicon glyphicon-user"></i> User Name</a>
+                              </li>
+                              <li>
+                                <a href="userHome1.html"><i class="glyphicon glyphicon-home"></i> Home</a>
+                              </li>
+                              <li>
+                                <a href="userFriend.html"><i class="glyphicon glyphicon-user"></i> Find Friends</a>
+                              </li>
+                              <li>
+                                <a href="todoPage.html" title="Friend Requests"><i class="glyphicon glyphicon-user"></i><span class="badge">9</span></a>
+                              </li>
+                                <li>
+                                <a href="todoPage.html" title="Mesages"><i class="glyphicon glyphicon-envelope"></i><span class="badge">3</span></a>
+                              </li>
+                              <li>
+                                <a href="todoPage.html" title="Notifications"><i class="glyphicon glyphicon-cloud"></i><span class="badge">5</span></a>
+                              </li>
+                             
+							 <li role="separator" class="divider"></li>
+   
+							<li> <div class="dropdown">
+  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+  <span class="caret"></span></button>
+  <ul class="dropdown-menu">
+    
+    <li><a type="submit" class="" id="logoutButton1">Logout</a></li>
+  </ul>
+</div> 
+							
 							</li>
-							<li>
-							<button type="submit" class="btn btn-primary" id="logoutButton1">Logout</button>
-							</li>
 							</ul>
-							</nav>
-						</div>
-						<!-- /top nav -->
+                           
+                            
+                            </nav>
+                        </div>
 				
 					  
 					  
-						<div class="padding">
+						
 							<div class="full col-sm-12">
 							  
 								<!-- content -->                      
@@ -789,15 +796,15 @@ jQuery(document).ajaxComplete(function () {
 								  
 								  
 								   <!-- main col right -->
-								  <div class="col-sm-3 col-xs-3" >
-									   
-									   <div class="panel panel-default">
-										 <div class="panel-heading"><h4>My Friends</h4></div>
-										  <div class="list_group">
-										  <p id="allFriends"></p>
-										  	  </div>
-									   </div>
-									</div>
+								 <div class=" col-sm-3 col-xs-3 affix" style="float:right; left:970px; top:20px;" >
+    	 <br>
+	   <div class="panel panel-default" style="float:right; left:970px; top:30px; min-height: 2000px">
+	   <div class="panel-heading"><h4>My Friends</h4></div>
+		<div class="pre-scrollable" style="max-height:580px;overflow-y: scroll;">   
+		<p id="allFriends"></p>
+			</div>
+		  </div>			    
+		</div>
 									   
 									
 								  </div>
@@ -814,7 +821,7 @@ jQuery(document).ajaxComplete(function () {
 					<!-- /main -->
 				  
 				</div>
-			</div>
+			
 		
 
 
