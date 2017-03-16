@@ -130,10 +130,11 @@
                     	   st+="<div class="+"\"panel-body\""+"id=\"forcomment\""+">";
                     	   st+="<div class="+"\"row\""+">";
                     	   st+="<div class="+"\"col-md-12\""+">";
-                    	   st+="<p><font size="+"\"5\""+"color="+"\"blue\""+">"+data[i].name+"</font></p>" ;
+                    		 st+="<div class=\" col-sm-2\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/tn.jpg\""+" /></div>";
+                             st+="<div class=\" col-sm-5\"><p><font size="+"\"4\""+"color="+"\"blue\""+">"+data[i].name+"</font></p></div>" ;
                     	   /* $(status_name).appendTo('#text_color');
                     	   document.getElementById("forstatus").style.color="blue"; */
-                    	 	st+="<hr>";
+                    	 	st+="<br><br><br>";
                     	   st+="<p id="+"\"forstatus\""+">"+data[i].status_desc+"</p>" ;
                     	   st+="</div></div><hr>";
                     	   st+="<div class="+"\"row\""+">";
@@ -161,8 +162,13 @@
                 		  
                     			   
                 		   {
-                    		   st+= "<p id="+"\"outputname\""+"><font size="+"\"3\""+"color="+"\"blue\""+">"+data[i].a[j].name+"</font></p>"; 
-                    	   st+= "<p id="+"\"output\""+">"+data[i].a[j].comment_desc+"</p>";
+                    		    st+="<div class=\" col-sm-2\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/tn.jpg\""+" /></div>";
+                    		    st+= "<div class=\" col-sm-5\"><p id="+"\"outputname\""+"><font size="+"\"3\""+"color="+"\"blue\""+">"+data[i].a[j].name+"</font></p></div>"; 
+                    			/* $(status_name).appendTo('#text_color');
+                        	   document.getElementById("forstatus").style.color="blue"; */
+                        	 	st+="<br><br><br>";
+                        	  
+                    		   st+= "<p id="+"\"output\""+">"+data[i].a[j].comment_desc+"</p>";
                     	   st+="<br>";
                     	   st+="<hr>";
                 		   }

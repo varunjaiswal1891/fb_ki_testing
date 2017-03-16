@@ -78,12 +78,12 @@ ImageIO.write(bi, "jpg", outputfile);
 			finally{
 			 
 			if(outputStream!=null)
-			return "uploaded Successfully!!!!";
+			 return "uploaded Successfully!!!!";
 			}
 			
+			return null;
 			
 			
-						return null;
 	}
     public static BufferedImage resize(BufferedImage img, int newW, int newH) {  
         int w = img.getWidth();  
