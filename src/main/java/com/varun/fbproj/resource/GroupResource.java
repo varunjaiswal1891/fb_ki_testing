@@ -111,19 +111,20 @@ public class GroupResource {
     @Path("/delete_group")
 	@Consumes({MediaType.TEXT_PLAIN})
 	@Produces({MediaType.TEXT_PLAIN})
-    public String deleteGroup(@CookieParam("ID") String jwt,String group_name) throws IOException{
+    public String deleteGroup(@CookieParam("ID") String jwt,@CookieParam("ID_group") String group_name) throws IOException{
 	//deletes the specified group if he is the owner of that group otherwise false
 		System.out.println("jwt="+ jwt);
+		String gname=group_name.replaceAll("%20", " ");
 		Claims claims = Jwts.parser()         
 			       .setSigningKey("secret".getBytes("UTF-8"))
 			       .parseClaimsJws(jwt).getBody();
 	    System.out.println("Subject: " + claims.getSubject());
 	    String myEmailID=claims.getSubject();
-		if(GroupService.deleteGroup(group_name, myEmailID))
+		if(GroupService.deleteGroup(gname, myEmailID))
 		{
 			return "Group deleted";
 		}
-		return  "Not authorized to delete group";
+		return  null;
 	}// delete a group ends here
 	
 	
@@ -140,7 +141,7 @@ public class GroupResource {
 			       .parseClaimsJws(jwt).getBody();
 	    System.out.println("Subject: " + claims.getSubject());
 	    String owner=claims.getSubject();
-		if(GroupService.deleteUserByOwnerroup(ug1.getGroup_name(),owner,ug1.getEmailID()))
+		if(GroupService.deleteUserByOwnerGroup(ug1.getGroup_name(),owner,ug1.getEmailID()))
 		{
 			return "user deleted from group";
 		}
@@ -154,7 +155,7 @@ public class GroupResource {
 	@Consumes({MediaType.TEXT_PLAIN})
 	@Produces({MediaType.TEXT_PLAIN})
     public String deleteUserInGroup(@CookieParam("ID") String jwt,String group_name) throws IOException{
-	//deletes the specified group if he is the owner of that group otherwise false
+	//deletes member whether owner or other person
 		String gname=group_name.replaceAll("%20", " ");
 		System.out.println("jwt="+ jwt);
 		Claims claims = Jwts.parser()         
@@ -164,7 +165,7 @@ public class GroupResource {
 	    String emailID=claims.getSubject();
 		if(GroupService.deleteUserInGroup(gname,emailID))
 		{
-			return "user deleted from group";
+			return "user left group";
 		}
 		return  null;
 	}// delete a group ends here

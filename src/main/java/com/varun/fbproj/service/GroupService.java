@@ -175,7 +175,7 @@ public class GroupService {
 
 
 	
-	public static boolean deleteUserByOwnerroup(String group_name,String owner,String emailID)
+	public static boolean deleteUserByOwnerGroup(String group_name,String owner,String emailID)
 	{
 		try {
 
@@ -237,16 +237,81 @@ public class GroupService {
 	            	System.out.println("trying connection for leave group");
 	            }
 	            
-	            String query2="delete from UserGroup where emailID=?";
-	            PreparedStatement ps2 = connect.con.prepareStatement(query2);
-	            ps2.setString(1,emailID);
-	            int x= ps2.executeUpdate();
+	            String query1="select owner from Group1 where group_name=?";
+	            PreparedStatement ps1 = connect.con.prepareStatement(query1);
+	            ps1.setString(1,group_name);
+	            ResultSet result = ps1.executeQuery();
+				
+				while (result.next()) {
+			     String e1=result.getString("owner");
+				 System.out.println("e1="+e1);
+				 if(!e1.equals(emailID))  //not owner so delete from group
+				 {
+					 String query2="delete from UserGroup where emailID=?";
+			            PreparedStatement ps2 = connect.con.prepareStatement(query2);
+			            ps2.setString(1,emailID);
+			            int x= ps2.executeUpdate();
+			            
+			            if(x>0)
+			            {
+			            	System.out.println(" one user deleted  from successfully ");
+			            	return true;
+			            }
+			            
+					 
+				 }
+				 else
+				 {
+					 //owner wants to leave
+					 //1.remove owner from UserGroup first
+					 String query2="delete from UserGroup where emailID=?";
+			            PreparedStatement ps2 = connect.con.prepareStatement(query2);
+			            ps2.setString(1,emailID);
+			            int x= ps2.executeUpdate();
+			            
+			            if(x>0)
+			            {
+			            	System.out.println(" one user deleted  from again ");
+			            	//2.select a group member and make him admin now
+			            	//select emailID from UserGroup where group_name='office' order by RAND() LIMIT 1;
+			            	String query = "select emailID from UserGroup where group_name=? order by RAND() LIMIT 1";
+				            PreparedStatement ps = connect.con.prepareStatement(query);
+				            ps.setString(1,group_name);
+				            
+				              ResultSet rs2 = ps.executeQuery();
+							
+								while (rs2.next()) {
+							
+								 e1=rs2.getString("emailID");
+								 //now make this emaiID as new owner of that group
+								 System.out.println("random emailID ="+e1);
+								 String q3="update Group1 set owner=? where group_name=?";
+						            PreparedStatement ps3 = connect.con.prepareStatement(q3);
+						            ps3.setString(1,e1);
+						            ps3.setString(2, group_name);
+						            int y= ps3.executeUpdate();
+						         
+						            if(y>0)
+						            {
+						            	System.out.println("New owner assigned to group");
+						            	return true;
+						            }
+								 
+								}
+			            	
+			            }//if x>0 over
+			            
+
+
+				 }//outer else ends
+				}//while ends
 	            
-	            if(x>0)
-	            {
-	            	System.out.println(" one user deleted  from successfully ");
-	            	return true;
-	            }
+	            
+	            
+	            
+	            
+	            
+	            
 	            
 	            		
 				connect.stop();

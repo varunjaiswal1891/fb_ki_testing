@@ -16,7 +16,7 @@
         <script type="text/javascript">
         
         $(document).ready(function() {
-        	
+        	var f1,l1;
         	var group_name = $.cookie("ID_group");
         	document.getElementById("group_name").innerHTML=group_name;
         	var foo = $.cookie("ID");
@@ -36,6 +36,48 @@
                    	   //alert(obj.fname);
                    	   //alert(obj.highschool);
                        	   document.getElementById("userName").innerHTML=obj.fname+" "+obj.lname;
+                       	    
+                       	        	   	$.ajax({ 
+                url: "http://localhost:8080/DemoFB/webapi/group/getGroupAdmin",
+                type: "GET",
+                dataType: "json",
+                contentType : "application/json",
+                crossDomain: true,
+                processData: true,
+                
+                
+                success: function(response){  
+             	   
+                    // we have the response  
+             	   if(response!=null){
+                     var data =JSON.parse(JSON.stringify(response)); 
+                     f1=data.fname;
+                     l1=data.lname;
+                   		if((obj.fname==f1)&&(obj.lname==l1))
+                   		{
+                   			document.getElementById('deleteGroup').style.visibility = 'visible';
+                   		}
+                   		else
+                   		{
+                   			document.getElementById('deleteGroup').style.visibility = 'hidden';
+                   		}	
+                    }  
+                    
+                    else
+                 	   {
+                 	  alert("something wrong to get admin");
+                 	   }
+                  },
+    	    
+       			error: function(e){  
+         					alert('Error121212: ' + e);  
+         					alert(e.toString());
+       			}				
+         
+    	  });//ajax call end for getting all group admin
+                       	   
+                       	   
+                       	   
                       }  
                       
                       else
@@ -411,7 +453,8 @@
                   	    	   
                   	    	  if(resp!=null){
                   	    		  alert("leave group success");
-                  	    		 location.reload();                	    		  
+                  	    		window.location.replace("myGroups.html");
+                  	    		 		  
                   	    	  }
                   	    	  else{
                   	    		
@@ -425,10 +468,48 @@
                 	        }	 
                               		 
                               		 
-                              		 }); //ajax call ends
+                         }); //ajax call ends
                  		 
                  		 
-                 	 });//post button click
+                 	 });//leave button click
+                 	 
+                 	 
+                 	 
+                 	 $("#deleteGroup").click(function(e){
+                  		var foo = $.cookie("ID_group");
+                  		 
+                  		 $.ajax({
+                   	        type: "DELETE",
+                   	        contentType: "text/plain",  //send data to server in this format
+                   	        url:"http://localhost:8080/DemoFB/webapi/group/delete_group",
+                   	        dataType: "text",  //expect response of this type
+                   	        data: foo,
+                   	       success: function(resp){
+                   	    	   
+                   	    	  if(resp!=null){
+                   	    		  alert("delete group success");
+                   	    		window.location.replace("myGroups.html");
+                   	    		 		  
+                   	    	  }
+                   	    	  else{
+                   	    		
+                   	    		  alert("null");
+                   	    	  }
+                   	    	   
+                   	       },
+                   	       
+                   	      error: function(jqXHR, textStatus, errorThrown){
+                 	            alert('leave group error: ' + textStatus);
+                 	        }	 
+                               		 
+                               		 
+                          }); //ajax call ends
+                  		 
+                  		 
+                  	 });//delete group button click
+                 	 
+                 	 
+                 	 
                  	
                  	
                  	
@@ -583,7 +664,7 @@
          					alert(e.toString());
        			}				
          
-    	  });//ajax call end for getting all group members
+    	  });//ajax call end for getting all group admin
 
 
    	   	$.ajax({ 
@@ -762,6 +843,7 @@
 								<label for="group_admin" style="font-size:20px">Admin</label>
 								<b style="color:blue;" style="margin-left:30px" id="group_admin"></b>
 								
+								<button class="btn btn-primary pull-right"  type="button" id="deleteGroup">Delete Group</button>
 								<button class="btn btn-primary pull-right"  type="button" id="leavebutton">Leave Group</button>
 								
 								</div>
