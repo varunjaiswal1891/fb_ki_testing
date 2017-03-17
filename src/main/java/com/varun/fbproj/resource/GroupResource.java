@@ -74,12 +74,12 @@ public class GroupResource {
 	@Produces({MediaType.TEXT_PLAIN})
     public String addUserToGroup(UserGroup g1,@CookieParam("ID_group") String group_name) throws JsonParseException, JsonMappingException, IOException{
 	
-		String gname=group_name.replaceAll("%20", " ");
+		String gname=group_name.replaceAll("%20"," ");
 		g1.setGroup_name(gname);
 		String emailID=g1.getEmailID();
 		System.out.println("email here="+emailID);
 		System.out.println("group name here="+gname);
-		if(GroupService.addUserGroup(group_name, emailID))
+		if(GroupService.addUserGroup(gname, emailID))
 		{
 			return "user added in group";
 		}
@@ -132,7 +132,7 @@ public class GroupResource {
     @Path("/delete_user_from_group")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.TEXT_PLAIN})
-    public String deleteUserFromGroup(@CookieParam("ID") String jwt,UserGroup ug1) throws IOException{
+    public String deleteUserByOwner1Group(@CookieParam("ID") String jwt,UserGroup ug1) throws IOException{
 	//deletes the specified group if he is the owner of that group otherwise false
 		System.out.println("jwt="+ jwt);
 		Claims claims = Jwts.parser()         
@@ -140,12 +140,36 @@ public class GroupResource {
 			       .parseClaimsJws(jwt).getBody();
 	    System.out.println("Subject: " + claims.getSubject());
 	    String owner=claims.getSubject();
-		if(GroupService.deleteUserFromGroup(ug1.getGroup_name(),owner,ug1.getEmailID()))
+		if(GroupService.deleteUserByOwnerroup(ug1.getGroup_name(),owner,ug1.getEmailID()))
 		{
 			return "user deleted from group";
 		}
 		return  "Not authorized to delete user";
 	}// delete a group ends here
+	
+
+	
+	@DELETE
+    @Path("/leave_group")
+	@Consumes({MediaType.TEXT_PLAIN})
+	@Produces({MediaType.TEXT_PLAIN})
+    public String deleteUserInGroup(@CookieParam("ID") String jwt,String group_name) throws IOException{
+	//deletes the specified group if he is the owner of that group otherwise false
+		String gname=group_name.replaceAll("%20", " ");
+		System.out.println("jwt="+ jwt);
+		Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(jwt).getBody();
+	    System.out.println("Subject: " + claims.getSubject());
+	    String emailID=claims.getSubject();
+		if(GroupService.deleteUserInGroup(gname,emailID))
+		{
+			return "user deleted from group";
+		}
+		return  null;
+	}// delete a group ends here
+	
+	
 	
 	
 	
@@ -292,6 +316,20 @@ public class GroupResource {
 			return user_list;
 			
 	    }//method ends here
+	    
+	    
+	    @GET
+	    @Path("/getGroupAdmin")
+		@Produces({MediaType.APPLICATION_JSON})
+	    public User getAdminOfGroup(@CookieParam("ID_group") String group_name) throws JsonParseException, JsonMappingException, IOException
+	    {
+	    	String gname=group_name.replaceAll("%20", " ");
+	    	User uobj=new User();
+	    	uobj=GroupService.getGroupAdmin(gname);
+			return uobj;
+			
+	    }//method ends here
+	    
 	
 	
 	

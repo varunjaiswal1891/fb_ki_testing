@@ -232,7 +232,7 @@ public class UserResource {
 	@Path("/uploadProfilePic")
 	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	public boolean updateProfilePic(
+	public void updateProfilePic(
 			
 	        @FormDataParam("file") InputStream fileInputStream,
 	        @FormDataParam("file") FormDataContentDisposition fileFormDataContentDisposition,@CookieParam("ID") String token) throws UnsupportedJwtException, MalformedJwtException, SignatureException, IllegalArgumentException, UnsupportedEncodingException {
@@ -252,7 +252,7 @@ public class UserResource {
 	    //System.out.print(userId);
 	    fileName = fileFormDataContentDisposition.getFileName();
 	    uploadFilePath=new UserImageService().uploadProfilePic(fileInputStream, fileName,token,emailID);
-	   return true;
+	   
 	}
     
     

@@ -161,7 +161,7 @@ public class StatusResource {
     
     
     
-    //this method gives all mere and my frineds k status to be shown n userhome page
+    //this method gives all mere and my frineds k status to be shown on userhome page
     @GET
     @Path("/getAllStatus")
 	@Produces({MediaType.APPLICATION_JSON})
@@ -198,7 +198,7 @@ public class StatusResource {
     @GET
     @Path("/getMyStatus")
 	@Produces({MediaType.APPLICATION_JSON})
-    public ArrayList<Status> getALLMyStatus(@CookieParam("ID1") String jwt) throws JsonParseException, JsonMappingException, IOException
+    public ArrayList<Status> getALLMyStatus(@CookieParam("ID") String jwt) throws JsonParseException, JsonMappingException, IOException
     {
     	System.out.println("Inside getALLMyStatus ");
     	System.out.println("jwt="+ jwt);

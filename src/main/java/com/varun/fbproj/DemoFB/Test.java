@@ -24,7 +24,8 @@ public class Test {
 							String email=result.getString(1);
 							
 							//System.out.println("YES");
-	            new File("/home/varun/git/newWK_6march/fb_ki_testing/src/main/webapp/users/"+email+"/images/").mkdirs();
+	            //new File("/home/varun/git/fb_ki_testing/src/main/webapp/users/"+email+"/images/").mkdirs();
+	            new File("/home/varun/git/fb_ki_testing/src/main/webapp/users/"+email+"/images/").mkdirs();
 	            
 	        }
 	        }
