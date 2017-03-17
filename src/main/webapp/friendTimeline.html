@@ -452,10 +452,11 @@
                              document.getElementById("School").innerHTML=obj.highschool;
                              var path="users/"+obj.emailID+"/profilePic.jpg";
                              var path1="users/"+obj.emailID+"/cover.jpg";
-	                           //alert(path);
-	                           $("#image").attr('src', path);
-	                           $("#cover").attr('src', path1);
-                            
+		                           //alert(path);
+                             var email=obj.emailID;
+                             
+                             var path="users/"+email+"/profilePic.jpg";
+                             $("#image").attr('src', path);                            
                             
                          }  
                          
@@ -776,7 +777,7 @@
 <div class="carousel-inner">
             <div class="item active">
 
-                    <img id="cover" src=""  class=" img-responsive" width="1000" height="400" style="float:left;">    
+                    <img id="cover" src="cover.jpg"  class=" img-responsive" width="1000" height="400" style="float:left;">    
                 <div class='img-container'>
                     <div class='img-text'>
                         <img class="img-thumbnail" id="image"  src="" alt="..." width="250px" height="250px" />

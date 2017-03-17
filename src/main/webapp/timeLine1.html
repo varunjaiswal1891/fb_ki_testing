@@ -39,113 +39,108 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	var x=$.cookie("ID");//current user logged in cookie
-	var y=$.cookie("ID1");//friend timeline ki cookie
-	//document.write(x);
-	var email;
-	$("#logoutForm").submit(function(e){
-	        e.preventDefault();
-	 });
+    var x=$.cookie("ID");//current user logged in cookie
+    var y=$.cookie("ID1");//friend timeline ki cookie
+    //document.write(x);
     var email;
-	//this ajax call to print user name on top logged in user row
-	//alert(foo);
-         	$.ajax({
-         		 type: "GET",
-     	        contentType: "text/plain",  //send data to server in this format
-     	        url:"http://localhost:8080/DemoFB/webapi/user/retrive",
-     	        dataType: "JSON",  //expect response of this type
-     	        data: foo,
+    $("#logoutForm").submit(function(e){
+            e.preventDefault();
+     });
+    var email;
+    //this ajax call to print user name on top logged in user row
+    //alert(foo);
+             $.ajax({
+                  type: "GET",
+                 contentType: "text/plain",  //send data to server in this format
+                 url:"http://localhost:8080/DemoFB/webapi/user/retrive",
+                 dataType: "JSON",  //expect response of this type
+                 data: foo,
                    
                    success: function(response){  
                        // we have the response  
                        if(response!=null){
-                    	  // alert("data fetched");
-                    	   var obj = JSON.parse(JSON.stringify(response));
-                    	   //alert(obj.emailID);
-                    	   //alert(obj.fname);
-                    	   //alert(obj.highschool);
-                        	   document.getElementById("userName").innerHTML=obj.fname+" "+obj.lname;
+                          // alert("data fetched");
+                           var obj = JSON.parse(JSON.stringify(response));
+                           //alert(obj.emailID);
+                           //alert(obj.fname);
+                           //alert(obj.highschool);
+                               document.getElementById("userName").innerHTML=obj.fname+" "+obj.lname;
                        }  
                        
                        else
-                    	   {
-                    	  	alert("data cannot be fetchedii99009");
-                    	   }
+                           {
+                              alert("data cannot be fetchedii99009");
+                           }
                      },
-    	    
-          			error: function(e){  
-            					alert('Error121212: ' + e);  
-            					alert(e.toString());
-          			}				
             
-    	  });  //ajax call ends here
+                      error: function(e){  
+                                alert('Error121212: ' + e);  
+                                alert(e.toString());
+                      }                
+            
+          });  //ajax call ends here
 
 
-         	//ajax call to fetch friend  personal info on going to his timeline
-		var foo = $.cookie("ID");
-		//alert(foo);
-		 	$.ajax({
-             		 type: "GET",
-         	        contentType: "text/plain",  //send data to server in this format
-         	        url:"http://localhost:8080/DemoFB/webapi/user/retrive",
-         	        dataType: "JSON",  //expect response of this type
-         	        data: foo,
-	                   
+             //ajax call to fetch friend  personal info on going to his timeline
+        var foo = $.cookie("ID");
+        //alert(foo);
+             $.ajax({
+                      type: "GET",
+                     contentType: "text/plain",  //send data to server in this format
+                     url:"http://localhost:8080/DemoFB/webapi/user/retrive",
+                     dataType: "JSON",  //expect response of this type
+                     data: foo,
+                       
                        success: function(response){  
-	                       // we have the response  
-	                       if(response!=null){
-	                    	  /// alert("data fetched");
-	                    	   var obj = JSON.parse(JSON.stringify(response));
-	                    	  // alert(obj.emailID);
-	                    	   //alert(obj.fname);
-	                    	//   alert(obj.highschool);
-	                    	        document.getElementById("email").innerHTML=obj.emailID;
-	                    	       document.getElementById("School").innerHTML=obj.highschool;
-	                    	       document.getElementById("name").innerHTML=obj.fname+" "+obj.lname;
-		                    	   document.getElementById("DOB").innerHTML= obj.date;
-		                    	   document.getElementById("Mob").innerHTML= obj.mob_no;
-		                    	   document.getElementById("college").innerHTML=obj.college;
-		                    	   document.getElementById("work").innerHTML=obj.placeOfWork;
-		                    	   document.getElementById("town").innerHTML=obj.hometown;
-		                    	   document.getElementById("workCity").innerHTML=obj.cityOfWork;
-		                    	   document.getElementById("School").innerHTML=obj.highschool;
-		                    	   document.getElementById("mob_no").defaultValue =obj.mob_no;
-		                    	   document.getElementById("college").defaultValue =obj.college;
-		                    	   document.getElementById("highschool").defaultValue =obj.highschool;
-		                    	   document.getElementById("workplace").defaultValue =obj.placeOfWork;
-		                    	   document.getElementById("hometown").defaultValue =obj.hometown;
-		                    	   document.getElementById("workcity").defaultValue =obj.cityOfWork;
-		                    	   document.getElementById("userName").innerHTML=obj.fname+" "+obj.lname;
-									 //alert(obj.emailID);
-		                    	   var email=obj.emailID;
-		                           var path="users/"+email+"/profilePic.jpg";
-		                           //alert(path);
-		                           $("#image").attr('src', path);
-		                           //window.location.replace("timeLine1.html");
-		                    	  
-
-		                           
-		                           var path1="users/"+email+"/cover.jpg"
-		                           //alert(path1);
-		                           $("#cover").attr('src', path1);
-
-	                       }  
-	                       
-	                       else
-	                    	   {
-	                    	  	alert("data cannot be fetched");
-	                    	   }
-	                     },
-	    	    
-	          			error: function(e){  
-	            					alert('Error121212: ' + e);  
-	            					alert(e.toString());
-	          			}				
-	            
-	    	  });//ajax call ends here
+                           // we have the response  
+                           if(response!=null){
+                              /// alert("data fetched");
+                               var obj = JSON.parse(JSON.stringify(response));
+                              // alert(obj.emailID);
+                               //alert(obj.fname);
+                            //   alert(obj.highschool);
+                                    document.getElementById("email").innerHTML=obj.emailID;
+                                   document.getElementById("School").innerHTML=obj.highschool;
+                                   document.getElementById("name").innerHTML=obj.fname+" "+obj.lname;
+                                   document.getElementById("DOB").innerHTML= obj.date;
+                                   document.getElementById("Mob").innerHTML= obj.mob_no;
+                                   document.getElementById("college").innerHTML=obj.college;
+                                   document.getElementById("work").innerHTML=obj.placeOfWork;
+                                   document.getElementById("town").innerHTML=obj.hometown;
+                                   document.getElementById("workCity").innerHTML=obj.cityOfWork;
+                                   document.getElementById("School").innerHTML=obj.highschool;
+                                   document.getElementById("mob_no").defaultValue =obj.mob_no;
+                                   document.getElementById("college").defaultValue =obj.college;
+                                   document.getElementById("highschool").defaultValue =obj.highschool;
+                                   document.getElementById("workplace").defaultValue =obj.placeOfWork;
+                                   document.getElementById("hometown").defaultValue =obj.hometown;
+                                   document.getElementById("workcity").defaultValue =obj.cityOfWork;
+                                   document.getElementById("userName").innerHTML=obj.fname+" "+obj.lname;
+                                     //alert(obj.emailID);
+                                   var email=obj.emailID;
+                                   
+                                   var path="users/"+email+"/profilePic.jpg";
+                                   $("#image").attr('src', path);    
+                                   var path1="users/"+email+"/cover.jpg"
+                               
+                                  
+                           }  
+                           
+                           else
+                               {
+                                  alert("data cannot be fetched");
+                               }
+                         },
+                
+                          error: function(e){  
+                                    alert('Error121212: ' + e);  
+                                    alert(e.toString());
+                          }                
+                
+              });//ajax call ends here
             
             //ajax call to show my all friends on my friend ki timeline
-            	   	$.ajax({ 
+                       $.ajax({ 
             url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
             type: "GET",
             dataType: "json",
@@ -155,83 +150,83 @@ $(document).ready(function() {
             
             
             success: function(response){  
-         	   
+                
                 // we have the response  
-         	   if(response!=null){
+                if(response!=null){
                 var data =JSON.parse(JSON.stringify(response));  
                  var allFriends;
-         	 
-               	for (var i=0; i < data.length; i++){
-             		 allFriends+="<div class=\"panel-body\">";
-             		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
-             		allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>";
-           // allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  " data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>"; 		
-             		//  allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID+"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
+              
+                   for (var i=0; i < data.length; i++){
+                      allFriends+="<div class=\"panel-body\">";
+                      allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
+                     allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>";
+           // allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  " data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>";         
+                     //  allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID+"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
                      allFriends+="</div>";
-             		allFriends+="</div>";
-					     	}
-             	
+                     allFriends+="</div>";
+                             }
+                 
              allFriends=allFriends.replace("undefined","");
-         	   $("#allFriends").html(allFriends);
+                $("#allFriends").html(allFriends);
         
                 }  
                 
                 else
-             	   {
-             	  alert("something wrong");
-             	   }
+                    {
+                   alert("something wrong");
+                    }
               },
-	    
-   			error: function(e){  
-     					alert('Error121212: ' + e);  
-     					alert(e.toString());
-   			}				
+        
+               error: function(e){  
+                         alert('Error121212: ' + e);  
+                         alert(e.toString());
+               }                
      
-	  });//ajax call end
-  		///ajax call ends here*/
-	      
-	    
+      });//ajax call end
+          ///ajax call ends here*/
+          
+        
 window.go = function(e1){
-		 
-		   var friendUserID= $(e1).attr('id');
-		   $.cookie("ID1",friendUserID);
-		   //window.location.replace("friendTimeline.html");
-    	  
-		
-	   }
+         
+           var friendUserID= $(e1).attr('id');
+           $.cookie("ID1",friendUserID);
+           //window.location.replace("friendTimeline.html");
+          
+        
+       }
 
 
-	    	  
-	    	  
+              
+              
 
-	   $("#findFriendButton").click(function(e){
-		   window.location.replace("userFriend.html");
-	   });
-	    	   
-	   $("#homeButton").click(function(e){
-		   window.location.replace("userHome1.html");
-	   }); 	   
-	
-	
-	
-	  $("#logoutButton1").click(function(e){
-		   var foo = $.cookie("ID");
-      	// alert("logout success");
-   	   window.location.replace("appHome.html");	  
-	       
-	   });//logout button ends ends
-	   $("#search").click(function(e){
-	 		  
+       $("#findFriendButton").click(function(e){
+           window.location.replace("userFriend.html");
+       });
+               
+       $("#homeButton").click(function(e){
+           window.location.replace("userHome1.html");
+       });        
+    
+    
+    
+      $("#logoutButton1").click(function(e){
+           var foo = $.cookie("ID");
+          // alert("logout success");
+          window.location.replace("appHome.html");      
+           
+       });//logout button ends ends
+       $("#search").click(function(e){
+               
            var key=$("input#srch-term").val();
           
            $.cookie("key",key);
           
             
- 	   });//search button ends ends
- 	   
- 	   
- 	  $("#updateDetails").click(function(e){
-		  
+        });//search button ends ends
+        
+        
+       $("#updateDetails").click(function(e){
+          
           var mob_no=$("input#mob_no").val();
           var college=$("input#college").val();
           var placeOfWork=$("input#workplace").val();
@@ -240,100 +235,102 @@ window.go = function(e1){
           var highschool=$("input#highschool").val();
           
           var obj = { mob_no:mob_no,college:college,placeOfWork:placeOfWork,
-        		  hometown:hometown,cityOfWork:cityOfWork,highschool:highschool
-        		  };  
-      	var myJSON = JSON.stringify(obj);
-          	
-			//document.write(myJSON);
-	    $.ajax({
-	        type: "PUT",
-	        contentType: "application/json",  //send data to server in this format
-	        url:"http://localhost:8080/DemoFB/webapi/user/updateAllData",
-	        dataType: "text",  //expect response of this type
-	        data: myJSON,
-	        success: function(resp){
-	            
-	            if(resp!=null){
-	   	                    	 //alert("update success");
-	   	                    	 
-	                    	  // var obj = JSON.parse(JSON.stringify(resp));
-	                    	   //window.location.replace("timeLine1.html");
-	            	 var obj1 = JSON.parse(JSON.stringify(resp));
-                	   //alert(obj.emailID);
-                	   //alert(obj.fname);
-                	  /*  alert(obj1);
-                	       document.getElementById("email").innerHTML=obj1.emailID;
-                	       document.getElementById("School").innerHTML=obj1.highschool;
-                	       document.getElementById("name").innerHTML=obj1.fname+" "+obj.lname;;
-                    	   document.getElementById("DOB").innerHTML= obj1.date;
-                    	   document.getElementById("Mob").innerHTML= obj1.mob_no;
-                    	   document.getElementById("college").innerHTML=obj1.college;
-                    	   document.getElementById("work").innerHTML=obj1.placeOfWork;
-                    	   document.getElementById("town").innerHTML=obj1.hometown;
-                    	   document.getElementById("workCity").innerHTML=obj1.cityOfWork;
-                    	   document.getElementById("School").innerHTML=obj1.highschool;
-                    	   document.getElementById("mob_no").defaultValue =obj1.mob_no;
-                    	   document.getElementById("college").defaultValue =obj1.college;
-                    	   document.getElementById("highschool").defaultValue =obj1.highschool;
-                    	   document.getElementById("workplace").defaultValue =obj1.placeOfWork;
-                    	   document.getElementById("hometown").defaultValue =obj1.hometown;
-                    	   document.getElementById("workcity").defaultValue =obj1.cityOfWork;
-                    	 */   window.location.replace("timeLine1.html");
-	                    	  
-	            }	
-	            else
-	            {
-	            	alert("update failed.. ")
-	            	window.location.replace("tm.html");
-	            }	
-	            
-	            
-	        },
-	        error: function(jqXHR, textStatus, errorThrown){
-	            alert('logout error: ' + textStatus);
-	        }
-	    });
-	           	
+                  hometown:hometown,cityOfWork:cityOfWork,highschool:highschool
+                  };  
+          var myJSON = JSON.stringify(obj);
+              
+            //document.write(myJSON);
+        $.ajax({
+            type: "PUT",
+            contentType: "application/json",  //send data to server in this format
+            url:"http://localhost:8080/DemoFB/webapi/user/updateAllData",
+            dataType: "text",  //expect response of this type
+            data: myJSON,
+            success: function(resp){
+                
+                if(resp!=null){
+                                    //alert("update success");
+                                    
+                              // var obj = JSON.parse(JSON.stringify(resp));
+                               //window.location.replace("timeLine1.html");
+                     var obj1 = JSON.parse(JSON.stringify(resp));
+                       //alert(obj.emailID);
+                       //alert(obj.fname);
+                      /*  alert(obj1);
+                           document.getElementById("email").innerHTML=obj1.emailID;
+                           document.getElementById("School").innerHTML=obj1.highschool;
+                           document.getElementById("name").innerHTML=obj1.fname+" "+obj.lname;;
+                           document.getElementById("DOB").innerHTML= obj1.date;
+                           document.getElementById("Mob").innerHTML= obj1.mob_no;
+                           document.getElementById("college").innerHTML=obj1.college;
+                           document.getElementById("work").innerHTML=obj1.placeOfWork;
+                           document.getElementById("town").innerHTML=obj1.hometown;
+                           document.getElementById("workCity").innerHTML=obj1.cityOfWork;
+                           document.getElementById("School").innerHTML=obj1.highschool;
+                           document.getElementById("mob_no").defaultValue =obj1.mob_no;
+                           document.getElementById("college").defaultValue =obj1.college;
+                           document.getElementById("highschool").defaultValue =obj1.highschool;
+                           document.getElementById("workplace").defaultValue =obj1.placeOfWork;
+                           document.getElementById("hometown").defaultValue =obj1.hometown;
+                           document.getElementById("workcity").defaultValue =obj1.cityOfWork;
+                         */   window.location.replace("timeLine1.html");
+                              
+                }    
+                else
+                {
+                    alert("update failed.. ")
+                    window.location.replace("tm.html");
+                }    
+                
+                
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                alert('logout error: ' + textStatus);
+            }
+        });
+                   
 
-	        	
-	    	    
-	    
-	    
-	   
+                
+                
+        
+        
+       
 
-	   });//update button ends ends
-	   var modalform1 = $('#uploadPic');
-		  modalform1.submit(function() {
-		  var fd1 = new FormData($('#uploadPic')[0]);
-		  console.log(fd1);
-		  alert("uploading");
-		  $.ajax({
-		  type : modalform1.attr('method'),
-		  url : modalform1.attr('action'),
-		  data : fd1,
-		  enctype : 'multipart/form-data',
-		  processData : false, // Important!
+       });//update button ends ends
+       
+       
+       var modalform1 = $('#uploadPic');
+          modalform1.submit(function() {
+          var fd1 = new FormData($('#uploadPic')[0]);
+          console.log(fd1);
+          alert("uploading");
+          $.ajax({
+          type : modalform1.attr('method'),
+          url : modalform1.attr('action'),
+          data : fd1,
+          enctype : 'multipart/form-data',
+          processData : false, // Important!
 
-		  contentType : "text",
-		  cache : false,
-		  success : function(data) {
-		 
-		  if (data) {
-			  alert("runin");
-		  window.location.replace("#");
+          contentType : "text",
+          cache : false,
+          success : function(data) {
+         
+          if (data) {
+              alert("runin");
+          window.location.replace("#");
 
   
 
-		  } else {
-		  alert("Try Again");
-		  }
-		  },
+          } else {
+          alert("Try Again");
+          }
+          },
 
-		  
-		  });  		
-		  });
-		  $.ajax({ 
-              url: "http://localhost:8080/DemoFB/webapi/status/getAllStatus",
+          
+          });          
+          });
+          $.ajax({ 
+              url: "http://localhost:8080/DemoFB/webapi/status/getMyStatus",
               type: "GET",
               dataType: "json",
               contentType : "application/json",
@@ -342,9 +339,9 @@ window.go = function(e1){
               
               
               success: function(response){  
-           	   
+                  
                   // we have the response  
-           	   if(response!=null){
+                  if(response!=null){
                   var data =JSON.parse(JSON.stringify(response));  
                   
                   //console.log(data);
@@ -352,98 +349,98 @@ window.go = function(e1){
                   var st;
                   var fname,lname;
                   for (var i=0; i < data.length; i++){
-               	   
-               	   var email =data[i].emailID; 
-               	  
-               	   
-               	   
-               	   st+="<div class="+"\"panel panel-default\""+">";
-               	   st+="<div class="+"\"panel-body\""+"id=\"forcomment\""+">";
-               	   st+="<div class="+"\"row\""+">";
-               	   st+="<div class="+"\"col-md-12\""+">";
-               	   
-               	   st+="<p><font size="+"\"5\""+"color="+"\"blue\""+">"+data[i].name+"</font></p>" ;
-               	   /* $(status_name).appendTo('#text_color');
-               	   document.getElementById("forstatus").style.color="blue"; */
-               	 	st+="<hr>";
-               	   st+="<p id="+"\"forstatus\""+">"+data[i].status_desc+"</p>" ;
-               	   st+="</div></div><hr>";
-               	   st+="<div class="+"\"row\""+">";
-               	   st+="<div class="+"\"col-md-12\""+">";
-               	   st+="<ul class="+"\"list-inline\""+">";
-               	   st+="<li>";
-               	   st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+" OnClick=\"like(this);\"><span class="+"\"glyphicon glyphicon-thumbs-up\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Like</font></a>";
-               	   st+="</li>";
-               	   st+="<li>";
-               	   st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+" OnClick=\"unlike(this);\""+"><span class="+"\"glyphicon glyphicon-thumbs-down\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Unlike</font></a>";
-               	   st+="</li>";
-               	   st+="<li>";
-               	   st+= "<a href="+"\"#\""+ "id=\""+data[i].statusID+"\""+"><span class="+"\"glyphicon glyphicon-comment\"" +"style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Comment</font></a>";
-               	   st+="</li></ul></div></div>";
-               	   st+="</div>";
-               	   st+="<div class="+"\"panel-footer\"" +"id="+"\"o\""+">";
-               	   st+="<div class="+"\"row\""+">";
-               	   st+="<div class="+"\"col-md-12\""+">";
-               	   st+="<p id="+"\"likescount\""+">"+data[i].likesCount+"Likes"+"  "+data[i].unlikes_count+"Unlikes"+"</p><br></div></div>";
-               	   
-               	   st+="<hr>";
-               	   
-               	   st+="<div class="+"\"pre-scrollable\""+" style="+"\"height:100px;\""+">";
-               	   for(var j=0;j<data[i].a.length;j++)
-           		  
-               			   
-           		   {
-               		   st+= "<p id="+"\"outputname\""+"><font size="+"\"3\""+"color="+"\"blue\""+">"+data[i].a[j].name+"</font></p>"; 
-               	   st+= "<p id="+"\"output\""+">"+data[i].a[j].comment_desc+"</p>";
-               	   st+="<br>";
-               	   st+="<hr>";
-           		   }
-               	   st+="</div>";
-           		   
-               	   st+="<ul>";
-               	   st+="<li class="+"\"media\""+">";
-               	   st+="<div class="+"\"media-body\""+">";
-               	   st+="<div class="+"\"input-group\""+">";
-               	   st+="<input type="+"\"text\""+" class="+"\"form-control\""+" id=\"comment_d"+data[i].statusID+"\""+" placeholder="+"\"Write a comment...\""+">";
+                      
+                      var email =data[i].emailID; 
+                     
+                      
+                      
+                      st+="<div class="+"\"panel panel-default\""+">";
+                      st+="<div class="+"\"panel-body\""+"id=\"forcomment\""+">";
+                      st+="<div class="+"\"row\""+">";
+                      st+="<div class="+"\"col-md-12\""+">";
+                      
+                      st+="<p><font size="+"\"5\""+"color="+"\"blue\""+">"+data[i].name+"</font></p>" ;
+                      /* $(status_name).appendTo('#text_color');
+                      document.getElementById("forstatus").style.color="blue"; */
+                        st+="<hr>";
+                      st+="<p id="+"\"forstatus\""+">"+data[i].status_desc+"</p>" ;
+                      st+="</div></div><hr>";
+                      st+="<div class="+"\"row\""+">";
+                      st+="<div class="+"\"col-md-12\""+">";
+                      st+="<ul class="+"\"list-inline\""+">";
+                      st+="<li>";
+                      st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+" OnClick=\"like(this);\"><span class="+"\"glyphicon glyphicon-thumbs-up\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Like</font></a>";
+                      st+="</li>";
+                      st+="<li>";
+                      st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+" OnClick=\"unlike(this);\""+"><span class="+"\"glyphicon glyphicon-thumbs-down\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Unlike</font></a>";
+                      st+="</li>";
+                      st+="<li>";
+                      st+= "<a href="+"\"#\""+ "id=\""+data[i].statusID+"\""+"><span class="+"\"glyphicon glyphicon-comment\"" +"style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Comment</font></a>";
+                      st+="</li></ul></div></div>";
+                      st+="</div>";
+                      st+="<div class="+"\"panel-footer\"" +"id="+"\"o\""+">";
+                      st+="<div class="+"\"row\""+">";
+                      st+="<div class="+"\"col-md-12\""+">";
+                      st+="<p id="+"\"likescount\""+">"+data[i].likesCount+"Likes"+"  "+data[i].unlikes_count+"Unlikes"+"</p><br></div></div>";
+                      
+                      st+="<hr>";
+                      
+                      st+="<div class="+"\"pre-scrollable\""+" style="+"\"height:100px;\""+">";
+                      for(var j=0;j<data[i].a.length;j++)
+                     
+                              
+                      {
+                          st+= "<p id="+"\"outputname\""+"><font size="+"\"3\""+"color="+"\"blue\""+">"+data[i].a[j].name+"</font></p>"; 
+                      st+= "<p id="+"\"output\""+">"+data[i].a[j].comment_desc+"</p>";
+                      st+="<br>";
+                      st+="<hr>";
+                      }
+                      st+="</div>";
+                      
+                      st+="<ul>";
+                      st+="<li class="+"\"media\""+">";
+                      st+="<div class="+"\"media-body\""+">";
+                      st+="<div class="+"\"input-group\""+">";
+                      st+="<input type="+"\"text\""+" class="+"\"form-control\""+" id=\"comment_d"+data[i].statusID+"\""+" placeholder="+"\"Write a comment...\""+">";
                       st+="<span class="+"\"input-group-btn\""+">";
-                  		st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].statusID+"\""+" OnClick=\"comment(this);\">Post Comment</button>";
-                  		st+="</span>";
-                  		st+="</div>";
-                  		st+="</div>";
-                  		st+="</li>";
-                  		st+="</ul>";
-                  		st+="</div>";
-                  		st+="</div>";
+                          st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].statusID+"\""+" OnClick=\"comment(this);\">Post Comment</button>";
+                          st+="</span>";
+                          st+="</div>";
+                          st+="</div>";
+                          st+="</li>";
+                          st+="</ul>";
+                          st+="</div>";
+                          st+="</div>";
                        
                       
                       
                  
                   st=st.replace("undefined","");
-           	   $("#abcd").html(st);
+                  $("#abcd").html(st);
                   
-           	   }    //outer for ends        
-           	   }//if ends 
-           	   },//success ends  
+                  }    //outer for ends        
+                  }//if ends 
+                  },//success ends  
 
-           	 
-			error: function(e){  
-				alert('Error121212: ' + e);  
-				alert(e.toString());
-		}		
+                
+            error: function(e){  
+                alert('Error121212: ' + e);  
+                alert(e.toString());
+        }        
        
-	  }); //ajax call ends
-  	
-		
-			 window.like = function(e1){
-				 
-				   var statusid= $(e1).attr('id');
-				   alert("cccacacaca"+statusid);
-				   var sid={statusID:statusid};
-				   var myJSON=JSON.stringify(sid);
-				   //alert(statusid);
-				   
-				   
-				   $.ajax({ 
+      }); //ajax call ends
+      
+        
+             window.like = function(e1){
+                 
+                   var statusid= $(e1).attr('id');
+                   alert("cccacacaca"+statusid);
+                   var sid={statusID:statusid};
+                   var myJSON=JSON.stringify(sid);
+                   //alert(statusid);
+                   
+                   
+                   $.ajax({ 
            url: "http://localhost:8080/DemoFB/webapi/status/incrementLike",
            type: "POST",
            dataType: "text",
@@ -454,35 +451,35 @@ window.go = function(e1){
            
            
            success: function(response){  
-        	   
+               
                // we have the response  
-        	   if(response!=null){
+               if(response!=null){
        
 
-        	   }
-        	   else{
-        		   }
-        	   
-			},
-			error: function(e){  
-				alert('Error in like: ' + e);  
-				alert(e.toString());
-		}				
+               }
+               else{
+                   }
+               
+            },
+            error: function(e){  
+                alert('Error in like: ' + e);  
+                alert(e.toString());
+        }                
 
 }); 
 
 }//like fun ends
 
-			 
-			 window.unlike = function(e1){
-				 
-				   var statusid= $(e1).attr('id');
-				   var sid={statusID:statusid};
-				   var myJSON=JSON.stringify(sid);
-				   //alert(statusid);
-				   
-				   
-				   $.ajax({ 
+             
+             window.unlike = function(e1){
+                 
+                   var statusid= $(e1).attr('id');
+                   var sid={statusID:statusid};
+                   var myJSON=JSON.stringify(sid);
+                   //alert(statusid);
+                   
+                   
+                   $.ajax({ 
          url: "http://localhost:8080/DemoFB/webapi/status/decrementLike",
          type: "POST",
          dataType: "text",
@@ -493,44 +490,44 @@ window.go = function(e1){
          
          
          success: function(response){  
-      	   
+             
              // we have the response  
-      	   if(response!=null){
+             if(response!=null){
      
-      		   //alert(response);
-      	   }
-      	   
-      	   
-			},
-			error: function(e){  
-				alert('Error121212: ' + e);  
-				alert(e.toString());
-		}				
+                 //alert(response);
+             }
+             
+             
+            },
+            error: function(e){  
+                alert('Error121212: ' + e);  
+                alert(e.toString());
+        }                
 
 }); 
 }//unlike fun ends
 
-			 
-			 
-			 
+             
+             
+             
 
 
-			 window.comment = function(e1){
-				 
-				   var statusid= $(e1).attr('id');
-				   var chk="comment_d";
-				   chk+=statusid;
-				  // alert(chk);
-				   var comment_desc=document.getElementById(chk).value;
-				   
-				  /*  alert(statusid);*/
-				   //alert("comment"+comment_desc); 
-				   var sid={statusID:statusid,comment_desc:comment_desc};
-				   var myJSON=JSON.stringify(sid);
-				   //alert(statusid);
-				   
-			   
-				   $.ajax({ 
+             window.comment = function(e1){
+                 
+                   var statusid= $(e1).attr('id');
+                   var chk="comment_d";
+                   chk+=statusid;
+                  // alert(chk);
+                   var comment_desc=document.getElementById(chk).value;
+                   
+                  /*  alert(statusid);*/
+                   //alert("comment"+comment_desc); 
+                   var sid={statusID:statusid,comment_desc:comment_desc};
+                   var myJSON=JSON.stringify(sid);
+                   //alert(statusid);
+                   
+               
+                   $.ajax({ 
            url: "http://localhost:8080/DemoFB/webapi/status/addComment",
            type: "POST",
            dataType: "text",
@@ -541,80 +538,80 @@ window.go = function(e1){
            
            
            success: function(response){  
-        	   
+               
                // we have the response  
-        	   if(response!=null){
-        		  $('#comment_d').val('');
-        		   //alert(response);
-        		  location.reload();
-        	   }
-        	   else{
-        		   }
-        	   
-			},
-			error: function(e){  
-				alert('Error121212: ' + e);  
-				alert(e.toString());
-		}				
+               if(response!=null){
+                  $('#comment_d').val('');
+                   //alert(response);
+                  location.reload();
+               }
+               else{
+                   }
+               
+            },
+            error: function(e){  
+                alert('Error121212: ' + e);  
+                alert(e.toString());
+        }                
 
 }); 
 }
-	     	 $("#postbutton").click(function(e){
-         		 
-         		 
-          		var statusdesc= document.getElementById("posttext").value;
-          		 //alert(x);
-          		 $.ajax({
-	        type: "POST",
-	        contentType: "text/plain",  //send data to server in this format
-	        url:"http://localhost:8080/DemoFB/webapi/status/addStatus",
-	        dataType: "text",  //expect response of this type
-	        data: statusdesc,
-	       success: function(resp){
-	    	   
-	    	  if(resp!=null){
-	    		  
-	    		 // alert(resp);
-	    		 $('#posttext').val('');
-	    		location.reload();
-	    		  
-	    	  }
-	    	  else{
-	    		
-	    		  alert("null");
-	    	  }
-	    	   
-	       },
-	       
-	      error: function(jqXHR, textStatus, errorThrown){
+              $("#postbutton").click(function(e){
+                  
+                  
+                  var statusdesc= document.getElementById("posttext").value;
+                   //alert(x);
+                   $.ajax({
+            type: "POST",
+            contentType: "text/plain",  //send data to server in this format
+            url:"http://localhost:8080/DemoFB/webapi/status/addStatus",
+            dataType: "text",  //expect response of this type
+            data: statusdesc,
+           success: function(resp){
+               
+              if(resp!=null){
+                  
+                 // alert(resp);
+                 $('#posttext').val('');
+                location.reload();
+                  
+              }
+              else{
+                
+                  alert("null");
+              }
+               
+           },
+           
+          error: function(jqXHR, textStatus, errorThrown){
             alert('status posting error: ' + textStatus);
-        }	 
-          		 
-          		 
-          		 });    		 
-          		 
-          	 });      	
-          	
-          	 
-          	 
-          	$("#comment").click(function(){
-          	    /* $(this).next("#forcomment").slideToggle(200)
-          	           .find("comment_d").focus(); */
+        }     
+                   
+                   
+                   });             
+                   
+               });          
+              
+               
+               
+              $("#comment").click(function(){
+                  /* $(this).next("#forcomment").slideToggle(200)
+                         .find("comment_d").focus(); */
 
-          	           
-          	           
-          	    return false;
-          	});
-          	 
+                         
+                         
+                  return false;
+              });
+               
 
 
-	});//document ready ends
-	
-	
-	jQuery(document).ajaxComplete(function () {
-		 $('[data-toggle="popover"]').popover({placement:'left'})  
-		}); 
-	
+    });//document ready ends
+    
+    
+    jQuery(document).ajaxComplete(function () {
+         $('[data-toggle="popover"]').popover({placement:'left'})  
+        }); 
+    
 
 </script>
 
@@ -627,9 +624,9 @@ window.go = function(e1){
 
 <div class="row row-fluid">
 <div class=" col-sm-12 col-xs-12 " id="main">
-						
-						<!-- top nav -->
-						   <div class="navbar navbar-blue navbar-static-top">  
+                        
+                        <!-- top nav -->
+                           <div class="navbar navbar-blue navbar-static-top">  
                             <div class="navbar-header">
                               <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
                                 <span class="sr-only">Toggle</span>
@@ -668,9 +665,9 @@ window.go = function(e1){
                                 <a href="todoPage.html" title="Notifications"><i class="glyphicon glyphicon-cloud"></i><span class="badge">5</span></a>
                               </li>
                              
-							 <li role="separator" class="divider"></li>
+                             <li role="separator" class="divider"></li>
    
-							<li> <div class="dropdown">
+                            <li> <div class="dropdown">
   <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
   <span class="caret"></span></button>
   <ul class="dropdown-menu">
@@ -678,29 +675,29 @@ window.go = function(e1){
     <li><a type="submit" class="" id="logoutButton1">Logout</a></li>
   </ul>
 </div> 
-							
-							</li>
-							</ul>
+                            
+                            </li>
+                            </ul>
                            
                             
                             </nav>
                         </div>
-							
-						
-						</div>
+                            
+                        
+                        </div>
 </div>
 
 <div class="row row-fluid">
 <div class=" col-sm-9 col-xs-9" >
 <div class="media ">
-  	<div class="media-left">
-	
+      <div class="media-left">
+    
 <div class="panel panel-default">
-<div class="panel-body">       										
+<div class="panel-body">                                               
 <div class="carousel-inner">
             <div class="item active">
 
-                    <img id="cover" src=""  class=" img-responsive" width="1000" height="400" style="float:left;">    
+                    <img id="cover" src="cover.jpg"  class=" img-responsive" width="1000" height="400" style="float:left;">    
                 <div class='img-container'>
                     <div class='img-text'>
                         <img  class="img-thumbnail" id="image" src="" alt="..."  width="300px" height="300px"/>
@@ -710,89 +707,89 @@ window.go = function(e1){
                 </div>  
                   
                 
-  	<div class="img-container2" >
-  	<div class="img-text offset4">
-  	<div class="dropup">
-  	<button class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-  	<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Chnage
-  	<span class="caret"></span>  
+      <div class="img-container2" >
+      <div class="img-text offset4">
+      <div class="dropup">
+      <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Chnage
+      <span class="caret"></span>  
   </button>
   <ul class="dropdown-menu">
     <li>
     <form id="uploadPic"action="http://localhost:8080/DemoFB/webapi/user/uploadProfilePic" method="post" enctype="multipart/form-data">
-		<p id="uploadPhoto">
-		Change profile pic:<input type="file" name="file" size="45" onchange="this.form.submit()" class="filestyle" data-classButton="btn btn-primary" data-input="false" data-classIcon="icon-plus" data-buttonText="Your label here."/>
-		</p>
-		<input type="text" name="userId" id="PhotoId"  style="display: none;">
-		
+        <p id="uploadPhoto">
+        Change profile pic:<input type="file" name="file" size="45" onchange="this.form.submit()" class="filestyle" data-classButton="btn btn-primary" data-input="false" data-classIcon="icon-plus" data-buttonText="Your label here."/>
+        </p>
+        <input type="text" name="userId" id="PhotoId"  style="display: none;">
+        
     </form>
     </li>
    
     </ul>
-  	</div></div></div>
-  	<div class="img-container1" >
-  	<div class="img-text offset4">
-  	<a class="btn btn-default active" href="timeLine1.html">TimeLine</a>
-  	<a class="btn btn-default" href="todoPage.html">About</a>
-  	<a class="btn btn-default" href="todoPage.html">Photos</a>
-  	</div></div></div>
+      </div></div></div>
+      <div class="img-container1" >
+      <div class="img-text offset4">
+      <a class="btn btn-default active" href="timeLine1.html">TimeLine</a>
+      <a class="btn btn-default" href="todoPage.html">About</a>
+      <a class="btn btn-default" href="todoPage.html">Photos</a>
+      </div></div></div>
   </div>  </div>    </div>    </div>
     </div></div></div>
     <!-- cover pic profile pic ends here -->
     <div class=" col-sm-3 col-xs-3 affix" style="float:right; left:970px; top:20px;" >
-    	 <br>
-	   <div class="panel panel-default" style="float:right; left:970px; top:30px; min-height: 2000px">
-	   <div class="panel-heading"><h4>My Friends</h4></div>
-		<div class="pre-scrollable" style="max-height:580px;overflow-y: scroll;">   
-		<p id="allFriends"></p>
-			</div>
-		  </div>			    
-		</div>
+         <br>
+       <div class="panel panel-default" style="float:right; left:970px; top:30px; min-height: 2000px">
+       <div class="panel-heading"><h4>My Friends</h4></div>
+        <div class="pre-scrollable" style="max-height:580px;overflow-y: scroll;">   
+        <p id="allFriends"></p>
+            </div>
+          </div>                
+        </div>
     <!-- friends ends here -->
     <div class="row row-fluid">
      <div class="col-sm-3 col-xs-3">
-								 	  <div class="panel panel-default">
-										<div class="panel-heading"><h4>Personal Information</h4></div>
-										
-										    <div class="panel-body">
-											
-											<div class="media">
-      										<div class="media-right">
-      										<h4 class="media-heading" id="name"></h4>
+                                       <div class="panel panel-default">
+                                        <div class="panel-heading"><h4>Personal Information</h4></div>
+                                        
+                                            <div class="panel-body">
+                                            
+                                            <div class="media">
+                                              <div class="media-right">
+                                              <h4 class="media-heading" id="name"></h4>
        
-      										
-											</div>
-    										</div>
-	  <pre width="5" class="media-left">EmailID :</pre><p id="email"></p><br>
+                                              
+                                            </div>
+                                            </div>
+      <pre width="5" class="media-left">EmailID :</pre><p id="email"></p><br>
       <pre class="media-left">High School :</pre><p id="School" class="media-right"></p><br>
       <pre class="media-left">DOB :</pre><p id="DOB" class="media-right"></p><br>
-	  <pre class="media-left">Mobile :</pre><p id="Mob" class="media-right"></p>      <br>   
-	  <pre class="media-left">College :</pre><p id="college" class="media-right"></p><br>	    
-	  <pre class="media-left">Work Place :</pre><p id="work" class="media-right"></p>	<br>    
-	  <pre class="media-left">HomeTown :</pre><p id="town" class="media-right"></p>	    <br>
-	  <pre class="media-left">City of Work :</pre><p id="workCity" class="media-right"></p>	<br>
-	   <input type="button" id ="popup" class="btn btn-primary" value="Update Info" data-toggle="modal" data-target="#myModal">
-											
-											
-											
-											</div>
-										  </div>
-									  </div>
-	<!-- personal info ends here -->
-	
-	 <div class="col-sm-6 col-xs-6">
-	 							   
-		<div class="well"> 
-		   <form class="form-horizontal" role="form">
-											
-			 <div class="form-group" style="padding:14px;">
-			  <textarea class="form-control" placeholder="What's on your mind!" id="posttext"></textarea>
-			</div>
-			<button class="btn btn-primary pull-right" type="button" id="postbutton">Post</button><ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
-		   </form>
-		  </div>
-								   
-								   
+      <pre class="media-left">Mobile :</pre><p id="Mob" class="media-right"></p>      <br>   
+      <pre class="media-left">College :</pre><p id="college" class="media-right"></p><br>        
+      <pre class="media-left">Work Place :</pre><p id="work" class="media-right"></p>    <br>    
+      <pre class="media-left">HomeTown :</pre><p id="town" class="media-right"></p>        <br>
+      <pre class="media-left">City of Work :</pre><p id="workCity" class="media-right"></p>    <br>
+       <input type="button" id ="popup" class="btn btn-primary" value="Update Info" data-toggle="modal" data-target="#myModal">
+                                            
+                                            
+                                            
+                                            </div>
+                                          </div>
+                                      </div>
+    <!-- personal info ends here -->
+    
+     <div class="col-sm-6 col-xs-6">
+                                    
+        <div class="well"> 
+           <form class="form-horizontal" role="form">
+                                            
+             <div class="form-group" style="padding:14px;">
+              <textarea class="form-control" placeholder="What's on your mind!" id="posttext"></textarea>
+            </div>
+            <button class="btn btn-primary pull-right" type="button" id="postbutton">Post</button><ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
+           </form>
+          </div>
+                                   
+                                   
 <div id="abcd">
   <div class="panel-body" id="forcomment">
     <!-- Post metadata -->
@@ -876,8 +873,8 @@ window.go = function(e1){
  
 </div> 
 </div>
-								  
-								   
+                                  
+                                   
     
     </div>
     
@@ -966,19 +963,19 @@ window.go = function(e1){
         <script type="text/javascript" src="assets/js/bootstrap.js"></script>
         <script type="text/javascript">
         $(document).ready(function() {
-			$('[data-toggle=offcanvas]').click(function() {
-				$(this).toggleClass('visible-xs text-center');
-				$(this).find('i').toggleClass('glyphicon-chevron-right glyphicon-chevron-left');
-				$('.row-offcanvas').toggleClass('active');
-				$('#lg-menu').toggleClass('hidden-xs').toggleClass('visible-xs');
-				$('#xs-menu').toggleClass('visible-xs').toggleClass('hidden-xs');
-				$('#btnShow').toggle();
-				
-			});
-			
-			 $("#see-more").click(function() {
-		            $(this).hide();
-		        });
+            $('[data-toggle=offcanvas]').click(function() {
+                $(this).toggleClass('visible-xs text-center');
+                $(this).find('i').toggleClass('glyphicon-chevron-right glyphicon-chevron-left');
+                $('.row-offcanvas').toggleClass('active');
+                $('#lg-menu').toggleClass('hidden-xs').toggleClass('visible-xs');
+                $('#xs-menu').toggleClass('visible-xs').toggleClass('hidden-xs');
+                $('#btnShow').toggle();
+                
+            });
+            
+             $("#see-more").click(function() {
+                    $(this).hide();
+                });
         });
         
         

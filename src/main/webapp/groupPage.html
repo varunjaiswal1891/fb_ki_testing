@@ -17,7 +17,8 @@
         
         $(document).ready(function() {
         	
-        	
+        	var group_name = $.cookie("ID_group");
+        	document.getElementById("group_name").innerHTML=group_name;
         	var foo = $.cookie("ID");
          	$.ajax({
         		 type: "GET",
@@ -395,7 +396,43 @@
     	          			}				
     	            
     	    	  });
-            	
+                 	
+                 	
+                 	 $("#leavebutton").click(function(e){
+                 		var foo = $.cookie("ID_group");
+                 		 
+                 		 $.ajax({
+                  	        type: "DELETE",
+                  	        contentType: "text/plain",  //send data to server in this format
+                  	        url:"http://localhost:8080/DemoFB/webapi/group/leave_group",
+                  	        dataType: "text",  //expect response of this type
+                  	        data: foo,
+                  	       success: function(resp){
+                  	    	   
+                  	    	  if(resp!=null){
+                  	    		  alert("leave group success");
+                  	    		 location.reload();                	    		  
+                  	    	  }
+                  	    	  else{
+                  	    		
+                  	    		  alert("null");
+                  	    	  }
+                  	    	   
+                  	       },
+                  	       
+                  	      error: function(jqXHR, textStatus, errorThrown){
+                	            alert('leave group error: ' + textStatus);
+                	        }	 
+                              		 
+                              		 
+                              		 }); //ajax call ends
+                 		 
+                 		 
+                 	 });//post button click
+                 	
+                 	
+                 	
+                 	
                  	 $("#postbutton").click(function(e){
                  		 
                  		 
@@ -519,7 +556,7 @@
     	  
     	  
      	   	$.ajax({ 
-                url: "http://localhost:8080/DemoFB/webapi/group/getGroupMembers",
+                url: "http://localhost:8080/DemoFB/webapi/group/getGroupAdmin",
                 type: "GET",
                 dataType: "json",
                 contentType : "application/json",
@@ -531,25 +568,13 @@
              	   
                     // we have the response  
              	   if(response!=null){
-                    var data =JSON.parse(JSON.stringify(response));  
-                     var groupMembers;
-             	 
-                   	for (var i=0; i < data.length; i++){
-                   		groupMembers+="<div class=\"panel-body\">";
-                   		groupMembers+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/tn.jpg\""+" /></div>";
-                   		groupMembers+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>";
-                         groupMembers+="</div>";
-                         groupMembers+="</div>";
-    					     	}
-                 	
-                   	groupMembers=groupMembers.replace("undefined","");
-             	   $("#groupMembers").html(groupMembers);
-            
+                     var data =JSON.parse(JSON.stringify(response));  
+                     document.getElementById("group_admin").innerHTML=data.fname+" "+data.lname;
                     }  
                     
                     else
                  	   {
-                 	  alert("something wrong");
+                 	  alert("something wrong to get admin");
                  	   }
                   },
     	    
@@ -560,7 +585,50 @@
          
     	  });//ajax call end for getting all group members
 
-    	      	  
+
+   	   	$.ajax({ 
+            url: "http://localhost:8080/DemoFB/webapi/group/getGroupMembers",
+            type: "GET",
+            dataType: "json",
+            contentType : "application/json",
+            crossDomain: true,
+            processData: true,
+            
+            
+            success: function(response){  
+         	   
+                // we have the response  
+         	   if(response!=null){
+                var data =JSON.parse(JSON.stringify(response));  
+                 var groupMembers;
+         	 
+               	for (var i=0; i < data.length; i++){
+               		groupMembers+="<div class=\"panel-body\">";
+               		groupMembers+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/tn.jpg\""+" /></div>";
+               		groupMembers+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>";
+                     groupMembers+="</div>";
+                     groupMembers+="</div>";
+					     	}
+             	
+               	groupMembers=groupMembers.replace("undefined","");
+         	   $("#groupMembers").html(groupMembers);
+        
+                }  
+                
+                else
+             	   {
+             	  alert("something wrong");
+             	   }
+              },
+	    
+   			error: function(e){  
+     					alert('Error121212: ' + e);  
+     					alert(e.toString());
+   			}				
+     
+	  });//ajax call end for getting admin group
+    	  
+    	  
     	  
     	  $("#search").click(function(e){
      	    var key=$("input#srch-term").val();
@@ -688,7 +756,16 @@
 							  
 								<!-- content -->
 								<div class="row">
-				
+								<label for="group_name" style="font-size:20px" >Group Name</label>
+								<b style="color:blue;" style="margin-left:20px" id="group_name"></b>
+								
+								<label for="group_admin" style="font-size:20px">Admin</label>
+								<b style="color:blue;" style="margin-left:30px" id="group_admin"></b>
+								
+								<button class="btn btn-primary pull-right"  type="button" id="leavebutton">Leave Group</button>
+								
+								</div>
+					
 								
 									<!-- sidebar -->
 				 	<div class="column col-sm-2 col-xs-2 "   style="background-color: #E9EAED">
@@ -782,7 +859,12 @@
 											 <div class="form-group" style="padding:14px;">
 											  <textarea class="form-control" placeholder="post in group here please" id="posttext"></textarea>
 											</div>
-											<button class="btn btn-primary pull-right" type="button" id="postbutton">Post</button><ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
+											<button class="btn btn-primary pull-right" type="button" id="postbutton">Post</button>
+											<ul class="list-inline">
+											<li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li>
+											<li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li>
+											<li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li>
+											</ul>
 										 	
 										   </form>
 									  </div>

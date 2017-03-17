@@ -175,7 +175,7 @@ public class GroupService {
 
 
 	
-	public static boolean deleteUserFromGroup(String group_name,String owner,String emailID)
+	public static boolean deleteUserByOwnerroup(String group_name,String owner,String emailID)
 	{
 		try {
 
@@ -223,6 +223,40 @@ public class GroupService {
 		return false;
 		
 	}//method delete user from Group ends here
+
+	
+	public static boolean deleteUserInGroup(String group_name,String emailID)
+	{
+		try {
+
+	      	  DBAccess connect = new DBAccess();
+	            boolean check=false;
+	            while(check==false)
+	            {
+	            	check=connect.start();
+	            	System.out.println("trying connection for leave group");
+	            }
+	            
+	            String query2="delete from UserGroup where emailID=?";
+	            PreparedStatement ps2 = connect.con.prepareStatement(query2);
+	            ps2.setString(1,emailID);
+	            int x= ps2.executeUpdate();
+	            
+	            if(x>0)
+	            {
+	            	System.out.println(" one user deleted  from successfully ");
+	            	return true;
+	            }
+	            
+	            		
+				connect.stop();
+			} catch (Exception e) {
+				e.printStackTrace();
+		  }
+		return false;
+		
+	}//method delete user leave Group ends here
+
 	
 	
 	 public  static ArrayList<Status> getStatusByGroup(String group_name){
@@ -393,6 +427,49 @@ public  static ArrayList<User> getGroupMembers(String group_name){
 	
 	 return  null;
  }//method get all members of Group ends here
+
+
+
+public  static User getGroupAdmin(String group_name){
+    
+	 String result;
+	 DBAccess db= new DBAccess();
+	boolean check=false;
+ try{
+     while(check!=true){
+	  System.out.println("trying connection in get all members of group");
+	  check= db.start();
+ }
+ String sql="select owner from Group1 where group_name= ?";
+
+ PreparedStatement pstmnt=db.con.prepareStatement(sql);
+ pstmnt.setString(1,group_name); 
+ ResultSet rs= pstmnt.executeQuery();
+ User u1=new User();
+ if(rs!=null){
+	  
+	  while (rs.next()) {
+		  
+		  String e1=rs.getString("owner");
+		  u1=RetriveService.getUserAllData(e1);
+		
+	
+		}
+ }
+ else{
+	  System.out.println("resultset empty");
+ }
+ db.stop();
+ return u1;
+}
+catch(Exception e){
+	
+}
+
+return  null;
+}//method get Admin of Group ends here
+
+
 
 	
 	
