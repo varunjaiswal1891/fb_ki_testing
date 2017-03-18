@@ -116,7 +116,10 @@ $(document).ready(function() {
                                    document.getElementById("hometown").defaultValue =obj.hometown;
                                    document.getElementById("workcity").defaultValue =obj.cityOfWork;
                                    document.getElementById("userName").innerHTML=obj.fname+" "+obj.lname;
-                                     //alert(obj.emailID);
+                                  
+                                   //document.getElementById("sportID").defaultValue =obj.sport;
+                                   
+                                   //alert(obj.emailID);
                                    var email=obj.emailID;
                                    
                                    var path="users/"+email+"/profilePic.jpg";
@@ -157,11 +160,13 @@ $(document).ready(function() {
                  var allFriends;
               
                    for (var i=0; i < data.length; i++){
-                      allFriends+="<div class=\"panel-body\">";
+                      allFriends+="<div class=\"panel-body\">";                                                                                          
                       allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
+                     
+                      //put here if(myObj.sport=data[i].sport) 
                      allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>";
-           // allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  " data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>";         
-                     //  allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID+"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
+               //use this in lab test     // 
+             //  allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"college at " +data[i].college +""  "Lives in  "+data[i].hometown +"\""  +"  >"+data[i].fname+" "+data[i].lname + "</a>";
                      allFriends+="</div>";
                      allFriends+="</div>";
                              }
@@ -233,6 +238,7 @@ window.go = function(e1){
           var hometown=$("input#hometown").val();
           var cityOfWork=$("input#workcity").val();
           var highschool=$("input#highschool").val();
+          //var sport=$('#sport option:selected').text();
           
           var obj = { mob_no:mob_no,college:college,placeOfWork:placeOfWork,
                   hometown:hometown,cityOfWork:cityOfWork,highschool:highschool
@@ -273,7 +279,8 @@ window.go = function(e1){
                            document.getElementById("workplace").defaultValue =obj1.placeOfWork;
                            document.getElementById("hometown").defaultValue =obj1.hometown;
                            document.getElementById("workcity").defaultValue =obj1.cityOfWork;
-                         */   window.location.replace("timeLine1.html");
+                            */
+                            window.location.replace("timeLine1.html");
                               
                 }    
                 else
@@ -381,10 +388,12 @@ window.go = function(e1){
                       st+="<div class="+"\"panel-footer\"" +"id="+"\"o\""+">";
                       st+="<div class="+"\"row\""+">";
                       st+="<div class="+"\"col-md-12\""+">";
-                      st+="<p id="+"\"likescount\""+">"+data[i].likesCount+"Likes"+"  "+data[i].unlikes_count+"Unlikes"+"</p><br></div></div>";
+                      st+="<a id="+"\"likescount\""+">"+data[i].likesCount+"</a>";
+                      st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+"onmouseover=\"likehover(this)\"><span style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Likes</font></a>";
+                      st+="<p id="+"\"likescount\""+">"+data[i].unlikes_count+" Unlikes"+"</p><br></div></div>";
                       
-                      st+="<hr>";
-                      
+                      st+="<hr>"; 
+               	   
                       st+="<div class="+"\"pre-scrollable\""+" style="+"\"height:100px;\""+">";
                       for(var j=0;j<data[i].a.length;j++)
                      
@@ -431,6 +440,76 @@ window.go = function(e1){
       }); //ajax call ends
       
         
+          window.likehover = function(e1){
+	    		  
+	    		  var statusid= $(e1).attr('id');
+	    		  
+	    		 var obj={statusID:statusid};
+	    		 var myjson=JSON.stringify(obj);
+	    		 
+	    			
+	    			$.ajax({ 
+	                    url: "http://localhost:8080/DemoFB/webapi/status/getAllLikeName",
+	                    type: "POST",
+	                    dataType: "json",
+	                    contentType : "application/json",
+	                    crossDomain: true,
+	                    processData: true,
+	                    data:myjson,
+	                    
+	                    success: function(response){  
+	                 	   
+	                    	 var data =JSON.parse(JSON.stringify(response)); 
+	                        console.log(data);  
+	                      
+	                        
+	                       
+	                        
+	                        
+	                         var st;
+	                        // $("#showlikesnames").html(st);
+	                         for (var i=0; i < data.length; i++){
+	                      	st+="<div>";
+	                      	st+="<div class=\" col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
+	                      	st+="<font size="+"\"4\">"+data[i].fname+data[i].lname+"</font>";
+	                      	// st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].emailID+"\""+" OnClick=\"suggest(this)"+";\">Suggest</button>";
+	                      	// st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].emailID+"\""+" OnClick=\"suggestignore(this);\">Ignore</button>";
+	                      	 st+="</div>"; 
+	                      	 st+="<hr>";
+	                       
+	                      	 
+	                        } 
+	                         
+	                         st=st.replace("undefined","");
+	                      	 $("#showlikesnames").html(st);
+	                         
+	                         $('#likeModal').modal({
+	                             show: true
+	                         });
+	                        
+	                        
+	                    },
+	                    
+	                    error: function(e){  
+	    					alert('Errorinsidelikehover: ' + e);  
+	    					alert(e.toString());
+	    			}		
+	                
+	        	  }); //ajax call ends
+	           		  
+	    			
+	    			
+	    			
+	    			
+	    			
+	    			
+	    		 
+	    	  }//like hover fun ends
+
+      
+      
+      
+      
              window.like = function(e1){
                  
                    var statusid= $(e1).attr('id');
@@ -609,7 +688,7 @@ window.go = function(e1){
     
     
     jQuery(document).ajaxComplete(function () {
-         $('[data-toggle="popover"]').popover({placement:'left'})  
+         $('[data-toggle="popover"]').popover({placement:'right'})  
         }); 
     
 
@@ -768,6 +847,7 @@ window.go = function(e1){
       <pre class="media-left">Work Place :</pre><p id="work" class="media-right"></p>    <br>    
       <pre class="media-left">HomeTown :</pre><p id="town" class="media-right"></p>        <br>
       <pre class="media-left">City of Work :</pre><p id="workCity" class="media-right"></p>    <br>
+   <!--     <pre class="media-left">Sports :</pre><p id="sportID" class="media-right"></p>    <br>  -->
        <input type="button" id ="popup" class="btn btn-primary" value="Update Info" data-toggle="modal" data-target="#myModal">
                                             
                                             
@@ -883,7 +963,33 @@ window.go = function(e1){
     
     
     
-    
+    <!--like modal-->
+		 <div id="likeModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog">
+		  <div class="modal-content">
+			  <div class="modal-header">
+			 
+				  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Hide</button>
+					<h4>People Who Liked This Status</h4>
+			  </div>
+			  <div class="modal-body">
+				  <form class="form center-block">
+					<div class="form-group" id="showlikesnames">
+					
+					 <!--  <textarea class="form-control input-lg" autofocus="" placeholder="What do you want to share?"></textarea> -->
+					</div>
+				  </form>
+			  </div>
+			  <div class="modal-footer">
+				  <div>
+				 <!--  <button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Post</button> -->
+					<!-- <ul class="pull-left list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul> -->
+				  </div>	
+			  </div>
+		  </div>
+		  </div>
+		</div> 
+		
     
     
     
@@ -902,8 +1008,6 @@ window.go = function(e1){
       </div>
       <div class="modal-body">
         <div class="container">
-
-        
         <br>
         <div class="form-group">
           <label for="mob_no" >Mobile No:</label>
@@ -937,6 +1041,18 @@ window.go = function(e1){
           <input type="text"  id="highschool" style="margin-left:10px;">
         </div>
              <br>
+             
+    <!--     <div class="form-group">
+         <label for="sel1">Sports (select one):</label>
+      <select class="form-control" id="sport" style="margin-left:10px;">
+        <option>Cricket</option>
+        <option>Football</option>
+        <option>Tennis</option>
+        <option>Baseball</option>
+      </select>
+        </div>
+             <br>      
+             -->
        
     </div>
     

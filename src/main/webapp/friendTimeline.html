@@ -628,10 +628,12 @@
                          st+="<div class="+"\"panel-footer\"" +"id="+"\"o\""+">";
                          st+="<div class="+"\"row\""+">";
                          st+="<div class="+"\"col-md-12\""+">";
-                         st+="<p id="+"\"likescount\""+">"+data[i].likesCount+"Likes"+"  "+data[i].unlikes_count+"Unlikes"+"</p><br></div></div>";
+                         st+="<a id="+"\"likescount\""+">"+data[i].likesCount+"</a>";
+                         st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+"onmouseover=\"likehover(this)\"><span style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Likes</font></a>";
+                         st+="<p id="+"\"likescount\""+">"+data[i].unlikes_count+" Unlikes"+"</p><br></div></div>";
                          
-                         st+="<hr>";
-                         
+                         st+="<hr>"; 
+                  	   
                          st+="<div class="+"\"pre-scrollable\""+" style="+"\"height:100px;\""+">";
                          for(var j=0;j<data[i].a.length;j++)
                        {
@@ -679,6 +681,76 @@
         }); //ajax call ends
 
 
+
+           			 window.likehover = function(e1){
+           	    		  
+           	    		  var statusid= $(e1).attr('id');
+           	    		  
+           	    		 var obj={statusID:statusid};
+           	    		 var myjson=JSON.stringify(obj);
+           	    		 
+           	    			
+           	    			$.ajax({ 
+           	                    url: "http://localhost:8080/DemoFB/webapi/status/getAllLikeName",
+           	                    type: "POST",
+           	                    dataType: "json",
+           	                    contentType : "application/json",
+           	                    crossDomain: true,
+           	                    processData: true,
+           	                    data:myjson,
+           	                    
+           	                    success: function(response){  
+           	                 	   
+           	                    	 var data =JSON.parse(JSON.stringify(response)); 
+           	                        console.log(data);  
+           	                      
+           	                        
+           	                       
+           	                        
+           	                        
+           	                         var st;
+           	                        // $("#showlikesnames").html(st);
+           	                         for (var i=0; i < data.length; i++){
+           	                      	st+="<div>";
+           	                      	st+="<div class=\" col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
+           	                      	st+="<font size="+"\"4\">"+data[i].fname+data[i].lname+"</font>";
+           	                      	// st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].emailID+"\""+" OnClick=\"suggest(this)"+";\">Suggest</button>";
+           	                      	// st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].emailID+"\""+" OnClick=\"suggestignore(this);\">Ignore</button>";
+           	                      	 st+="</div>"; 
+           	                      	 st+="<hr>";
+           	                       
+           	                      	 
+           	                        } 
+           	                         
+           	                         st=st.replace("undefined","");
+           	                      	 $("#showlikesnames").html(st);
+           	                         
+           	                         $('#likeModal').modal({
+           	                             show: true
+           	                         });
+           	                        
+           	                        
+           	                    },
+           	                    
+           	                    error: function(e){  
+           	    					alert('Errorinsidelikehover: ' + e);  
+           	    					alert(e.toString());
+           	    			}		
+           	                
+           	        	  }); //ajax call ends
+           	           		  
+           	    			
+           	    			
+           	    			
+           	    			
+           	    			
+           	    			
+           	    		 
+           	    	  }//like hover fun ends
+           	  
+        
+        
+        
 
   	  $("#search").click(function(e){
    	    var key=$("input#srch-term").val();
@@ -967,6 +1039,34 @@
           </div>
         </div> 
     
+    
+    <!--like modal-->
+		 <div id="likeModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog">
+		  <div class="modal-content">
+			  <div class="modal-header">
+			 
+				  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Hide</button>
+					<h4>People Who Liked This Status</h4>
+			  </div>
+			  <div class="modal-body">
+				  <form class="form center-block">
+					<div class="form-group" id="showlikesnames">
+					
+					 <!--  <textarea class="form-control input-lg" autofocus="" placeholder="What do you want to share?"></textarea> -->
+					</div>
+				  </form>
+			  </div>
+			  <div class="modal-footer">
+				  <div>
+				 <!--  <button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Post</button> -->
+					<!-- <ul class="pull-left list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul> -->
+				  </div>	
+			  </div>
+		  </div>
+		  </div>
+		</div> 
+		
     
     
         

@@ -191,5 +191,43 @@ public class RetriveService {
 	}
 	
 	
+	public static String emailIDfromuID(int userID) {
+		String email="";
+		try {
+
+	      	  DBAccess connect = new DBAccess();
+	            boolean check=false;
+	            while(check==false)
+	            {
+	            	check=connect.start();
+	            	System.out.println("trying connection");
+	            }
+	            PreparedStatement prepStatement = connect.con
+						.prepareStatement("select emailID from User where userID = ? ");
+				prepStatement.setInt(1,userID);
+				
+				
+				ResultSet result = prepStatement.executeQuery();
+			
+				if(result!=null){
+				if(result.next())
+			    email =result.getString(1);
+				  connect.stop();
+				}
+				else {
+					connect.stop();
+					return "";
+				}
+	            connect.stop();
+	            
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			return email;
+	}
+
+	
+	
 	
 }//class ends here

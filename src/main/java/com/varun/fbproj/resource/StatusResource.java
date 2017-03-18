@@ -229,6 +229,19 @@ public class StatusResource {
 		return status_list;
     }
     
+    @POST
+    @Path("/getAllLikeName")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public  ArrayList<User> GetAllLikeName(Status obj) throws JsonParseException, JsonMappingException, IOException
+    {
+    	System.out.println("inside likehover");
+    	int id=obj.getStatusID();
+    	System.out.println("statusid"+id);
+    	
+		return s1.getStatusLikesName(id);
+    } 
+    
     
 
 }//Ststus resource class ends here

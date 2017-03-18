@@ -78,124 +78,123 @@ public class FriendResource {
 	}//searchFriend method ends here
 	
 
-	@GET
-    @Path("/peopleYouMay_KnowMutualFriends")
-	@Produces({MediaType.APPLICATION_JSON})
-    public static ArrayList<User> peopleYouMayKnow(@CookieParam("ID") String jwt
-    		) throws JsonParseException, JsonMappingException, IOException{
-	
-		System.out.println("jwt="+ jwt);
-		Claims claims = Jwts.parser()         
-			       .setSigningKey("secret".getBytes("UTF-8"))
-			       .parseClaimsJws(jwt).getBody();
-			    System.out.println("Subject: " + claims.getSubject());
-			   // System.out.println("Expiration: " + claims.getExpiration());
-			  String myEmailID=claims.getSubject();
-		
-		ArrayList<User> al_friends=new ArrayList<User>();
-		ArrayList<User> al_mutual_friends=new ArrayList<User>();
-         System.out.println("fetching all my friends list");
-		al_friends=GetMyAllFriends.getMyFriends(al_friends,myEmailID);
-		System.out.println("here in friend resource of people u may know"+al_friends.toString());
-		for(int i=0;i<al_friends.size();i++)
-		{
-			String e1=al_friends.get(i).getEmailID(); // e1 is a frnd
-			ArrayList<User> temp=new ArrayList<User>();
-					 System.out.println("fetching all my friends k frnds list");
-			temp=GetMyAllFriends.getMyFriends(temp,e1);
-			System.out.println("temp before="+temp);
-			
-			Iterator<User> iter = temp.iterator();
-			/*for(int j=0;j<temp.size();j++){
-			 *    if(temp.get(j).getEmailID()==myEmailID){
-			 *       temp.remove(j);
-			 * }
-			 */
-			
-			
-			/***here we are removing the self entry i.e frnds ki frnd list me mera bhi naam rhega wo hatao****/
-			while (iter.hasNext()) 
-			{
-			    User user = iter.next();
-			    if(user.getEmailID().equals(myEmailID))
-			    {
-			        //Use iterator to remove this User object.
-			        iter.remove();
-			    }
-			}					
-			System.out.println("temp after="+temp);
-			
-			
-			for(int j=0;j<temp.size();j++)
-			{
-				String e2=temp.get(j).getEmailID();
-				System.out.println("e2="+e2);
-				/** if frnd ka frnd is not my frnd then add it to list of mutualfrnds**/
-				if(!IsMyFriendService.isMyFriend(myEmailID, e2))
-				{
-					System.out.println("yes add to people you may know");
-					User u1=new User();
-					u1=RetriveService.getUserAllData(e2);
-					al_mutual_friends.add(u1);
-				}			
-			}//for loop j wala end
-			
-		}//for loop i wala end
-		
-		 for(int j=0;j<al_mutual_friends.size();j++)
-			{
-				String e2=al_mutual_friends.get(j).getEmailID();  // e2 will contain the email id from which some may belong to  request already sent or received or people u mayknow
-				System.out.println("e2="+e2);    
-             if(IsRequestAlreadySentService.isRequestAlreadySent(myEmailID,e2)){
-				
-				System.out.println("already sent request to "+e2+" so dont suggest this to me");
-				//al_friends.remove(j);
-				Iterator<User> iter = al_mutual_friends.iterator();
-				while (iter.hasNext()) 
-				{
-				    User user = iter.next();
-				    if(user.getEmailID().equals(e2))
-				    {
-				        //Use iterator to remove this User object.
-				        iter.remove();
-				    }
-				}
-				 
-			 	
-			 } //  IsRequestAlreadySentService.isRequestAlreadySent ends
-             else{
-             	if(IsRequestAlreadyReceived.isRequestAlreadyReceived(myEmailID,e2)){
-						
-						System.out.println("already received  request from"+e2+" so dont suggest this to me");
-						//al_friends.remove(j);
-						Iterator<User> iter = al_mutual_friends.iterator();
-						while (iter.hasNext()) 
-						{
-						    User user = iter.next();
-						    if(user.getEmailID().equals(e2))
-						    {
-						        //Use iterator to remove this User object.
-						        iter.remove();
-						    }
-						}
-						 
-             }
-             	else
-					{
-					  System.out.println(al_mutual_friends.get(j).getEmailID()+"not a frnd so add it again");}
-					}
-		    
-			} 
-		    
-		    
-		
-		
-		System.out.println("list ="+ al_mutual_friends);
-		return al_mutual_friends;	
-	
-	}//people you may know method ends here
-	
-
+	 @GET
+	    @Path("/peopleYouMay_KnowMutualFriends")
+	    @Produces({MediaType.APPLICATION_JSON})
+	    public static ArrayList<User> peopleYouMayKnow(@CookieParam("ID") String jwt
+	            ) throws JsonParseException, JsonMappingException, IOException{
+	    
+	        System.out.println("jwt="+ jwt);
+	        Claims claims = Jwts.parser()         
+	                   .setSigningKey("secret".getBytes("UTF-8"))
+	                   .parseClaimsJws(jwt).getBody();
+	                System.out.println("Subject: " + claims.getSubject());
+	               // System.out.println("Expiration: " + claims.getExpiration());
+	              String myEmailID=claims.getSubject();
+	        
+	        ArrayList<User> al_friends=new ArrayList<User>();
+	        ArrayList<User> al_mutual_friends=new ArrayList<User>();
+	         System.out.println("fetching all my friends list");
+	        al_friends=GetMyAllFriends.getMyFriends(al_friends,myEmailID);
+	        System.out.println("here in friend resource of people u may know"+al_friends.toString());
+	        for(int i=0;i<al_friends.size();i++)
+	        {
+	            String e1=al_friends.get(i).getEmailID(); // e1 is a frnd
+	            ArrayList<User> temp=new ArrayList<User>();
+	                     System.out.println("fetching all my friends k frnds list");
+	            temp=GetMyAllFriends.getMyFriends(temp,e1,myEmailID);
+	            System.out.println("temp before="+temp);
+	            
+	            
+	            
+	            for(int j=0;j<temp.size();j++)
+	            {
+	                String e2=temp.get(j).getEmailID();
+	                System.out.println("e2="+e2);
+	                /** if frnd ka frnd is not my frnd then add it to list of mutualfrnds**/
+	                if(!IsMyFriendService.isMyFriend(myEmailID, e2))
+	                {
+	                    System.out.println("yes add to people you may know");
+	                    User u1=new User();
+	                    u1=RetriveService.getUserAllData(e2);
+	                    al_mutual_friends.add(u1);
+	                }            
+	            }//for loop j wala end
+	            
+	        }//for loop i wala end
+	        
+	         for(int j=0;j<al_mutual_friends.size();j++)
+	            {
+	                String e2=al_mutual_friends.get(j).getEmailID();  // e2 will contain the email id from which some may belong to  request already sent or received or people u mayknow
+	                System.out.println("e2="+e2);    
+	             if(IsRequestAlreadySentService.isRequestAlreadySent(myEmailID,e2)){
+	                
+	                System.out.println("already sent request to "+e2+" so dont suggest this to me");
+	                //al_friends.remove(j);
+	                Iterator<User> iter = al_mutual_friends.iterator();
+	                while (iter.hasNext()) 
+	                {
+	                    User user = iter.next();
+	                    if(user.getEmailID().equals(e2))
+	                    {
+	                        //Use iterator to remove this User object.
+	                        iter.remove();
+	                    }
+	                }
+	                 
+	                 
+	             } //  IsRequestAlreadySentService.isRequestAlreadySent ends
+	             else{
+	                 if(IsRequestAlreadyReceived.isRequestAlreadyReceived(myEmailID,e2)){
+	                        
+	                        System.out.println("already received  request from"+e2+" so dont suggest this to me");
+	                        //al_friends.remove(j);
+	                        Iterator<User> iter = al_mutual_friends.iterator();
+	                        while (iter.hasNext()) 
+	                        {
+	                            User user = iter.next();
+	                            if(user.getEmailID().equals(e2))
+	                            {
+	                                //Use iterator to remove this User object.
+	                                iter.remove();
+	                            }
+	                        }
+	                         
+	             }
+	                 else
+	                    {
+	                      System.out.println(al_mutual_friends.get(j).getEmailID()+"not a frnd so add it again");}
+	                    }
+	            
+	            } 
+	            
+	            
+	        
+	        
+	        System.out.println("list ="+ al_mutual_friends);
+	        Collections.sort(al_mutual_friends,new Comparator<User>(){
+	            @Override
+	            public int compare(User u1,User u2){
+	                return u1.getUserID()<u2.getUserID()?-1:1;
+	            }
+	        });
+	        ArrayList<User> mutual_friends_new = new ArrayList<User>();
+	        if(al_mutual_friends.size()>0){
+	            int val=al_mutual_friends.get(0).getUserID();
+	            int val1;
+	            mutual_friends_new.add(al_mutual_friends.get(0));
+	            for(int i=1;i<al_mutual_friends.size();i++){
+	                val1=al_mutual_friends.get(i).getUserID();
+	                if(val1!=val){
+	                    mutual_friends_new.add(al_mutual_friends.get(i));
+	                    val=al_mutual_friends.get(i).getUserID();
+	                }
+	            }
+	        }
+	        return mutual_friends_new;    
+	    
+	    }//people you may know method ends here
+	    
 	
 	
 	@POST
@@ -318,6 +317,56 @@ public class FriendResource {
 		return u1;
 	
 	}//findMyFriend method ends here
+	
+	
+	
+	
+	@GET
+    @Path("/count_of_MutualFriends")
+	@Produces({MediaType.APPLICATION_JSON})
+    public static ArrayList<User> countyourMutualFriends(@CookieParam("ID") String jwt,@CookieParam("ID5") int userID
+    		) throws JsonParseException, JsonMappingException, IOException{
+	
+		System.out.println("jwt="+ jwt);
+		Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(jwt).getBody();
+			    System.out.println("Subject: " + claims.getSubject());
+			   // System.out.println("Expiration: " + claims.getExpiration());
+			  String myEmailID=claims.getSubject();
+	//System.out.println(email+"------------------");
+	String email=RetriveService.emailIDfromuID(userID);
+	ArrayList<User> al_friends=new ArrayList<User>();
+		ArrayList<User> al_mutual_friends=new ArrayList<User>();
+       //  System.out.println("fetching all my friends list");
+		al_friends=GetMyAllFriends.getMyFriends(al_friends,myEmailID);// al_friends containg your friend list
+		al_mutual_friends=GetMyAllFriends.getMyFriends(al_mutual_friends,email);
+
+		 for(int j=0;j<al_mutual_friends.size();j++)
+	       { 
+	    	   int flag=0;
+	    	   int uid=al_mutual_friends.get(j).getUserID();
+	    	   for(int k=0;k<al_friends.size();k++)
+	    	   {
+	    		   if(uid==al_friends.get(k).getUserID())
+	    		   {
+	    			flag=1;
+	    			break;
+	    			   
+	    		   }
+	    	   }
+	    	   if(flag==0)
+	    		   al_mutual_friends.remove(j);
+	       }	    
+		    
+		
+		
+	//	System.out.println("list ="+ al_mutual_friends);
+		return al_mutual_friends;	
+	
+	}//count_of_MutualFriends
+	
+	
 	
 	
 	
