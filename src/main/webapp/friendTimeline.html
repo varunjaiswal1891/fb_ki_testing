@@ -440,17 +440,16 @@
                            //alert(obj.emailID);
                            //alert(obj.fname);
                            //alert(obj.highschool);
-                               document.getElementById("email").innerHTML=obj.emailID;
-                               document.getElementById("School").innerHTML=obj.highschool;
-                               document.getElementById("name").innerHTML=obj.fname+" "+obj.lname;
-                             document.getElementById("DOB").innerHTML= obj.date;
-                            // document.getElementById("Mob").innerHTML= obj.mob_no;
-                             document.getElementById("college").innerHTML=obj.college;
-                             document.getElementById("work").innerHTML=obj.placeOfWork;
-                             document.getElementById("town").innerHTML=obj.hometown;
-                             document.getElementById("workCity").innerHTML=obj.cityOfWork;
-                             document.getElementById("School").innerHTML=obj.highschool;
-                           
+                             document.getElementById("email").innerHTML="EmailID   : "+obj.emailID;
+                                   document.getElementById("School").innerHTML="HighSchool   : "+obj.highschool;
+                                   document.getElementById("name").innerHTML=obj.fname+" "+obj.lname;
+                                   document.getElementById("DOB").innerHTML="DOB       : "+obj.date;
+                                   document.getElementById("Mob").innerHTML="Contact   : "+obj.mob_no;
+                                   document.getElementById("college").innerHTML="College      : "+obj.college;
+                                   document.getElementById("work").innerHTML="Work Place   : "+obj.placeOfWork;
+                                   document.getElementById("town").innerHTML="HomeTown     : "+obj.hometown;
+                                   document.getElementById("workCity").innerHTML="City of Work : "+obj.cityOfWork;
+                                   
                              var path="users/"+obj.emailID+"/profilePic.jpg";
                              var path1="users/"+obj.emailID+"/cover.jpg";
 		                           //alert(path);
@@ -542,7 +541,7 @@
              	 
                    	for (var i=0; i < data.length; i++){
                  		 allFriends+="<div class=\"panel-body\">";
-                 		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/tn.jpg\""+" /></div>";
+                 		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
                  		allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>";
                // allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  " data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>"; 		
                  		//  allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID+"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
@@ -639,7 +638,7 @@ for (var i=0; i < data.length; i++){
                 		  
                     			   
                 		   {
-                    		    st+="<div class=\" col-sm-2\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/tn.jpg\""+" /></div>";
+                    		    st+="<div class=\" col-sm-2\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
                     		    st+= "<div class=\" col-sm-5\"><p id="+"\"outputname\""+"><font size="+"\"3\""+"color="+"\"blue\""+">"+data[i].a[j].name+"</font></p></div>"; 
                     			/* $(status_name).appendTo('#text_color');
                         	   document.getElementById("forstatus").style.color="blue"; */
@@ -877,7 +876,7 @@ for (var i=0; i < data.length; i++){
     <!-- cover pic profile pic ends here -->
     <div class=" col-sm-3 col-xs-3 affix" style="float:right; left:970px; top:20px;" >
     	 <br>
-	   <div class="panel panel-default" style="float:right; left:970px; top:30px; min-height: 2000px">
+	   <div class="panel panel-primary" style="float:right; left:970px; top:30px; min-height: 2000px">
 	   <div class="panel-heading"><h4>My Friends</h4></div>
 		<div class="pre-scrollable" style="max-height:580px;overflow-y: scroll;">   
 		<p id="allFriends"></p>
@@ -887,32 +886,62 @@ for (var i=0; i < data.length; i++){
     <!-- friends ends here -->
     <div class="row row-fluid">
      <div class="col-sm-3 col-xs-3">
-								 	  <div class="panel panel-default">
-										<div class="panel-heading"><h4>Personal Information</h4></div>
-										
-										    <div class="panel-body">
-											
-											<div class="media">
-      										<div class="media-right">
-      										<h4 class="media-heading" id="name"></h4>
+		  <div class="panel-group" id="accordion">
+<div class="panel panel-Default">
+                                        <div class="panel-heading"><h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+        <h3 id="name"></h3></a>
+      </h4></div></div>
+           
+                                       <div class="panel panel-primary">
+                                        <div class="panel-heading"><h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+        Personal Info</a>
+      </h4></div>
+                                      <div id="collapse1" class="panel-collapse collapse ">
+      
+                                            <div class="panel-body">
+                                            
+                                           
+      
+     <pre width="5" class="media-left" id="email"></pre><br>
+      <pre class="media-left" id="DOB"></pre><br>
+      <pre class="media-left" id="Mob"></pre><br>   
+   <!--     <pre class="media-left">Sports :</pre><p id="sportID" class="media-right"></p>    <br>  -->
+                                            
+                                            
+                                            
+                                            </div>
+                                            </div>
+                                          </div>
+        <div class="panel panel-primary">
+                                        <div class="panel-heading"><h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+        Background Info</a>
+      </h4></div>
+                                      <div id="collapse2" class="panel-collapse collapse ">
+         
+                                            <div class="panel-body">
+                                            
+                                            <div class="media">
+                                              <div class="media-right">
+                                              <h4 class="media-heading" id="name"></h4>
        
-      										
-											</div>
-    										</div>
-	  <pre width="5" class="media-left">EmailID :</pre><p id="email"></p><br>
-      <pre class="media-left">High School :</pre><p id="School" class="media-right"></p><br>
-      <pre class="media-left">DOB :</pre><p id="DOB" class="media-right"></p><br>
-	  <pre class="media-left">Mobile :</pre><p id="Mob" class="media-right"></p>      <br>   
-	  <pre class="media-left">College :</pre><p id="college" class="media-right"></p><br>	    
-	  <pre class="media-left">Work Place :</pre><p id="work" class="media-right"></p>	<br>    
-	  <pre class="media-left">HomeTown :</pre><p id="town" class="media-right"></p>	    <br>
-	  <pre class="media-left">City of Work :</pre><p id="workCity" class="media-right"></p>	<br>
-	  									
-											
-											
-											</div>
-										  </div>
-									  </div>
+                                              
+                                            </div>
+                                            </div>
+   <pre class="media-left" id="college"></pre><br>        
+   <pre class="media-left" id="work"></pre>   <br>    
+      <pre class="media-left" id="town"></pre>        <br>
+      <pre class="media-left" id="workCity"></pre>    <br>
+      <pre class="media-left" id="School"></pre><br>
+   <!--     <pre class="media-left">Sports :</pre><p id="sportID" class="media-right"></p>    <br>  -->
+                                            
+                                            
+                                            
+                                            </div></div>
+                                          </div>
+       </div>				  </div>
 	<!-- personal info ends here -->
 	
 	 <div class="col-sm-6 col-xs-6">

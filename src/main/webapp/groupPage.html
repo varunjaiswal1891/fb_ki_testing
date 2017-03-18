@@ -114,7 +114,7 @@
     	             	 
     	                   	for (var i=0; i < data.length; i++){
     	                 		 allFriends+="<div class=\"panel-body\">";
-    	                 		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/tn.jpg\""+" /></div>";
+    	                 		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
     	                 		allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>";
     	                 		allFriends+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].emailID+"\""+" OnClick=\"addMember(this)"+";\">Add</button>";
     	                 		allFriends+="</div>";
@@ -599,7 +599,7 @@
              	 
                    	for (var i=0; i < data.length; i++){
                  		 allFriends+="<div class=\"panel-body\">";
-                 		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/tn.jpg\""+" /></div>";
+                 		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
                  		allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>";
                // allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  " data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>"; 		
                  		//  allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID+"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
@@ -685,7 +685,7 @@
          	 
                	for (var i=0; i < data.length; i++){
                		groupMembers+="<div class=\"panel-body\">";
-               		groupMembers+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/tn.jpg\""+" /></div>";
+               		groupMembers+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
                		groupMembers+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>";
                      groupMembers+="</div>";
                      groupMembers+="</div>";
@@ -968,70 +968,10 @@
        <p id="forstatus"></p>  <!-- status text -->
       </div>
     </div>
-  <hr>  
-  <div class="row">
- <div class="col-md-12">
-   <ul class="list-inline">
-     <li>
-     <a href="#thumbs-up"><span class="glyphicon glyphicon-thumbs-up" style="color:#3b5998"></span> <font color="#3b5998">Like</font></a>
-     </li>
-      <li>
-     <a href="#thumbs-up"><span class="glyphicon glyphicon-thumbs-down" style="color:#3b5998"></span> <font color="#3b5998">Unlike</font></a>
-     </li>
-     <li>
-     <a href="#" id="comment"><span class="glyphicon glyphicon-comment" style="color:#3b5998"></span> <font color="#3b5998">Comment</font></a>
-     </li>
-     
-   </ul>
- </div>
-  </div>
+  
  </div> <!--  div of panel body for status update 1 -->
  <!-- panel body footer -->
- <div class="panel-footer" id="o">
- <div class="row">
-   <div class="col-md-12">  
-      <p id="likescount"></p>
-      
-      <br>
-   </div> 
-   
-  </div>
-  
-  
-  <hr>
-  <div class="pre-scrollable" style="height:100px;">
 
-        <p id="output_name"></p>
-        
-       <p id="outputname"></p>
-
-       <p id="output"></p>
-       <br>
-       <hr>
-     
-  </div> 
-   
-   <ul>
-   <li class="media">
-      <div class="media-body">
-        <div class="input-group">
-          <input type="text" class="form-control" id="comment_d" placeholder="Write a comment here varun...">
-          <span class="input-group-btn">
-            <button type="button" class="btn btn-primary pull-right" id="commentAdd">
-              Post Comment varun
-            </button>
-          </span>
-        </div>
-      </div>
-    </li>
-   </ul>
-   
-  
- 
-  
-</div>
- 
- 
  
 </div> <!--  div of panel default for status update 1 -->
 								   
@@ -1107,7 +1047,7 @@
 				  
 				</div>
 			</div>
-		</div>
+		
 
 
 

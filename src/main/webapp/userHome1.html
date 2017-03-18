@@ -163,7 +163,7 @@
                 		  
                     			   
                 		   {
-                    		    st+="<div class=\" col-sm-2\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/tn.jpg\""+" /></div>";
+                    		    st+="<div class=\" col-sm-2\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
                     		    st+= "<div class=\" col-sm-5\"><p id="+"\"outputname\""+"><font size="+"\"3\""+"color="+"\"blue\""+">"+data[i].a[j].name+"</font></p></div>"; 
                     			/* $(status_name).appendTo('#text_color');
                         	   document.getElementById("forstatus").style.color="blue"; */
@@ -515,8 +515,8 @@
              	 
                    	for (var i=0; i < data.length; i++){
                  		 allFriends+="<div class=\"panel-body\">";
-                 		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/tn.jpg\""+" /></div>";
-                 		allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>";
+                 		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
+                 		allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-html="+"\"true\""+"data-content ="+"\"Lives in: "+data[i].hometown+" <br>Highschool: "+data[i].highschool+"\">"+data[i].fname+" "+data[i].lname + "</a>";
                // allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  " data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>"; 		
                  		//  allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID+"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
                          allFriends+="</div>";
@@ -920,7 +920,7 @@
 								   <!-- main col right -->
 								   <div class=" col-sm-3 col-xs-3 affix" style="float:right; left:970px; top:20px;" >
     	 <br>
-	   <div class="panel panel-default" style="float:right; left:970px; top:30px; min-height: 2000px">
+	   <div class="panel panel-primary" style="float:right; left:970px; top:30px; min-height: 2000px">
 	   <div class="panel-heading"><h4>My Friends</h4></div>
 		<div class="pre-scrollable" style="max-height:580px;overflow-y: scroll;">   
 		<p id="allFriends"></p>

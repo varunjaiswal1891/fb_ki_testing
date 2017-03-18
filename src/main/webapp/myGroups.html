@@ -133,7 +133,7 @@
              	 
                    	for (var i=0; i < data.length; i++){
                  		 allFriends+="<div class=\"panel-body\">";
-                 		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/tn.jpg\""+" /></div>";
+                 		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
                  		allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>";
                // allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  " data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>"; 		
                  		//  allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID+"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
@@ -293,7 +293,7 @@
 				
 					  
 					  
-						<div class="padding">
+	
 							<div class="full col-sm-12">
 							  
 								<!-- content -->
@@ -387,7 +387,7 @@
 								 <!-- main col left --> 
 								 <div class="col-sm-7 col-xs-7">
 								   <div class="pre-scrollable" style="background-color: #d8dfea;margin-bottom:.5cm; margin-top:.5cm; min-height:95%;">   
-									   <div class="panel panel-default">
+									   <div class="panel panel-primary">
 										 <div class="panel-heading"><h4>My Groups</h4></div>
 										 	<div id="myGroups"></div>
   	                                            
@@ -403,18 +403,15 @@
 								  
 								  
 								   <!-- main col right -->
-								  <div class="col-sm-3 col-xs-3" >
-									<div class="pre-scrollable" style="background-color: #d8dfea;margin-bottom:.5cm; margin-top:.5cm; min-height:95%;">   
-									   <div class="panel panel-default">
-										 <div class="panel-heading"><h4>My Friends</h4></div>
-										 	<div id="allFriends"></div>
-  	                                            <p id="allFriends"></p>
-										
-									   </div>
-									</div>
-									   
-									
-								  </div>
+								   <div class=" col-sm-3 col-xs-3 affix" style="float:right; left:970px; top:20px;" >
+    	 <br>
+	   <div class="panel panel-primary" style="float:right; left:970px; top:30px; min-height: 2000px">
+	   <div class="panel-heading"><h4>My Friends</h4></div>
+		<div class="pre-scrollable" style="max-height:580px;overflow-y: scroll;">   
+		<p id="allFriends"></p>
+			</div>
+		  </div>			    
+		</div>
 								  
 								  
 								  
