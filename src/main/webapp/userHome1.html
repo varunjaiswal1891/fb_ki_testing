@@ -130,7 +130,7 @@
                     	   st+="<div class="+"\"panel-body\""+"id=\"forcomment\""+">";
                     	   st+="<div class="+"\"row\""+">";
                     	   st+="<div class="+"\"col-md-12\""+">";
-                    		 st+="<div class=\" col-sm-2\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/tn.jpg\""+" /></div>";
+                    		 st+="<div class=\" col-sm-2\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
                              st+="<div class=\" col-sm-5\"><p><font size="+"\"4\""+"color="+"\"blue\""+">"+data[i].name+"</font></p></div>" ;
                     	   /* $(status_name).appendTo('#text_color');
                     	   document.getElementById("forstatus").style.color="blue"; */
@@ -152,17 +152,18 @@
                     	   st+="</div>";
                     	   st+="<div class="+"\"panel-footer\"" +"id="+"\"o\""+">";
                     	   st+="<div class="+"\"row\""+">";
-                    	   st+="<div class="+"\"col-md-12\""+">";
-                    	   st+="<p id="+"\"likescount\""+">"+data[i].likesCount+"Likes"+"  "+data[i].unlikes_count+"Unlikes"+"</p><br></div></div>";
-                    	   
-                    	   st+="<hr>";
-                    	   
+                           st+="<div class="+"\"col-md-12\""+">";
+                           st+="<a id="+"\"likescount\""+">"+data[i].likesCount+"</a>";
+                           st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+"onmouseover=\"likehover(this)\"><span style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Likes</font></a>";
+                           st+="<p id="+"\"likescount\""+">"+data[i].unlikes_count+" Unlikes"+"</p><br></div></div>";
+                           
+                           st+="<hr>"; 
                     	   st+="<div class="+"\"pre-scrollable\""+" style="+"\"height:100px;\""+">";
                     	   for(var j=0;j<data[i].a.length;j++)
                 		  
                     			   
                 		   {
-                    		    st+="<div class=\" col-sm-2\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/tn.jpg\""+" /></div>";
+                    		    st+="<div class=\" col-sm-2\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
                     		    st+= "<div class=\" col-sm-5\"><p id="+"\"outputname\""+"><font size="+"\"3\""+"color="+"\"blue\""+">"+data[i].a[j].name+"</font></p></div>"; 
                     			/* $(status_name).appendTo('#text_color');
                         	   document.getElementById("forstatus").style.color="blue"; */
@@ -208,6 +209,74 @@
     	  }); //ajax call ends
        	
     		
+    			 window.likehover = function(e1){
+    	    		  
+    	    		  var statusid= $(e1).attr('id');
+    	    		  
+    	    		 var obj={statusID:statusid};
+    	    		 var myjson=JSON.stringify(obj);
+    	    		 
+    	    			
+    	    			$.ajax({ 
+    	                    url: "http://localhost:8080/DemoFB/webapi/status/getAllLikeName",
+    	                    type: "POST",
+    	                    dataType: "json",
+    	                    contentType : "application/json",
+    	                    crossDomain: true,
+    	                    processData: true,
+    	                    data:myjson,
+    	                    
+    	                    success: function(response){  
+    	                 	   
+    	                    	 var data =JSON.parse(JSON.stringify(response)); 
+    	                        console.log(data);  
+    	                      
+    	                        
+    	                       
+    	                        
+    	                        
+    	                         var st;
+    	                        // $("#showlikesnames").html(st);
+    	                         for (var i=0; i < data.length; i++){
+    	                      	st+="<div>";
+    	                      	st+="<div class=\" col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
+    	                      	st+="<font size="+"\"4\">"+data[i].fname+data[i].lname+"</font>";
+    	                      	// st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].emailID+"\""+" OnClick=\"suggest(this)"+";\">Suggest</button>";
+    	                      	// st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].emailID+"\""+" OnClick=\"suggestignore(this);\">Ignore</button>";
+    	                      	 st+="</div>"; 
+    	                      	 st+="<hr>";
+    	                       
+    	                      	 
+    	                        } 
+    	                         
+    	                         st=st.replace("undefined","");
+    	                      	 $("#showlikesnames").html(st);
+    	                         
+    	                         $('#likeModal').modal({
+    	                             show: true
+    	                         });
+    	                        
+    	                        
+    	                    },
+    	                    
+    	                    error: function(e){  
+    	    					alert('Errorinsidelikehover: ' + e);  
+    	    					alert(e.toString());
+    	    			}		
+    	                
+    	        	  }); //ajax call ends
+    	           		  
+    	    			
+    	    			
+    	    			
+    	    			
+    	    			
+    	    			
+    	    		 
+    	    	  }//like hover fun ends
+    	  
+    	  
+    	  
     			 window.like = function(e1){
     				 
     				   var statusid= $(e1).attr('id');
@@ -446,8 +515,8 @@
              	 
                    	for (var i=0; i < data.length; i++){
                  		 allFriends+="<div class=\"panel-body\">";
-                 		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/tn.jpg\""+" /></div>";
-                 		allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>";
+                 		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
+                 		allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-html="+"\"true\""+"data-content ="+"\"Lives in: "+data[i].hometown+" <br>Highschool: "+data[i].highschool+"\">"+data[i].fname+" "+data[i].lname + "</a>";
                // allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  " data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>"; 		
                  		//  allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID+"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
                          allFriends+="</div>";
@@ -851,7 +920,7 @@
 								   <!-- main col right -->
 								   <div class=" col-sm-3 col-xs-3 affix" style="float:right; left:970px; top:20px;" >
     	 <br>
-	   <div class="panel panel-default" style="float:right; left:970px; top:30px; min-height: 2000px">
+	   <div class="panel panel-primary" style="float:right; left:970px; top:30px; min-height: 2000px">
 	   <div class="panel-heading"><h4>My Friends</h4></div>
 		<div class="pre-scrollable" style="max-height:580px;overflow-y: scroll;">   
 		<p id="allFriends"></p>
@@ -900,6 +969,37 @@
 		  </div>
 		  </div>
 		</div> 
+		
+		
+		
+		<!--like modal-->
+		 <div id="likeModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog">
+		  <div class="modal-content">
+			  <div class="modal-header">
+			 
+				  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Hide</button>
+					<h4>People Who Liked This Status</h4>
+			  </div>
+			  <div class="modal-body">
+				  <form class="form center-block">
+					<div class="form-group" id="showlikesnames">
+					
+					 <!--  <textarea class="form-control input-lg" autofocus="" placeholder="What do you want to share?"></textarea> -->
+					</div>
+				  </form>
+			  </div>
+			  <div class="modal-footer">
+				  <div>
+				 <!--  <button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Post</button> -->
+					<!-- <ul class="pull-left list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul> -->
+				  </div>	
+			  </div>
+		  </div>
+		  </div>
+		</div> 
+		
+		
 		
 		
 		        <div id="groupModal" class="modal fade" role="dialog">

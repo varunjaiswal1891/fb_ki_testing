@@ -12,6 +12,8 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
@@ -232,10 +234,10 @@ public class UserResource {
 	@Path("/uploadProfilePic")
 	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	public void updateProfilePic(
+	public Response updateProfilePic(
 			
 	        @FormDataParam("file") InputStream fileInputStream,
-	        @FormDataParam("file") FormDataContentDisposition fileFormDataContentDisposition,@CookieParam("ID") String token) throws UnsupportedJwtException, MalformedJwtException, SignatureException, IllegalArgumentException, UnsupportedEncodingException {
+	        @FormDataParam("file") FormDataContentDisposition fileFormDataContentDisposition,@CookieParam("ID") String token) throws UnsupportedJwtException, MalformedJwtException, SignatureException, IllegalArgumentException, UnsupportedEncodingException, URISyntaxException {
 	    // local variables
 		
 	    String fileName = null;
@@ -252,7 +254,10 @@ public class UserResource {
 	    //System.out.print(userId);
 	    fileName = fileFormDataContentDisposition.getFileName();
 	    uploadFilePath=new UserImageService().uploadProfilePic(fileInputStream, fileName,token,emailID);
-	   
+	    URI url = new URI("http://localhost:8080/DemoFB/timeLine1.html");
+	    return Response.temporaryRedirect(url).build();
+	
+
 	}
     
     
@@ -300,7 +305,8 @@ public class UserResource {
 		
 		ArrayList<User> u1 = new ArrayList<User>();
 		System.out.println("searching "+key);
-		if(!key.isEmpty())u1=SearchFriendService.searchFriends(emailID, key);
+		String gname=key.replaceAll("%20", " ");
+		if(!key.isEmpty())u1=SearchFriendService.searchFriends(emailID,gname);
 		else return null;
 		return u1;
 	 

@@ -9,6 +9,7 @@ import javassist.bytecode.Descriptor.Iterator;
 
 import com.varun.fbproj.model.Comment;
 import com.varun.fbproj.model.Status;
+import com.varun.fbproj.model.User;
 
 public class StatusService {
 
@@ -237,6 +238,60 @@ public class StatusService {
 
 		    return null;    
 		}//method getAllDetailsOfEachStatus ends here
+	 
+	 
+	 
+	 public  ArrayList<User> getStatusLikesName(int statusid){
+		 ArrayList<User> userobjlist = new ArrayList<User>(); 
+		 
+		 try{
+			 boolean check=false;
+			 while(check!=true){
+				 System.out.println("trying connection");
+				check= db.start();
+			 }
+			
+			 
+			 String query15= "select emailID from likes where statusID=? and flag=?";
+			 PreparedStatement pstmnt15 = db.con.prepareStatement(query15);
+			 pstmnt15.setInt(1,statusid);
+			 pstmnt15.setInt(2,1);
+			 ResultSet rs15= pstmnt15.executeQuery();
+			  while(rs15.next())
+			 {User u=new User();
+			 //System.out.println("resultset"+rs15.getString("emailID"));
+			 String query116= "select * from User where emailID=?";
+			 PreparedStatement pstmnt116 = db.con.prepareStatement(query116);
+			 //System.out.println(rs15.getString("emailID"));
+			 pstmnt116.setString(1,rs15.getString("emailID"));
+			 //System.out.println("qazwsxedcrfvtgb");
+			 ResultSet rs116= pstmnt116.executeQuery();
+			 //System.out.println("qwerty");
+			 rs116.next();
+			// System.out.println(rs116.getString("fname"));
+			 u.setFname(rs116.getString("fname"));
+			 u.setLname(rs116.getString("lname"));
+			 u.setEmailID(rs116.getString("emailID"));
+			 //System.out.println("ugname"+u.getFname());
+			 userobjlist.add(u);	 
+				 
+				 
+			 }
+			
+			 db.stop();
+			 return userobjlist;
+			 
+			 
+			 
+			 
+			 
+		  }
+		  catch (Exception e) 
+	      {
+	          System.out.println(e.getMessage());
+	      }
+		  return userobjlist; 
+	   }//method ends here
 	 
 	 
 	 

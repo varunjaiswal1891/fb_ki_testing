@@ -11,6 +11,8 @@ public class SearchFriendService {
 	//this method searches for all users in database with given fname or lname
 	public static ArrayList<User> searchFriends(ArrayList<User> al_friends,String searchName)
 	{
+		System.out.println("varun dfjkldjsf="+ searchName);
+		
 		
 		try {
 
@@ -27,11 +29,13 @@ public class SearchFriendService {
 	            for(int i=0;i<splited.length;i++)
 	            {
 	            
-	            	PreparedStatement prepStatement = connect.con.prepareStatement("select * from User where fname like ? or lname like ?");
+	            	PreparedStatement prepStatement = connect.con.prepareStatement("select * from User where fname like ? or lname like ? or concat(fname,' ',lname)=? ");
+	            	//PreparedStatement prepStatement = connect.con.prepareStatement("select * from User where concat(fname,' ',lname)=? ");
 	            	//it searches like %name% like statement of sql
 	            	prepStatement.setString(1,"%"+ splited[i] +"%");
 	            	prepStatement.setString(2,"%"+ splited[i] +"%");
-									
+	            	prepStatement.setString(3,searchName);
+	            
 					ResultSet result = prepStatement.executeQuery();
 					
 						while (result.next()) {
@@ -88,9 +92,11 @@ public class SearchFriendService {
 						User u_obj=new User();
 						u_obj=RetriveService.getUserAllData(e1);
 						if(IsMyFriendService.isMyFriend(emailID, e1))
-							{u_obj.setMob_no("1");}
+						{u_obj.setMob_no("1");}
+						else if(IsRequestAlreadySentService.isRequestAlreadySent(emailID, e1))
+						{u_obj.setMob_no("2");}
 						else
-							{u_obj.setMob_no("0");}
+						{u_obj.setMob_no("0");}
 						if(!u_obj.getEmailID().equals(emailID))
 						{u1.add(u_obj);}
 						

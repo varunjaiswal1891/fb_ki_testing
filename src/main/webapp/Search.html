@@ -3,16 +3,17 @@
 <head>
   <title>Search results</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
- <script type="text/javascript" src="Jquery/jquery-3.1.1.js"></script>
- <script type="text/javascript" src="Jquery/jquery.cookie.js"></script>
-  <link href="bootstrap/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/css/bootstrap.css" rel="stylesheet">
+   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link href="assets/css/bootstrap.css" rel="stylesheet">
         <link href="assets/css/facebook.css" rel="stylesheet">
-        
-  <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>  
-  <script type="text/javascript" src="Jquery/jquery.popupoverlay.js"></script>
-  <style>
+        <script type="text/javascript" src="Jquery/jquery-3.1.1.js"></script>
+        <script type="text/javascript" src="Jquery/jquery.cookie.js"></script>
+        <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>  
+
+
+        <script type="text/javascript" src="assets/js/jquery.js"></script>
+        <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+          <style>
   label { width: 100px; }
   </style>
   
@@ -81,20 +82,28 @@ $(document).ready(function() {
                       		if(data[i].mob_no=="0")
                       		{
                   		    SearchResult+="<div class="+"\"panel-body\""+">";
-                  		    SearchResult+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"img_avatar1.png\""+" /></div>";
+                  		    SearchResult+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
                   			SearchResult+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
                   			SearchResult+="<div class="+"\"text-right\""+">";
                   			SearchResult+="<button type="+"\"button\""+" class="+"\"btn btn-primary\" id=\""+data[i].emailID+"\" OnClick=\"add(this);\""+" \">Add Friend<span class="+"\"glyphicon glyphicon-plus\""+"></span></button>";
-                  			SearchResult+="<a class="+"\"btn btn-primary\""+" id="+"\"SentReq"+data[i].emailID+"\" "+" style=\"visibility: hidden\";>Request Sent</a></div></div>";
+                  			SearchResult+="<a class="+"\"btn btn-primary\""+" id="+"\"SentReq"+data[i].emailID+"\" "+" style=\"visibility: hidden\";>Request Sent<span class="+"\"glyphicon glyphicon-ok\""+"></span></a></div></div>";
                    			
                       		}
-                      	else{
+                      	else if(data[i].mob_no=="1"){
                       		SearchResult+="<div class="+"\"panel-body\""+">";
-                  		    SearchResult+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"img_avatar1.png\""+" /></div>";
+                  		    SearchResult+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
                   			SearchResult+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
                   			SearchResult+="<div class="+"\"text-right\""+">";
-                  			SearchResult+="<button type="+"\"button\""+" class="+"\"btn btn-primary\">Friends<span class="+"\"glyphicon glyphicon-plus\""+"></span></button></div></div>";
+                  			SearchResult+="<button type="+"\"button\""+" class="+"\"btn btn-primary\">Friends<span class="+"\"glyphicon glyphicon-ok\""+"></span></button></div></div>";
                   				
+                      	}
+                      	else{
+                      	   SearchResult+="<div class="+"\"panel-body\""+">";
+                 		    SearchResult+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
+                 			SearchResult+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
+                 			SearchResult+="<div class="+"\"text-right\""+">";
+                 			SearchResult+="<a class="+"\"btn btn-primary\""+" id="+"\"SentReq"+data[i].emailID+"\" "+" >Request Sent<span class="+"\"glyphicon glyphicon-ok\""+"></span></a></div></div>";
+                  			
                       	}
                       	}
                       	
@@ -247,7 +256,7 @@ $(document).ready(function() {
          	 
                	for (var i=0; i < data.length; i++){
              		 allFriends+="<div class=\"panel-body\">";
-             		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/tn.jpg\""+" /></div>";
+             		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
              		allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>";
            // allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  " data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>"; 		
              		//  allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID+"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
@@ -297,7 +306,7 @@ $(document).ready(function() {
 					<div class="column col-sm-12 col-xs-12" id="main">
 						
 						<!-- top nav -->
-						 <div class="navbar navbar-blue navbar-static-top">  
+						 	   <div class="navbar navbar-blue navbar-static-top">  
                             <div class="navbar-header">
                               <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
                                 <span class="sr-only">Toggle</span>
@@ -326,7 +335,6 @@ $(document).ready(function() {
                               <li>
                                 <a href="userFriend.html"><i class="glyphicon glyphicon-user"></i> Find Friends</a>
                               </li>
-                              
                               <li>
                                 <a href="todoPage.html" title="Friend Requests"><i class="glyphicon glyphicon-user"></i><span class="badge">9</span></a>
                               </li>
@@ -462,7 +470,7 @@ $(document).ready(function() {
 								   <!-- main col right -->
 								  <div class=" col-sm-3 col-xs-3 affix" style="float:right; left:970px; top:20px;" >
     	 <br>
-	   <div class="panel panel-default" style="float:right; left:970px; top:30px; min-height: 2000px">
+	   <div class="panel panel-primary" style="float:right; left:970px; top:30px; min-height: 2000px">
 	   <div class="panel-heading"><h4>My Friends</h4></div>
 		<div class="pre-scrollable" style="max-height:580px;overflow-y: scroll;">   
 		<p id="allFriends"></p>
