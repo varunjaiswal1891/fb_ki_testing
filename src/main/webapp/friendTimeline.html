@@ -596,79 +596,83 @@
                        
                        var st;
                        var fname,lname;
-                       for (var i=0; i < data.length; i++){
-                         
-                         var email =data[i].emailID; 
-                        
-                         
-                         
-                         st+="<div class="+"\"panel panel-default\""+">";
-                         st+="<div class="+"\"panel-body\""+"id=\"forcomment\""+">";
-                         st+="<div class="+"\"row\""+">";
-                         st+="<div class="+"\"col-md-12\""+">";
-                         st+="<p><font color="+"\"blue\""+">"+data[i].name+"</font></p>" ;
-                         /* $(status_name).appendTo('#text_color');
-                         document.getElementById("forstatus").style.color="blue"; */
-                         st+="<hr>";
-                         st+="<p id="+"\"forstatus\""+">"+data[i].status_desc+"</p>" ;
-                         st+="</div></div><hr>";
-                         st+="<div class="+"\"row\""+">";
-                         st+="<div class="+"\"col-md-12\""+">";
-                         st+="<ul class="+"\"list-inline\""+">";
-                         st+="<li>";
-                         st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+" OnClick=\"like(this);\"><span class="+"\"glyphicon glyphicon-thumbs-up\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Like</font></a>";
-                         st+="</li>";
-                         st+="<li>";
-                         st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+" OnClick=\"unlike(this);\""+"><span class="+"\"glyphicon glyphicon-thumbs-down\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Unlike</font></a>";
-                         st+="</li>";
-                         st+="<li>";
-                         st+= "<a href="+"\"#\""+ "id=\""+data[i].statusID+"\""+"><span class="+"\"glyphicon glyphicon-comment\"" +"style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Comment</font></a>";
-                         st+="</li></ul></div></div>";
-                         st+="</div>";
-                         st+="<div class="+"\"panel-footer\"" +"id="+"\"o\""+">";
-                         st+="<div class="+"\"row\""+">";
-                         st+="<div class="+"\"col-md-12\""+">";
-                         st+="<a id="+"\"likescount\""+">"+data[i].likesCount+"</a>";
-                         st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+"onmouseover=\"likehover(this)\"><span style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Likes</font></a>";
-                         st+="<p id="+"\"likescount\""+">"+data[i].unlikes_count+" Unlikes"+"</p><br></div></div>";
-                         
-                         st+="<hr>"; 
-                  	   
-                         st+="<div class="+"\"pre-scrollable\""+" style="+"\"height:100px;\""+">";
-                         for(var j=0;j<data[i].a.length;j++)
-                       {
-                             
-                       {
-                           st+= "<p id="+"\"outputname\""+"><font color="+"\"blue\""+">"+data[i].a[j].name+"</font></p>"; 
-                         st+= "<p id="+"\"output\""+">"+data[i].a[j].comment_desc+"</p>";
-                         st+="<br>";
-                         st+="<hr>";
-                       }
-                         st+="</div>";
-                       
-                         st+="<ul>";
-                         st+="<li class="+"\"media\""+">";
-                         st+="<div class="+"\"media-body\""+">";
-                         st+="<div class="+"\"input-group\""+">";
-                         st+="<input type="+"\"text\""+" class="+"\"form-control\""+" id=\"comment_d"+data[i].statusID+"\""+" placeholder="+"\"Write a comment...\""+">";
+for (var i=0; i < data.length; i++){
+                    	   
+                    	   var email =data[i].emailID; 
+                    	  
+                    	   
+                    	   
+                    	   st+="<div class="+"\"panel panel-default\""+">";
+                    	   st+="<div class="+"\"panel-body\""+"id=\"forcomment\""+">";
+                    	   st+="<div class="+"\"row\""+">";
+                    	   st+="<div class="+"\"col-md-12\""+">";
+                    		 st+="<div class=\" col-sm-2\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
+                             st+="<div class=\" col-sm-5\"><p><font size="+"\"4\""+"color="+"\"blue\""+">"+data[i].name+"</font></p></div>" ;
+                    	   /* $(status_name).appendTo('#text_color');
+                    	   document.getElementById("forstatus").style.color="blue"; */
+                    	 	st+="<br><br><br>";
+                    	   st+="<p id="+"\"forstatus\""+">"+data[i].status_desc+"</p>" ;
+                    	   st+="</div></div><hr>";
+                    	   st+="<div class="+"\"row\""+">";
+                    	   st+="<div class="+"\"col-md-12\""+">";
+                    	   st+="<ul class="+"\"list-inline\""+">";
+                    	   st+="<li>";
+                    	   st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+" OnClick=\"like(this);\"><span class="+"\"glyphicon glyphicon-thumbs-up\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Like</font></a>";
+                    	   st+="</li>";
+                    	   st+="<li>";
+                    	   st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+" OnClick=\"unlike(this);\""+"><span class="+"\"glyphicon glyphicon-thumbs-down\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Unlike</font></a>";
+                    	   st+="</li>";
+                    	   st+="<li>";
+                    	   st+= "<a href="+"\"#\""+ "id=\""+data[i].statusID+"\""+"><span class="+"\"glyphicon glyphicon-comment\"" +"style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Comment</font></a>";
+                    	   st+="</li></ul></div></div>";
+                    	   st+="</div>";
+                    	   st+="<div class="+"\"panel-footer\"" +"id="+"\"o\""+">";
+                    	   st+="<div class="+"\"row\""+">";
+                           st+="<div class="+"\"col-md-12\""+">";
+                           st+="<a id="+"\"likescount\""+">"+data[i].likesCount+"</a>";
+                           st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+"onmouseover=\"likehover(this)\"><span style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Likes</font></a>";
+                           st+="<p id="+"\"likescount\""+">"+data[i].unlikes_count+" Unlikes"+"</p><br></div></div>";
+                           
+                           st+="<hr>"; 
+                    	   st+="<div class="+"\"pre-scrollable\""+" style="+"\"height:100px;\""+">";
+                    	   for(var j=0;j<data[i].a.length;j++)
+                		  
+                    			   
+                		   {
+                    		    st+="<div class=\" col-sm-2\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/tn.jpg\""+" /></div>";
+                    		    st+= "<div class=\" col-sm-5\"><p id="+"\"outputname\""+"><font size="+"\"3\""+"color="+"\"blue\""+">"+data[i].a[j].name+"</font></p></div>"; 
+                    			/* $(status_name).appendTo('#text_color');
+                        	   document.getElementById("forstatus").style.color="blue"; */
+                        	 	st+="<br><br><br>";
+                        	  
+                    		   st+= "<p id="+"\"output\""+">"+data[i].a[j].comment_desc+"</p>";
+                    	   st+="<br>";
+                    	   st+="<hr>";
+                		   }
+                    	   st+="</div>";
+                		   
+                    	   st+="<ul>";
+                    	   st+="<li class="+"\"media\""+">";
+                    	   st+="<div class="+"\"media-body\""+">";
+                    	   st+="<div class="+"\"input-group\""+">";
+                    	   st+="<input type="+"\"text\""+" class="+"\"form-control\""+" id=\"comment_d"+data[i].statusID+"\""+" placeholder="+"\"Write a comment...\""+">";
                            st+="<span class="+"\"input-group-btn\""+">";
-                          st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].statusID+"\""+" OnClick=\"comment(this);\">Post Comment</button>";
-                          st+="</span>";
-                          st+="</div>";
-                          st+="</div>";
-                          st+="</li>";
-                          st+="</ul>";
-                          st+="</div>";
-                          st+="</div>"; 
+                       		st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].statusID+"\""+" OnClick=\"comment(this);\">Post Comment</button>";
+                       		st+="</span>";
+                       		st+="</div>";
+                       		st+="</div>";
+                       		st+="</li>";
+                       		st+="</ul>";
+                       		st+="</div>";
+                       		st+="</div>";
                             
                            
                            
-                       }//inner for ends
-      
+                      
                        st=st.replace("undefined","");
-                     $("#abcd").html(st);
+                	   $("#abcd").html(st);
                        
-                     }    //outer for ends        
+                	   }    //outer for ends        
                      }//if ends 
                      },//success ends  
 
