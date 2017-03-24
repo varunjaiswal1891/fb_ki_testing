@@ -27,7 +27,7 @@ public class AuthenticationFilter implements ContainerRequestFilter{
 		// Get the HTTP Authorization header from the request
 		String s1=requestContext.getUriInfo().getPath();
 		System.out.println("s1="+s1);
-        if(!s1.contains("signup"))
+        if(!s1.contains("signup")&&!s1.contains("login"))
         {
         	Map<String, Cookie> cookies  = requestContext.getCookies();
             Cookie cookie = cookies.get("ID");

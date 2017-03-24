@@ -88,8 +88,11 @@ $("#loginForm").submit(function(e){
                     	  // var obj = JSON.parse(JSON.stringify(resp));
                     	  // window.location.replace("timeLine1.html");
                     	  window.location.replace("userHome1.html");
-                    	   $.cookie("ID",resp);
-                    	   // $.cookie("myToken",resp);
+                    	  // $.cookie("ID",resp);
+                    	   
+                    	  
+                    	  document.cookie = "ID="+resp+";"+ "expires=Thu, 18 Dec 2019 12:00:00 UTC"; 
+                    	   
                     	  
             }	
             else
@@ -139,10 +142,8 @@ $("#loginForm").submit(function(e){
               success: function(resp){  
                   // we have the response  
                   if(resp!=null){
-                	  //alert(resp);
-                	  $.cookie("ID",resp);
-                	  // var obj = JSON.parse(JSON.stringify(resp));
-                	   //window.location.replace("timeLine1.html");
+	
+                	  document.cookie = "ID="+resp+";"+ "expires=Thu, 18 Dec 2019 12:00:00 UTC"; 
                 	  window.location.replace("userHome1.html");
                 	   
                  }

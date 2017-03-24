@@ -39,6 +39,15 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+	
+	var ID = $.cookie("ID");
+	if(ID==null)
+	{
+		window.location.replace("appHome.html");
+	}
+	
+	
+	
     var x=$.cookie("ID");//current user logged in cookie
     var y=$.cookie("ID1");//friend timeline ki cookie
     //document.write(x);
@@ -47,6 +56,10 @@ $(document).ready(function() {
             e.preventDefault();
      });
     var email;
+    
+    
+    
+    
     //this ajax call to print user name on top logged in user row
     //alert(foo);
              $.ajax({
@@ -96,7 +109,8 @@ $(document).ready(function() {
                            if(response!=null){
                               /// alert("data fetched");
                                var obj = JSON.parse(JSON.stringify(response));
-                              // alert(obj.emailID);
+                              
+                               // alert(obj.emailID);
                                //alert(obj.fname);
                             //   alert(obj.highschool);
                                     document.getElementById("email").innerHTML="EmailID   : "+obj.emailID;
@@ -116,7 +130,6 @@ $(document).ready(function() {
                                    document.getElementById("workcity").defaultValue =obj.cityOfWork;
                                    document.getElementById("userName").innerHTML=obj.fname+" "+obj.lname;
                                   
-                                   //document.getElementById("sportID").defaultValue =obj.sport;
                                    
                                    //alert(obj.emailID);
                                    var email=obj.emailID;
@@ -204,21 +217,23 @@ window.go = function(e1){
               
 
        $("#findFriendButton").click(function(e){
-           window.location.replace("userFriend.html");
+    	   if(ID!=null)
+           {window.location.replace("userFriend.html");}
        });
                
        $("#homeButton").click(function(e){
-           window.location.replace("userHome1.html");
+    	   if(ID!=null)
+           {window.location.replace("userHome1.html");}
        });        
     
     
     
       $("#logoutButton1").click(function(e){
-           var foo = $.cookie("ID");
-          // alert("logout success");
+          
+          $.cookie("ID",null);
           window.location.replace("appHome.html");      
-           
        });//logout button ends ends
+       
        $("#search").click(function(e){
                
            var key=$("input#srch-term").val();
@@ -237,14 +252,13 @@ window.go = function(e1){
           var hometown=$("input#hometown").val();
           var cityOfWork=$("input#workcity").val();
           var highschool=$("input#highschool").val();
-          //var sport=$('#sport option:selected').text();
           
           var obj = { mob_no:mob_no,college:college,placeOfWork:placeOfWork,
                   hometown:hometown,cityOfWork:cityOfWork,highschool:highschool
                   };  
           var myJSON = JSON.stringify(obj);
               
-            //document.write(myJSON);
+    //        document.write(myJSON);
         $.ajax({
             type: "PUT",
             contentType: "application/json",  //send data to server in this format
@@ -279,7 +293,7 @@ window.go = function(e1){
                            document.getElementById("hometown").defaultValue =obj1.hometown;
                            document.getElementById("workcity").defaultValue =obj1.cityOfWork;
                             */
-                            window.location.replace("timeLine1.html");
+                           window.location.replace("timeLine1.html");
                               
                 }    
                 else
@@ -501,7 +515,7 @@ window.go = function(e1){
              window.like = function(e1){
                  
                    var statusid= $(e1).attr('id');
-                   alert("cccacacaca"+statusid);
+                  // alert("cccacacaca"+statusid);
                    var sid={statusID:statusid};
                    var myJSON=JSON.stringify(sid);
                    //alert(statusid);
@@ -862,7 +876,8 @@ window.go = function(e1){
       <pre class="media-left" id="town"></pre>        <br>
       <pre class="media-left" id="workCity"></pre>    <br>
       <pre class="media-left" id="School"></pre><br>
-   <!--     <pre class="media-left">Sports :</pre><p id="sportID" class="media-right"></p>    <br>  -->
+    
+        
                                             
                                             
                                             
@@ -870,7 +885,18 @@ window.go = function(e1){
                                           </div>
     <input type="button" id ="popup" class="btn btn-primary" value="Update Info" data-toggle="modal" data-target="#myModal">
        </div>
+       
+    
+       
+       
+       
+    <br>
+       
+       
+       
+       
                                       </div>
+                                      
     <!-- personal info ends here -->
     
      <div class="col-sm-6 col-xs-6">
@@ -1058,6 +1084,13 @@ window.go = function(e1){
         </div>
              <br>
              
+        <div class="form-group col-sm-3">
+        
+        
+        </div>     
+             
+             
+             
     <!--     <div class="form-group">
          <label for="sel1">Sports (select one):</label>
       <select class="form-control" id="sport" style="margin-left:10px;">
@@ -1071,8 +1104,7 @@ window.go = function(e1){
              -->
        
     </div>
-    
-
+  
      
       <div class="modal-footer">
        <input type="button" id ="updateDetails" class="btn btn-primary" value="Update Info" data-dismiss="modal" >
