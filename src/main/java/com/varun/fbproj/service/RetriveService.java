@@ -29,6 +29,7 @@ public class RetriveService {
 			ResultSet result = prepStatement.executeQuery();
 			if (result != null) {
 				while (result.next()) {
+					System.out.println();
 					User u = new User();
 					u.setUserID(result.getInt(1));
 					u.setEmailID(result.getString(2));
@@ -41,7 +42,9 @@ public class RetriveService {
 					u.setHometown(result.getString(11));
 					u.setCityOfWork(result.getString(12));
 					u.setHighschool(result.getString(13));
-					
+					//u.setBp(result.getString(14));
+					//String xx=result.getString(14);
+					//System.out.println("xx=="+xx);
 					connect.stop();
 						return u;
 						//System.out.println("YES");
@@ -95,6 +98,7 @@ public class RetriveService {
 					u.setHometown(result.getString(11));
 					u.setCityOfWork(result.getString(12));
 					u.setHighschool(result.getString(13));
+				
 					
 					connect.stop();
 						return u;

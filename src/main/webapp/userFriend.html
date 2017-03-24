@@ -17,6 +17,15 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+	
+	
+	var ID = $.cookie("ID");
+	if(ID==null)
+	{
+		window.location.replace("appHome.html");
+	}
+	
+	
 	var x=$.cookie("ID");
 	
 	var firstemail;
@@ -39,6 +48,65 @@ $(document).ready(function() {
 	$("#findmyFriends").click(function(e){
 		window.location.replace("todoPage.html");
 	 });
+	
+
+		
+	   	$.ajax({ 
+            url: "http://localhost:8080/DemoFB/webapi/friendRequest/giveMyRequests",
+            type: "GET",
+            
+            dataType: "json",
+            contentType : "text/plain",
+            crossDomain: true,
+            processData: true,
+            
+            
+            success: function(response){  
+         	   
+                // we have the response  
+         	   if(response!=null){
+                var data =JSON.parse(JSON.stringify(response));  
+                 var Frequest;
+         	 
+               
+             	for (var i=0; i < data.length; i++){
+             		
+             		
+         			Frequest+="<div class=\"panel-body\" id=\"div"+data[i].emailID+"\">";
+					Frequest+="<div class=\"pull-left col-sm-3\"><img class=\"img-responsive\" alt=\"logo\" src=\"users/"+data[i].emailID+"/profilePic.jpg\" /></div>";
+					
+					//Frequest+="<a href=\"\ " +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-html="+"\"true\""+"data-content ="+"\"Best place: "+data[i].bp+" <br>DOB: "+data[i].date+"\">"+data[i].fname+" "+data[i].lname + "</a>";
+					Frequest+="<a href=\"#\">"+data[i].fname+" "+data[i].lname+"</span></a>";
+					
+					Frequest+="<div class=\"text-right\">";
+					Frequest+="<button type=\"button\" class=\"btn btn-primary\" id=\""+data[i].emailID+"\" OnClick=\"accept(this);\">Confirm<span class=\"glyphicon glyphicon-plus\"></span></button>";
+					Frequest+="<a class="+"\"btn btn-primary\""+" id=\"delete"+data[i].emailID+"\" "+"href=\"\""+" OnClick=\"del(this);\">Delete request</a>";
+					Frequest+="<a class="+"\"btn btn-primary\""+" id="+"\"done"+data[i].emailID+"\" href=\"\""+" style=\"visibility: hidden\";>Cancelled</a></div></div>";
+        //allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-html="+"\"true\""+"data-content ="+"\"Lives in: "+data[i].hometown+" <br>Highschool: "+data[i].highschool+"\">"+data[i].fname+" "+data[i].lname + "</a>";       		
+             	}
+             	Frequest=Frequest.replace("undefined","");
+         	
+         	   $("#Frequest").html(Frequest);
+        
+                }  
+                
+                else
+             	   {
+             	  alert("something wrong");
+             	   }
+              },
+	    
+   			error: function(e){  
+     					//alert('Error121212: ' + e);  
+     					//alert(e.toString());
+   			}				
+     
+	  });//ajax ends
+		
+	
+	
+	
+	
 $(function () {
 	
 	var foo = $.cookie("ID");
@@ -55,9 +123,7 @@ $(function () {
                        if(response!=null){
                     	  // alert("data fetched");
                     	   var obj = JSON.parse(JSON.stringify(response));
-                    	   //alert(obj.emailID);
-                    	   //alert(obj.fname);
-                    	   //alert(obj.highschool);
+                  
                         	   document.getElementById("userName").innerHTML=obj.fname+" "+obj.lname;
                        }  
                        
@@ -68,8 +134,8 @@ $(function () {
                      },
     	    
           			error: function(e){  
-            					alert('Error121212: ' + e);  
-            					alert(e.toString());
+            					//alert('Error121212: ' + e);  
+            					//alert(e.toString());
           			}				
             
     	  });
@@ -116,8 +182,8 @@ $(function () {
                      },
     	    
           			error: function(e){  
-            					alert('Error121212: ' + e);  
-            					alert(e.toString());
+            					//alert('Error121212: ' + e);  
+            					//alert(e.toString());
           			}				
             
     	  }); 
@@ -166,8 +232,8 @@ $(function () {
                    },
   	    
         			error: function(e){  
-          					alert('Error121212: ' + e);  
-          					alert(e.toString());
+          					//alert('Error121212: ' + e);  
+          					//alert(e.toString());
         			}				
           
   	  }); 
@@ -214,8 +280,8 @@ $(function () {
               },
 	    
    			error: function(e){  
-     					alert('Error121212: ' + e);  
-     					alert(e.toString());
+     					//alert('Error121212: ' + e);  
+     					//alert(e.toString());
    			}				
      
 	  });
@@ -257,8 +323,8 @@ $(function () {
               },
 	    
    			error: function(e){  
-     					alert('Error121212: ' + e);  
-     					alert(e.toString());
+     					//alert('Error121212: ' + e);  
+     					//alert(e.toString());
    			}				
      
 	  });//ajax call end
@@ -330,8 +396,8 @@ $(function () {
                      },
     	    
           			error: function(e){  
-            					alert('Error121212: ' + e);  
-            					alert(e.toString());
+            					//alert('Error121212: ' + e);  
+            					//alert(e.toString());
           			}				
             
     	  }); 
@@ -342,92 +408,12 @@ $(function () {
 	  
 	  
        	
-       	$.ajax({ 
-            url: "http://localhost:8080/DemoFB/webapi/friendRequest/giveMyRequests",
-            type: "GET",
-            dataType: "json",
-            contentType : "application/json",
-            crossDomain: true,
-            processData: true,
-            
-            
-            success: function(response){  
-         	   
-                // we have the response  
-         	   if(response!=null){
-                var data =JSON.parse(JSON.stringify(response));  
-                 var Frequest;
-         	 
-               
-             	for (var i=0; i < data.length; i++){
-             		
-         			Frequest+="<div class=\"panel-body\" id=\"div"+data[i].emailID+"\">";
-					Frequest+="<div class=\"pull-left col-sm-3\"><img class=\"img-responsive\" alt=\"logo\" src=\"users/"+data[i].emailID+"/profilePic.jpg\" /></div>";
-					Frequest+="<a href=\"#\">"+data[i].fname+" "+data[i].lname+"</span></a>";
-					Frequest+="<div class=\"text-right\">";
-					Frequest+="<button type=\"button\" class=\"btn btn-primary\" id=\""+data[i].emailID+"\" OnClick=\"accept(this);\">Confirm<span class=\"glyphicon glyphicon-plus\"></span></button>";
-					Frequest+="<a class="+"\"btn btn-primary\""+" id=\"delete"+data[i].emailID+"\" "+"href=\"\""+" OnClick=\"del(this);\">Delete request</a>";
-					Frequest+="<a class="+"\"btn btn-primary\""+" id="+"\"done"+data[i].emailID+"\" href=\"\""+" style=\"visibility: hidden\";>Cancelled</a></div></div>";
-               		
-             	}
-             	Frequest=Frequest.replace("undefined","");
-         	
-         	   $("#Frequest").html(Frequest);
-        
-                }  
-                
-                else
-             	   {
-             	  alert("something wrong");
-             	   }
-              },
-	    
-   			error: function(e){  
-     					//alert('Error121212: ' + e);  
-     					//alert(e.toString());
-   			}				
-     
-	  });
+    
 });
 	
 	$("#logoutButton1").click(function(e){
-		  var foo = $.cookie("ID");
-     	 //alert("logout success");
-     	  // var obj = JSON.parse(JSON.stringify(resp));
-     	   window.location.replace("appHome.html");
-	    /*$.ajax({
-	        type: "DELETE",
-	        contentType: "text/plain",  //send data to server in this format
-	        url:"http://localhost:8080/DemoFB/webapi/user/logout",
-	        dataType: "text",  //expect response of this type
-	        data: foo,
-	        success: function(resp){
-	            //alert("succes done");
-	            //alert(data);
-	            
-	            if(resp!=null){
-	            			
-	                    	 alert("logout success");
-	                    	  // var obj = JSON.parse(JSON.stringify(resp));
-	                    	   window.location.replace("appHome.html");
-	                    	   $.removeCookie("ID");
-	                    	  
-	            }	
-	            else
-	            {
-	            	alert("logout failed.. ")
-	            	window.location.replace("userFriend.html");
-	            }	
-	            
-	            
-	        },
-	        error: function(jqXHR, textStatus, errorThrown){
-	            alert('logout error: ' + textStatus);
-	        }
-	    });*/
-	           	
-	        	
-	       
+       $.cookie("ID",null);
+        window.location.replace("appHome.html"); 
 	   });//logout button ends ends
 	   
 	   window.add = function(e1){
@@ -471,8 +457,8 @@ $(function () {
                   },
  	    
        			error: function(e){  
-         					alert('Error121212: ' + e);  
-         					alert(e.toString());
+         					//alert('Error121212: ' + e);  
+         					//alert(e.toString());
        			}				
          
  	  }); 
@@ -576,12 +562,25 @@ $(function () {
                   },
  	    
        			error: function(e){  
-         					alert('Error121212: ' + e);  
-         					alert(e.toString());
+         					//alert('Error121212: ' + e);  
+         					//alert(e.toString());
        			}				
          
  	  }); 
 	   }
+	   
+	 	$('a[href="#uName"]').click(function(){
+     		if(ID!=null)
+     		{window.location.replace("timeLine1.html"); 
+     		}
+     		});
+	 	$('a[href="#uHome"]').click(function(){
+     		if(ID!=null)
+     		{window.location.replace("userHome1.html"); 
+     		}
+     		});
+	   
+	   
 	   $("#search").click(function(e){
 	 		  
            var key=$("input#srch-term").val();
@@ -594,7 +593,7 @@ $(function () {
 });//document ready ends here
 
 jQuery(document).ajaxComplete(function () {
-	 $('[data-toggle="popover"]').popover({placement:'left'})  
+	 $('[data-toggle="popover"]').popover({placement:'right'})  
 	}); 
 </script>
 
@@ -636,10 +635,10 @@ jQuery(document).ajaxComplete(function () {
                             </form>
                             <ul class="nav navbar-nav navbar-center">
                             <li>
-                                <a href="timeLine1.html" id="userName"><i class="glyphicon glyphicon-user"></i> User Name</a>
+                                <a href="#uName" id="userName"><i class="glyphicon glyphicon-user"></i> User Name</a>
                               </li>
                               <li>
-                                <a href="userHome1.html"><i class="glyphicon glyphicon-home"></i> Home</a>
+                                <a href="#uHome"><i class="glyphicon glyphicon-home"></i> Home</a>
                               </li>
                               <li>
                                 <a href="userFriend.html"><i class="glyphicon glyphicon-user"></i> Find Friends</a>
@@ -670,14 +669,11 @@ jQuery(document).ajaxComplete(function () {
 					  
 						
 							<div class="full col-sm-12">
-							  
-								<!-- content -->                      
+							
+				
+							<!-- content -->                      
 								<div class="row">
-				
-								
-								 				
-				
-								  
+									  
 								 <!-- main col left --> 
 								 <div class="col-sm-4 col-xs-4">
 								   
@@ -753,19 +749,6 @@ jQuery(document).ajaxComplete(function () {
 								  <!-- main col center -->
 								  <div class="col-sm-5 col-xs-5">
 									   
-								
-
-									   <!-- <div class="panel panel-default">
-										 <div class="panel-heading"> <h4>Trending</h4></div>
-										  <div class="panel-body">
-										  	<div class="list-group">
- 												 <a href="todoPage.html" class="list-group-item">Virat Kohli</a>
-  												 <a href="todoPage.html" class="list-group-item">Varun Dhawan</a>
-  												 <a href="todoPage.html" class="list-group-item">David Guetta</a>
-											</div>
-										  </div>
-									   </div> -->
-									
 									   <div class="panel panel-default">
 										<div class="panel-heading"> <h4>Add Personel Contacts</h4></div>
 										 										  <div class="panel-body">

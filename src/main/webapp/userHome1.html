@@ -17,7 +17,11 @@
         
         $(document).ready(function() {
         	
-        	
+        	var ID = $.cookie("ID");
+        	if(ID==null)
+        	{
+        		window.location.replace("appHome.html");
+        	}	
         	var foo = $.cookie("ID");
          	$.ajax({
         		 type: "GET",
@@ -31,10 +35,8 @@
                       if(response!=null){
                    	  // alert("data fetched");
                    	   var obj = JSON.parse(JSON.stringify(response));
-                   	   //alert(obj.emailID);
-                   	   //alert(obj.fname);
-                   	   //alert(obj.highschool);
-                       	   document.getElementById("userName").innerHTML=obj.fname+" "+obj.lname;
+                   	 
+                      document.getElementById("userName").innerHTML=obj.fname+" "+obj.lname;
                       }  
                       
                       else
@@ -51,9 +53,17 @@
    	  });
     		//alert(foo);
     		 		
+    		 	$('a[href="#uName"]').click(function(){
+                 		if(ID!=null)
+                 		{window.location.replace("timeLine1.html"); 
+                 		}
+                 		});  
+    		
     		
     		
     		 $("#createEvent").click(function(e){
+    			 
+    			 if(ID!=null){
 		  
          var ename=$("input#eventname").val();
          var hname=$("input#hostname").val();
@@ -96,7 +106,7 @@
     	        }
     	    });
 	        	
-	       
+    			 }//if ID!=NUll
 	   }); // create ajax call end
     		
     		
@@ -403,38 +413,7 @@
 }); 
 }
     		
-    			
-    		
-                 	$.ajax({
-                 		 type: "GET",
-             	        contentType: "text/plain",  //send data to server in this format
-             	        url:"http://localhost:8080/DemoFB/webapi/user/retrive",
-             	        dataType: "JSON",  //expect response of this type
-             	        data: foo,
-    	                   
-                           success: function(response){  
-    	                       // we have the response  
-    	                       if(response!=null){
-    	                    	  // alert("data fetched");
-    	                    	   var obj = JSON.parse(JSON.stringify(response));
-    	                    	   //alert(obj.emailID);
-    	                    	   //alert(obj.fname);
-    	                    	   //alert(obj.highschool);
-    	                        	   document.getElementById("userName").innerHTML=obj.fname+" "+obj.lname;
-    	                       }  
-    	                       
-    	                       else
-    	                    	   {
-    	                    	  	alert("data cannot be fetched");
-    	                    	   }
-    	                     },
-    	    	    
-    	          			error: function(e){  
-    	            					alert('Error121212: ' + e);  
-    	            					alert(e.toString());
-    	          			}				
-    	            
-    	    	  });
+
             	
                  	 $("#postbutton").click(function(e){
                  		 
@@ -483,15 +462,16 @@
                  	    return false;
                  	});
                  	 
+                
                  	 
-                 	 
-                 	 
-                 	
+                 	    	
                  	
       	  $("#logoutButton1").click(function(e){
      		  //alert("logout success");
          	  // var obj = JSON.parse(JSON.stringify(resp));
-         	   window.location.replace("appHome.html");
+         	  //$.removeCookie("ID"); 
+         	  $.cookie("ID",null);
+         	  window.location.replace("appHome.html");
      	           	   	        	
      	       
      	   });//logout button ends ends
@@ -571,8 +551,12 @@
      	        success: function(resp){
      	            
      	            if(resp!=null){
-     	   	                    	 alert("group created");
-     	                    	   window.location.replace("myGroups.html");
+     	            	if(ID!=null)
+     	            	{
+     	              	 alert("group created");
+                   	   window.location.replace("myGroups.html");
+     	            	}	
+     	   	                
      	            }	
      	            else
      	            {
@@ -646,7 +630,7 @@
                             </form>
                             <ul class="nav navbar-nav navbar-center">
                             <li>
-                                <a href="timeLine1.html" id="userName"><i class="glyphicon glyphicon-user"></i> User Name</a>
+                                <a href="#uName" id="userName"><i class="glyphicon glyphicon-user"></i> User Name</a>
                               </li>
                               <li>
                                 <a href="userHome1.html"><i class="glyphicon glyphicon-home"></i> Home</a>
