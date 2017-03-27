@@ -120,7 +120,7 @@
             .popup-box .popup-messages
             {
                 height: 100%;
-                /* overflow-y: scroll; */
+                 overflow-y: scroll; 
             }
             
             
@@ -241,7 +241,9 @@
             element = element + '<div style="clear: both"></div>';
             element = element + '</div>';
             
-            element = element + '<div class="popup-messages"></div>';
+            element = element + '<div class="popup-messages" id="xxx">';
+            
+            element = element + '</div>';
             
             element = element +'<div class="popup-messages-footer">';
             element = element +'<textarea id="status_message" placeholder="Type a message..." rows="10" cols="40" name="message"></textarea>';
@@ -287,10 +289,16 @@
         
         $(document).ready(function() {
         	
+			/*
+        	var inputBox = document.getElementById('status_message');
+
+        	inputBox.onkeyup = function(){
+        	    document.getElementById('xxx').innerHTML = inputBox.value;
+        	}
+			*/
         	
         	
-        	
-        	$('#status_message').keypress(
+        	/*$('#status_message').keypress(
         		    function(e){
         		        if (e.keyCode == 13) {
         		            e.preventDefault();
@@ -304,7 +312,7 @@
         		        }
         		    });
             	
-        	
+        	*/
         	
         	
         	
