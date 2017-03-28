@@ -126,7 +126,6 @@ public class FriendRequestResource {
 	
 	@GET
     @Path("/giveMyRequests")
-	@Consumes({MediaType.TEXT_PLAIN})
 	@Produces({MediaType.APPLICATION_JSON})
     public static ArrayList<User> getMyALLRequests(@CookieParam("ID") String jwt
     		) throws JsonParseException, JsonMappingException, IOException{

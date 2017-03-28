@@ -43,7 +43,7 @@ $(document).ready(function() {
 	
 	 
 	$.ajax({ 
-        url: "http://localhost:8080/DemoFB/webapi/event/yourevent",
+        url: "http://localhost:8085/DemoFB/webapi/event/yourevent",
         type: "GET",
         dataType: "json",
         contentType : "application/json",
@@ -103,7 +103,7 @@ $(document).ready(function() {
 		
 		
 		$.ajax({ 
-        url: "http://localhost:8080/DemoFB/webapi/event/userListForEvent",
+        url: "http://localhost:8085/DemoFB/webapi/event/userListForEvent",
         type: "GET",
         dataType: "json",
         contentType : "application/json",
@@ -160,7 +160,7 @@ $(document).ready(function() {
 		
 //------------------------------------------------------------------------------------------------------------
 $.ajax({ 
-url: "http://localhost:8080/DemoFB/webapi/event/friendlistwhichisnotinvited",
+url: "http://localhost:8085/DemoFB/webapi/event/friendlistwhichisnotinvited",
 type: "GET",
 dataType: "json",
 contentType : "application/json",
@@ -209,7 +209,7 @@ else
 	$.cookie("ID3",uid);
 	
 	$.ajax({ 
-		url: "http://localhost:8080/DemoFB/webapi/event/requestforinvite",
+		url: "http://localhost:8085/DemoFB/webapi/event/requestforinvite",
 		type: "POST",
 		crossDomain: true,
 		processData: true,
@@ -246,7 +246,7 @@ else
 	 var obj={eID:eid};
 	 var myJSON=JSON.stringify(obj);
 	  $.ajax({ 
-		  url: "http://localhost:8080/DemoFB/webapi/event/deleteEvent",
+		  url: "http://localhost:8085/DemoFB/webapi/event/deleteEvent",
 		  type: "DELETE",
 		  dataType: "text",
 		  contentType : "application/json",

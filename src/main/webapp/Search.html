@@ -45,7 +45,7 @@ $(document).ready(function() {
 		 	$.ajax({
              		 type: "GET",
          	        contentType: "text/plain",  //send data to server in this format
-         	        url:"http://localhost:8080/DemoFB/webapi/user/retrive",
+         	        url:"http://localhost:8085/DemoFB/webapi/user/retrive",
          	        dataType: "JSON",  //expect response of this type
          	        data: foo,
 	                   
@@ -78,7 +78,7 @@ $(document).ready(function() {
 		 	$.ajax({
         		 type: "GET",
     	        contentType: "text/plain",  //send data to server in this format
-    	        url:"http://localhost:8080/DemoFB/webapi/user/search",
+    	        url:"http://localhost:8085/DemoFB/webapi/user/search",
     	        dataType: "JSON",  //expect response of this type
     	        data: foo,
                   
@@ -158,7 +158,7 @@ $(document).ready(function() {
 				   
 				   //alert(friendEmailID);
 					$.ajax({ 
-		                url: "http://localhost:8080/DemoFB/webapi/friendRequest/addFriend",
+		                url: "http://localhost:8085/DemoFB/webapi/friendRequest/addFriend",
 		                type: "POST",
 		                dataType: "text",
 		                contentType : "text/plain",
@@ -236,7 +236,7 @@ $(document).ready(function() {
             
  	   });//search button ends ends
  	   	$.ajax({ 
-            url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
+            url: "http://localhost:8085/DemoFB/webapi/friend/getMyAllFriends",
             type: "GET",
             dataType: "json",
             contentType : "application/json",

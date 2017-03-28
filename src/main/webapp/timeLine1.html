@@ -39,15 +39,6 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	
-	var ID = $.cookie("ID");
-	if(ID==null)
-	{
-		window.location.replace("appHome.html");
-	}
-	
-	
-	
     var x=$.cookie("ID");//current user logged in cookie
     var y=$.cookie("ID1");//friend timeline ki cookie
     //document.write(x);
@@ -56,16 +47,12 @@ $(document).ready(function() {
             e.preventDefault();
      });
     var email;
-    
-    
-    
-    
     //this ajax call to print user name on top logged in user row
     //alert(foo);
              $.ajax({
                   type: "GET",
                  contentType: "text/plain",  //send data to server in this format
-                 url:"http://localhost:8080/DemoFB/webapi/user/retrive",
+                 url:"http://localhost:8085/DemoFB/webapi/user/retrive",
                  dataType: "JSON",  //expect response of this type
                  data: foo,
                    
@@ -100,7 +87,7 @@ $(document).ready(function() {
              $.ajax({
                       type: "GET",
                      contentType: "text/plain",  //send data to server in this format
-                     url:"http://localhost:8080/DemoFB/webapi/user/retrive",
+                     url:"http://localhost:8085/DemoFB/webapi/user/retrive",
                      dataType: "JSON",  //expect response of this type
                      data: foo,
                        
@@ -109,8 +96,7 @@ $(document).ready(function() {
                            if(response!=null){
                               /// alert("data fetched");
                                var obj = JSON.parse(JSON.stringify(response));
-                              
-                               // alert(obj.emailID);
+                              // alert(obj.emailID);
                                //alert(obj.fname);
                             //   alert(obj.highschool);
                                     document.getElementById("email").innerHTML="EmailID   : "+obj.emailID;
@@ -122,6 +108,8 @@ $(document).ready(function() {
                                    document.getElementById("work").innerHTML="Work Place   : "+obj.placeOfWork;
                                    document.getElementById("town").innerHTML="HomeTown     : "+obj.hometown;
                                    document.getElementById("workCity").innerHTML="City of Work : "+obj.cityOfWork;
+                                   document.getElementById("bestplace").innerHTML="Best Place : "+obj.bestPlace;
+                                   
                                    document.getElementById("mob_no").defaultValue =obj.mob_no;
                                    document.getElementById("college").defaultValue =obj.college;
                                    document.getElementById("highschool").defaultValue =obj.highschool;
@@ -130,6 +118,7 @@ $(document).ready(function() {
                                    document.getElementById("workcity").defaultValue =obj.cityOfWork;
                                    document.getElementById("userName").innerHTML=obj.fname+" "+obj.lname;
                                   
+                                   //document.getElementById("sportID").defaultValue =obj.sport;
                                    
                                    //alert(obj.emailID);
                                    var email=obj.emailID;
@@ -156,7 +145,7 @@ $(document).ready(function() {
             
             //ajax call to show my all friends on my friend ki timeline
                        $.ajax({ 
-            url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
+            url: "http://localhost:8085/DemoFB/webapi/friend/getMyAllFriends",
             type: "GET",
             dataType: "json",
             contentType : "application/json",
@@ -217,23 +206,21 @@ window.go = function(e1){
               
 
        $("#findFriendButton").click(function(e){
-    	   if(ID!=null)
-           {window.location.replace("userFriend.html");}
+           window.location.replace("userFriend.html");
        });
                
        $("#homeButton").click(function(e){
-    	   if(ID!=null)
-           {window.location.replace("userHome1.html");}
+           window.location.replace("userHome1.html");
        });        
     
     
     
       $("#logoutButton1").click(function(e){
-          
-          $.cookie("ID",null);
+           var foo = $.cookie("ID");
+          // alert("logout success");
           window.location.replace("appHome.html");      
+           
        });//logout button ends ends
-       
        $("#search").click(function(e){
                
            var key=$("input#srch-term").val();
@@ -252,17 +239,18 @@ window.go = function(e1){
           var hometown=$("input#hometown").val();
           var cityOfWork=$("input#workcity").val();
           var highschool=$("input#highschool").val();
-          
+          var bestplace=$('select#bestplace option:selected').text();
+          alert("bestplace"+bestplace);
           var obj = { mob_no:mob_no,college:college,placeOfWork:placeOfWork,
-                  hometown:hometown,cityOfWork:cityOfWork,highschool:highschool
+                  hometown:hometown,cityOfWork:cityOfWork,highschool:highschool,bestPlace:bestplace
                   };  
           var myJSON = JSON.stringify(obj);
               
-    //        document.write(myJSON);
+            //document.write(myJSON);
         $.ajax({
             type: "PUT",
             contentType: "application/json",  //send data to server in this format
-            url:"http://localhost:8080/DemoFB/webapi/user/updateAllData",
+            url:"http://localhost:8085/DemoFB/webapi/user/updateAllData",
             dataType: "text",  //expect response of this type
             data: myJSON,
             success: function(resp){
@@ -293,7 +281,7 @@ window.go = function(e1){
                            document.getElementById("hometown").defaultValue =obj1.hometown;
                            document.getElementById("workcity").defaultValue =obj1.cityOfWork;
                             */
-                           window.location.replace("timeLine1.html");
+                            window.location.replace("timeLine1.html");
                               
                 }    
                 else
@@ -339,7 +327,7 @@ window.go = function(e1){
           });          
           });
           $.ajax({ 
-              url: "http://localhost:8080/DemoFB/webapi/status/getMyStatus",
+              url: "http://localhost:8085/DemoFB/webapi/status/getMyStatus",
               type: "GET",
               dataType: "json",
               contentType : "application/json",
@@ -451,7 +439,7 @@ window.go = function(e1){
 	    		 
 	    			
 	    			$.ajax({ 
-	                    url: "http://localhost:8080/DemoFB/webapi/status/getAllLikeName",
+	                    url: "http://localhost:8085/DemoFB/webapi/status/getAllLikeName",
 	                    type: "POST",
 	                    dataType: "json",
 	                    contentType : "application/json",
@@ -515,14 +503,14 @@ window.go = function(e1){
              window.like = function(e1){
                  
                    var statusid= $(e1).attr('id');
-                  // alert("cccacacaca"+statusid);
+                   alert("cccacacaca"+statusid);
                    var sid={statusID:statusid};
                    var myJSON=JSON.stringify(sid);
                    //alert(statusid);
                    
                    
                    $.ajax({ 
-           url: "http://localhost:8080/DemoFB/webapi/status/incrementLike",
+           url: "http://localhost:8085/DemoFB/webapi/status/incrementLike",
            type: "POST",
            dataType: "text",
            contentType : "application/json",
@@ -561,7 +549,7 @@ window.go = function(e1){
                    
                    
                    $.ajax({ 
-         url: "http://localhost:8080/DemoFB/webapi/status/decrementLike",
+         url: "http://localhost:8085/DemoFB/webapi/status/decrementLike",
          type: "POST",
          dataType: "text",
          contentType : "application/json",
@@ -609,7 +597,7 @@ window.go = function(e1){
                    
                
                    $.ajax({ 
-           url: "http://localhost:8080/DemoFB/webapi/status/addComment",
+           url: "http://localhost:8085/DemoFB/webapi/status/addComment",
            type: "POST",
            dataType: "text",
            contentType : "application/json",
@@ -638,16 +626,27 @@ window.go = function(e1){
 }); 
 }
               $("#postbutton").click(function(e){
-                  
+            	  $.ajax({
+            	        type: "POST",
+            	        contentType: "text/plain",  //send data to server in this format
+            	        url:"http://localhost:8085/DemoFB/webapi/friend/getmyemail",
+            	        dataType: "text",  //expect response of this type
+            	        data: x,
+            	       success: function(resp){
+            	           
+            	          if(resp!=null){
+            	        	
                   
                   var statusdesc= document.getElementById("posttext").value;
-                   //alert(x);
+                  var obj2={status_desc:statusdesc,timelineid:resp};
+                  var mahjson=JSON.stringify(obj2);
+                  //alert(x);
                    $.ajax({
             type: "POST",
-            contentType: "text/plain",  //send data to server in this format
-            url:"http://localhost:8080/DemoFB/webapi/status/addStatus",
+            contentType: "application/json",  //send data to server in this format
+            url:"http://localhost:8085/DemoFB/webapi/status/addStatus",
             dataType: "text",  //expect response of this type
-            data: statusdesc,
+            data: mahjson,
            success: function(resp){
                
               if(resp!=null){
@@ -669,10 +668,27 @@ window.go = function(e1){
         }     
                    
                    
-                   });             
+             });
                    
-               });          
+            }
+            	          else{
+            	        	  alert("getid failed");
+            	        	  }
+            	          
+            	          
+            	       },          
+                   error: function(e){  
+                       alert('inside add status: ' + e);  
+                       alert(e.toString());
+               }                
+
+       });      
               
+            	          
+            	          
+      });          
+        
+        
                
                
               $("#comment").click(function(){
@@ -797,7 +813,7 @@ window.go = function(e1){
   </button>
   <ul class="dropdown-menu">
     <li>
-    <form id="uploadPic"action="http://localhost:8080/DemoFB/webapi/user/uploadProfilePic" method="post" enctype="multipart/form-data">
+    <form id="uploadPic"action="http://localhost:8085/DemoFB/webapi/user/uploadProfilePic" method="post" enctype="multipart/form-data">
         <p id="uploadPhoto">
         Change profile pic:<input type="file" name="file" size="45" onchange="this.form.submit()" class="filestyle" data-classButton="btn btn-primary" data-input="false" data-classIcon="icon-plus" data-buttonText="Your label here."/>
         </p>
@@ -876,8 +892,7 @@ window.go = function(e1){
       <pre class="media-left" id="town"></pre>        <br>
       <pre class="media-left" id="workCity"></pre>    <br>
       <pre class="media-left" id="School"></pre><br>
-    
-        
+       <pre class="media-left" id="bestplace">Best Places :</pre><p class="media-right"></p>    <br>  
                                             
                                             
                                             
@@ -885,18 +900,7 @@ window.go = function(e1){
                                           </div>
     <input type="button" id ="popup" class="btn btn-primary" value="Update Info" data-toggle="modal" data-target="#myModal">
        </div>
-       
-    
-       
-       
-       
-    <br>
-       
-       
-       
-       
                                       </div>
-                                      
     <!-- personal info ends here -->
     
      <div class="col-sm-6 col-xs-6">
@@ -925,6 +929,8 @@ window.go = function(e1){
     <div class="row">
       <div class="col-md-12">
       <p id="status_name"></p>
+      <p id="feelings"></p>
+      
        <p id="forstatus"></p>  <!-- status text -->
       </div>
     </div>
@@ -1084,27 +1090,21 @@ window.go = function(e1){
         </div>
              <br>
              
-        <div class="form-group col-sm-3">
-        
-        
-        </div>     
-             
-             
-             
-    <!--     <div class="form-group">
-         <label for="sel1">Sports (select one):</label>
-      <select class="form-control" id="sport" style="margin-left:10px;">
-        <option>Cricket</option>
-        <option>Football</option>
-        <option>Tennis</option>
-        <option>Baseball</option>
+      <div class="form-group">
+         <label for="bestplace">SBestPlace (select one):</label>
+      <select class="form-group" name="bestplaces" id="bestplace" style="margin-left:10px;">
+        <option value="Bangalore">Bangalore</option>
+        <option value="Tokyo">Tokyo</option>
+        <option value="Pataya">Pataya</option>
+        <option value="Malasia">Malasia</option>
       </select>
         </div>
              <br>      
-             -->
+             
        
     </div>
-  
+    
+
      
       <div class="modal-footer">
        <input type="button" id ="updateDetails" class="btn btn-primary" value="Update Info" data-dismiss="modal" >
