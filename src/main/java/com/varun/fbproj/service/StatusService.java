@@ -24,12 +24,17 @@ public class StatusService {
 			 }
 			 String  status_desc=s1.getStatus_desc(); 
 			 String emailID=s1.getEmailID();
+			 String feeling=s1.getFeeling();
+			 String timelineid=s1.getTimelineid();
 			 
-			 String query = "insert into status(status_desc,emailID,group_name) values(?,?,?)";
+			 String query = "insert into status(status_desc,emailID,group_name,feeling,timelineid) values(?,?,?,?,?)";
 			 PreparedStatement pstmnt = db.con.prepareStatement(query);
 			 pstmnt.setString(1,status_desc);
 			 pstmnt.setString(2,emailID);
-			 pstmnt.setString(3, s1.getGroup_name());
+			 pstmnt.setString(3,s1.getGroup_name());
+			 pstmnt.setString(4,feeling);
+			 pstmnt.setString(5,timelineid);
+				
 			 pstmnt.executeUpdate();
 			 db.stop();
 			 return true;
@@ -111,11 +116,15 @@ public class StatusService {
 	 //this method is VERY IMPORTANT
 	 //given an email ID ..it returns all status of that guy and all status of his friends
 	 //along with all comments and likes on every status
-	 public ArrayList<Status> getAllDetailsOfEachStatus(String emailID)
+	 
+	 public ArrayList<Status> getAllDetailsOfEachStatus(String emailID,String timelineID)
 		{
-
+		 String feel1="is feeling ";
+		 String feel2="";
 		 System.out.println("eamil ddd  "+emailID);
-			String rs1;
+		 System.out.println("timelineid "+timelineID);
+				
+		 String rs1;
 			boolean check=false;
 		    
 
@@ -125,9 +134,11 @@ public class StatusService {
 					 check= db.start();
 				  }
 		    
-				  String query1="select * from status where emailID= ?";	   
+				  String query1="select * from status where emailID=? and timelineid= ?";	   
 				  PreparedStatement pstmnt=db.con.prepareStatement(query1);
 				  pstmnt.setString(1,emailID); // user_id is the one sent in paramater
+				  pstmnt.setString(2,timelineID); // timelineid is the one sent in paramater
+				  
 				  ResultSet rs= pstmnt.executeQuery();
 				  ArrayList<Status> statusArrayList = new ArrayList<Status>();				  
 				  
@@ -140,9 +151,17 @@ public class StatusService {
 					status_obj.setCreated(String.valueOf(rs.getTimestamp(3)));
 					status_obj.setEmailID(emailID);
 					status_obj.setFlag(rs.getInt(5));
+					
+					
+					if((rs.getString("feeling"))!=null)
+					{feel2=rs.getString("feeling");
+					feel1=feel1.concat(feel2);
+					status_obj.setFeeling(feel1);}
+					else 
+						status_obj.setFeeling(rs.getString("feeling"));
 					//statusArrayList.add(status_obj);	
-
-		         
+					feel1="is feeling ";
+		         System.out.println("eeeeeeeeeeeeeeeeeeeeee"+rs.getString(2));
 					  String query11="select fname,lname from User where emailID=?";	   
 					  PreparedStatement pstmnt11=db.con.prepareStatement(query11);
 					  pstmnt11.setString(1,emailID); // user_id is the one sent in paramater

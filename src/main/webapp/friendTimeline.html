@@ -41,15 +41,22 @@
   </style>
         <script type="text/javascript">
         $(document).ready(function() {
-        	
 
-        	var ID = $.cookie("ID");
-        	if(ID==null)
-        	{
-        		window.location.replace("appHome.html");
-        	}
         	
-
+          var feeling1;
+          	
+        	
+        	
+        	
+        	$(".dropdown-menu li a").click(function(){
+        		  $(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="caret"></span>');
+        		  feeling1=  $(this).parents(".dropdown").find('.btn').val($(this).data('value')).text();
+        			alert(feeling1);	 
+        	});        	
+        	
+        	
+        	
+        	
               var foo = $.cookie("ID");
             //alert(foo);
              var x=$.cookie("ID");//current user logged in cookie
@@ -69,7 +76,7 @@
                  $.ajax({
         type: "POST",
         contentType: "text/plain",  //send data to server in this format
-        url:"http://localhost:8080/DemoFB/webapi/friend/getmyemail",
+        url:"http://localhost:8085/DemoFB/webapi/friend/getmyemail",
         dataType: "text",  //expect response of this type
         data: x,
        success: function(resp){
@@ -86,13 +93,13 @@
               $.ajax({
       	        type: "POST",
       	        contentType: "application/json",  //send data to server in this format
-      	        url:"http://localhost:8080/DemoFB/webapi/friend/getfriendemail",
+      	        url:"http://localhost:8085/DemoFB/webapi/friend/getfriendemail",
       	        dataType: "text",  //expect response of this type
       	        data: myjson,
       	       success: function(resp){
       	           
       	          if(resp!=null){
-      	           
+      	          
       	        	  //resp contains email id of friend
       	             // alert("uemailid"+email);
       	             // alert("femailid"+resp);
@@ -147,7 +154,7 @@
         	  $.ajax({
         	        type:"POST",
         	        contentType: "application/json",  //send data to server in this format
-        	        url:"http://localhost:8080/DemoFB/webapi/friend/suggestedFriends",
+        	        url:"http://localhost:8085/DemoFB/webapi/friend/suggestedFriends",
         	        dataType: "json",  //expect response of this type
         	        data: j,
         	       success: function(resp){
@@ -211,7 +218,7 @@
            	 	var obj1={firstemailid:first,secondemailid:second,suggestedemailid:suggestemailid};
            	 var jsonobj=JSON.stringify(obj1);
            	 $.ajax({ 
-                    url: "http://localhost:8080/DemoFB/webapi/friend/confirmsuggestion",
+                    url: "http://localhost:8085/DemoFB/webapi/friend/confirmsuggestion",
                     type: "POST",
                     dataType: "text",
                     contentType : "application/json",
@@ -257,7 +264,7 @@
                        
                        
                        $.ajax({ 
-                url: "http://localhost:8080/DemoFB/webapi/status/incrementLike",
+                url: "http://localhost:8085/DemoFB/webapi/status/incrementLike",
                 type: "POST",
                 dataType: "text",
                 contentType : "application/json",
@@ -303,7 +310,7 @@
                        
                    
                        $.ajax({ 
-                url: "http://localhost:8080/DemoFB/webapi/status/addComment",
+                url: "http://localhost:8085/DemoFB/webapi/status/addComment",
                 type: "POST",
                 dataType: "text",
                 contentType : "application/json",
@@ -335,22 +342,41 @@
           
                      $("#postbutton").click(function(e){
                          
+                       
+                    	 
+                    	 var obj1={userID:y};
+                         var myjson1=JSON.stringify(obj1);
                          
+                         $.ajax({
+                 	        type: "POST",
+                 	        contentType: "application/json",  //send data to server in this format
+                 	        url:"http://localhost:8085/DemoFB/webapi/friend/getfriendemail",
+                 	        dataType: "text",  //expect response of this type
+                 	        data: myjson1,
+                 	       success: function(resp){
+                 	           
+                 	          if(resp!=null){
+                 	          var friendemail=resp;
+                    	 
+                    	 
                         var statusdesc= document.getElementById("posttext").value;
                          //alert(x);
+                         var obj2={status_desc:statusdesc,feeling:feeling1,timelineid:friendemail};
+                 		 var mahjson=JSON.stringify(obj2);
+                 		 
                          $.ajax({
                 type: "POST",
-                contentType: "text/plain",  //send data to server in this format
-                url:"http://localhost:8080/DemoFB/webapi/status/addStatus",
+                contentType: "application/json",  //send data to server in this format
+                url:"http://localhost:8085/DemoFB/webapi/status/addStatus",
                 dataType: "text",  //expect response of this type
-                data: statusdesc,
+                data: mahjson,
                success: function(resp){
                    
                   if(resp!=null){
                       
-                     // alert(resp);
-                     $('#posttext').val('');
-                    location.reload();
+                     alert(resp);
+                     /* $('#posttext').val('');
+   */                  location.reload();
                       
                   }
                   else{
@@ -367,11 +393,21 @@
                          
                          });             
                          
-          });     //post button click ends here  
+              //post button click ends here  
 
+                 	       }
+                         else
+                        	 {alert("error in getting friend email");}
 
-
-
+                         },
+                         error: function(e){  
+                             alert('Error121212: ' + e);  
+                             alert(e.toString());
+                       }       
+                   
+               });      
+                         
+          });                     
                      
           $("#comment").click(function(){
                         /* $(this).next("#forcomment").slideToggle(200)
@@ -382,31 +418,12 @@
                      
                                    
           $("#logoutButton1").click(function(e){
-              $.cookie("ID",null);
+              //alert("logout success");
+              // var obj = JSON.parse(JSON.stringify(resp));
                window.location.replace("appHome.html");
            
                
            });//logout button ends ends
-           
-           $('a[href="#uName"]').click(function(){
-        		if(ID!=null)
-        		{window.location.replace("timeLine1.html"); 
-        		}
-        		});
-   	   
-   		$('a[href="#uHome"]').click(function(){
-        		if(ID!=null)
-        		{window.location.replace("userHome1.html"); 
-        		}
-        		});
-   		$('a[href="#uFriend"]').click(function(){
-        		if(ID!=null)
-        		{window.location.replace("userFriend.html"); 
-        		}
-        		});
-   	   
-           
-           
 
 
             //this ajax call to print user name on top logged in user row
@@ -414,7 +431,7 @@
           $.ajax({
              type: "GET",
               contentType: "text/plain",  //send data to server in this format
-              url:"http://localhost:8080/DemoFB/webapi/user/retrive",
+              url:"http://localhost:8085/DemoFB/webapi/user/retrive",
               dataType: "JSON",  //expect response of this type
               data: foo,
                    
@@ -454,7 +471,7 @@
       $.ajax({
                  type: "GET",
                   contentType: "text/plain",  //send data to server in this format
-                  url:"http://localhost:8080/DemoFB/webapi/user/retrive_other",
+                  url:"http://localhost:8085/DemoFB/webapi/user/retrive_other",
                   dataType: "JSON",  //expect response of this type
                   data:other_jwt,
                      
@@ -504,7 +521,7 @@
           $.ajax({
      		 type: "GET",
  	        contentType: "text/plain",  //send data to server in this format
- 	        url:"http://localhost:8080/DemoFB/webapi/friend/myFriendOrNot",
+ 	        url:"http://localhost:8085/DemoFB/webapi/friend/myFriendOrNot",
  	        dataType: "text",  //expect response of this type
  	       success: function(response){  
                // we have the response  
@@ -536,7 +553,7 @@
             	}
            
        	   $("#SearchResult").html(SearchResult);
-            	   }//if ends here
+            	   }
  	       },
  	       
  	      error: function(e){  
@@ -551,7 +568,7 @@
 
                     //ajax call to show my all friends on my friend ki timeline
    	$.ajax({ 
-                url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
+                url: "http://localhost:8085/DemoFB/webapi/friend/getMyAllFriends",
                 type: "GET",
                 dataType: "json",
                 contentType : "application/json",
@@ -606,7 +623,7 @@
              	var other_userID = $.cookie("ID1");
                 //this ajax call to get all my status on my  other ke timeline page pe
                         $.ajax({ 
-                   url: "http://localhost:8080/DemoFB/webapi/status/getOtherAllStatus",
+                   url: "http://localhost:8085/DemoFB/webapi/status/getOtherAllStatus",
                    type: "GET",
                    dataType: "json",
                    contentType : "application/json",
@@ -618,11 +635,11 @@
                      if(response!=null){
                        var data =JSON.parse(JSON.stringify(response));  
                        
-                       console.log(data);
                        
+                       console.log(data);
                        var st;
                        var fname,lname;
-for (var i=0; i < data.length; i++){
+for (var i=data.length-1; i >=0; i--){
                     	   
                     	   var email =data[i].emailID; 
                     	  
@@ -634,7 +651,9 @@ for (var i=0; i < data.length; i++){
                     	   st+="<div class="+"\"col-md-12\""+">";
                     		 st+="<div class=\" col-sm-2\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
                              st+="<div class=\" col-sm-5\"><p><font size="+"\"4\""+"color="+"\"blue\""+">"+data[i].name+"</font></p></div>" ;
-                    	   /* $(status_name).appendTo('#text_color');
+                             st+="<p id="+"\"feelings\""+">"+data[i].feeling+"</p>" ;
+                          	  
+                             /* $(status_name).appendTo('#text_color');
                     	   document.getElementById("forstatus").style.color="blue"; */
                     	 	st+="<br><br><br>";
                     	   st+="<p id="+"\"forstatus\""+">"+data[i].status_desc+"</p>" ;
@@ -645,9 +664,9 @@ for (var i=0; i < data.length; i++){
                     	   st+="<li>";
                     	   st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+" OnClick=\"like(this);\"><span class="+"\"glyphicon glyphicon-thumbs-up\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Like</font></a>";
                     	   st+="</li>";
-                    	   st+="<li>";
+                    	  /*  st+="<li>";
                     	   st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+" OnClick=\"unlike(this);\""+"><span class="+"\"glyphicon glyphicon-thumbs-down\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Unlike</font></a>";
-                    	   st+="</li>";
+                    	   st+="</li>"; */
                     	   st+="<li>";
                     	   st+= "<a href="+"\"#\""+ "id=\""+data[i].statusID+"\""+"><span class="+"\"glyphicon glyphicon-comment\"" +"style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Comment</font></a>";
                     	   st+="</li></ul></div></div>";
@@ -721,7 +740,7 @@ for (var i=0; i < data.length; i++){
            	    		 
            	    			
            	    			$.ajax({ 
-           	                    url: "http://localhost:8080/DemoFB/webapi/status/getAllLikeName",
+           	                    url: "http://localhost:8085/DemoFB/webapi/status/getAllLikeName",
            	                    type: "POST",
            	                    dataType: "json",
            	                    contentType : "application/json",
@@ -833,13 +852,13 @@ for (var i=0; i < data.length; i++){
                             </form>
                             <ul class="nav navbar-nav navbar-center">
                             <li>
-                                <a href="#uName" id="userName"><i class="glyphicon glyphicon-user"></i> User Name</a>
+                                <a href="timeLine1.html" id="userName"><i class="glyphicon glyphicon-user"></i> User Name</a>
                               </li>
                               <li>
-                                <a href="#uHome"><i class="glyphicon glyphicon-home"></i> Home</a>
+                                <a href="userHome1.html"><i class="glyphicon glyphicon-home"></i> Home</a>
                               </li>
                               <li>
-                                <a href="#uFriend"><i class="glyphicon glyphicon-user"></i> Find Friends</a>
+                                <a href="userFriend.html"><i class="glyphicon glyphicon-user"></i> Find Friends</a>
                               </li>
                               <li>
                                 <a href="todoPage.html" title="Friend Requests"><i class="glyphicon glyphicon-user"></i><span class="badge">9</span></a>
@@ -979,7 +998,23 @@ for (var i=0; i < data.length; i++){
 			 <div class="form-group" style="padding:14px;">
 			  <textarea class="form-control" placeholder="What's on your mind!" id="posttext"></textarea>
 			</div>
-			<button class="btn btn-primary pull-right" type="button" id="postbutton">Post</button><ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
+			<div class="dropdown">
+  <button class="btn pull-left dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    Feeling
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="Feeling">
+    <li><a href="#" data-value="Happy"><i class="glyphicon glyphicon-upload"></i>Happy</a></li>
+    <li><a href="#" data-value="Sad"><i class="glyphicon glyphicon-upload"></i>Sad</a></li>
+    <li><a href="#" data-value="Excited"><i class="glyphicon glyphicon-upload"></i>Excited</a></li>
+    <li><a href="#" data-value="Adventurous"><i class="glyphicon glyphicon-upload"></i>Adventurous</a></li>
+  	<li><a href="#" data-value="Hungry"><i class="glyphicon glyphicon-upload"></i>Hungry</a></li>
+  
+  </ul>
+</div>
+ 
+			
+			<button class="btn btn-primary pull-right" type="button" id="postbutton">Post</button><ul class="list-inline"> <li><!-- <a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a>--></li> </ul>
 		   </form>
 		  </div>
 								   
@@ -997,6 +1032,7 @@ for (var i=0; i < data.length; i++){
     <div class="row">
       <div class="col-md-12">
       <p id="status_name"></p>
+      <p id="feelings"></p>
        <p id="forstatus"></p>  <!-- status text -->
       </div>
     </div>

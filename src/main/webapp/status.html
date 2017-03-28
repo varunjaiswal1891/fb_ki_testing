@@ -30,7 +30,7 @@
 var user_id=21;
 var stat_id; // global variable for status that is fetched
         $.ajax({   
-                    url: "http://localhost:8080/fbapp3/webapi/status/21/",
+                    url: "http://localhost:8085/fbapp3/webapi/status/21/",
                     type: "GET",
                     //data: "myJSON1",
                     dataType: "json",
@@ -148,7 +148,7 @@ var stat_id; // global variable for status that is fetched
            $.ajax({
             
                type: "POST",
-               url: "http://localhost:8080/fbapp3/webapi/status/addComment",
+               url: "http://localhost:8085/fbapp3/webapi/status/addComment",
                data: myJSON,
                contentType :"application/json",
                dataType: "json",
@@ -195,7 +195,7 @@ var stat_id; // global variable for status that is fetched
            $.ajax({
             
                type: "POST",
-               url: "http://localhost:8080/fbapp3/webapi/status/addStatus",
+               url: "http://localhost:8085/fbapp3/webapi/status/addStatus",
                data: myJSON,
                contentType : "application/json",
                dataType: "json",
@@ -232,7 +232,7 @@ var stat_id; // global variable for status that is fetched
       $.ajax({
         
                 type: "POST",
-                url: "http://localhost:8080/fbapp3/webapi/status/incrementLike",
+                url: "http://localhost:8085/fbapp3/webapi/status/incrementLike",
                 data: myJSON,
                 contentType : "application/json",
                 dataType: "json",
