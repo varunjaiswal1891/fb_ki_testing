@@ -30,12 +30,12 @@ $(document).ready(function() {
 		var foo = $.cookie("ID");
 		var key=$.cookie("key");
 		//alert(foo);
-		 	$.ajax({
+		 $.ajax({
              		 type: "GET",
-         	        contentType: "text/plain",  //send data to server in this format
+         	       // contentType: "text/plain",  //send data to server in this format
          	        url:"http://localhost:8080/DemoFB/webapi/user/retrive",
          	        dataType: "JSON",  //expect response of this type
-         	        data: foo,
+         	        //data: foo,
 	                   
                        success: function(response){  
 	                       // we have the response  
@@ -61,75 +61,80 @@ $(document).ready(function() {
 	            					alert(e.toString());
 	          			}				
 	            
-	    	  });
-        
-		 	$.ajax({
+	    	  });        
+		 	 $.ajax({
         		 type: "GET",
-    	        contentType: "text/plain",  //send data to server in this format
-    	        url:"http://localhost:8080/DemoFB/webapi/user/search",
+    	       // contentType: "text/plain",  //send data to server in this format
+    	        url:"http://localhost:8080/DemoFB/webapi/friend/findFriends",
     	        dataType: "JSON",  //expect response of this type
-    	        data: foo,
+    	       // data: foo,
                   
                   success: function(response){  
                       // we have the response  
                       if(response!=null){
                    	  // alert("data fetched");
-                    	  var data =JSON.parse(JSON.stringify(response));  
-                          var SearchResult;
-                        
-                      	for (var i=0; i < data.length; i++){
-                      	
-                      		if(data[i].mob_no=="0")
-                      		{
-                  		    SearchResult+="<div class="+"\"panel-body\""+">";
-                  		    SearchResult+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
-                  			SearchResult+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
-                  			SearchResult+="<div class="+"\"text-right\""+">";
-                  			SearchResult+="<button type="+"\"button\""+" class="+"\"btn btn-primary\" id=\""+data[i].emailID+"\" OnClick=\"add(this);\""+" \">Add Friend<span class="+"\"glyphicon glyphicon-plus\""+"></span></button>";
-                  			SearchResult+="<a class="+"\"btn btn-primary\""+" id="+"\"SentReq"+data[i].emailID+"\" "+" style=\"visibility: hidden\";>Request Sent<span class="+"\"glyphicon glyphicon-ok\""+"></span></a></div></div>";
-                   			
-                      		}
-                      	else if(data[i].mob_no=="1"){
-                      		SearchResult+="<div class="+"\"panel-body\""+">";
-                  		    SearchResult+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
-                  			SearchResult+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
-                  			SearchResult+="<div class="+"\"text-right\""+">";
-                  			SearchResult+="<button type="+"\"button\""+" class="+"\"btn btn-primary\">Friends<span class="+"\"glyphicon glyphicon-ok\""+"></span></button></div></div>";
-                  				
-                      	}
-                      	else{
-                      	   SearchResult+="<div class="+"\"panel-body\""+">";
-                 		    SearchResult+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
-                 			SearchResult+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
-                 			SearchResult+="<div class="+"\"text-right\""+">";
-                 			SearchResult+="<a class="+"\"btn btn-primary\""+" id="+"\"SentReq"+data[i].emailID+"\" "+" >Request Sent<span class="+"\"glyphicon glyphicon-ok\""+"></span></a></div></div>";
-                  			
-                      	}
-                      	}
-                      	
-                    	if(data.length==0)
-                      		SearchResult="<h3>No Record Found</h3>";
-                       
-                      	SearchResult=SearchResult.replace("undefined","");
-                      
-                  	   $("#SearchResult").html(SearchResult);
-                 
-                      }  
-                      
-                      else
-                   	   {
-                    	  var SearchResult;
-                    	  SearchResult="<h3>No Record Found</h3>";
-                    	  $("#SearchResult").html(SearchResult);
-                   	   }
-                    },
-   	    
-         			error: function(e){  
-           					alert('Error121212: ' + e);  
-           					alert(e.toString());
-         			}				
-           
-   	  }); //ajacx ends
+                   	   var obj = JSON.parse(JSON.stringify(response));
+                   	   //alert(obj.emailID);
+                   	   //alert(obj.fname);
+                   	   //alert(obj.highschool);
+	                    	  // document.getElementById("userName").innerHTML=obj.fname+" "+obj.lname;
+	                    	  // document.getElementById("srch-term").defaultValue =key;
+	                    	  var data =JSON.parse(JSON.stringify(response));  
+	                    	   var SearchResult;
+	                           
+	                         	for (var i=0; i < data.length; i++){
+	                         	
+	                         		if(data[i].mob_no=="0")
+	                         		{
+	                     		    SearchResult+="<div class="+"\"panel-body\""+">";
+	                     		    SearchResult+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
+	                     			SearchResult+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
+	                     			SearchResult+="<div class="+"\"text-right\""+">";
+	                     			SearchResult+="<button type="+"\"button\""+" class="+"\"btn btn-primary\" id=\""+data[i].emailID+"\" OnClick=\"add(this);\""+" \">Add Friend<span class="+"\"glyphicon glyphicon-plus\""+"></span></button>";
+	                     			SearchResult+="<a class="+"\"btn btn-primary\""+" id="+"\"SentReq"+data[i].emailID+"\" "+" style=\"visibility: hidden\";>Request Sent<span class="+"\"glyphicon glyphicon-ok\""+"></span></a></div></div>";
+	                      			
+	                         		}
+	                         	else if(data[i].mob_no=="1"){
+	                         		SearchResult+="<div class="+"\"panel-body\""+">";
+	                     		    SearchResult+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
+	                     			SearchResult+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
+	                     			SearchResult+="<div class="+"\"text-right\""+">";
+	                     			SearchResult+="<button type="+"\"button\""+" class="+"\"btn btn-primary\">Friends<span class="+"\"glyphicon glyphicon-ok\""+"></span></button></div></div>";
+	                     				
+	                         	}
+	                         	else{
+	                         	   SearchResult+="<div class="+"\"panel-body\""+">";
+	                    		    SearchResult+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
+	                    			SearchResult+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
+	                    			SearchResult+="<div class="+"\"text-right\""+">";
+	                    			SearchResult+="<a class="+"\"btn btn-primary\""+" id="+"\"SentReq"+data[i].emailID+"\" "+" >Request Sent<span class="+"\"glyphicon glyphicon-ok\""+"></span></a></div></div>";
+	                     			
+	                         	}
+	                         	}
+	                         	
+	                      // 	if(data.length==0)
+	                         		//SearchResult="<h3>No Record Found</h3>";
+	                          
+	                         	SearchResult=SearchResult.replace("undefined","");
+	                         
+	                     	   $("#SearchResult").html(SearchResult);
+	                    
+	                         }  
+	                         
+	                         else
+	                      	   {
+	                       	  var SearchResult;
+	                       	  SearchResult="<h3>No Record Found</h3>";
+	                       	  $("#SearchResult").html(SearchResult);
+	                      	   }
+	                       },
+	      	    
+	            			error: function(e){  
+	              					alert('Error121212: ' + e);  
+	              					alert(e.toString());
+	            			}				
+	       
+   	  });
 	});//fun ends
    
 	window.go = function(e1){
@@ -491,6 +496,14 @@ $(document).ready(function() {
 				</div>
 			</div>
 		
+
+
+
+        
+        
+        
+        
+        
         <script type="text/javascript" src="assets/js/jquery.js"></script>
         <script type="text/javascript" src="assets/js/bootstrap.js"></script>
         <script type="text/javascript">

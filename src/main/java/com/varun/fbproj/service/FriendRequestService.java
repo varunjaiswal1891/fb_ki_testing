@@ -200,6 +200,46 @@ public class FriendRequestService {
 		return false;
 		
 	}
+	
+	public static boolean removeFriendRequest(String myEmailID,String suggestEmailID)
+	{
+		//this method removes a friend suggestion that came to me
+		try {
+
+	      	  DBAccess connect = new DBAccess();
+	            boolean check=false;
+	            while(check==false)
+	            {
+	            	check=connect.start();
+	            	System.out.println("trying connection for removing request");
+	            	
+	            }
+	          
+	            System.out.println("My email id: "+myEmailID);
+            	System.out.println("Suggest email id: "+suggestEmailID);
+            	
+	            String sql = "DELETE FROM FriendSuggestion WHERE secondp=? and suggestedp=?";
+	            
+	            PreparedStatement statement = connect.con.prepareStatement(sql);
+	            statement.setString(1,myEmailID);
+	            statement.setString(2,suggestEmailID);
+	             
+	            int rowsDeleted = statement.executeUpdate();
+	            if (rowsDeleted > 0) {
+	                System.out.println("suggest Request was removed successfully!");
+	                return true;
+	            }
+	            
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		
+		
+		return false;
+		
+	}
+	
 	public static ArrayList<User> getAllFriendRequest(String myEmailID,ArrayList<User> al_requests)
 	{
 		//this method returns all friend requests came to me 

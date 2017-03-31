@@ -9,8 +9,6 @@
         <script type="text/javascript" src="Jquery/jquery-3.1.1.js"></script>
         <script type="text/javascript" src="Jquery/jquery.cookie.js"></script>
         <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>  
-
-
         <script type="text/javascript" src="assets/js/jquery.js"></script>
         <script type="text/javascript" src="assets/js/bootstrap.js"></script>
         
@@ -36,9 +34,10 @@ $(document).ready(function() {
 		window.location.replace("todoPage.html");
 	 });
 	
-	$("#findmyFriends").click(function(e){
-		window.location.replace("todoPage.html");
-	 });
+	
+	 
+	
+	
 $(function () {
 	
 	var foo = $.cookie("ID");
@@ -198,7 +197,7 @@ $(function () {
                		mayKnow+="<a href="+"\"#\""+"onmouseover=\"mutual(this)\""+" id="+data[i].userID+">"+data[i].fname+" "+data[i].lname+"</span></a>";
                		mayKnow+="<div class="+"\"text-right\""+">";
                		mayKnow+="<button type="+"\"button\""+" class="+"\"btn btn-primary\" id=\""+data[i].emailID+"\" OnClick=\"add(this);\""+" \">Add Friend<span class="+"\"glyphicon glyphicon-plus\""+"></span></button>";
-               		mayKnow+="<a class="+"\"btn btn-primary\""+" id=\"remove"+data[i].emailID+"\""+" href=\"\""+" OnClick=\"rmv(this);\">Remove</a>"; 
+               		mayKnow+="<a class="+"\"btn btn-primary\""+" id=\"remove"+data[i].emailID+"\""+" href=\"\""+" OnClick=\"remv(this);\">Remove</a>"; 
                		mayKnow+="<a class="+"\"btn btn-primary\""+" id="+"\"SentReq"+data[i].emailID+"\" href=\"\""+" style=\"visibility: hidden\";>Request Sent</a></div></div>";
                			
              	}
@@ -234,20 +233,22 @@ $(function () {
          	   if(response!=null){
                 var data =JSON.parse(JSON.stringify(response));  
                  var allFriends;
-         	 
+         	 	 var showFriends;
                	for (var i=0; i < data.length; i++){
              		 allFriends+="<div class=\"panel-body\">";
              		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
              		allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>";
-           // allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  " data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>"; 		
-             		//  allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID+"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
                      allFriends+="</div>";
-             		allFriends+="</div>";
+             		allFriends+="</div>";   		
 					     	}
-             	
+               	for (var i=0; i < data.length; i++){
+               		showFriends+="<label><input type=\"checkbox\" value=\""+data[i].fname+" "+data[i].lname+"\" name=\"tick\">"+data[i].fname+" "+data[i].lname+"</label>";
+               		showFriends+="<br>"
+					     	}
              allFriends=allFriends.replace("undefined","");
+             showFriends=showFriends.replace("undefined","");
          	   $("#allFriends").html(allFriends);
-        
+        		$("#showFriends").html(showFriends);
                 }  
                 
                 else
@@ -313,14 +314,6 @@ $(function () {
                                 show: true
                             });
                            
-                           
-                        
-                       
-                	   
-                	   
-                	   
-                	   
-                	   
                 	   }  
                        
                        else
@@ -526,18 +519,99 @@ $(function () {
  	  }); 
 	   }
 	   window.rmv = function(e1){
-		/* 	 alert("insode rmv");
-		   var friendEmailID= $(e1).attr('id');
-		   friendEmailID=friendEmailID.replace("remove","");
-		   alert(friendEmailID);
+		   var suggestEmailID= $(e1).attr('id');
+		   suggestEmailID=suggestEmailID.replace("remove","");
 		   
-		   //alert(friendEmailID);
-			 	   
-			var chk="div";
-			chk+=friendEmailID;
-		     document.getElementById(chk).style.visibility = 'hidden';
-	 	 */	 
+		 //  alert(suggestEmailID);
+			$.ajax({ 
+                url: "http://localhost:8080/DemoFB/webapi/friendRequest/removeRequest",
+                type: "DELETE",
+                dataType: "text",
+                contentType : "text/plain",
+                data : suggestEmailID,
+                crossDomain: true,
+                processData: true,
+                
+                
+                success: function(response){  
+             	   
+                    // we have the response  
+             	   if(response!=null){
+                     
+		
+       				$(e1).hide();
+				
+					 location.reload();
+				 
+                    }  
+                    
+                    else
+                 	   {
+                 	  alert("something wrong");
+                 	   }
+                  },
+ 	    
+       			error: function(e){  
+         					//alert('Error121212: ' + e);  
+         					//alert(e.toString());
+       			}				
+         
+ 	  }); 
        }
+	   
+	   window.remv = function(e1){
+		   var people= $(e1).attr('id');
+		  people=people.replace("remove","");
+		 alert(people);
+		   $.cookie("people",people);
+		//alert(people);
+		alert("Trying..abcde")
+		$.ajax({ 
+            url: "http://localhost:8080/DemoFB/webapi/friend/peopleYouMay_KnowMutualFriendss",
+            type: "GET",
+            dataType: "json",
+          //  contentType : "application/json",
+            crossDomain: true,
+            processData: true,
+            
+            
+            success: function(response){  
+         	   
+                // we have the response  
+         	   if(response!=null){
+                var data =JSON.parse(JSON.stringify(response));  
+                 var mayKnoww;
+         	 
+             	for (var i=0; i < data.length; i++){
+         		    mayKnoww+="<div class="+"\"panel-body\""+">";
+               		mayKnoww+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
+               		mayKnoww+="<a href="+"\"#\""+"onmouseover=\"mutual(this)\""+" id="+data[i].userID+">"+data[i].fname+" "+data[i].lname+"</span></a>";
+               		mayKnoww+="<div class="+"\"text-right\""+">";
+               		mayKnoww+="<button type="+"\"button\""+" class="+"\"btn btn-primary\" id=\""+data[i].emailID+"\" OnClick=\"add(this);\""+" \">Add Friend<span class="+"\"glyphicon glyphicon-plus\""+"></span></button>";
+               		mayKnoww+="<a class="+"\"btn btn-primary\""+" id=\"remove"+data[i].emailID+"\""+" href=\"\""+" OnClick=\"remv(this);\">Remove</a>"; 
+               		mayKnoww+="<a class="+"\"btn btn-primary\""+" id="+"\"SentReq"+data[i].emailID+"\" href=\"\""+" style=\"visibility: hidden\";>Request Sent</a></div></div>";
+               			
+             	}
+             mayKnoww=mayKnoww.replace("undefined","");
+         	   $("#abcde").html(mayKnoww);
+        
+                }  
+                
+                else
+             	   {
+             	  alert("something wrong");
+             	   }
+              },
+	    
+   			error: function(e){  
+     					alert('Error121212: ' + e);  
+     					alert(e.toString());
+   			}				
+     
+	  });
+    
+       }
+	   
 	   window.accept = function(e1){
 			 
 		   var friendEmailID= $(e1).attr('id');
@@ -591,6 +665,38 @@ $(function () {
 
             
  	   });//search button ends ends
+ 	   
+	   $("#findmyFriends").click(function(e){
+		      alert("search in progress...");
+		            var name=$("input#searchname").val();
+		            $.cookie("name",name);
+		           // alert(name);
+		      		//var lname=$("input#searchname").val();
+		            var college=$("input#searchclg").val();
+		            $.cookie("college",college);
+		          // alert(college);
+		          //  var placeOfWork=$("input#workplace").val();
+		            var hometown=$("input#searchhome").val();
+		            $.cookie("hometown",hometown);
+		          // alert(hometown);
+		            var cityOfWork=$("input#searchcity").val();
+		            $.cookie("cityOfWork",cityOfWork);
+		          // alert(cityOfWork);
+		            var highschool=$("input#searchschool").val();
+		            $.cookie("highschool",highschool);
+		          // alert(highschool);
+		        //   alert("before..");
+		              var friends = [];
+            $.each($("input[name='tick']:checked"), function(){            
+                friends.push($(this).val());
+            });
+           // alert("My friends are: " + friends.join(" "));
+            friends=friends.join(" ");
+		           alert(friends);
+		           $.cookie("friends",friends);
+	   });  
+
+	  		    
 });//document ready ends here
 
 jQuery(document).ajaxComplete(function () {
@@ -681,29 +787,7 @@ jQuery(document).ajaxComplete(function () {
 								 <!-- main col left --> 
 								 <div class="col-sm-4 col-xs-4">
 								   
-									<!-- 	<div class="well"> 
-										   <form class="form-horizontal" role="form">
-											<h4>What's New</h4>
-											 <div class="form-group" style="padding:14px;">
-											  <textarea class="form-control" placeholder="Update your status"></textarea>
-											</div>
-											<button class="btn btn-primary pull-right" type="button">Post</button><ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
-										  </form>
-									  </div>
-								   
-									
-									
-									  <div class="panel panel-default">
-										<div class="panel-thumbnail"><img src="assets/img/bg_5.jpg" class="img-responsive"></div>
-										<div class="panel-body">
-										  <p class="lead">Urbanization</p>
-										  <p>45 Followers, 13 Posts</p>
-										  
-										  <p>
-											<img src="assets/img/uFp_tsTJboUY7kue5XAsGAs28.png" height="28px" width="28px">
-										  </p>
-										</div>
-									  </div> -->
+							
 
 								   
 								   <div class="pre-scrollable" style="background-color: #d8dfea;height:250px ;margin-bottom:.5cm;margin-top:.5cm">
@@ -741,6 +825,8 @@ jQuery(document).ajaxComplete(function () {
 
 										  </div>
 										
+										<div id="abcde">
+										</div>
 								   
 									  
 								   
@@ -752,20 +838,7 @@ jQuery(document).ajaxComplete(function () {
 								  
 								  <!-- main col center -->
 								  <div class="col-sm-5 col-xs-5">
-									   
 								
-
-									   <!-- <div class="panel panel-default">
-										 <div class="panel-heading"> <h4>Trending</h4></div>
-										  <div class="panel-body">
-										  	<div class="list-group">
- 												 <a href="todoPage.html" class="list-group-item">Virat Kohli</a>
-  												 <a href="todoPage.html" class="list-group-item">Varun Dhawan</a>
-  												 <a href="todoPage.html" class="list-group-item">David Guetta</a>
-											</div>
-										  </div>
-									   </div> -->
-									
 									   <div class="panel panel-default">
 										<div class="panel-heading"> <h4>Add Personel Contacts</h4></div>
 										 										  <div class="panel-body">
@@ -791,51 +864,45 @@ jQuery(document).ajaxComplete(function () {
 										  <div class="panel-body">
 										  	
  												
- 												<form id="contact" action="" method="post">
-    
+ 	   <form id="contact" action="Search1.html" >
+    <div class="input-group input-group-sm" style="max-width:480px;">
    
     <fieldset>
-      Friends Name: <input placeholder="Your name" type="text" tabindex="1" required autofocus>
+      Friends Name: <input placeholder="Search with name" type="text" id="searchname" >
     </fieldset>
 	<br>
 	 <fieldset>
-      Hometown: <input placeholder="Your name" type="text" tabindex="1" required autofocus>
+      Hometown: <input placeholder="Search using hometown" type="text" id="searchhome">
     </fieldset>
 	<br>
 	<fieldset>
-      Current city: <input placeholder="Your name" type="text" tabindex="1" required autofocus>
+      Current city: <input placeholder="Search using current city" type="text" id="searchcity">
     </fieldset>
 	<br>
 	<fieldset>
-      High School: <input placeholder="Your name" type="text" tabindex="1" required autofocus>
+      High School: <input placeholder="Search using high school" id="searchschool" type="text" >
     </fieldset>
 	<br>
-
-<fieldset>
-      Employees: <input type="text" tabindex="1" required autofocus>
+	<fieldset>
+      College: <input placeholder="Search using college name" type="text" id="searchclg" >
     </fieldset>
 	<br>
+	<fieldset>
+<h3>Mutual Friends</h3>
+<div id="showFriends">
 
-<fieldset>
-      College: <input  type="text" tabindex="1" required autofocus>
-    </fieldset>
-	<br>
-
-    <fieldset>
-	<button type="submit" id="findmyFriends" class="btn btn-primary btn-sm" style="margin-top:.5cm">Find Friends</button>
+</div>
+</fieldset>
+   <div class="input-group-btn">
+		<button type="submit" id="findmyFriends" class="btn btn-primary btn-sm" style="margin-top:.5cm">Find Friends</button>
+		</div>
+		</div>
       <!--<button name="submit" type="submit" id="contact-submit" data-submit="...Sending" style="background-color: #afbdd4;">Submit</button>-->
-    </fieldset>
-  </form>	
- 												
- 												
- 												
- 												
-
-										  </div>
+  
+  </form>									  </div>
 										
 									  </div>
-									
-									
+
 									 <div class="panel panel-default">
 										<div class="panel-heading"> <h4>Mutual Friends</h4></div>
 										 										  <div class="panel-body">
@@ -848,9 +915,6 @@ jQuery(document).ajaxComplete(function () {
 										  </div>
 										
 									  </div>
-									
-									
-									
 									
 								  </div>
 								  
@@ -911,95 +975,27 @@ jQuery(document).ajaxComplete(function () {
 		  </div>
 		</div> 
 		
-		
-
-
-		<!--post modal-->
-	<!--  	 <div id="postModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-		  <div class="modal-dialog">
-		  <div class="modal-content">
-			  <div class="modal-header">
-			 
-				  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Hide</button>
-					Update Status
-			  </div>
-			  <div class="modal-body">
-				  <form class="form center-block">
-					<div class="form-group">
-					  <textarea class="form-control input-lg" autofocus="" placeholder="What do you want to share?"></textarea>
-					</div>
-				  </form>
-			  </div>
-			  <div class="modal-footer">
-				  <div>
-				  <button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Post</button>
-					<ul class="pull-left list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
-				  </div>	
-			  </div>
-		  </div>
-		  </div>
-		</div> 
-        
-        
-       <div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog" >
-    Modal content
-<form action="" id="updateInfo">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Edit Your Info</h4>
-      </div>
-      <div class="modal-body">
-        <div class="container">
-        
-        <br>
-        <div class="form-group">
-          <label for="mob_no" >Mobile No:</label>
-          <input type="text"  id="mob_no" style="margin-left:10px;">
-        </div>
-        <br> 
-      <h4 style="color: black; margin-right:6em; margin-top:0px"><i class="fa fa-shield"></i>Background info</h4>
-      <div class="form-group">
-          <label for="college" >College:</label>
-          <input type="text"  id="college" style="margin-left:10px;">
-        </div>
-             <br>
-            <div class="form-group">
-          <label for="workplace" >Place of work:</label>
-          <input type="text"  id="workplace" style="margin-left:10px;">
-        </div>
-             <br>
-             <div class="form-group">
-          <label for="hometown" >Home town:</label>
-          <input type="text"  id="hometown" style="margin-left:10px;">
-        </div>
-             <br>
-      <div class="form-group">
-          <label for="workcity" >Workplace city:</label>
-          <input type="text"  id="workcity" style="margin-left:10px;">
-        </div>
-             <br>
-      <div class="form-group">
-          <label for="highschool" >HighSchool:</label>
-          <input type="text"  id="highschool" style="margin-left:10px;">
-        </div>
-             <br>
-       
-    </div>
-    
-     
-      <div class="modal-footer">
-       <input type="button" id ="updateDetails" class="btn btn-primary" value="Update Info" data-dismiss="modal" >
-       <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-      </div>
-    
-       </form>
-    </div>
-  </div>
-    -->     
+		     <div id="postModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+             
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Close</button>
+                    Search friends
+              </div>
+              <div class="modal-body">
+                  <form class="form center-block">
+                    <div class="form-group" id="SearchResult">
+                    
+                    
+                    </div>
+                  </form>
+              </div>
+              
+          </div>
+          </div>
+        </div> 
+	    
         
         
         
@@ -1026,179 +1022,3 @@ jQuery(document).ajaxComplete(function () {
         
         </script>
 
-
-
-
-
-
-
-
-
-<!-- <div class="row">
-  <nav class="navbar navbar-default" style="background-color:#3b5998; min-height:80px;">
-  <div class="container-fluid">
-    <form class="navbar-form navbar-left">
-        <div class="form-group">
-          <img src="Facebook-logo.jpg" alt="facebook_logo" width="200" height="100" style="margin-left:200px">
-        </div>
-      </form>
-     <form class="navbar-form navbar-right" id="friendForm1">     
-        <button type="submit" class="btn btn-default" id="backButton" style="margin-top:40px">Back</button>
-        <button type="submit" class="btn btn-default" id="logoutButton1" style="margin-top:40px">Logout</button>
-        
-      </form>
-    </div>
-</nav>
-</div>
-main section
-<div class="row" style ="background-color:  #ffffff;">
- 
-  scrollable items here
-  <div class="col-sm-4" style ="background-color: #afbdd4;">
----------------------------------------------------------------------------------------------------------------
-	<div class="pre-scrollable" style="background-color: #d8dfea;height:250px ;margin-bottom:.5cm;margin-top:.5cm">
-	<div class="panel panel-default">
-  	<div class="panel-heading" >Friends Suggestion</div>
-  	 
-  	<div class="panel-body">
-	
-	<div class="pull-left col-sm-3"><img class="img-responsive" alt="logo" src="https://cdn4.iconfinder.com/data/icons/miu-flat-social/60/stackoverflow-128.png" /></div>
-        <div class="text-right">
-        <button type="button" class="btn btn-primary">Add Friend<span class="glyphicon glyphicon-plus"></span></button>
-        <a class="btn btn-primary" id="remove" href="">Remove</a>
-        </div>
-	</div>end of panel body
-	  	<div id="suggest"></div>
-  	<p id="suggest"></p>
-	
-	</div> end ofpanel panel-default
-	</div>end of scroll
----------------------------------------------------------------------------------------------------------------
-	
-	<div class="pre-scrollable" style="background-color: #d8dfea;height:250px ;margin-bottom:.5cm;">
-	<div class="panel panel-default">
-  	<div class="panel-heading" >Friends Request</div>
-  	
-  	<div class="panel-body">
-	
-	<div class="pull-left col-sm-3"><img class="img-responsive" alt="logo" src="https://cdn4.iconfinder.com/data/icons/miu-flat-social/60/stackoverflow-128.png" /></div>
-        <div class="text-right">
-        <button type="button" class="btn btn-primary">Confirm<span class="glyphicon glyphicon-plus"></span></button>
-        <a class="btn btn-primary" id="remove" href="">Delete request</a>
-        </div>
-	</div>end of panel body
-	</div>end ofpanel panel-default
-       </div>end of scroll
----------------------------------------------------------------------------------------------------------------
-	<div class="pre-scrollable" style="background-color: #d8dfea;height:250px ;margin-bottom:.5cm">
-	<div class="panel panel-default">
-  	<div class="panel-heading" >People you may know</div>
-  	
-  	 <div class="panel-body">
-	
-	<div class="pull-left col-sm-3"><img class="img-responsive" alt="logo" src="https://cdn4.iconfinder.com/data/icons/miu-flat-social/60/stackoverflow-128.png" /></div>
-        <div class="text-right">
-        <button type="button" class="btn btn-primary">Add Friend<span class="glyphicon glyphicon-plus"></span></button>
-        <a class="btn btn-primary" id="remove" href="">Remove</a>
-        </div>
-	</div>
-  	 	<!--extra two panel ends here
-	  	<div id="mayKnow"></div>
-  	<p id="mayKnow"></p>
-	</div>
-	</div>end of scroll
----------------------------------------------------------------------------------------------------------------
-  </div>scrollable items ends here
-  
-  center forms
-  <div class="col-sm-4" style ="background-color:#afbdd4;">
---------------------------------------ADD PERSONEL CONTACTS-----------------------
-	<div class="panel panel-default" style="margin-top:.5cm">
-  	<div class="panel-heading">Add Personel Contacts</div>
-  	<div class="panel-body">
-	 <div class="search">
-<input type="text" class="form-control input-sm" maxlength="64" placeholder="Search" />
- <button type="submit" id="personalContact" class="btn btn-primary btn-sm" style="margin-top:.5cm">Find Friends</button>
-</div>
-	</div>end of panel body
-	</div>end of panel class
------------------search for friends-------------------------------------------------
-	<div class="panel panel-default">
-  	<div class="panel-heading">Search For Friends</div>
-  	<div class="panel-body">
-	<form id="contact" action="" method="post">
-    
-   
-    <fieldset>
-      Friends Name: <input placeholder="Your name" type="text" tabindex="1" required autofocus>
-    </fieldset>
-	<br>
-	 <fieldset>
-      Hometown: <input placeholder="Your name" type="text" tabindex="1" required autofocus>
-    </fieldset>
-	<br>
-	<fieldset>
-      Current city: <input placeholder="Your name" type="text" tabindex="1" required autofocus>
-    </fieldset>
-	<br>
-	<fieldset>
-      High School: <input placeholder="Your name" type="text" tabindex="1" required autofocus>
-    </fieldset>
-	<br>
---------
-     <div class="pre-scrollable" style="background-color: #d8dfea ;height:179px;margin-bottom:.5cm;margin-top:.5cm">
-	<div class="panel panel-default">
-  	<div class="panel-heading" >Mutual Friends</div>
-  	<div class="panel-body">
-	
-	<div class="pull-left col-sm-3"><img class="img-responsive" alt="logo" src="https://cdn4.iconfinder.com/data/icons/miu-flat-social/60/stackoverflow-128.png" /></div>
-        
-	</div>end of panel body
-	</div><!-end ofpanel panel-default
-	</div>end of scroll
-    
-    
--------------  
-    
-<fieldset>
-      Employees: <input " type="text" tabindex="1" required autofocus>
-    </fieldset>
-	<br>
-<fieldset>
-      College: <input  type="text" tabindex="1" required autofocus>
-    </fieldset>
-	<br>
-    <fieldset>
-	<button type="submit" id="findmyFriends" class="btn btn-primary btn-sm" style="margin-top:.5cm">Find Friends</button>
-      <button name="submit" type="submit" id="contact-submit" data-submit="...Sending" style="background-color: #afbdd4;">Submit</button>
-    </fieldset>
-  </form>	
-	</div>end of panel body
-	</div>end of panel class
-------------------------------------------------------------------------------------
-  </div> center forms end here
-  <div class="col-sm-4" style ="background-color: #afbdd4; height:826px">
-<div class="pre-scrollable" style="background-color: #d8dfea;margin-bottom:.5cm; margin-top:.5cm; min-height:95%;">
-	<div class="panel panel-default">
-  	<div class="panel-heading" >Friends List</div>
-  	<div class="panel-body">
-	
-	 <div class="pull-left col-sm-3"><img class="img-responsive" alt="logo" src="https://cdn4.iconfinder.com/data/icons/miu-flat-social/60/stackoverflow-128.png" /></div>
-       <div class="pull-left col-sm-9">Name of the friend</div>
-	</div>end of panel body
-	  	<div id="allFriends"></div>
-  	<p id="allFriends"></p>
-	</div>end ofpanel panel-default
-       </div>end of scroll
-</div>
-</div>main section ends here
-<div class="row" style ="background-color:#3b5998;">
-Footer
-</div>
-</div>containerfluid
- -->
- 
- 
- 
- </body>
-</html>

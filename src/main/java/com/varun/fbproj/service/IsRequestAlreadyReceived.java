@@ -7,7 +7,7 @@ public class IsRequestAlreadyReceived {
     public static boolean isRequestAlreadyReceived(String emailID1,String emailID2)
     {
     try {
-
+    	int i=0;
   	  DBAccess connect = new DBAccess();
         boolean check=false;
         while(check==false)
@@ -24,12 +24,16 @@ public class IsRequestAlreadyReceived {
 			
 			
 			ResultSet result = prepStatement.executeQuery();
+			
 			if (result.next()) {
 				System.out.println("yes I had already sent the request for id's"+emailID1+" "+emailID2);
 				
-				return true;
+				i=1;
 				
-			}	//if ends	
+			}	//if ends
+			connect.stop();
+			if(i==1)
+				return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
