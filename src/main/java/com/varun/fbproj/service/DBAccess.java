@@ -14,7 +14,7 @@ public class DBAccess {
 		try{
 		Class.forName("com.mysql.jdbc.Driver");
 
-		this.con=DriverManager.getConnection("jdbc:mysql://localhost:3306/facebook_database","root","asdfzxcv");
+		this.con=DriverManager.getConnection("jdbc:mysql://localhost:3306/facebook_database","root","diksha1994");
 
 		return true;
 		}

@@ -52,7 +52,7 @@ $(document).ready(function() {
              $.ajax({
                   type: "GET",
                  contentType: "text/plain",  //send data to server in this format
-                 url:"http://localhost:8085/DemoFB/webapi/user/retrive",
+                 url:"http://localhost:8080/DemoFB/webapi/user/retrive",
                  dataType: "JSON",  //expect response of this type
                  data: foo,
                    
@@ -87,7 +87,7 @@ $(document).ready(function() {
              $.ajax({
                       type: "GET",
                      contentType: "text/plain",  //send data to server in this format
-                     url:"http://localhost:8085/DemoFB/webapi/user/retrive",
+                     url:"http://localhost:8080/DemoFB/webapi/user/retrive",
                      dataType: "JSON",  //expect response of this type
                      data: foo,
                        
@@ -145,7 +145,7 @@ $(document).ready(function() {
             
             //ajax call to show my all friends on my friend ki timeline
                        $.ajax({ 
-            url: "http://localhost:8085/DemoFB/webapi/friend/getMyAllFriends",
+            url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
             type: "GET",
             dataType: "json",
             contentType : "application/json",
@@ -250,7 +250,7 @@ window.go = function(e1){
         $.ajax({
             type: "PUT",
             contentType: "application/json",  //send data to server in this format
-            url:"http://localhost:8085/DemoFB/webapi/user/updateAllData",
+            url:"http://localhost:8080/DemoFB/webapi/user/updateAllData",
             dataType: "text",  //expect response of this type
             data: myJSON,
             success: function(resp){
@@ -327,7 +327,7 @@ window.go = function(e1){
           });          
           });
           $.ajax({ 
-              url: "http://localhost:8085/DemoFB/webapi/status/getMyStatus",
+              url: "http://localhost:8080/DemoFB/webapi/status/getMyStatus",
               type: "GET",
               dataType: "json",
               contentType : "application/json",
@@ -439,7 +439,7 @@ window.go = function(e1){
 	    		 
 	    			
 	    			$.ajax({ 
-	                    url: "http://localhost:8085/DemoFB/webapi/status/getAllLikeName",
+	                    url: "http://localhost:8080/DemoFB/webapi/status/getAllLikeName",
 	                    type: "POST",
 	                    dataType: "json",
 	                    contentType : "application/json",
@@ -510,7 +510,7 @@ window.go = function(e1){
                    
                    
                    $.ajax({ 
-           url: "http://localhost:8085/DemoFB/webapi/status/incrementLike",
+           url: "http://localhost:8080/DemoFB/webapi/status/incrementLike",
            type: "POST",
            dataType: "text",
            contentType : "application/json",
@@ -549,7 +549,7 @@ window.go = function(e1){
                    
                    
                    $.ajax({ 
-         url: "http://localhost:8085/DemoFB/webapi/status/decrementLike",
+         url: "http://localhost:8080/DemoFB/webapi/status/decrementLike",
          type: "POST",
          dataType: "text",
          contentType : "application/json",
@@ -597,7 +597,7 @@ window.go = function(e1){
                    
                
                    $.ajax({ 
-           url: "http://localhost:8085/DemoFB/webapi/status/addComment",
+           url: "http://localhost:8080/DemoFB/webapi/status/addComment",
            type: "POST",
            dataType: "text",
            contentType : "application/json",
@@ -629,7 +629,7 @@ window.go = function(e1){
             	  $.ajax({
             	        type: "POST",
             	        contentType: "text/plain",  //send data to server in this format
-            	        url:"http://localhost:8085/DemoFB/webapi/friend/getmyemail",
+            	        url:"http://localhost:8080/DemoFB/webapi/friend/getmyemail",
             	        dataType: "text",  //expect response of this type
             	        data: x,
             	       success: function(resp){
@@ -644,7 +644,7 @@ window.go = function(e1){
                    $.ajax({
             type: "POST",
             contentType: "application/json",  //send data to server in this format
-            url:"http://localhost:8085/DemoFB/webapi/status/addStatus",
+            url:"http://localhost:8080/DemoFB/webapi/status/addStatus",
             dataType: "text",  //expect response of this type
             data: mahjson,
            success: function(resp){
@@ -813,7 +813,7 @@ window.go = function(e1){
   </button>
   <ul class="dropdown-menu">
     <li>
-    <form id="uploadPic"action="http://localhost:8085/DemoFB/webapi/user/uploadProfilePic" method="post" enctype="multipart/form-data">
+    <form id="uploadPic"action="http://localhost:8080/DemoFB/webapi/user/uploadProfilePic" method="post" enctype="multipart/form-data">
         <p id="uploadPhoto">
         Change profile pic:<input type="file" name="file" size="45" onchange="this.form.submit()" class="filestyle" data-classButton="btn btn-primary" data-input="false" data-classIcon="icon-plus" data-buttonText="Your label here."/>
         </p>

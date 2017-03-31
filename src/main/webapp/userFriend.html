@@ -46,7 +46,7 @@ $(function () {
          	$.ajax({
          		 type: "GET",
      	        contentType: "text/plain",  //send data to server in this format
-     	        url:"http://localhost:8085/DemoFB/webapi/user/retrive",
+     	        url:"http://localhost:8080/DemoFB/webapi/user/retrive",
      	        dataType: "JSON",  //expect response of this type
      	        data: foo,
                    
@@ -75,7 +75,7 @@ $(function () {
     	  });
 	 	
        	$.ajax({ 
-                   url: "http://localhost:8085/DemoFB/webapi/friend/retrivesuggestedFriends",
+                   url: "http://localhost:8080/DemoFB/webapi/friend/retrivesuggestedFriends",
                    type: "POST",
                    dataType: "json",
                    contentType : "text/plain",
@@ -131,7 +131,7 @@ $(function () {
  		   var myjson=JSON.stringify(obj);
  		   //alert(friendEmailID);
  			$.ajax({ 
-                 url: "http://localhost:8085/DemoFB/webapi/friendRequest/addFriendSuggestion",
+                 url: "http://localhost:8080/DemoFB/webapi/friendRequest/addFriendSuggestion",
                  type: "POST",
                  dataType: "text",
                  contentType : "application/json",
@@ -177,7 +177,7 @@ $(function () {
        	
        	
         	$.ajax({ 
-            url: "http://localhost:8085/DemoFB/webapi/friend/peopleYouMay_KnowMutualFriends",
+            url: "http://localhost:8080/DemoFB/webapi/friend/peopleYouMay_KnowMutualFriends",
             type: "GET",
             dataType: "json",
             contentType : "application/json",
@@ -221,7 +221,7 @@ $(function () {
      
 	  }); 
        	$.ajax({ 
-            url: "http://localhost:8085/DemoFB/webapi/friend/getMyAllFriends",
+            url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
             type: "GET",
             dataType: "json",
             contentType : "application/json",
@@ -279,7 +279,7 @@ $(function () {
    		  $.cookie("ID5",foo); 
    		//  alert(foo);
    			$.ajax({ 
-                   url: "http://localhost:8085/DemoFB/webapi/friend/count_of_MutualFriends",
+                   url: "http://localhost:8080/DemoFB/webapi/friend/count_of_MutualFriends",
                    type: "GET",
                    dataType: "json",
                    contentType : "application/json",
@@ -344,7 +344,7 @@ $(function () {
 	  
        	
        	$.ajax({ 
-            url: "http://localhost:8085/DemoFB/webapi/friendRequest/giveMyRequests",
+            url: "http://localhost:8080/DemoFB/webapi/friendRequest/giveMyRequests",
             type: "GET",
             dataType: "json",
             
@@ -400,7 +400,7 @@ $(function () {
 	    /*$.ajax({
 	        type: "DELETE",
 	        contentType: "text/plain",  //send data to server in this format
-	        url:"http://localhost:8085/DemoFB/webapi/user/logout",
+	        url:"http://localhost:8080/DemoFB/webapi/user/logout",
 	        dataType: "text",  //expect response of this type
 	        data: foo,
 	        success: function(resp){
@@ -438,7 +438,7 @@ $(function () {
 		   
 		   //alert(friendEmailID);
 			$.ajax({ 
-                url: "http://localhost:8085/DemoFB/webapi/friendRequest/addFriend",
+                url: "http://localhost:8080/DemoFB/webapi/friendRequest/addFriend",
                 type: "POST",
                 dataType: "text",
                 contentType : "text/plain",
@@ -486,7 +486,7 @@ $(function () {
 		   
 		   //alert(friendEmailID);
 			$.ajax({ 
-                url: "http://localhost:8085/DemoFB/webapi/friendRequest/deleteRequest",
+                url: "http://localhost:8080/DemoFB/webapi/friendRequest/deleteRequest",
                 type: "DELETE",
                 dataType: "text",
                 contentType : "text/plain",
@@ -546,7 +546,7 @@ $(function () {
 		   
 		   //alert(friendEmailID);
 			$.ajax({ 
-                url: "http://localhost:8085/DemoFB/webapi/friendRequest/confirmRequest",
+                url: "http://localhost:8080/DemoFB/webapi/friendRequest/confirmRequest",
                 type: "POST",
                 dataType: "text",
                 contentType : "text/plain",
