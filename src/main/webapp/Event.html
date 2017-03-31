@@ -46,7 +46,7 @@ $(document).ready(function() {
 	   
 	   
 	$.ajax({ 
-        url: "http://localhost:8085/DemoFB/webapi/event/retrive_event",
+        url: "http://localhost:8080/DemoFB/webapi/event/retrive_event",
         type: "GET",
         dataType: "json",
         contentType : "application/json",
@@ -104,7 +104,7 @@ $(document).ready(function() {
        
 // ajax call for retrive event invitation
 	  $.ajax({ 
-		  url: "http://localhost:8085/DemoFB/webapi/event/retriveEventInvitaionlist",
+		  url: "http://localhost:8080/DemoFB/webapi/event/retriveEventInvitaionlist",
 		  type: "GET",
 	        dataType: "json",
 	        contentType : "application/json",
@@ -168,7 +168,7 @@ $(document).ready(function() {
   
   
 	  $.ajax({ 
-		  url: "http://localhost:8085/DemoFB/webapi/event/retriveincomingInvitaionlist",
+		  url: "http://localhost:8080/DemoFB/webapi/event/retriveincomingInvitaionlist",
 		  type: "GET",
 	        dataType: "json",
 	        contentType : "application/json",
@@ -242,7 +242,7 @@ $(document).ready(function() {
 			
 		
 			 $.ajax({ 
-				  url: "http://localhost:8085/DemoFB/webapi/event/inviteapproved",
+				  url: "http://localhost:8080/DemoFB/webapi/event/inviteapproved",
 				  type: "GET",
 				  dataType: "text",
 				  crossDomain: true,
@@ -276,7 +276,7 @@ window.reject1=function(e1){
 	//alert(eid);
 	$.cookie("ID4",eid);
 	$.ajax({ 
-		  url: "http://localhost:8085/DemoFB/webapi/event/inviterejected",
+		  url: "http://localhost:8080/DemoFB/webapi/event/inviterejected",
 		  type: "GET",
 		  dataType: "text",
 		  crossDomain: true,
@@ -308,7 +308,7 @@ window.reject1=function(e1){
 	 var obj={eID:eid};
 	 var myJSON=JSON.stringify(obj);
 	  $.ajax({ 
-		  url: "http://localhost:8085/DemoFB/webapi/event/deleteEvent",
+		  url: "http://localhost:8080/DemoFB/webapi/event/deleteEvent",
 		  type: "DELETE",
 		  dataType: "text",
 		  contentType : "application/json",
@@ -373,7 +373,7 @@ window.reject1=function(e1){
 			 $.ajax({
     	        type: "PUT",
     	        contentType: "application/json",  //send data to server in this format
-    	        url:"http://localhost:8085/DemoFB/webapi/event/create_event",
+    	        url:"http://localhost:8080/DemoFB/webapi/event/create_event",
     	        dataType: "text",  //expect response of this type
     	        data: myJSON,
     	        success: function(resp){
