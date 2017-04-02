@@ -219,7 +219,7 @@ $(function () {
    			}				
      
 	  });
-       	$.ajax({ 
+        $.ajax({ 
             url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
             type: "GET",
             dataType: "json",
@@ -237,10 +237,9 @@ $(function () {
          	 
                	for (var i=0; i < data.length; i++){
              		 allFriends+="<div class=\"panel-body\">";
-             		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
-             		allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>";
-           // allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  " data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>"; 		
-             		//  allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID+"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
+             
+        	 allFriends+='<a href="friendTimeline.html" OnClick=go(this); data-html="true"  data-placement="left" data-toggle="popover"  data-trigger="click hover" data-content=\'<div class="item active"><img src="users/'+data[i].emailID+'/cover.jpg" class=" img-responsive" width="1000" height="400" style="float:left;"><div><div class="img-container" style="display:inline-block;"><img class="img-thumbnail" src="users/'+data[i].emailID+'/profilePic.jpg" style="width:60px;height:60px;/"></div><div class="text" style="display:inline-block;margin-left:0.2cm;"><p><strong>'+data[i].fname+" "+data[i].lname+'</strong></p></div><div style="margin-left:1.5cm;"><p style="color:grey"><span class="glyphicon glyphicon-home"></span> <b>'  +'Lives in: '+ '</b> '+ data[i].hometown+'<br/><br/><span class="glyphicon glyphicon-gift"></span> <b>Born on: </b> '+ data[i].date +'<br><br><a href="#" style="color:grey"; OnClick=mutual1(this); id='+data[i].userID+'><span class="glyphicon glyphicon-user"></span> See Mutual Friends</p></div></div>\'>'+'<img src="users/'+data[i].emailID+'/profilePic.jpg" style="width:20px;height:20px;">'+data[i].fname+" "+data[i].lname+'</a><br/>';
+
                      allFriends+="</div>";
              		allFriends+="</div>";
 					     	}
@@ -262,7 +261,74 @@ $(function () {
    			}				
      
 	  });//ajax call end
-       	
+  	  
+       	window.go = function(e1){
+     		 
+   		   var friendUserID= $(e1).attr('id');
+   		   $.cookie("ID1",friendUserID);
+   		   //window.location.replace("friendTimeline.html");
+       	  
+   		
+   	   }
+	  
+       	 window.mutual=function(e1){
+      		 var foo=$(e1).attr('id');
+      		  $.cookie("ID5",foo); 
+      		//  alert(foo);
+      			$.ajax({ 
+                      url: "http://localhost:8080/DemoFB/webapi/friend/count_of_MutualFriends",
+                      type: "GET",
+                      dataType: "json",
+                      contentType : "application/json",
+                      crossDomain: true,
+                      processData: true,
+                      
+                      
+                      success: function(response){  
+                   	   
+                          // we have the response  
+                   	   if(response!=null){
+                          // alert("data is come");
+                   		  var data =JSON.parse(JSON.stringify(response));
+      						 
+                   		    var st;
+                              // $("#showlikesnames").html(st);
+                               for (var i=0; i < data.length; i++){
+                            	st+="<div>";
+                            	st+="<font size="+"\"4\">"+data[i].fname+data[i].lname+"</font>";
+                            	// st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].emailID+"\""+" OnClick=\"suggest(this)"+";\">Suggest</button>";
+                            	// st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].emailID+"\""+" OnClick=\"suggestignore(this);\">Ignore</button>";
+                            	 st+="</div>"; 
+                            	 st+="<hr>";
+                             
+                            	 
+                              } 
+                               
+                               st=st.replace("undefined","");
+                            	 $("#showMutualnames").html(st);
+                               
+                               $('#MutualModal').modal({
+                                   show: true
+                               });
+                   
+                   	   
+                   	   }  
+                          
+                          else
+                       	   {
+                       	  alert("something wrong");
+                       	   }
+                        },
+       	    
+             			error: function(e){  
+               					alert('Error121212: ' + e);  
+               					alert(e.toString());
+             			}				
+               
+       	  }); 
+      	
+      	  
+      	  }//mutual fun ends here
        	window.go = function(e1){
       		 
   		   var friendUserID= $(e1).attr('id');
@@ -273,71 +339,71 @@ $(function () {
   	   }
 	  
 	  
-        window.mutual=function(e1){
-   		 var foo=$(e1).attr('id');
-   		  $.cookie("ID5",foo); 
-   		//  alert(foo);
-   			$.ajax({ 
-                   url: "http://localhost:8080/DemoFB/webapi/friend/count_of_MutualFriends",
-                   type: "GET",
-                   dataType: "json",
-                   contentType : "application/json",
-                   crossDomain: true,
-                   processData: true,
-                   
-                   
-                   success: function(response){  
-                	   
-                       // we have the response  
-                	   if(response!=null){
-                       // alert("data is come");
-                		  var data =JSON.parse(JSON.stringify(response));
-   						 
-                		    var st;
-                           // $("#showlikesnames").html(st);
-                            for (var i=0; i < data.length; i++){
-                         	st+="<div>";
-                         	st+="<font size="+"\"4\">"+data[i].fname+data[i].lname+"</font>";
-                         	// st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].emailID+"\""+" OnClick=\"suggest(this)"+";\">Suggest</button>";
-                         	// st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].emailID+"\""+" OnClick=\"suggestignore(this);\">Ignore</button>";
-                         	 st+="</div>"; 
-                         	 st+="<hr>";
+       	window.mutual1=function(e1){
+       	 var foo=$(e1).attr('id');
+       	  $.cookie("ID5",foo); 
+       	//  alert(foo);
+       		$.ajax({ 
+                  url: "http://localhost:8080/DemoFB/webapi/friend/count_of_MutualFriends",
+                  type: "GET",
+                  dataType: "json",
+                  contentType : "application/json",
+                  crossDomain: true,
+                  processData: true,
+                  
+                  
+                  success: function(response){  
+               	   
+                      // we have the response  
+               	   if(response!=null){
+                      // alert("data is come");
+               		  var data =JSON.parse(JSON.stringify(response));
+       					 
+               		    var st;
+                          // $("#showlikesnames").html(st);
+                           for (var i=0; i < data.length; i++){
+                        	st+="<div>";
+                        	st+="<font size="+"\"4\">"+data[i].fname+data[i].lname+"</font>";
+                        	// st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].emailID+"\""+" OnClick=\"suggest(this)"+";\">Suggest</button>";
+                        	// st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].emailID+"\""+" OnClick=\"suggestignore(this);\">Ignore</button>";
+                        	 st+="</div>"; 
+                        	 st+="<hr>";
+                         
+                        	 
+                          } 
+                           
+                           st=st.replace("undefined","");
+                        	 $("#showMutualFriendnames").html(st);
+                           
+                           $('#MutualFriendModal').modal({
+                               show: true
+                           });
                           
-                         	 
-                           } 
-                            
-                            st=st.replace("undefined","");
-                         	 $("#showMutualnames").html(st);
-                            
-                            $('#MutualModal').modal({
-                                show: true
-                            });
-                           
-                           
-                        
+                          
                        
-                	   
-                	   
-                	   
-                	   
-                	   
-                	   }  
-                       
-                       else
-                    	   {
-                    	  alert("something wrong");
-                    	   }
-                     },
-    	    
-          			error: function(e){  
-            					alert('Error121212: ' + e);  
-            					alert(e.toString());
-          			}				
-            
-    	  }); 
-   	
-   	  
-   	  }//mutual fun ends here
+                      
+               	   
+               	   
+               	   
+               	   
+               	   
+               	   }  
+                      
+                      else
+                   	   {
+                   	  alert("something wrong");
+                   	   }
+                    },
+           
+         			error: function(e){  
+           					alert('Error121212: ' + e);  
+           					alert(e.toString());
+         			}				
+           
+         }); 
+
+        
+        }//mutual fun ends here
 	  
 	  
 	  
@@ -593,9 +659,39 @@ $(function () {
  	   });//search button ends ends
 });//document ready ends here
 
-jQuery(document).ajaxComplete(function () {
-	 $('[data-toggle="popover"]').popover({placement:'left'})  
-	}); 
+jQuery(document).ajaxComplete(function (e) {
+	
+	var originalLeave = $.fn.popover.Constructor.prototype.leave;
+	$.fn.popover.Constructor.prototype.leave = function(obj){
+	  var self = obj instanceof this.constructor ?
+	    obj : $(obj.currentTarget)[this.type](this.getDelegateOptions()).data('bs.' + this.type)
+	  var container, timeout;
+
+	  originalLeave.call(this, obj);
+
+	  if(obj.currentTarget) {
+	    container = $(obj.currentTarget).siblings('.popover')
+	    timeout = self.timeout;
+	    container.one('mouseenter', function(){
+	      //We entered the actual popover – call off the dogs
+	      clearTimeout(timeout);
+	      //Let's monitor popover content instead
+	      container.one('mouseleave', function(){
+	        $.fn.popover.Constructor.prototype.leave.call(self, self);
+	      });
+	    })
+	  }
+	};
+	
+	
+	
+	
+	 $('[data-toggle="popover"]').popover({
+   		 placement:'left',
+   		 delay:{show: 50, hide: 400}
+   		 })  
+   	}); 
+
 </script>
 
 
@@ -912,6 +1008,32 @@ jQuery(document).ajaxComplete(function () {
 		</div> 
 		
 		
+		
+		<div id="MutualFriendModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog">
+		  <div class="modal-content">
+			  <div class="modal-header">
+			 
+				  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Hide</button>
+					<h4>your Mutual friends</h4>
+			  </div>
+			  <div class="modal-body">
+				  <form class="form center-block">
+					<div class="form-group" id="showMutualFriendnames">
+					
+					 <!--  <textarea class="form-control input-lg" autofocus="" placeholder="What do you want to share?"></textarea> -->
+					</div>
+				  </form>
+			  </div>
+			  <div class="modal-footer">
+				  <div>
+				 <!--  <button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Post</button> -->
+					<!-- <ul class="pull-left list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul> -->
+				  </div>	
+			  </div>
+		  </div>
+		  </div>
+		</div>
 
 
 		<!--post modal-->
