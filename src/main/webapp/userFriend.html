@@ -501,7 +501,7 @@ $(function () {
 						req+=friendEmailID;
 						 document.getElementById(chk).style.visibility = 'hidden';
 						 document.getElementById(req).style.visibility = 'visible';
-						 window.location.reload();
+						 location.reload();
 						 
              		 
                     }  
@@ -519,9 +519,6 @@ $(function () {
          
  	  }); 
 	   }
-	   
-	  
-	   
 	   window.del = function(e1){
 			 
 		   var friendEmailID= $(e1).attr('id');
@@ -611,7 +608,7 @@ $(function () {
  	  }); 
        }
 	   
-	   
+	  
 	   window.accept = function(e1){
 			 
 		   var friendEmailID= $(e1).attr('id');
@@ -670,7 +667,7 @@ $(function () {
 		      alert("search in progress...");
 		            var name=$("input#searchname").val();
 		            $.cookie("name",name);
-		           // alert(name);
+		            alert(name);
 		      		//var lname=$("input#searchname").val();
 		            var college=$("input#searchclg").val();
 		            $.cookie("college",college);
@@ -692,7 +689,7 @@ $(function () {
             });
            // alert("My friends are: " + friends.join(" "));
             friends=friends.join(" ");
-		           alert(friends);
+		           //alert(friends);
 		           $.cookie("friends",friends);
 	   });  
 
@@ -817,7 +814,9 @@ jQuery(document).ajaxComplete(function (e) {
 								 <!-- main col left --> 
 								 <div class="col-sm-4 col-xs-4">
 								   
+							
 
+								   
 								   <div class="pre-scrollable" style="background-color: #d8dfea;height:250px ;margin-bottom:.5cm;margin-top:.5cm">
 								    <div class="panel panel-default">
 										<div class="panel-heading"> <h4>Friends Suggestions</h4></div>
@@ -867,18 +866,12 @@ jQuery(document).ajaxComplete(function (e) {
 
 										  </div>
 										
-									
-										<div class="panel panel-default">
-										<div class="panel-heading"> <h4>People You May Know</h4></div>
-										 	
-										  	<div class="list-group">
-										  	<p id="abcde"></p>
- 												<!--  <a href="todoPage.html" class="list-group-item">The Logical Indian</a>
-  												 <a href="todoPage.html" class="list-group-item">C programming</a>
-  												 -->	 
-											</div>
+								   
+									  
+								   
+									  
 
-										  </div>
+										
 								   
 								  </div>
 								  
@@ -914,23 +907,28 @@ jQuery(document).ajaxComplete(function (e) {
     <div class="input-group input-group-sm" style="max-width:480px;">
    
     <fieldset>
-      Friends Name: <input placeholder="Search with name" type="text" id="searchname" >
+    <label for="searchname">Friends Name:</label>
+     <input placeholder="Search with name" type="text" id="searchname" >
     </fieldset>
 	<br>
 	 <fieldset>
-      Hometown: <input placeholder="Search using hometown" type="text" id="searchhome">
+	     <label for="searchhome">Hometown:</label>
+       <input placeholder="Search using hometown" type="text" id="searchhome">
     </fieldset>
 	<br>
 	<fieldset>
-      Current city: <input placeholder="Search using current city" type="text" id="searchcity">
+	<label for="searchcity">Current city:</label>
+       <input placeholder="Search using current city" type="text" id="searchcity">
     </fieldset>
 	<br>
 	<fieldset>
-      High School: <input placeholder="Search using high school" id="searchschool" type="text" >
+	<label for="searchschool">High School:</label>
+       <input placeholder="Search using high school" id="searchschool" type="text" >
     </fieldset>
 	<br>
 	<fieldset>
-      College: <input placeholder="Search using college name" type="text" id="searchclg" >
+	<label for="searchclg">College:</label>
+       <input placeholder="Search using college name" type="text" id="searchclg" >
     </fieldset>
 	<br>
 	<fieldset>
@@ -939,9 +937,9 @@ jQuery(document).ajaxComplete(function (e) {
 
 </div>
 </fieldset>
-   <div class="input-group-btn">
-		<button type="submit" id="findmyFriends" class="btn btn-primary btn-sm" style="margin-top:.5cm">Find Friends</button>
-		</div>
+  
+		<button type="submit" id="findmyFriends" class="btn btn-primary btn-sm pull-right" style="margin-top:.5cm">Find Friends</button>
+		
 		</div>
       <!--<button name="submit" type="submit" id="contact-submit" data-submit="...Sending" style="background-color: #afbdd4;">Submit</button>-->
   
@@ -1197,8 +1195,11 @@ jQuery(document).ajaxComplete(function (e) {
 
 
 
+
+
  
  
  
  </body>
 </html>
+

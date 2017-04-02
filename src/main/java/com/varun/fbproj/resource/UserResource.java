@@ -335,7 +335,7 @@ public class UserResource {
     @Path("/filterSearch")
     @Consumes({MediaType.TEXT_PLAIN})
 	@Produces({MediaType.APPLICATION_JSON})
-    public ArrayList<User> SearchPeopleFilter(@CookieParam("ID") String jwt,@CookieParam("key") String key,@CookieParam("college1") String college1,@CookieParam("highschool1") String highschool1,@CookieParam("hometown1") String hometown1,@CookieParam("cityOfWork1") String cityOfWork1) throws JsonParseException, JsonMappingException, IOException 
+    public ArrayList<User> SearchPeopleFilter(@CookieParam("ID") String jwt,@CookieParam("key") String key,@CookieParam("college1") String college1,@CookieParam("highschool1") String highschool1,@CookieParam("hometown1") String hometown1,@CookieParam("cityOfWork1") String cityOfWork1,@CookieParam("friends1") String friends1) throws JsonParseException, JsonMappingException, IOException 
     {
     	
     	System.out.println("Inside searchFilter method ");
@@ -357,8 +357,10 @@ public class UserResource {
 		String gname3=hometown1.replaceAll("%20", " ");
 		System.out.println("searching "+cityOfWork1);
 		String gname4=cityOfWork1.replaceAll("%20", " ");
+		String gname5=friends1.replaceAll("%20", " ");
+ 		System.out.println("Friends="+friends1+".");
 		//if name is non empty, filter using searcgFriendsFilter function
-		if(!key.isEmpty())u1=SearchFriendService.searchFriendsFilter(emailID,gname,gname1,gname2,gname3,gname4);
+		if(!key.isEmpty())u1=SearchFriendService.searchFriendsFilter(emailID,gname,gname1,gname2,gname3,gname4,gname5);
 		else return null;
 		return u1;
 	 

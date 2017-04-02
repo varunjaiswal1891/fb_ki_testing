@@ -137,7 +137,7 @@ public class FriendResource {
 	                String e2=temp.get(j).getEmailID();
 	                System.out.println("e2="+e2);
 	                /** if frnd ka frnd is not my frnd then add it to list of mutualfrnds**/
-	                if(!IsMyFriendService.isMyFriend(myEmailID, e2))
+	                if(!(IsMyFriendService.isMyFriend(myEmailID, e2)) && !(IsRequestAlreadySentService.isRequestAlreadySent(myEmailID,e2)) && !(IsRequestAlreadyReceived.isRequestAlreadyReceived(myEmailID,e2)) )
 	                {
 	                    System.out.println("yes add to people you may know");
 	                    User u1=new User();
@@ -149,7 +149,7 @@ public class FriendResource {
 	            
 	        }//for loop i wala end
 	        
-	         for(int j=0;j<al_mutual_friends.size();j++)
+	        for(int j=0;j<al_mutual_friends.size();j++)
 	            {
 	                String e2=al_mutual_friends.get(j).getEmailID();  // e2 will contain the email id from which some may belong to  request already sent or received or people u mayknow
 	                System.out.println("e2="+e2);    
@@ -221,7 +221,7 @@ public class FriendResource {
 	 
 	 
 	 //removes a person from people you may know
-	    @GET
+	 /*   @GET
 	    @Path("/peopleYouMay_KnowMutualFriendsRemove")
 	    @Produces({MediaType.APPLICATION_JSON})
 	    public static ArrayList<User> peopleYouMayKnowRemove(@CookieParam("ID") String jwt,@CookieParam("people") String people
@@ -253,7 +253,7 @@ public class FriendResource {
 	                String e2=temp.get(j).getEmailID();
 	                System.out.println("e2="+e2);
 	                /** if frnd ka frnd is not my frnd then add it to list of mutualfrnds**/
-	                if(!IsMyFriendService.isMyFriend(myEmailID, e2))
+	               /* if(!IsMyFriendService.isMyFriend(myEmailID, e2))
 	                {
 	                    System.out.println("yes add to people you may know");
 	                    if(!e2.equals(gname))
@@ -349,7 +349,7 @@ public class FriendResource {
 	        else 
 	        	return null;
 	    }//people you may know remove method ends here
-	    
+	    */
 	 
 	
 	@POST
@@ -545,6 +545,7 @@ public class FriendResource {
  		System.out.println("searching... "+highschool);
  		String gname5=highschool.replaceAll("%20", " ");
  		String gname6=friends.replaceAll("%20", " ");
+ 		System.out.println("Friends="+friends+".");
  		al_friends=SearchFriendService.searchForFriends(myEmailID,gname1,gname2,gname3,gname4,gname5,gname6);
  		if(al_friends.isEmpty())
  			return null;

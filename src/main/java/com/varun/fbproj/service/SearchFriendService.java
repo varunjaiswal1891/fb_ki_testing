@@ -117,7 +117,7 @@ return null;
 	}//method ends here
 
 //this method is used to apply filter to a search result.	
-	public static ArrayList<User> searchFriendsFilter(String emailID,String searchName,String college,String highschool,String hometown,String cityOfWork)
+	public static ArrayList<User> searchFriendsFilter(String emailID,String searchName,String college,String highschool,String hometown,String cityOfWork,String friends1)
 	{
 		
 		try {
@@ -129,8 +129,9 @@ return null;
 	            	check=connect.start();
 	            	System.out.println("trying connection in Filter..");
 	            }
-	            
+	        	ArrayList<User> u1 = new ArrayList<User>();
 	            String[] splited = searchName.split("\\s+");
+	            String[] fsplited = friends1.split("\\s+");
 	            
 	            for(int i=0;i<splited.length;i++)
 	            {
@@ -145,7 +146,7 @@ return null;
 	            	prepStatement.setString(6,"%"+ highschool +"%");
 	            	
 					ResultSet result = prepStatement.executeQuery();
-					ArrayList<User> u1 = new ArrayList<User>();
+				
 						while (result.next()) {
 						String e1=result.getString("emailID");	
 						User u_obj=new User();
@@ -159,19 +160,45 @@ return null;
 						if(!u_obj.getEmailID().equals(emailID))
 						{u1.add(u_obj);}
 						
+					
+						
 					}
-						return u1;
+						//return u1;
 				  
 					
 	            }//for ends here
 	            
-
+	            for(int i=0;i<fsplited.length-1;i=i+2)
+	            { System.out.println("....Iterator!!!!!!!!!!");
+	            System.out.println("fsplited is"+fsplited[i]);
+	            	PreparedStatement prepStatement = connect.con.prepareStatement("select * from User where fname like ? and lname like ?");
+	            	//it searches like %name% like statement of sql
+	            	prepStatement.setString(1,"%"+ fsplited[i] +"%");
+	            	prepStatement.setString(2,"%"+ fsplited[i+1] +"%");
+	            	
+	            	ResultSet result = prepStatement.executeQuery();
+	            	
+					while (result.next()) {
+					String e1=result.getString("emailID");	
+				
 					
+					Iterator<User> iter = u1.iterator();
+
+					while (iter.hasNext()) {
+					    User data = iter.next();
+					    String email=data.getEmailID();
+					    if(!IsMyFriendService.isMyFriend(email, e1))
+					        iter.remove();
+					}
+				}
+	            	
+	            }
+					return u1;
 			} catch (Exception e) {
 				e.printStackTrace();
 				return null;
 			}
-return null;
+//return null;
 		
 		
 	}//method ends here
@@ -191,8 +218,11 @@ return null;
 	            }
 	            
 	            String[] splited = name.split("\\s+");
+	            //if(!friends.isEmpty())
 	            String[] fsplited = friends.split("\\s+");
 	            ArrayList<User> u1 = new ArrayList<User>();
+	            System.out.println("Length is:"+fsplited.length);
+	            
 	            
 	            for(int i=0;i<splited.length;i++)
 	            {
@@ -208,7 +238,9 @@ return null;
 					ResultSet result = prepStatement.executeQuery();
 				
 						while (result.next()) {
-						String e1=result.getString("emailID");	
+							
+						String e1=result.getString("emailID");
+						System.out.println(e1);	
 						User u_obj=new User();
 						u_obj=RetriveService.getUserAllData(e1);
 						if(IsMyFriendService.isMyFriend(emailID, e1))
@@ -228,8 +260,10 @@ return null;
 					
 	            }//for ends here
 	            
-	            for(int i=0;i<fsplited.length;i=i+2)
+	            
+	            for(int i=0;i<fsplited.length-1;i=i+2)
 	            { System.out.println("....Iterator!!!!!!!!!!");
+	            System.out.println("fsplited is"+fsplited[i]);
 	            	PreparedStatement prepStatement = connect.con.prepareStatement("select * from User where fname like ? and lname like ?");
 	            	//it searches like %name% like statement of sql
 	            	prepStatement.setString(1,"%"+ fsplited[i] +"%");
