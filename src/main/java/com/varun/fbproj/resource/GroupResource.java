@@ -47,12 +47,13 @@ public class GroupResource {
     
 	}
 	
+  //This resource class is called when user clicks on create group in group page 
 	
 	@POST
     @Path("/create_group")
-	@Consumes({MediaType.TEXT_PLAIN})
+	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.TEXT_PLAIN})
-    public String createGroup(@CookieParam("ID") String jwt,String grpName) throws IOException{
+    public String createGroup(@CookieParam("ID") String jwt,Group g) throws IOException{
 	
 		System.out.println("jwt="+ jwt);
 		Claims claims = Jwts.parser()         
@@ -60,7 +61,8 @@ public class GroupResource {
 			       .parseClaimsJws(jwt).getBody();
 			    System.out.println("Subject: " + claims.getSubject());
 			  String myEmailID=claims.getSubject();
-		if(GroupService.createGroup(grpName, myEmailID))
+			  System.out.println("grpname"+g.getGroup_name());
+		if(GroupService.createGroup(g.getGroup_name(), myEmailID,g.getGroup_privacy()))
 		{
 			return "group created";
 		}
@@ -68,6 +70,10 @@ public class GroupResource {
 		return null;
 	}//method create group ends here
 	
+	
+	
+	//This resource class is called when user clicks on add member in group page
+	 
 	@POST
     @Path("/addUser_group")
 	@Consumes({MediaType.APPLICATION_JSON})
@@ -87,7 +93,8 @@ public class GroupResource {
 		return "user NOT added in group";
 	}//method add user group ends here
 	
-
+	//This resource class is called when user clicks on Groups button
+	
 	@GET
     @Path("/show_my_groups")
 	@Produces({MediaType.APPLICATION_JSON})
@@ -106,7 +113,8 @@ public class GroupResource {
 		
 	}//show my groups ends here
 
-
+	//This resource class is called when admin  deletes group
+	
 	@DELETE
     @Path("/delete_group")
 	@Consumes({MediaType.TEXT_PLAIN})
@@ -128,6 +136,7 @@ public class GroupResource {
 	}// delete a group ends here
 	
 	
+	//This resource class is called when admin removes user from group
 	
 	@DELETE
     @Path("/delete_user_from_group")
@@ -149,6 +158,7 @@ public class GroupResource {
 	}// delete a group ends here
 	
 
+	//This resource class is called when user leaves group
 	
 	@DELETE
     @Path("/leave_group")
@@ -173,39 +183,43 @@ public class GroupResource {
 	
 	
 	
-	
+	//This resource class is used to add status
 	    @POST
 	    @Path("/addStatus")
-	    @Consumes({MediaType.TEXT_PLAIN})
-	    @Produces({MediaType.TEXT_PLAIN})
-	    public String addStatus(@CookieParam("ID") String jwt,String status_desc,@CookieParam("ID_group") String group_name)throws JsonParseException, JsonMappingException, IOException{
+	    @Consumes({MediaType.APPLICATION_JSON})
+	    @Produces({MediaType.APPLICATION_JSON})
+	    public Status addStatus(@CookieParam("ID") String jwt,@CookieParam("ID_group") String group_name,Status obj)throws JsonParseException, JsonMappingException, IOException{
 
 	    	String gname=group_name.replaceAll("%20", " ");
 	    	System.out.println("token: "+jwt);
-	    	//System.out.println("desc: "+status.getStatus_desc());
+	    	System.out.println("desc: "+obj.getStatus_desc());
 	    	Claims claims = Jwts.parser()         
 				       .setSigningKey("secret".getBytes("UTF-8"))
 				       .parseClaimsJws(jwt).getBody();
 				    System.out.println("Subject: " + claims.getSubject());
 				   // System.out.println("Expiration: " + claims.getExpiration());
 				  String myEmailID=claims.getSubject();
-				  
+				  Status status1 = new Status();
+					
 		 Status sobj=new Status();
 		 sobj.setEmailID(myEmailID);
 		 sobj.setGroup_name(gname);
-		 sobj.setStatus_desc(status_desc);
-	    	if(s1.addStatus(sobj)){
-	    	    System.out.println("post submitted properly in group");
-	    		return "You posted in group";
-	    	}
-	    		return "status not posted";
-	    } // end of addStatus
+		 sobj.setStatus_desc(obj.getStatus_desc());
+		 sobj.setTimelineid(obj.getTimelineid());
+	    	int atr=s1.addStatus(sobj);
+	    	
+	    	status1.setStatusID(atr);
+	    	  
+	    		return status1;
+	    	
+	    }    		
 	    
 	    
 	    /* this method working good*/
 	    @POST
 	    @Path("/addComment")
 	    @Consumes({MediaType.APPLICATION_JSON})
+	    @Produces({MediaType.TEXT_PLAIN})
 	    public String addComment(@CookieParam("ID") String jwt,@CookieParam("ID_group") String group_name,Comment cobj)throws JsonParseException, JsonMappingException, IOException{
 	    	
 	    	System.out.println("inside addComment");
@@ -259,46 +273,29 @@ public class GroupResource {
 	    }
 	    
 
-	    @POST
-	    @Path("/decrementLike")
-	    @Consumes({MediaType.APPLICATION_JSON})
-	    @Produces({MediaType.TEXT_HTML})
-	    public String decrementLike(@CookieParam("ID") String jwt,Status statusobj)throws JsonParseException, JsonMappingException, IOException{
-	    	 System.out.println("inside increment like resource");
-	    	 
-	    	 
-	    	 Claims claims = Jwts.parser()         
-				       .setSigningKey("secret".getBytes("UTF-8"))
-				       .parseClaimsJws(jwt).getBody();
-				    System.out.println("Subject: " + claims.getSubject());
-				    String myEmailID=claims.getSubject();
-	  	
-				    Likes likeobj = new Likes();
-	    	 
-				    System.out.println("status id in resource: "+statusobj.getStatusID());
-	    	 int sid=statusobj.getStatusID();
-	     	 likeobj.setEmailID(myEmailID);
-	    	 likeobj.setStatusID(sid);
-	     	 if(l1.decrementLike(likeobj)==1){
-	    		 return "like decremented";
-	    	 }
-	    	 else 
-	    	     return "like not decremented";
-	    }//method ends here
-
-
+	    
 	    
 	    @GET
 	    @Path("/getGroupAllStatus")
 		@Produces({MediaType.APPLICATION_JSON})
-	    public ArrayList<Status> getGroupAllStatus(@CookieParam("ID_group") String group_name) throws JsonParseException, JsonMappingException, IOException
+	    public ArrayList<Status> getGroupAllStatus(@CookieParam("ID_group") String group_name,@CookieParam("ID") String jwt) throws JsonParseException, JsonMappingException, IOException
 	    {
-	    	System.out.println("Inside getGroupAllStatus ="+group_name);
+	    	Claims claims = Jwts.parser()         
+				       .setSigningKey("secret".getBytes("UTF-8"))
+				       .parseClaimsJws(jwt).getBody();
+				    System.out.println("Subject: " + claims.getSubject());
+				   // System.out.println("Expiration: " + claims.getExpiration());
+				  String myEmailID=claims.getSubject();
+			
+	    	/*
+	    	String myEmailID="vishal@gmail.com";
+	    	String group_name="ha bahi naya group after";
+	    	*/System.out.println("Inside getGroupAllStatus ="+group_name);
 	    	String gname=group_name.replaceAll("%20", " ");
 	    	System.out.println("new string varun = "+gname);
 	    	ArrayList<Status> status_list= new ArrayList<Status>(); 
 	    	//it gives mere all status
-			status_list.addAll(GroupService.getStatusByGroup(gname)); 
+			status_list.addAll(GroupService.getStatusByGroup(gname,myEmailID)); 
 	    
 			return status_list;
 	    }//method ends here

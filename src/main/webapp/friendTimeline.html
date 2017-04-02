@@ -256,12 +256,14 @@
              
              
                  window.like = function(e1){
-                     
-                       var statusid= $(e1).attr('id');
+                	 var tempid= $(e1).attr('id');
+  				   var statusid = tempid.slice(4);
                        var sid={statusID:statusid};
                        var myJSON=JSON.stringify(sid);
                        //alert(statusid);
                        
+    				   alert(statusid);
+    				  
                        
                        $.ajax({ 
                 url: "http://localhost:8085/DemoFB/webapi/status/incrementLike",
@@ -641,78 +643,128 @@
                        var fname,lname;
 for (var i=data.length-1; i >=0; i--){
                     	   
-                    	   var email =data[i].emailID; 
-                    	  
-                    	   
-                    	   
-                    	   st+="<div class="+"\"panel panel-default\""+">";
-                    	   st+="<div class="+"\"panel-body\""+"id=\"forcomment\""+">";
-                    	   st+="<div class="+"\"row\""+">";
-                    	   st+="<div class="+"\"col-md-12\""+">";
-                    		 st+="<div class=\" col-sm-2\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
-                             st+="<div class=\" col-sm-5\"><p><font size="+"\"4\""+"color="+"\"blue\""+">"+data[i].name+"</font></p></div>" ;
-                             st+="<p id="+"\"feelings\""+">"+data[i].feeling+"</p>" ;
-                          	  
-                             /* $(status_name).appendTo('#text_color');
-                    	   document.getElementById("forstatus").style.color="blue"; */
-                    	 	st+="<br><br><br>";
-                    	   st+="<p id="+"\"forstatus\""+">"+data[i].status_desc+"</p>" ;
-                    	   st+="</div></div><hr>";
-                    	   st+="<div class="+"\"row\""+">";
-                    	   st+="<div class="+"\"col-md-12\""+">";
-                    	   st+="<ul class="+"\"list-inline\""+">";
-                    	   st+="<li>";
-                    	   st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+" OnClick=\"like(this);\"><span class="+"\"glyphicon glyphicon-thumbs-up\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Like</font></a>";
-                    	   st+="</li>";
-                    	  /*  st+="<li>";
-                    	   st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+" OnClick=\"unlike(this);\""+"><span class="+"\"glyphicon glyphicon-thumbs-down\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Unlike</font></a>";
-                    	   st+="</li>"; */
-                    	   st+="<li>";
-                    	   st+= "<a href="+"\"#\""+ "id=\""+data[i].statusID+"\""+"><span class="+"\"glyphicon glyphicon-comment\"" +"style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Comment</font></a>";
-                    	   st+="</li></ul></div></div>";
-                    	   st+="</div>";
-                    	   st+="<div class="+"\"panel-footer\"" +"id="+"\"o\""+">";
-                    	   st+="<div class="+"\"row\""+">";
-                           st+="<div class="+"\"col-md-12\""+">";
-                           st+="<a id="+"\"likescount\""+">"+data[i].likesCount+"</a>";
-                           st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+"onmouseover=\"likehover(this)\"><span style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Likes</font></a>";
-                           st+="<p id="+"\"likescount\""+">"+data[i].unlikes_count+" Unlikes"+"</p><br></div></div>";
-                           
-                           st+="<hr>"; 
-                    	   st+="<div class="+"\"pre-scrollable\""+" style="+"\"height:100px;\""+">";
-                    	   for(var j=0;j<data[i].a.length;j++)
-                		  
-                    			   
-                		   {
-                    		    st+="<div class=\" col-sm-2\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
-                    		    st+= "<div class=\" col-sm-5\"><p id="+"\"outputname\""+"><font size="+"\"3\""+"color="+"\"blue\""+">"+data[i].a[j].name+"</font></p></div>"; 
-                    			/* $(status_name).appendTo('#text_color');
-                        	   document.getElementById("forstatus").style.color="blue"; */
-                        	 	st+="<br><br><br>";
-                        	  
-                    		   st+= "<p id="+"\"output\""+">"+data[i].a[j].comment_desc+"</p>";
-                    	   st+="<br>";
-                    	   st+="<hr>";
-                		   }
-                    	   st+="</div>";
-                		   
-                    	   st+="<ul>";
-                    	   st+="<li class="+"\"media\""+">";
-                    	   st+="<div class="+"\"media-body\""+">";
-                    	   st+="<div class="+"\"input-group\""+">";
-                    	   st+="<input type="+"\"text\""+" class="+"\"form-control\""+" id=\"comment_d"+data[i].statusID+"\""+" placeholder="+"\"Write a comment...\""+">";
-                           st+="<span class="+"\"input-group-btn\""+">";
-                       		st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].statusID+"\""+" OnClick=\"comment(this);\">Post Comment</button>";
-                       		st+="</span>";
-                       		st+="</div>";
-                       		st+="</div>";
-                       		st+="</li>";
-                       		st+="</ul>";
-                       		st+="</div>";
-                       		st+="</div>";
-                            
-                           
-                           
+	   var email =data[i].emailID; 
+	   
+ 	  /*  <a href='#target2' id='target2' class='target'>Target 2</a>
+  	   */
+ 	   st+="<div class="+"\"panel panel-default\""+">";
+ 	   st+="<div class="+"\"panel-body\""+"id=\"forcomment\""+">";
+ 	   st+="<div class="+"\"row\""+">";
+ 	   st+="<div class="+"\"col-md-12\""+">";
+ 		 st+="<div class=\" col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
+          st+="<div class=\" col-sm-5\"><p><font size="+"\"4\""+"color="+"\"blue\""+">"+data[i].name+"</font></p></div>" ;
+           //st+="<br>";
+          st+="</div>";
+         // st+="<hr>";
+          st+="<div class="+"\"row\""+">";
+         
+          if(data[i].feeling==null)
+        	{
+        	  st+="<br><br><br>";
+        	  
+        	}
+          else
+        	  {
+          st+="<div id="+"\"feelings\""+"><font size="+"\"2\""+"color="+"\"#A4A4A4\""+">"+data[i].feeling+"<font></div>" ;
+          
+          st+="<br><br>";
+        	  }
+        st+="<br>";
+          st+="<ul type="+"\"disc\""+">";
+          st+="<div id="+"\"time\""+"><font size="+"\"2\""+"color="+"\"#A4A4A4\""+">"+data[i].postedon+"<font></div>" ;
+          st+="</ul>";
+          /* st+="<ul>";
+          st+="<li id="+"\"time\""+">"+data[i].postedon+"</li>" ;
+       	  st+="</ul>";
+           */
+          /* $(status_name).appendTo('#text_color');
+ 	   document.getElementById("forstatus").style.color="blue"; */
+ 	   st+="</div>";
+ 	   st+="<div class="+"\"row\""+">";
+ 	 	st+="<br>";
+ 	   st+="<div id="+"\"forstatus\""+"><font size="+"\"3\""+"color="+"\"black\""+">"+data[i].status_desc+"</font></div>" ;
+ 	   st+="</div></div><hr>";
+ 	   st+="<div class="+"\"row\""+">";
+ 	   st+="<div class="+"\"col-md-12\""+">";
+ 	   st+="<ul class="+"\"list-inline\""+">";
+ 	   st+="<li>";
+ 	   
+ 		   if(data[i].color==1){
+ 			  // alert("testing11:  "+data[i].statusID);
+ 	   		//highlight(data[i].statusID);
+ 	   		  st+="<a href="+"\"#thumbs-up\""+"id=\"like"+data[i].statusID+"\""+" OnClick=\"like(this);\"><span class="+"\"glyphicon glyphicon-thumbs-up\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"blue\""+">Like</font></a>";
+ 		   }
+ 		   else{
+  	   		  st+="<a href="+"\"#thumbs-up\""+"id=\"like"+data[i].statusID+"\""+" OnClick=\"like(this);\"><span class="+"\"glyphicon glyphicon-thumbs-up\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Like</font></a>";
+
+ 			   
+ 		   }
+ 		   
+ 	   
+
+ 	   st+="</li>";
+ 	   /* st+="<li>";
+ 	   st+="<a href=\""+data[i].statusID+"\""+"id=\""+data[i].statusID+"\""+"class=\""+data[i].statusID+"\""+" OnClick=\"like(this);\"><span class="+"\"glyphicon glyphicon-thumbs-up\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Like</font></a>";
+ 	   st+="</li>"; */
+ 	   /* st+="<li>";
+ 	   st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+" OnClick=\"unlike(this);\""+"><span class="+"\"glyphicon glyphicon-thumbs-down\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Unlike</font></a>";
+ 	   st+="</li>"; */
+ 	 //  st+="<li>";
+ 	  // st+= "<a href="+"\"#\""+ "id=\""+data[i].statusID+"\""+"><span class="+"\"glyphicon glyphicon-comment\"" +"style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Comment</font></a>";
+ 	  // st+="</ul></div></div>";
+ 	   //st+="</div>";
+ 	   	//   st+="<div class="+"\"row\""+">";
+      //  st+="<div class="+"\"col-md-12\""+">";
+      st+="<li>";  
+      st+="<a id="+"\"likescount\""+">"+data[i].likesCount+"</a>";
+        st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+"onmouseover=\"likehover(this)\"><span style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Likes</font></a>";
+       st+="</li>";
+        // st+="	</div></div>";
+        //st+="</div>";
+ 	   st+="</ul></div></div></div>";
+
+        //st+="<hr>"; 
+        st+="<div class="+"\"panel-footer\"" +"id="+"\"o\""+">";
+        
+ 	   if(data[i].a.length==0){
+ 		   st+="<div class="+"\"pre-scrollable\""+" style="+"\"height:0px;\""+">";
+ 	   }
+ 	   else{
+ 		   st+="<div class="+"\"pre-scrollable\""+" style="+"\"height:80px;\""+">";
+ 	   
+ 	   for(var j=0;j<data[i].a.length;j++)
+		  
+ 			   
+		   {
+ 		    st+="<div class=\" col-sm-2\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
+ 		    st+= "<div class=\" col-sm-5\"><p id="+"\"outputname\""+"><font size="+"\"3\""+"color="+"\"blue\""+">"+data[i].a[j].name+"</font></p></div>"; 
+ 			/* $(status_name).appendTo('#text_color');
+     	   document.getElementById("forstatus").style.color="blue"; */
+     	 	st+="<br><br>";
+     	  
+ 		   st+= "<p id="+"\"output\""+"><font size="+"\"2\""+"color="+"\"black\""+">"+data[i].a[j].comment_desc+"</font></p>";
+ 	  st+="<br>";
+ 	   //st+="<hr>";
+		   }
+ 	   }
+ 	   st+="</div>";
+		   
+ 	   //st+="<ul>";
+ 	   //st+="<li class="+"\"media\""+">";
+ 	   st+="<div class="+"\"media-body\""+">";
+ 	   //st+="<div class="+"\"input-group\""+">";
+ 	   st+="<input type="+"\"text\""+" class="+"\"form-control\""+" id=\"comment_d"+data[i].statusID+"\""+" placeholder="+"\"Write a comment...\""+">";
+        //st+="<span class="+"\"input-group-btn\""+">";
+    		st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].statusID+"\""+" OnClick=\"comment(this);\">Post Comment</button>";
+    		//st+="</span>";
+    		//st+="</div>";
+    		st+="</div>";
+    		//st+="</li>";
+    		//st+="</ul>";
+    		st+="</div>";
+    		st+="</div>";
+         
+        
                       
                        st=st.replace("undefined","");
                 	   $("#abcd").html(st);
@@ -1020,22 +1072,26 @@ for (var i=data.length-1; i >=0; i--){
 								   
 								   
 <div id="abcd">
-  <div class="panel-body" id="forcomment">
-    <!-- Post metadata -->
+  <!-- <div class="panel-body" id="forcomment">
+    Post metadata
     <div class="row">
       <div class="col-md-10">
-        <div class="media"><!-- for name pic  -->
+        <div class="media">for name pic 
         </div>
       </div>
       </div>
-    <!-- Post content -->
+    Post content
     <div class="row">
       <div class="col-md-12">
       <p id="status_name"></p>
       <p id="feelings"></p>
-       <p id="forstatus"></p>  <!-- status text -->
+      <br><br>
+      <ul type="disc">
+      <li id="time"></li>
+       </ul> 
+       <p id="forstatus"></p>  status text
       </div>
-    </div>
+    </div> 
   <hr>  
   <div class="row">
  <div class="col-md-12">
@@ -1044,8 +1100,8 @@ for (var i=data.length-1; i >=0; i--){
      <a href="#thumbs-up"><span class="glyphicon glyphicon-thumbs-up" style="color:#3b5998"></span> <font color="#3b5998">Like</font></a>
      </li>
       <li>
-     <a href="#thumbs-up"><span class="glyphicon glyphicon-thumbs-down" style="color:#3b5998"></span> <font color="#3b5998">Unlike</font></a>
-     </li>
+     <a href="#thumbs-up"><span class="glyphicon glyphicon-thumbs-down" style="color:#3b5998"></span> <font color="#3b5998">Unlike</font> </a>
+     </li> 
      <li>
      <a href="#" id="comment"><span class="glyphicon glyphicon-comment" style="color:#3b5998"></span> <font color="#3b5998">Comment</font></a>
      </li>
@@ -1053,8 +1109,8 @@ for (var i=data.length-1; i >=0; i--){
    </ul>
  </div>
   </div>
- </div> <!--  div of panel body for status update 1 -->
- <!-- panel body footer -->
+ </div>  div of panel body for status update 1
+ panel body footer
  <div class="panel-footer" id="o">
  <div class="row">
    <div class="col-md-12">  
@@ -1104,7 +1160,7 @@ for (var i=data.length-1; i >=0; i--){
 </div> 
 </div>
 								  
-								   
+ -->								   
     
     </div>
     

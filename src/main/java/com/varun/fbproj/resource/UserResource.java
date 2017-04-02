@@ -9,6 +9,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -46,6 +48,7 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
+import org.glassfish.jersey.media.multipart.ContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 @WebService()
@@ -53,6 +56,7 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 public class UserResource {
 	
 	private SignUpService s1;
+	
 
 	public UserResource() {
 		s1 = new SignUpService();
@@ -271,12 +275,100 @@ public class UserResource {
 			  String emailID=claims.getSubject();
 	    //System.out.print(userId);
 	    fileName = fileFormDataContentDisposition.getFileName();
+	    System.out.println("fileeeeeee"+fileName);
 	    uploadFilePath=new UserImageService().uploadProfilePic(fileInputStream, fileName,token,emailID);
-	    URI url = new URI("http://localhost:8080/DemoFB/timeLine1.html");
+	    URI url = new URI("http://localhost:8085/DemoFB/timeLine1.html");
 	    return Response.temporaryRedirect(url).build();
 	
 
 	}
+    
+    @POST
+   	@Path("/uploadProfilePic2")
+   	@Produces(MediaType.TEXT_HTML)
+   	@Consumes(MediaType.MULTIPART_FORM_DATA)
+   	public  String updateProfilePic1(
+   			
+   	        @FormDataParam("file") InputStream fileInputStream,
+   	        @FormDataParam("file") FormDataContentDisposition fileFormDataContentDisposition,@CookieParam("ID") String token,@FormDataParam("status_id") int statusid
+   	   		) throws UnsupportedJwtException, MalformedJwtException, SignatureException, IllegalArgumentException, UnsupportedEncodingException, URISyntaxException {
+   	    	
+   	    String fileName = null;
+   	    
+   	    String uploadFilePath = null;
+   	    System.out.print("backend");
+   	    System.out.print(token);
+   	    System.out.println("jwt="+ token);
+   		Claims claims = Jwts.parser()         
+   			       .setSigningKey("secret".getBytes("UTF-8"))
+   			       .parseClaimsJws(token).getBody();
+   			    System.out.println("Subject: " + claims.getSubject());
+   			    System.out.println("Expiration: " + claims.getExpiration());
+   			  String emailID=claims.getSubject();
+   	    System.out.print(statusid+"statusidddddddd");
+   	    fileName = fileFormDataContentDisposition.getFileName();
+   	   String statusid1=Integer.toString(statusid);
+   	 System.out.println("fillle");
+ 	   
+   	     uploadFilePath=new UserImageService().uploadProfilePic2(fileInputStream, fileName,token,emailID,statusid1);
+   	  System.out.println("filllessss");
+  	 
+   	    return "Got it";
+   	     
+    
+    }
+    
+    
+    
+   /* @POST  
+    @Path("/uploadProfilePic2")  
+    @Consumes(MediaType.MULTIPART_FORM_DATA)  
+    public Response uploadFile(  
+            @FormDataParam("file") InputStream uploadedInputStream,  
+            @FormDataParam("file") FormDataContentDisposition fileDetail,@CookieParam("ID") String token,@FormDataParam("status_id") int statusid) throws UnsupportedJwtException, MalformedJwtException, SignatureException, IllegalArgumentException, UnsupportedEncodingException {  
+           
+    	Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(token).getBody();
+			    System.out.println("Subject: " + claims.getSubject());
+			    System.out.println("Expiration: " + claims.getExpiration());
+			  String emailID=claims.getSubject();
+	    
+    	
+    	String fileLocation = "/home/vishal/git/fb_ki_testing/src/main/webapp/users/"+emailID;  
+                    //saving file  
+            try {  
+                FileOutputStream out = new FileOutputStream(new File(fileLocation));  
+                int read = 0;  
+                byte[] bytes = new byte[1024];  
+                out = new FileOutputStream(new File(fileLocation));  
+                while ((read = uploadedInputStream.read(bytes)) != -1) {  
+                    out.write(bytes, 0, read);  
+                }  
+                out.flush();  
+                out.close();  
+            } catch (IOException e) {e.printStackTrace();}  
+            String output = "File successfully uploaded to : " + fileLocation;  
+            return Response.status(200).entity(output).build();  
+        }  
+    
+    
+    */
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     

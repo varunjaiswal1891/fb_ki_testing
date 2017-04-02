@@ -1,32 +1,46 @@
 package com.varun.fbproj.service;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
+
+import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.security.Timestamp;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
+
+import javax.ws.rs.CookieParam;
 
 import javassist.bytecode.Descriptor.Iterator;
 
 import com.varun.fbproj.model.Comment;
+import com.varun.fbproj.model.Likes;
 import com.varun.fbproj.model.Status;
 import com.varun.fbproj.model.User;
-
+//this is service class for all status related work
 public class StatusService {
-
+	int statusid12=1;
 	DBAccess db= new DBAccess();
 	
-	 public boolean addStatus(Status s1){
+	 public int addStatus1(Status s1){//this function adds status to the status table
 		  try{
 			 boolean check=false;
 			 while(check!=true){
 				 System.out.println("trying connection");
 				check= db.start();
 			 }
+			 
 			 String  status_desc=s1.getStatus_desc(); 
 			 String emailID=s1.getEmailID();
 			 String feeling=s1.getFeeling();
 			 String timelineid=s1.getTimelineid();
-			 
+			 System.out.println("insiddddddddddddddddddddddde adddddstatusssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss");
 			 String query = "insert into status(status_desc,emailID,group_name,feeling,timelineid) values(?,?,?,?,?)";
 			 PreparedStatement pstmnt = db.con.prepareStatement(query);
 			 pstmnt.setString(1,status_desc);
@@ -36,18 +50,119 @@ public class StatusService {
 			 pstmnt.setString(5,timelineid);
 				
 			 pstmnt.executeUpdate();
-			 db.stop();
-			 return true;
+			 
+			 
+			 String query134 = "select max(statusID) as statusID from  status where   emailID=?";
+			 PreparedStatement pstmnt134=db.con.prepareStatement(query134);
+			
+			 pstmnt134.setString(1,emailID);
+			
+			 ResultSet rs134= pstmnt134.executeQuery();
+			 if(rs134.next()){
+				 statusid12=rs134.getInt("statusID");
+				 System.out.println("aaajaaaaaayarrrrrrrrrrrrrrrr"+statusid12);
+			 }
+			
+			  db.stop();
+			 return  statusid12;
 		  }
 		  catch (Exception e) 
 	      {
 	          System.out.println(e.getMessage());
 	      }
-		 return false;  
+		return statusid12 ;
+		 
 	   }//add status ends here
 	 
+	 public int addStatus(Status s1){
+         try{
+            boolean check=false;
+            while(check!=true){
+                System.out.println("trying connection");
+               check= db.start();
+            }
+            String  status_desc=s1.getStatus_desc(); 
+			 String emailID=s1.getEmailID();
+			 String feeling=s1.getFeeling();
+			 String timelineid=s1.getTimelineid();
+			 
+            String query1="select privacy from Group1 where group_name=?";
+            PreparedStatement pstmnt1 = db.con.prepareStatement(query1);
+            pstmnt1.setString(1, s1.getGroup_name());
+            ResultSet rs5= pstmnt1.executeQuery();
+            rs5.next();
+            String privacy = rs5.getString("privacy");
+            System.out.println(privacy);
+           // int flag=0;
+            if(privacy.equals("public"))
+            {
+            	String query = "insert into status(status_desc,emailID,group_name,feeling,timelineid) values(?,?,?,?,?)";
+   			 PreparedStatement pstmnt = db.con.prepareStatement(query);
+   			 pstmnt.setString(1,status_desc);
+   			 pstmnt.setString(2,emailID);
+   			 pstmnt.setString(3,s1.getGroup_name());
+   			 pstmnt.setString(4,feeling);
+   			 pstmnt.setString(5,timelineid);
+   				
+   			 pstmnt.executeUpdate();
+   			 
+   			 
+   			 String query134 = "select max(statusID) as statusID from  status where   emailID=?";
+   			 PreparedStatement pstmnt134=db.con.prepareStatement(query134);
+   			
+   			 pstmnt134.setString(1,emailID);
+   			
+   			 ResultSet rs134= pstmnt134.executeQuery();
+   			 if(rs134.next()){
+   				 statusid12=rs134.getInt("statusID");
+   				 System.out.println("aaajaaaaaayarrrrrrrrrrrrrrrr"+statusid12);
+   			 }
+   			
+   			  db.stop();
+   			 return  statusid12;
+   		  	
+            }
+            else
+            {
+            	String query = "insert into privategroupstatus(status_desc,emailID,group_name,feeling,timelineid) values(?,?,?,?,?)";
+      			 PreparedStatement pstmnt = db.con.prepareStatement(query);
+      			 pstmnt.setString(1,status_desc);
+      			 pstmnt.setString(2,emailID);
+      			 pstmnt.setString(3,s1.getGroup_name());
+      			 pstmnt.setString(4,feeling);
+      			 pstmnt.setString(5,timelineid);
+      				
+      			 pstmnt.executeUpdate();
+      			 
+      			 
+      			 String query134 = "select max(statusID) as statusID from  status where   emailID=?";
+      			 PreparedStatement pstmnt134=db.con.prepareStatement(query134);
+      			
+      			 pstmnt134.setString(1,emailID);
+      			
+      			 ResultSet rs134= pstmnt134.executeQuery();
+      			 if(rs134.next()){
+      				 statusid12=rs134.getInt("statusID");
+      				 System.out.println("aaajaaaaaayarrrrrrrrrrrrrrrr"+statusid12);
+      			 }
+      			
+      			  db.stop();
+      			 return  statusid12;
+      		  	  }
+         }
+         catch (Exception e) 
+         {
+             System.out.println(e.getMessage());
+         }
+        return statusid12;  
+      }//add status ends here
+	 
+	 
+	 
+	 
+	 
 	 //abhi incomplete h ye removeStatus
-	 public boolean removeStatus(Status s1){
+	 public boolean removeStatus(Status s1){//This function removes status but currently not in use
 		 try{
 			 boolean check=false;
 			 while(check!=true){
@@ -72,55 +187,24 @@ public class StatusService {
 	   }//removeStatus ends here
 	 
 	 
-	 /*public ArrayList<Status> getStatusByUser(String emailID){
-	        String result;
-			boolean check=false;
-			try{
-			  while(check!=true){
-				  System.out.println("trying connection in getStatusByUser");
-				 check= db.start();
-			  }
-			  String sql="select * from status where emailID= ?";
-			 
-			  PreparedStatement pstmnt=db.con.prepareStatement(sql);
-			  pstmnt.setString(1,emailID); // user_id is the one sent in paramater
-			  ResultSet rs= pstmnt.executeQuery();
-			  ArrayList<Status> status_list= new ArrayList<Status>();
-			  if(rs!=null){
-				  
-				  while (rs.next()) {
-						Status status_obj = new Status();
-						status_obj.setStatusID(rs.getInt(1));
-						status_obj.setStatus_desc(rs.getString(2));
-						status_obj.setCreated(String.valueOf(rs.getTimestamp(3)));
-						status_obj.setEmailID(emailID);
-						status_obj.setFlag(rs.getInt(5));
-						status_list.add(status_obj);	
-					}
-			  }
-			  else{
-				  System.out.println("resultset empty");
-			  }
-			  db.stop();
-			  return status_list;
-			}
-			catch(Exception e){
-				
-			}
-			
-			 return  null;
-		 }//method getStatusByUser ends here*/
-		 
+	 	 
 		 
 	 
 	 //this method is VERY IMPORTANT
 	 //given an email ID ..it returns all status of that guy and all status of his friends
 	 //along with all comments and likes on every status
 	 
-	 public ArrayList<Status> getAllDetailsOfEachStatus(String emailID,String timelineID)
+	 public ArrayList<Status> getAllDetailsOfEachStatus(String emailID,String timelineID,String loggedInEmailID) throws UnsupportedJwtException, MalformedJwtException, SignatureException, IllegalArgumentException, UnsupportedEncodingException
 		{
+		  ArrayList<Status> statusArrayList = new ArrayList<Status>();
 		 String feel1="is feeling ";
 		 String feel2="";
+		 String posted0="";
+		 String postedon="";
+		 
+			    System.out.println("this is the email id of logged in person: "+loggedInEmailID);
+			    
+			    
 		 System.out.println("eamil ddd  "+emailID);
 		 System.out.println("timelineid "+timelineID);
 				
@@ -139,8 +223,7 @@ public class StatusService {
 				  pstmnt.setString(1,emailID); // user_id is the one sent in paramater
 				  pstmnt.setString(2,timelineID); // timelineid is the one sent in paramater
 				  
-				  ResultSet rs= pstmnt.executeQuery();
-				  ArrayList<Status> statusArrayList = new ArrayList<Status>();				  
+				  ResultSet rs= pstmnt.executeQuery();				  
 				  
 				  
 		        while (rs.next())
@@ -151,6 +234,9 @@ public class StatusService {
 					status_obj.setCreated(String.valueOf(rs.getTimestamp(3)));
 					status_obj.setEmailID(emailID);
 					status_obj.setFlag(rs.getInt(5));
+					status_obj.setTimelineid(rs.getString("timelineid"));
+					java.sql.Timestamp timestamp2 = rs.getTimestamp(3);
+					 
 					
 					
 					if((rs.getString("feeling"))!=null)
@@ -158,7 +244,7 @@ public class StatusService {
 					feel1=feel1.concat(feel2);
 					status_obj.setFeeling(feel1);}
 					else 
-						status_obj.setFeeling(rs.getString("feeling"));
+						status_obj.setFeeling(null);
 					//statusArrayList.add(status_obj);	
 					feel1="is feeling ";
 		         System.out.println("eeeeeeeeeeeeeeeeeeeeee"+rs.getString(2));
@@ -169,6 +255,53 @@ public class StatusService {
 					  rs11.next();
 					  status_obj.setName(rs11.getString("fname")+" "+ rs11.getString("lname"));
 					System.out.println("name =  "+status_obj.getName());
+					
+					if((!(rs.getString("timelineid").equals("home")))&&((rs.getString("timelineid")!=null)))
+					{
+						String query111="select fname,lname from User where emailID=?";	   
+						PreparedStatement pstmnt111=db.con.prepareStatement(query111);
+						pstmnt111.setString(1,rs.getString("timelineid")); // user_id is the one sent in paramater
+						ResultSet rs111= pstmnt111.executeQuery();
+						rs111.next();
+						if(rs.getString("timelineid").equals(rs.getString("emailID")))
+							{
+								posted0="posted on his own timeline";
+								status_obj.setName2(posted0);
+								posted0="";
+						  
+						  
+							 }
+						else if(!(rs.getString("timelineid").equals(rs.getString("emailID"))))
+								{posted0="Posted on ";
+								posted0=posted0.concat(rs111.getString("fname"));
+								posted0=posted0.concat(" ");
+								posted0=posted0.concat(rs111.getString("lname"));
+								posted0=posted0.concat("'s timeline");
+								//posted2=posted2.concat(posted1);
+								//System.out.println("posted0000000000000000000000000000000000000000000000000000"+posted0);
+								status_obj.setName2(posted0);
+								posted0="";
+								}
+					  //status_obj.setName(rs111.getString("fname")+" "+ rs111.getString("lname"));
+				
+					}
+					else if(rs.getString("timelineid").equals("home"))
+					{
+						status_obj.setName2(null);
+						System.out.println("inside home status");
+					}
+					if(rs.getString("timelineid").equals("group"))
+					{	posted0=posted0.concat("Posted in");
+					    posted0=posted0.concat(rs.getString("group_name"));
+					
+					status_obj.setGroup_name(posted0);
+					posted0="";
+					
+						
+					}
+					
+					
+					
 					
 					
 					
@@ -189,18 +322,114 @@ public class StatusService {
 		            	 System.out.println("likes............: "+status_obj.getLikesCount());
 		             }
 
-		             /**********UNLIKES************************/
-			            String query31="select count(likeID) from likes where statusID=? and flag=0"; 
-						  PreparedStatement pstmnt31=db.con.prepareStatement(query31);
-						  pstmnt31.setInt(1,stID); // user_id is the one sent in paramater
-						  ResultSet rs31= pstmnt31.executeQuery();
-						  
-			             while(rs31.next())
-			             {   System.out.println("Inside rs31. while ");
-			            	 status_obj.setUnlikes_count(rs31.getInt(1)); 
-			            	 System.out.println("unlikes............: "+status_obj.getUnlikes_count());
-			             }
+		            
 		             
+			       /*********LikesColor***************/      
+			             
+			             	
+							 String query133 = "select * from likes where statusID = ? and emailID=?";
+							 PreparedStatement pstmnt133=db.con.prepareStatement(query133);
+							 pstmnt133.setInt(1,stID); // user_id is the one sent in paramater
+							 pstmnt133.setString(2,loggedInEmailID);
+							 ResultSet rs133= pstmnt133.executeQuery();
+							 if(rs133.next()){
+								 status_obj.setColor(1);
+							 }
+							 else{
+								 status_obj.setColor(0);
+							 }
+						
+							 /*********time of posting***************/      
+						      		 
+							 Calendar calendar = Calendar.getInstance();
+							    java.sql.Timestamp ourJavaTimestampObject = new java.sql.Timestamp(calendar.getTime().getTime());
+							    long milliseconds = ourJavaTimestampObject.getTime() - timestamp2.getTime();
+							    int seconds = (int) milliseconds / 1000;
+							 
+							    // calculate hours minutes and seconds
+							    int hours = seconds / 3600;
+							    int minutes = (seconds % 3600) / 60;
+							    seconds = (seconds % 3600) % 60;
+							 
+							 
+							    System.out.println("timestamp1: " + ourJavaTimestampObject);
+							    System.out.println("timestamp2: " + timestamp2);
+							 
+							    System.out.println("Difference: ");
+							    System.out.println(" Hours: " + hours);
+							    System.out.println(" Minutes: " + minutes);
+							    System.out.println(" Seconds: " + seconds);   
+							 if(hours==0)
+							 {
+								 if(minutes==0)
+								 {	
+								 	
+								 	postedon=" Just now";
+								 		
+									 status_obj.setPostedon(postedon);
+								 }
+								 else
+								 {
+									 postedon=Integer.toString(minutes);
+									 if(minutes==1)
+									 postedon=postedon.concat(" minute ago");
+									 else	 
+									 postedon=postedon.concat(" minutes ago");
+									 status_obj.setPostedon(postedon);
+									 
+									 
+								 }
+								 
+							 
+							 }
+							 
+							 else if((hours>=1)&&(hours<24))
+							 {
+								
+								postedon=Integer.toString(hours);
+								if(hours==1)
+								postedon=postedon.concat(" hour ago");
+								else
+								postedon=postedon.concat(" hours ago");
+									
+								status_obj.setPostedon(postedon);
+								 
+							 }
+							 else
+							 {
+									int Days=hours/24;
+									if(Days<365)
+									{
+									postedon=Integer.toString(Days);
+									if(Days==1)
+									postedon=postedon.concat(" day ago");
+									else
+									postedon=postedon.concat(" days ago");
+									
+									status_obj.setPostedon(postedon);
+									}
+									else
+									{	
+										int years=Days/365;
+										
+										postedon=Integer.toString(years);
+										if(years==1)
+										postedon=postedon.concat(" year ago");
+										else
+										postedon=postedon.concat(" years ago");
+										
+										status_obj.setPostedon(postedon);
+											
+										
+									}
+									
+									
+									
+									
+									
+							} 
+							 
+							 
 	                /*********Comments************/
 		            String query2 = "select * from comments where statusID = ?";
 
@@ -255,12 +484,13 @@ public class StatusService {
 		    }
 		   
 
-		    return null;    
+		    return statusArrayList;
+			  
 		}//method getAllDetailsOfEachStatus ends here
 	 
 	 
 	 
-	 public  ArrayList<User> getStatusLikesName(int statusid){
+	 public  ArrayList<User> getStatusLikesName(int statusid){//This function is used to get name of people who liked the status
 		 ArrayList<User> userobjlist = new ArrayList<User>(); 
 		 
 		 try{

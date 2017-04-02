@@ -15,11 +15,13 @@ import javax.ws.rs.core.MediaType;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.varun.fbproj.model.Comment;
+import com.varun.fbproj.model.Group;
 import com.varun.fbproj.model.Likes;
 import com.varun.fbproj.model.Status;
 import com.varun.fbproj.model.User;
 import com.varun.fbproj.service.CommentService;
 import com.varun.fbproj.service.GetMyAllFriends;
+import com.varun.fbproj.service.GroupService;
 import com.varun.fbproj.service.LikeService;
 import com.varun.fbproj.service.RetriveService;
 import com.varun.fbproj.service.StatusService;
@@ -50,11 +52,13 @@ public class StatusResource {
     @POST
     @Path("/addStatus")
     @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.TEXT_PLAIN})
-    public String addStatus(@CookieParam("ID") String jwt,Status obj)throws JsonParseException, JsonMappingException, IOException{
+    @Produces({MediaType.APPLICATION_JSON})
+    public Status addStatus(@CookieParam("ID") String jwt,Status obj)throws JsonParseException, JsonMappingException, IOException{
 
     	
     	System.out.println("token: "+jwt);
+    	
+    	
     	System.out.println("desc: "+obj.getStatus_desc());
     	System.out.println("feeing: "+obj.getFeeling());
     	System.out.println("timelineid: "+obj.getTimelineid());
@@ -65,18 +69,22 @@ public class StatusResource {
 			    System.out.println("Subject: " + claims.getSubject());
 			   // System.out.println("Expiration: " + claims.getExpiration());
 			  String myEmailID=claims.getSubject();
-			  
+			  System.out.println("emailID: "+myEmailID);
+		    	
 			  Status status = new Status();
+			  Status status1 = new Status();
+				
 		status.setFeeling(obj.getFeeling());
 		status.setTimelineid(obj.getTimelineid());
 		
     	status.setStatus_desc(obj.getStatus_desc());
        	status.setEmailID(myEmailID);
-    	if(s1.addStatus(status)){
+    	int statusid=s1.addStatus1(status);
     	    System.out.println("post submitted properly");
-    		return "You posted";
-    	}
-    		return "status not posted";
+    		
+    	status1.setStatusID(statusid);
+    	return  status1;
+    	
     } // end of addStatus
     
        
@@ -130,11 +138,16 @@ public class StatusResource {
     	 int sid=statusobj.getStatusID();
      	 likeobj.setEmailID(myEmailID);
     	 likeobj.setStatusID(sid);
-     	 if(l1.incrementLike(likeobj)==1){
-    		 return "like incremented";
+    	 int x = l1.incrementLike(likeobj);
+    	 if (x==1){
+    		 return "liked";
     	 }
-    	 else 
-    	     return "like not updated";
+    	if(x==2){
+    		return "unliked";
+    	 }
+    	 
+    	return "error";
+     	 
     }
     
 
@@ -186,7 +199,7 @@ public class StatusResource {
     	ArrayList<Status> status_list= new ArrayList<Status>(); 
     	//it gives mere all status
     	String str="home";
-		status_list.addAll(s1.getAllDetailsOfEachStatus(myEmailID,str)); 
+		status_list.addAll(s1.getAllDetailsOfEachStatus(myEmailID,str,myEmailID)); 
     	System.out.println("length is :"+status_list.size());
 		
 		 
@@ -196,7 +209,7 @@ public class StatusResource {
 		for(int i=0;i<al_friends.size();i++)
 		{
 			String e1=al_friends.get(i).getEmailID();
-			status_list.addAll(s1.getAllDetailsOfEachStatus(e1,str));
+			status_list.addAll(s1.getAllDetailsOfEachStatus(e1,str,myEmailID));
 			
 		}
 		
@@ -211,11 +224,22 @@ public class StatusResource {
 				String e2=al_friends.get(j).getEmailID();
 				
 					
-					status_list.addAll(s1.getAllDetailsOfEachStatus(e1,e2));
+					status_list.addAll(s1.getAllDetailsOfEachStatus(e1,e2,myEmailID));
 				
 				
 		    }
 	    }
+		String str1="group";
+		
+		ArrayList<Group> group=new ArrayList<Group>();
+		group=GroupService.getMyAllGroups(myEmailID,group);
+		for(int j=0;j<group.size();j++)
+		{
+			status_list.addAll(GroupService.getStatusByGroup(group.get(j).getGroup_name(),myEmailID));
+		}
+		
+		
+		
 		
 		Collections.sort(status_list,new Comparator<Status>(){
             @Override
@@ -223,6 +247,10 @@ public class StatusResource {
                 return u1.getStatusID()<u2.getStatusID()?-1:1;
             }
         });
+		
+		
+		
+		
 		
 		
 		return status_list;
@@ -245,7 +273,7 @@ public class StatusResource {
     	ArrayList<Status> status_list= new ArrayList<Status>(); 
     	//it gives mere all status
     	String str0="home";
-		status_list.addAll(s1.getAllDetailsOfEachStatus(myEmailID,str0)); 
+		status_list.addAll(s1.getAllDetailsOfEachStatus(myEmailID,str0,myEmailID)); 
     
 		ArrayList<User> al_friends2=new ArrayList<User>();
         System.out.println("fetching all my friends ke status");		
@@ -253,10 +281,10 @@ public class StatusResource {
 		for(int i=0;i<al_friends2.size();i++)
 		{
 			String e1=al_friends2.get(i).getEmailID();
-			status_list.addAll(s1.getAllDetailsOfEachStatus(e1,myEmailID));
+			status_list.addAll(s1.getAllDetailsOfEachStatus(e1,myEmailID,myEmailID));
 			
 		}
-		status_list.addAll(s1.getAllDetailsOfEachStatus(myEmailID,myEmailID));
+		status_list.addAll(s1.getAllDetailsOfEachStatus(myEmailID,myEmailID,myEmailID));
 		
 		
 		Collections.sort(status_list,new Comparator<Status>(){
@@ -273,14 +301,25 @@ public class StatusResource {
     @GET
     @Path("/getOtherAllStatus")
 	@Produces({MediaType.APPLICATION_JSON})
-    public ArrayList<Status> getOtherKeAllStatus(@CookieParam("ID1") int userID) throws JsonParseException, JsonMappingException, IOException
+    public ArrayList<Status> getOtherKeAllStatus(@CookieParam("ID1") int userID, @CookieParam("ID") String jwt) throws JsonParseException, JsonMappingException, IOException
     {
     	User u1=RetriveService.getUserAllDataByUserID(userID);
+    	
+    	
+    	Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(jwt).getBody();
+			    System.out.println("Subject: " + claims.getSubject());
+			    String myEmailID=claims.getSubject();
+ 	
+    	
+    	
+    	
     	
     	ArrayList<Status> status_list= new ArrayList<Status>(); 
     	//it gives mere all status
     	String str1="home";
-		status_list.addAll(s1.getAllDetailsOfEachStatus(u1.getEmailID(),str1)); 
+		status_list.addAll(s1.getAllDetailsOfEachStatus(u1.getEmailID(),str1,myEmailID)); 
 		System.out.println("status_listttttttttttttttttttttttttttttttttttttttttttt"+u1.getEmailID());
 		
 		
@@ -291,10 +330,10 @@ public class StatusResource {
 		for(int i=0;i<al_friends1.size();i++)
 		{
 			String e1=al_friends1.get(i).getEmailID();
-			status_list.addAll(s1.getAllDetailsOfEachStatus(e1,u1.getEmailID()));
+			status_list.addAll(s1.getAllDetailsOfEachStatus(e1,u1.getEmailID(),myEmailID));
 			
 		}
-		status_list.addAll(s1.getAllDetailsOfEachStatus(u1.getEmailID(),u1.getEmailID()));
+		status_list.addAll(s1.getAllDetailsOfEachStatus(u1.getEmailID(),u1.getEmailID(),myEmailID));
 		
 		Collections.sort(status_list,new Comparator<Status>(){
             @Override

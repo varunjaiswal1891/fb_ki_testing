@@ -13,8 +13,19 @@ public class Status {
 	   private String group_name;
 	   private String feeling;
 	   private String timelineid;
+	   private String name2;
+	   private String postedon;
+	   private  ArrayList<Comment> a;
+	 private int color;
 	   
-	   public String getFeeling() {
+	   public String getName2() {
+		return name2;
+	}
+	
+	public void setName2(String name2) {
+		this.name2 = name2;
+	}
+	public String getFeeling() {
 		return feeling;
 	}
 	public void setFeeling(String feeling) {
@@ -26,7 +37,7 @@ public class Status {
 	public void setTimelineid(String timelineid) {
 		this.timelineid = timelineid;
 	}
-	private  ArrayList<Comment> a;
+	
 	   
 	   
 	   
@@ -64,19 +75,39 @@ public class Status {
 	   public Status(){
 		 
 	   }
-	   public Status(int statusID,String status_desc,String emailID,String created,int LikesCount,String name,String feeling,String timelineid){
+	   public Status(int color,int statusID,String postedon,String status_desc,String name2,String emailID,String created,int LikesCount,String name,String feeling,String timelineid){
 		   this.statusID=statusID;
 		   this.status_desc=status_desc;
 		   this.emailID=emailID;
 		   this.created=created;
 		   flag=1;
 		   this.name=name;
+		   this.postedon=postedon;
+		   this.name2=name2;
 		   this.likes_count=LikesCount;
 		   this.feeling=feeling;
 		   this.timelineid=timelineid;
 		   a=new ArrayList<Comment>();
+		   this.color=color;
+		 
 		   }
 	  
+	public String getPostedon() {
+		return postedon;
+	}
+
+	public void setPostedon(String postedon) {
+		this.postedon = postedon;
+	}
+
+	public int getColor() {
+		return color;
+	}
+
+	public void setColor(int color) {
+		this.color = color;
+	}
+
 	public int getStatusID() {
 		return statusID;
 	}
