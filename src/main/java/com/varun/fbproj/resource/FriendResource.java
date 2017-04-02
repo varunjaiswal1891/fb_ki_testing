@@ -466,9 +466,6 @@ public class FriendResource {
 	
 	}//findMyFriend method ends here
 	
-	
-	
-	
 	@GET
     @Path("/count_of_MutualFriends")
 	@Produces({MediaType.APPLICATION_JSON})
@@ -482,10 +479,13 @@ public class FriendResource {
 			    System.out.println("Subject: " + claims.getSubject());
 			   // System.out.println("Expiration: " + claims.getExpiration());
 			  String myEmailID=claims.getSubject();
+			  System.out.println("myEmailID is.............."+myEmailID);
 	//System.out.println(email+"------------------");
 	String email=RetriveService.emailIDfromuID(userID);
+	System.out.println("------------------"+email+"------------------");
 	ArrayList<User> al_friends=new ArrayList<User>();
 		ArrayList<User> al_mutual_friends=new ArrayList<User>();
+		ArrayList<User> al_mutual_friends1=new ArrayList<User>();
        //  System.out.println("fetching all my friends list");
 		al_friends=GetMyAllFriends.getMyFriends(al_friends,myEmailID);// al_friends containg your friend list
 		al_mutual_friends=GetMyAllFriends.getMyFriends(al_mutual_friends,email);
@@ -503,14 +503,14 @@ public class FriendResource {
 	    			   
 	    		   }
 	    	   }
-	    	   if(flag==0)
-	    		   al_mutual_friends.remove(j);
+	    	   if(flag==1)
+	    		   al_mutual_friends1.add(al_mutual_friends.get(j));
 	       }	    
 		    
 		
 		
 	//	System.out.println("list ="+ al_mutual_friends);
-		return al_mutual_friends;	
+		return al_mutual_friends1;	
 	
 	}//count_of_MutualFriends
 	
@@ -553,6 +553,10 @@ public class FriendResource {
 			
 	}//findMyFriend method ends here
 
+	
+	
+	
+	
 	
 	
 	
