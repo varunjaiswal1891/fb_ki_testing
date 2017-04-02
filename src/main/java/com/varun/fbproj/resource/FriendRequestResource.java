@@ -123,6 +123,27 @@ public class FriendRequestResource {
 		return "Request deletion failed";
 	}//method ends here
 	
+	//Removes friend suggestion from the list
+	@DELETE
+    @Path("/removeRequest")
+	@Consumes({MediaType.TEXT_PLAIN})
+	@Produces({MediaType.TEXT_PLAIN})
+    public static String removeFriendRequest(@CookieParam("ID") String jwt,String suggestEmailID
+    		) throws JsonParseException, JsonMappingException, IOException{
+		System.out.println("*INSIDE REMOVE*");
+		System.out.println("jwt="+ jwt);
+		Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(jwt).getBody();
+			    System.out.println("Subject: " + claims.getSubject());
+			  String myEmailID=claims.getSubject();
+		
+		if(FriendRequestService.removeFriendRequest(myEmailID, suggestEmailID))
+		{
+			return "Request REMOVED successfully";
+		}
+		return "Request REMOVAL failed";
+	}//method ends here
 	
 	@GET
     @Path("/giveMyRequests")

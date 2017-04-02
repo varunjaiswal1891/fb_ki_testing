@@ -470,10 +470,10 @@
     //alert(foo);
       $.ajax({
                  type: "GET",
-                  contentType: "text/plain",  //send data to server in this format
+                    //send data to server in this format
                   url:"http://localhost:8080/DemoFB/webapi/user/retrive_other",
                   dataType: "JSON",  //expect response of this type
-                  data:other_jwt,
+                  
                      
                        success: function(response){  
                          // we have the response  

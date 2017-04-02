@@ -20,40 +20,11 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	
-	
-
-	var ID = $.cookie("ID");
-	if(ID==null)
-	{
-		window.location.replace("appHome.html");
-	}
-	
-	
-	
-	
 	var x=$.cookie("ID");
 	//document.write(x);
 	$("#logoutForm").submit(function(e){
 	        e.preventDefault();
 	 });
-	$("#filtermyFriends").click(function(e){
-	      alert("filtering in progress...");
-	           
-	            var college1=$("input#filterclg").val();
-	            $.cookie("college1",college1);
-	           // alert(college1);
-	            var hometown1=$("input#filterhome").val();
-	            $.cookie("hometown1",hometown1);
-	         //alert(hometown1);
-	            var cityOfWork1=$("input#filtercity").val();
-	            $.cookie("cityOfWork1",cityOfWork1);
-			//alert(cityOfWork1);
-	            var highschool1=$("input#filterschool").val();
-	            $.cookie("highschool1",highschool1);
-				//alert(highschool1);
-	          
- 		});  
 
 	$(function(){
 		var foo = $.cookie("ID");
@@ -95,7 +66,7 @@ $(document).ready(function() {
 		 	$.ajax({
         		 type: "GET",
     	        contentType: "text/plain",  //send data to server in this format
-    	        url:"http://localhost:8080/DemoFB/webapi/user/search",
+    	        url:"http://localhost:8080/DemoFB/webapi/user/filterSearch",
     	        dataType: "JSON",  //expect response of this type
     	        data: foo,
                   
@@ -213,38 +184,53 @@ $(document).ready(function() {
 		 	  }); 
 			   }
 
+	   	   
+	   $("#homeButton").click(function(e){
+		   window.location.replace("userHome1.html");
+	   }); 	   
 	
 	
 	
 	  $("#logoutButton1").click(function(e){
-		 $.cookie("ID",null);
+		   var foo = $.cookie("ID");
+      	 //alert("logout success");
    	   window.location.replace("appHome.html");	  
 			
+	   /* $.ajax({
+	        type: "DELETE",
+	        contentType: "text/plain",  //send data to server in this format
+	        url:"http://localhost:8080/DemoFB/webapi/user/logout",
+	        dataType: "text",  //expect response of this type
+	        data: foo,
+	        success: function(resp){
+	            //alert("succes done");
+	            //alert(data);
+	            
+	            if(resp!=null){
+	            			
+	                    	 alert("logout success");
+	                    	  // var obj = JSON.parse(JSON.stringify(resp));
+	                    	   window.location.replace("appHome.html");
+	                    	   $.removeCookie("ID");
+	                    	  
+	            }	
+	            else
+	            {
+	            	alert("logout failed.. ");
+	            	window.location.replace("appHome.html");
+	            }	
+	            
+
+	            
+	        },
+	        error: function(jqXHR, textStatus, errorThrown){
+	            alert('logout error: ' + textStatus);
+	        }
+	    });*/
+	           	
+	        	
+	       
 	   });//logout button ends ends
-	   
-	   
-	    $('a[href="#uName"]').click(function(){
-    		if(ID!=null)
-    		{window.location.replace("timeLine1.html"); 
-    		}
-    		});
-	   
-		$('a[href="#uHome"]').click(function(){
-    		if(ID!=null)
-    		{window.location.replace("userHome1.html"); 
-    		}
-    		});
-		$('a[href="#uFriend"]').click(function(){
-    		if(ID!=null)
-    		{window.location.replace("userFriend.html"); 
-    		}
-    		});
-	   
-       
-	   
-	   
-	   
-	   
 	   $("#search").click(function(e){
  		  
            var key=$("input#srch-term").val();
@@ -341,13 +327,13 @@ $(document).ready(function() {
                             </form>
                             <ul class="nav navbar-nav navbar-center">
                             <li>
-                                <a href="#uName" id="userName"><i class="glyphicon glyphicon-user"></i> User Name</a>
+                                <a href="timeLine1.html" id="userName"><i class="glyphicon glyphicon-user"></i> User Name</a>
                               </li>
                               <li>
-                                <a href="#uHome"><i class="glyphicon glyphicon-home"></i> Home</a>
+                                <a href="userHome1.html"><i class="glyphicon glyphicon-home"></i> Home</a>
                               </li>
                               <li>
-                                <a href="#uFriend"><i class="glyphicon glyphicon-user"></i> Find Friends</a>
+                                <a href="userFriend.html"><i class="glyphicon glyphicon-user"></i> Find Friends</a>
                               </li>
                               <li>
                                 <a href="todoPage.html" title="Friend Requests"><i class="glyphicon glyphicon-user"></i><span class="badge">9</span></a>
@@ -464,47 +450,7 @@ $(document).ready(function() {
 					</div>
 					<!-- /sidebar -->
 				  
-				  
-				<div class="col-sm-3 col-xs-3">
-				
- 											  <div class="panel panel-default">
-										<div class="panel-heading"> <h4>Filter Result</h4></div>
-										  <div class="panel-body">	
- 	   <form id="contact" action="Search2.html" >
-    <div class="input-group input-group-sm" style="max-width:480px;">
-   
-	 <fieldset>
-      Hometown: <input placeholder="Filter using hometown" type="text" id="filterhome">
-    </fieldset>
-	<br>
-	<fieldset>
-      Current city: <input placeholder="Filter using current city" type="text" id="filtercity">
-    </fieldset>
-	<br>
-	<fieldset>
-      High School: <input placeholder="Filter using high school" id="filterschool" type="text" >
-    </fieldset>
-	<br>
-	<fieldset>
-      College: <input placeholder="Filter using college name" type="text" id="filterclg" >
-    </fieldset>
-	<br>
-	
-   <div class="input-group-btn">
-		<button type="submit" id="filtermyFriends" class="btn btn-primary btn-sm" style="margin-top:.5cm">Filter Friends</button>
-		</div>
-		</div>
-      
-  
-  </form>
-  </div>
-  </div>									  
-  </div>
-										
-									 
-				  
-				  
-				<div class="col-sm-5 col-xs-5">
+				<div class="col-sm-7 col-xs-7">
 				
 					<div class="panel panel-default">
 										<div class="panel-heading"><h4>Search Result:</h4></div>
@@ -513,11 +459,20 @@ $(document).ready(function() {
 										<p id="SearchResult"></p>
 									  </div>
 									  </div>	
+									  
+									  
+									  
+									  	
 				</div>
 				
 				
+								  
+														
+									
+								   
+																	  
 								   <!-- main col right -->
-								  <div class=" col-sm-2 col-xs-2 affix" style="float:right; left:970px; top:20px;" >
+								  <div class=" col-sm-3 col-xs-3 affix" style="float:right; left:970px; top:20px;" >
     	 <br>
 	   <div class="panel panel-primary" style="float:right; left:970px; top:30px; min-height: 2000px">
 	   <div class="panel-heading"><h4>My Friends</h4></div>
@@ -539,11 +494,6 @@ $(document).ready(function() {
 				  
 				</div>
 			</div>
-			
-			
-
-			
-			
 		
         <script type="text/javascript" src="assets/js/jquery.js"></script>
         <script type="text/javascript" src="assets/js/bootstrap.js"></script>
