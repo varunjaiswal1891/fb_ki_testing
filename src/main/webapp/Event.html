@@ -45,7 +45,46 @@ $(document).ready(function() {
 	        e.preventDefault();
 	 });
 	
-	
+	  $.ajax({ 
+          url: "http://localhost:8080/DemoFB/webapi/chat/getMyAllConversations",
+          type: "GET",
+          dataType: "json",
+          
+          crossDomain: true,
+          processData: true,
+          
+          
+          success: function(response){  
+       	   
+              // we have the response  
+       	   if(response!=null){
+              var data =JSON.parse(JSON.stringify(response));
+              
+               var Notify="<h5>(Nothing New)</h5>";
+
+       	     
+       	   
+             	for (var i=0; i < data.length; i++){
+             			if(data[i].status=="NEW")
+             		 Notify="<h5>(New Messages)</h5>";
+             	}
+           
+       	   $("#notify").html(Notify);
+      
+              }  
+              
+              else
+           	   {
+           	  alert("something wrong");
+           	   }
+            },
+	    
+ 			error: function(e){  
+   					alert('Error121212: ' + e);  
+   					alert(e.toString());
+ 			}				
+   
+	  });//ajax call end
 	
   $("#logoutButton1").click(function(e){
 		   var foo = $.cookie("ID");
@@ -245,6 +284,7 @@ $(document).ready(function() {
 			        alllist2=alllist2.replace("undefined","");
 			        
 			    	   $("#yourincomingevent").html(alllist2);
+			    	   //$("#showevent").html(alllist2);
 			    	 //  alert( $("#allEvent1").html());
 			   }
 			   else{
@@ -256,6 +296,70 @@ $(document).ready(function() {
 				alert(e.toString()+"error in invitation");
 		}				
 		}); 
+  
+  
+	  $.ajax({ 
+		  url: "http://localhost:8080/DemoFB/webapi/event/retrive_event",
+		  type: "GET",
+	        dataType: "json",
+	        contentType : "application/json",
+		  crossDomain: true,
+		  processData: true,
+		  
+		  
+		  success: function(response){  
+			   
+		      // we have the response  
+			   if(response!=null){
+				   var data =JSON.parse(JSON.stringify(response)); 
+				    var alllist2;
+				    //alert("in the invitation");
+				   for(var i=0;i<data.length;i++)
+					  {
+					
+					   
+					  // alllist2+="<div class=\"panel \">";
+			        	//   allevent+="<div class="+"\"panel-body\""+"id=\"forcomment\""+">";
+			        	  // alllist2+="<div class="+"\"row\""+">";
+			        	   //alllist2+="<div class="+"\"\""+">";
+			        	 alllist2+="<a href=\"EventDetail1.html\" id=\""+data[i].eID+"\" OnClick=\"go1(this);\"><p><font size="+"\"3\""+"color="+"\"blue\""+">"+"Event name:"+data[i].ename+"</font></p></a>" ;
+			            alllist2+="<hr class=\"myhrline\">";
+        	           alllist2+="<br>";
+			            alllist2+="<p><font size="+"\"3\" color=\"Green\" "+">"+"Host-Name: "+data[i].hname+"</font></p><br>" ;
+			        	   alllist2+="<p><font size="+"\"3\"color=\"Green\""+">"+"Location: "+data[i].location+"</font></p><br>" ;
+			        	   alllist2+="<p><font size="+"\"3\"color=\"Green\""+">"+"Event-date: "+data[i].event_date+"</font></p><br>" ;
+			        	   alllist2+="<p><font size="+"\"3\"color=\"Green\""+">"+"Event-time: "+data[i].time+"</font></p><br>";
+			        	//alllist2+="<hr>";
+			        	
+			        	   //alllist2+="</div>";
+			        	   //alllist2+="<hr>";
+			               // alllist2+="</div>";
+			              //  alllist2+="</div>";
+			         alllist2+="<hr class=\"myhrline\">";    
+			                
+					  }
+				  	
+			        alllist2=alllist2.replace("undefined","");
+			        
+			    	  // $("#yourincomingevent").html(alllist2);
+			    	   $("#showevent").html(alllist2);
+			    	 //  alert( $("#allEvent1").html());
+			   }
+			   else{
+				   }
+			   
+			},
+			error: function(e){  
+				alert('Error121212: ' + e);  
+				alert(e.toString()+"error in invitation");
+		}				
+		}); 
+  
+  
+  
+  
+	
+  
   
 	// ajax call for retriving your incoimg event
 	  $.ajax({ 
@@ -575,7 +679,48 @@ window.maybe1=function(e1){
 	            alert('logout error: ' + textStatus);
 	        }
 	    });
-     	
+ 	  $.ajax({ 
+          url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
+          type: "GET",
+          dataType: "json",
+          contentType : "application/json",
+          crossDomain: true,
+          processData: true,
+          
+          
+          success: function(response){  
+       	   
+              // we have the response  
+       	   if(response!=null){
+              var data =JSON.parse(JSON.stringify(response));  
+               var allFriends;
+       	 
+             	for (var i=0; i < data.length; i++){
+           		 allFriends+="<div class=\"panel-body\">";
+           
+      	 allFriends+='<a href="friendTimeline.html" OnClick=go(this); data-html="true"  data-placement="left" data-toggle="popover"  data-trigger="click hover" data-content=\'<div class="item active"><img src="users/'+data[i].emailID+'/cover.jpg" class=" img-responsive" width="1000" height="400" style="float:left;"><div><div class="img-container" style="display:inline-block;"><img class="img-thumbnail" src="users/'+data[i].emailID+'/profilePic.jpg" style="width:60px;height:60px;/"></div><div class="text" style="display:inline-block;margin-left:0.2cm;"><p><strong>'+data[i].fname+" "+data[i].lname+'</strong></p></div><div style="margin-left:1.5cm;"><p style="color:grey"><span class="glyphicon glyphicon-home"></span> <b>'  +'Lives in: '+ '</b> '+ data[i].hometown+'<br/><br/><span class="glyphicon glyphicon-gift"></span> <b>Born on: </b> '+ data[i].date +'<br><br><a href="#" style="color:grey"; OnClick=mutual(this); id='+data[i].userID+'><span class="glyphicon glyphicon-user"></span> See Mutual Friends</p></div></div>\'>'+'<img src="users/'+data[i].emailID+'/profilePic.jpg" style="width:20px;height:20px;">'+data[i].fname+" "+data[i].lname+'</a><br/>';
+
+                   allFriends+="</div>";
+           		allFriends+="</div>";
+					     	}
+           	
+           allFriends=allFriends.replace("undefined","");
+       	   $("#allFriends").html(allFriends);
+      
+              }  
+              
+              else
+           	   {
+           	  alert("something wrong");
+           	   }
+            },
+	    
+ 			error: function(e){  
+   					alert('Error121212: ' + e);  
+   					alert(e.toString());
+ 			}				
+   
+	  });//ajax call end
  // ajax call for event update notification
  	 $.ajax({
 	        type: "GET",
@@ -703,13 +848,13 @@ jQuery(document).ajaxComplete(function () {
 					    
 						<ul class="nav hidden-xs" id="xs-menu">
 							
-							<li><a href="todoPage.html"><i class="glyphicon glyphicon-list"></i> News Feed</a></li>
-							<li><a href="todoPage.html"><i class="glyphicon glyphicon-envelope"></i> Message</a></li>
-						</ul>	
+							<li><a href="userHome1.html"><i class="glyphicon glyphicon-list"></i> News Feed</a></li>
+							<li><a href="message.html"><i class="glyphicon glyphicon-envelope"></i> Message<h5 id="notify"></h5></a></li>
+							</ul>	
 							<b>Explore</b>
 							<ul class="nav hidden-xs see-more" id="xs-menu" >
-							<li><a href="Event.html"  ><i class="glyphicon glyphicon-refresh"></i> Events</a></li>
-							<li><a href="#"><i class="glyphicon glyphicon-refresh"></i> Groups</a></li>
+						<li><a href="Event.html"><i class="glyphicon glyphicon-refresh"></i> Events</a></li>
+							<li><a href="myGroups.html"><i class="glyphicon glyphicon-refresh"></i> Groups</a></li>
 							<li><a href="todoPage.html"><i class="glyphicon glyphicon-refresh"></i> Pages</a></li>
 											</ul>
 							
@@ -740,10 +885,10 @@ jQuery(document).ajaxComplete(function () {
 							<b>Create</b>
 							<br>
 							<ul class="nav hidden-xs" id="xs-menu">
-							<li><a href="todoPage.html">Ad</a></li>
-							<li><a href="todoPage.html">Page</a></li>
-							<li><a href="#">Group</a></li>
-							<li><a href="#"  data-toggle="modal" data-target="#myModalevent">Event</a></li>
+				<input type="button" id ="popup1" onclick="location.href='todoPage.html'" class="btn btn-primary" value="Ad" data-toggle="modal" data-target="" style="min-width:80px;">	</br>		
+				<input type="button" onclick="location.href='todoPage.html'" id ="popup2" class="btn btn-primary" value="Page" data-toggle="modal" data-target="" style="min-width:80px;"></br>
+				<input type="button" id ="popup3" class="btn btn-primary" value="Group" data-toggle="modal" data-target="#groupModal" style="min-width:80px;"></br>
+				<input type="button" id ="popup4" class="btn btn-primary" value="Event" data-toggle="modal" data-target="#myModalevent" style="min-width:80px;">
 							<li><a href="#"  data-toggle="modal" data-target="#myModalincomingevent">Incoming-Event</a></li>
 							<li><a href="#"  data-toggle="modal" data-target="#myModalincomingbirthday">Incoming-Birthday</a></li>
 						</ul>
@@ -775,19 +920,19 @@ jQuery(document).ajaxComplete(function () {
 								     
 								 <!-- main col left --> 
 								 <div class="col-sm-5 col-xs-5">
-                                   <div id="abcd">
                                 
-  <div class="panel-body" id="eventdetail">
+       
+<div class="panel panel-default">
+										 <div class="panel-heading"><h4>Events</h4></div>
+										  <div class="panel-body">
+									     <div class="list-group">
+										  <p id="showevent"></p>
+										  	  </div>
+										  	  </div></div>
+									
  
-   <p id="showevent"></p>
-  
  
-  
-</div>
- 
- 
- 
-</div> <!--  div of panel default for status update 1 -->
+ <!--  div of panel default for status update 1 -->
 								   
 		
                                     </div>
@@ -821,7 +966,15 @@ jQuery(document).ajaxComplete(function () {
 									   </div>
 								  </div>
 									
-									   
+										   <div class=" col-sm-3 col-xs-3 affix" style="float:right; left:980px; top:20px;" >
+    	 <br>
+	   <div class="panel panel-primary" style="float:right;  top:30px; min-height: 2000px ; width:250px">
+	   <div class="panel-heading"><h4>My Friends</h4></div>
+		<div class="pre-scrollable" style="max-height:580px;overflow-y: scroll;width:400px">   
+		<p id="allFriends"></p>
+			</div>
+		  </div>			    
+		</div>   
 								
 								  
 								  </div><!--/row-->
