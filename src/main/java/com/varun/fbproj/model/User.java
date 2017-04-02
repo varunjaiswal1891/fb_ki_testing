@@ -21,9 +21,6 @@ public class User {
 		private String highschool;
 		
 		
-		
-		private String user_token;
-		
 		public User()
 		{
 			
@@ -34,8 +31,8 @@ public class User {
 				String fname,String lname,String date,String pic,
 				String mob_no,String college,
 				String placeOfWork,String hometown,
-				String cityOfWork,String highschool,			
-				String user_token
+				String cityOfWork,String highschool			
+				
 				) {
 			super();
 			this.userID=userID;
@@ -51,7 +48,7 @@ public class User {
 			this.hometown = hometown;
 			this.cityOfWork=cityOfWork;
 			this.highschool=highschool;
-			this.user_token=user_token;
+			
 		}
 
 		@JsonProperty(value = "userID")
@@ -83,6 +80,8 @@ public class User {
 		public void setPassword(String password) {
 			this.password = password;
 		}
+
+
 
 		@JsonProperty(value = "fname")
 		public String getFname() {
@@ -145,16 +144,6 @@ public class User {
 
 		public void setCollege(String college) {
 			this.college = college;
-		}
-
-
-		public String getUser_token() {
-			return user_token;
-		}
-
-
-		public void setUser_token(String user_token) {
-			this.user_token = user_token;
 		}
 
 

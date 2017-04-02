@@ -2,8 +2,15 @@ package com.varun.fbproj.resource;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 import javax.jws.WebMethod;
@@ -16,6 +23,10 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -29,6 +40,7 @@ import com.varun.fbproj.service.CommentService;
 import com.varun.fbproj.service.GroupService;
 import com.varun.fbproj.service.LikeService;
 import com.varun.fbproj.service.StatusService;
+import com.varun.fbproj.service.UserImageService;
 
 @WebService()
 @Path("/group")
@@ -47,20 +59,26 @@ public class GroupResource {
     
 	}
 	
-	
+	//creates a new group by calling groupService 
 	@POST
     @Path("/create_group")
-	@Consumes({MediaType.TEXT_PLAIN})
+	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.TEXT_PLAIN})
-    public String createGroup(@CookieParam("ID") String jwt,String grpName) throws IOException{
+    public String createGroup(@CookieParam("ID") String jwt,Group grp) throws IOException{
 	
-		System.out.println("jwt="+ jwt);
+		System.out.println("inside group");
 		Claims claims = Jwts.parser()         
 			       .setSigningKey("secret".getBytes("UTF-8"))
 			       .parseClaimsJws(jwt).getBody();
 			    System.out.println("Subject: " + claims.getSubject());
 			  String myEmailID=claims.getSubject();
-		if(GroupService.createGroup(grpName, myEmailID))
+		//String myEmailID="umesh@gmail.com";
+		Group grp1=new Group();
+		grp1.setGroup_name(grp.getGroup_name());
+		grp1.setGroup_privacy(grp.getGroup_privacy());
+		grp1.setOwner(myEmailID);
+		System.out.println(grp1.getGroup_privacy());
+		if(GroupService.createGroup(grp1, myEmailID))
 		{
 			return "group created";
 		}
@@ -68,6 +86,8 @@ public class GroupResource {
 		return null;
 	}//method create group ends here
 	
+	
+	//adding a new user to the group
 	@POST
     @Path("/addUser_group")
 	@Consumes({MediaType.APPLICATION_JSON})
@@ -88,6 +108,7 @@ public class GroupResource {
 	}//method add user group ends here
 	
 
+	//shows the group list of which the user is a part
 	@GET
     @Path("/show_my_groups")
 	@Produces({MediaType.APPLICATION_JSON})
@@ -107,6 +128,7 @@ public class GroupResource {
 	}//show my groups ends here
 
 
+	//deleting the group using groupService class
 	@DELETE
     @Path("/delete_group")
 	@Consumes({MediaType.TEXT_PLAIN})
@@ -128,7 +150,7 @@ public class GroupResource {
 	}// delete a group ends here
 	
 	
-	
+	//deleting a user from the group
 	@DELETE
     @Path("/delete_user_from_group")
 	@Consumes({MediaType.APPLICATION_JSON})
@@ -149,7 +171,7 @@ public class GroupResource {
 	}// delete a group ends here
 	
 
-	
+	//the user himself wants to leave the group
 	@DELETE
     @Path("/leave_group")
 	@Consumes({MediaType.TEXT_PLAIN})
@@ -173,10 +195,10 @@ public class GroupResource {
 	
 	
 	
-	
+	//A user adding status to a particular group of which he is a part
 	    @POST
 	    @Path("/addStatus")
-	    @Consumes({MediaType.TEXT_PLAIN})
+	   // @Consumes({MediaType.TEXT_PLAIN})
 	    @Produces({MediaType.TEXT_PLAIN})
 	    public String addStatus(@CookieParam("ID") String jwt,String status_desc,@CookieParam("ID_group") String group_name)throws JsonParseException, JsonMappingException, IOException{
 
@@ -189,7 +211,7 @@ public class GroupResource {
 				    System.out.println("Subject: " + claims.getSubject());
 				   // System.out.println("Expiration: " + claims.getExpiration());
 				  String myEmailID=claims.getSubject();
-				  
+			
 		 Status sobj=new Status();
 		 sobj.setEmailID(myEmailID);
 		 sobj.setGroup_name(gname);
@@ -202,7 +224,7 @@ public class GroupResource {
 	    } // end of addStatus
 	    
 	    
-	    /* this method working good*/
+	    //adding a comment to a particular post in a group
 	    @POST
 	    @Path("/addComment")
 	    @Consumes({MediaType.APPLICATION_JSON})
@@ -230,7 +252,7 @@ public class GroupResource {
 	     }//addComment ends here
 	    
 	    
-	    /* this method working good*/
+	    //a user likes a post in the group
 	    @POST
 	    @Path("/incrementLike")
 	    @Consumes({MediaType.APPLICATION_JSON})
@@ -287,7 +309,7 @@ public class GroupResource {
 	    }//method ends here
 
 
-	    
+	    //get all status of the particular requested group
 	    @GET
 	    @Path("/getGroupAllStatus")
 		@Produces({MediaType.APPLICATION_JSON})
@@ -304,7 +326,7 @@ public class GroupResource {
 	    }//method ends here
 	    
 	
-	    
+	    //get a list of members of the group
 	    @GET
 	    @Path("/getGroupMembers")
 		@Produces({MediaType.APPLICATION_JSON})
@@ -319,6 +341,8 @@ public class GroupResource {
 	    }//method ends here
 	    
 	    
+	    
+	    //Requesting the owner of the group
 	    @GET
 	    @Path("/getGroupAdmin")
 		@Produces({MediaType.APPLICATION_JSON})
@@ -331,7 +355,35 @@ public class GroupResource {
 			
 	    }//method ends here
 	    
+	    @POST
+		@Path("/uploadPic")
+		@Produces(MediaType.TEXT_PLAIN)
+		@Consumes(MediaType.MULTIPART_FORM_DATA)
+		public Response updateProfilePic(
+				
+		        @FormDataParam("file") InputStream fileInputStream,
+		        @FormDataParam("file") FormDataContentDisposition fileFormDataContentDisposition,@CookieParam("ID_group") String token,@CookieParam("ID") String group_name) throws UnsupportedJwtException, MalformedJwtException, SignatureException, IllegalArgumentException, UnsupportedEncodingException, URISyntaxException {
+		    // local variables
+			
+		    String fileName = null;
+		    String uploadFilePath=null;
+		    System.out.print("backend");
+		    System.out.print(token);
+		    System.out.println("jwt="+ token);
+			Claims claims = Jwts.parser()         
+				       .setSigningKey("secret".getBytes("UTF-8"))
+				       .parseClaimsJws(token).getBody();
+				    System.out.println("Subject: " + claims.getSubject());
+				    System.out.println("Expiration: " + claims.getExpiration());
+				  String emailID=claims.getSubject();
+		    //System.out.print(userId);
+		    fileName = fileFormDataContentDisposition.getFileName();
+		    uploadFilePath=new GroupService().uploadPic(fileInputStream, fileName,group_name,emailID);
+		    URI url = new URI("http://localhost:8080/DemoFB/groupPage.html");
+		    return Response.temporaryRedirect(url).build();
+		
+
+		}
+}
 	
 	
-	
-}//class ends

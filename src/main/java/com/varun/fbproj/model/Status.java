@@ -11,7 +11,22 @@ public class Status {
 	   private int likes_count;
 	   private int unlikes_count;
 	   private String group_name;
-	   private  ArrayList<Comment> a;
+	   private String feeling;
+	   private String timelineid;
+	   
+	   public String getFeeling() {
+		return feeling;
+	}
+	public void setFeeling(String feeling) {
+		this.feeling = feeling;
+	}
+	public String getTimelineid() {
+		return timelineid;
+	}
+	public void setTimelineid(String timelineid) {
+		this.timelineid = timelineid;
+	}
+	private  ArrayList<Comment> a;
 	   
 	   
 	   
@@ -49,7 +64,7 @@ public class Status {
 	   public Status(){
 		 
 	   }
-	   public Status(int statusID,String status_desc,String emailID,String created,int LikesCount,String name){
+	   public Status(int statusID,String status_desc,String emailID,String created,int LikesCount,String name,String feeling,String timelineid){
 		   this.statusID=statusID;
 		   this.status_desc=status_desc;
 		   this.emailID=emailID;
@@ -57,6 +72,8 @@ public class Status {
 		   flag=1;
 		   this.name=name;
 		   this.likes_count=LikesCount;
+		   this.feeling=feeling;
+		   this.timelineid=timelineid;
 		   a=new ArrayList<Comment>();
 		   }
 	  

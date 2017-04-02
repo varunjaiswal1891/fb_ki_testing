@@ -196,6 +196,7 @@ public class UserResource {
 		user1.setCityOfWork(user.getCityOfWork());
 		user1.setHighschool(user.getHighschool());
 		user1.setDate(user.getDate());
+		
 				if(UpdateService.UpdateUserService(user1))
 		{
 			System.out.println(user1.getCollege());
@@ -229,6 +230,23 @@ public class UserResource {
 	 
     }//retrive method ends here
     
+    
+    @GET
+    @Path("/retrive_email")
+    @Consumes({MediaType.TEXT_PLAIN})
+	@Produces({MediaType.APPLICATION_JSON})
+    public User retriveByEmail(String emailID) throws JsonParseException, JsonMappingException, IOException 
+    {
+    	
+    	System.out.println("Inside retrive email method ");
+    	System.out.println("emailID="+emailID);
+    	System.out.println();
+		User u1= RetriveService.getUserAllData(emailID);
+		
+		System.out.println(u1.getDate());
+		return u1;
+	 
+    }//retrive method ends here
     
     @POST
 	@Path("/uploadProfilePic")

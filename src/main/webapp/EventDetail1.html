@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
+        <meta charset="utf-8">
+        <title>Facebook</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link href="assets/css/bootstrap.css" rel="stylesheet">
+        <link href="assets/css/facebook.css" rel="stylesheet">
+        <script type="text/javascript" src="Jquery/jquery-3.1.1.js"></script>
+ 		<script type="text/javascript" src="Jquery/jquery.cookie.js"></script>
+  		<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>  
+       <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+           <link rel="stylesheet" href="/resources/demos/style.css">
+          
+           <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+            <script type="text/javascript" src="Jquery/jquery.popupoverlay.js"></script>
+          <style>
+  label { width: 100px; }
+  </style>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	var x=$.cookie("ID");//current user logged in cookie
+	var y=$.cookie("ID1");//friend timeline ki cookie
+	var z=$.cookie("ID2");// cuuent event ki cookie
+	var w=$.cookie("ID3");// this is user id which is envited for above event
+	//document.write(x);
+	$("#logoutForm").submit(function(e){
+	        e.preventDefault();
+	 });
+	
+	
+	
+  $("#logoutButton1").click(function(e){
+		   var foo = $.cookie("ID");
+      	// alert("logout success");
+   	   window.location.replace("appHome.html");	  
+	       
+	   });//logout button ends ends
+	   
+	
+	 
+	$.ajax({ 
+        url: "http://localhost:8080/DemoFB/webapi/event/yourevent",
+        type: "GET",
+        dataType: "json",
+        contentType : "application/json",
+        crossDomain: true,
+        processData: true,
+        
+        
+        success: function(response){  
+     	   
+            // we have the response  
+     	   if(response!=null){
+            var data =JSON.parse(JSON.stringify(response));  
+             var allevent;
+        	   
+             allevent+="<div class=\"panel panel-default\">";
+         	//   allevent+="<div class="+"\"panel-body\""+"id=\"forcomment\""+">";
+         	   allevent+="<div class="+"\"row\""+">";
+         	   allevent+="<div class="+"\"col-md-12\""+">";
+         	   allevent+="<br><br>";
+         	   allevent+="<a href=\"EventDetail1.html\" id=\""+data.eID+"\" OnClick=\"go1(this);\"><p><font size="+"\"3\""+"color="+"\"blue\""+">"+"Event name:"+data.ename+"</font></p></a>" ;
+         	   allevent+="<hr>";
+         	   allevent+="<p><font size="+"\"3\"color=\"Green\""+">"+"Host-name: "+data.hname+"</font></p><br>" ;
+         	   allevent+="<p><font size="+"\"3\" color=\"Green\" "+">"+"Event-date: "+data.event_date+"</font></p><br>" ;
+         	   allevent+="<p><font size="+"\"3\"color=\"Green\""+">"+"Event-time: "+data.time+"</font></p><br>" ;
+         	   allevent+="<p><font size="+"\"3\"color=\"Green\""+">"+"Event-location: "+data.location+"</font></p><br>" ;
+         	  // allevent+="<a href=\"EventDetail.html\" id=\""+data[i].eID+"\" OnClick=\"go(this);\">Invite-Friend</a> &nbsp;";
+         	 // allevent+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right \""+"id=\""+data.eID+"\""+" OnClick=\"go(this);\">Invite-Friend</button>"; 
+         	//  allevent+="<a href="+"\"#\""+"id=\""+data.eID+"\""+" OnClick=\"dele(this);\""+"><span class="+"\"glyphicon glyphicon-trash\""+ "style="+"\"color:#3b5998\""+"></span> <font size=\"3\" color="+"\"#3b5998\""+">Delete</font></a>";
+         	   
+         	 // allevent+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right \""+"id=\""+data[i].eID+"\""+" OnClick=\"dele(this);\">Delete</button>";
+         	  // allevent+="<a href=\"#\" id=\""+data[i].eID+"\" OnClick=\"dele(this);\">DELETE</a>";
+         	 
+         	   allevent+="</div>";
+         	   allevent+="<br>";
+                 allevent+="</div>";
+                 allevent+="</div>";
+        
+        	
+        allevent=allevent.replace("undefined","");
+        
+    	   $("#abcd").html(allevent);
+    	  // alert($("#abcd").html());
+   
+           } 
+     	   
+     	    
+            else
+         	   {
+         	  alert("something wrong");
+         	   }
+          },
+    
+			error: function(e){  
+				  alert("we are in alert");
+ 					alert('Error121212: ' + e);  
+ 					alert(e.toString());
+			}				
+ 
+  });//ajax call end
+		///ajax call ends here*/
+       
+		
+		
+		 // ajax call for retrive user that is come on that particular event  
+		
+		
+		$.ajax({ 
+        url: "http://localhost:8080/DemoFB/webapi/event/userListForEvent",
+        type: "GET",
+        dataType: "json",
+        contentType : "application/json",
+        crossDomain: true,
+        processData: true,
+        
+        
+        success: function(response){  
+     	   
+            // we have the response  
+     	   if(response!=null){
+            var data =JSON.parse(JSON.stringify(response));  
+             var alluser;
+        	   for(var i=0;i<data.length;i++){
+        		   
+        			 alluser+="<div class=\"panel-body\">";
+                     alluser+="<div class=\"pull-left col-sm-5\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
+        			alluser+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>";     		  
+        			alluser+="</div>";
+        			alluser+="</div>";
+        	   
+        	   
+        	    }
+        
+        alluser=alluser.replace("undefined","");
+        
+        $("#allUserList").html(alluser);
+    	  // alert($("#abcd").html());
+   
+           } 
+     	   
+     	    
+            else
+         	   {
+         	  alert("something wrong");
+         	   }
+          },
+    
+			error: function(e){  
+				  alert("we are in alert");
+ 					alert('Error121212: ' + e);  
+ 					alert(e.toString());
+			}				
+ 
+  });//ajax call end for user coming on particular event
+		///ajax call ends here*/
+//-----------------------------------------------------------------------------------------------------------
+
+	$.ajax({ 
+        url: "http://localhost:8080/DemoFB/webapi/event/userListFor_may_be_coming_in_Event",
+        type: "GET",
+        dataType: "json",
+        contentType : "application/json",
+        crossDomain: true,
+        processData: true,
+        
+        
+        success: function(response){  
+     	   
+            // we have the response  
+     	   if(response!=null){
+            var data =JSON.parse(JSON.stringify(response));  
+             var alluser;
+        	    for(var i=0;i<data.length;i++){
+        		   
+        			 alluser+="<div class=\"panel-body\">";
+                     alluser+="<div class=\"pull-left col-sm-5\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
+        			alluser+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>";     		  
+        			alluser+="</div>";
+        			alluser+="</div>";
+        	   
+        	   
+        	    }
+        
+        alluser=alluser.replace("undefined","");
+        
+          $("#allUserList1").html(alluser); 
+    	  // alert($("#abcd").html());
+   
+           } 
+     	   
+     	    
+            else
+         	   {
+         	  alert("something wrong");
+         	   }
+          },
+    
+			error: function(e){  
+				  alert("we are in alert");
+ 					alert('Error121212: ' + e);  
+ 					alert(e.toString());
+			}				
+ 
+  });//ajax call end
+		///ajax call ends here*/
+//--------------------------------------------------------------		
+
+          	 $("#postbutton").click(function(e){
+                 		 
+                 		 
+                 		var statusdesc= document.getElementById("posttext").value;
+                 	//	 alert(statusdesc);
+                 		 $.ajax({
+     	        type: "POST",
+     	        contentType: "text/plain",  //send data to server in this format
+     	        url:"http://localhost:8080/DemoFB/webapi/event/addReview",
+     	        dataType: "text",  //expect response of this type
+     	        data: statusdesc,
+     	       success: function(resp){
+     	    	   
+     	    	  if(resp!=null){
+     	    		  
+     	    		 // alert(resp);
+     	    		 $('#posttext').val('');
+     	    		location.reload();
+     	    		  
+     	    	  }
+     	    	  else{
+     	    		
+     	    		  alert("null");
+     	    	  }
+     	    	   
+     	       },
+     	       
+     	      error: function(jqXHR, textStatus, errorThrown){
+   	            alert('status posting error: ' + textStatus);
+   	        }	 
+                 		 
+                 		 
+                 		 });    		 
+                 		 
+                 	 });    //post button   	
+		
+		
+		
+				
+
+//---------------------------------------------------------------------------------------------------------------		
+	
+		$.ajax({ 
+        url: "http://localhost:8080/DemoFB/webapi/event/userListFor_not_coming_in_Event",
+        type: "GET",
+        dataType: "json",
+        contentType : "application/json",
+        crossDomain: true,
+        processData: true,
+        
+        
+        success: function(response){  
+     	   
+            // we have the response  
+     	   if(response!=null){
+            var data =JSON.parse(JSON.stringify(response));  
+             var alluser;
+        	   for(var i=0;i<data.length;i++){
+        		   
+        			 alluser+="<div class=\"panel-body\">";
+                     alluser+="<div class=\"pull-left col-sm-5\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
+        			alluser+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>";     		  
+        			alluser+="</div>";
+        			alluser+="</div>";
+        	   
+        	   
+        	    }
+        
+        alluser=alluser.replace("undefined","");
+        
+       $("#allUserList2").html(alluser); 
+    	  // alert($("#abcd").html());
+   
+           } 
+     	   
+     	    
+            else
+         	   {
+         	  alert("something wrong");
+         	   }
+          },
+    
+			error: function(e){  
+				  alert("we are in alert");
+ 					alert('Error121212: ' + e);  
+ 					alert(e.toString());
+			}				
+ 
+  });//ajax call end
+		///ajax call ends here*/
+		
+		window.go1 = function(e1){
+			 
+			   var friendUserID= $(e1).attr('id');
+			   $.cookie("ID2",friendUserID);
+			   window.location.replace("EventDetail1.html");
+		  
+			
+		   }		
+		
+		
+//------------------------------------------------------------------------------------------------------------
+ 	   	$.ajax({ 
+            url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
+            type: "GET",
+            dataType: "json",
+            contentType : "application/json",
+            crossDomain: true,
+            processData: true,
+            
+            
+            success: function(response){  
+         	   
+                // we have the response  
+         	   if(response!=null){
+                var data =JSON.parse(JSON.stringify(response));  
+                 var allFriends;
+         	 
+               	for (var i=0; i < data.length; i++){
+             		 allFriends+="<div class=\"panel-body\">";
+             		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
+             		allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go2(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-html="+"\"true\""+"data-content ="+"\"Lives in: "+data[i].hometown+" <br>Highschool: "+data[i].highschool+"\">"+data[i].fname+" "+data[i].lname + "</a>";
+           // allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  " data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>"; 		
+             		//  allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID+"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
+                     allFriends+="</div>";
+             		allFriends+="</div>";
+					     	}
+             	
+             allFriends=allFriends.replace("undefined","");
+         	   $("#allFriends").html(allFriends);
+        
+                }  
+                
+                else
+             	   {
+             	  alert("something wrong");
+             	   }
+              },
+	    
+   			error: function(e){  
+     					alert('Error121212: ' + e);  
+     					alert(e.toString());
+   			}				
+     
+	  });//ajax call end
+	  
+     	window.go2 = function(e1){
+   		 
+ 		   var friendUserID= $(e1).attr('id');
+ 		   $.cookie("ID1",friendUserID);
+ 		   //window.location.replace("friendTimeline.html");
+     	  
+ 		
+ 	   }
+		window.inviterequest=function(e1){
+	
+	var uid=$(e1).attr('id');
+	$.cookie("ID3",uid);
+	
+	$.ajax({ 
+		url: "http://localhost:8080/DemoFB/webapi/event/requestforinvite",
+		type: "POST",
+		crossDomain: true,
+		processData: true,
+		 datatype:"text",
+		success: function(response){  
+		//console.log(response);
+		// we have the response  
+		if(response!=null){
+		//var data =JSON.parse(JSON.stringify(response));  
+		//  alert("ajax call");
+		  location.reload();
+	
+		}  
+		else
+			   {
+			  alert("something wrong");
+			   }
+		},
+				error: function(e){  
+			
+						alert('Error121212: ' + e+"going wrong");  
+						alert(e.toString());
+				}				
+		});//ajax call end
+	
+	
+}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		  
+		$.ajax({ 
+	        url: "http://localhost:8080/DemoFB/webapi/event/youreventreviewlist",
+	        type: "GET",
+	        dataType: "json",
+	        crossDomain: true,
+	        processData: true,
+	        
+	        
+	        success: function(response){  
+	     	   
+	            // we have the response  
+	     	   if(response!=null){
+	     		  var data =JSON.parse(JSON.stringify(response));  
+	              // console.log(data);
+	                      var st;
+	                       var fname,lname;
+	                       var count=0;
+	     		  for (var i=0; i < data.length; i++){
+	     			 var email =data[i].u1.emailID;
+	     			  
+	     			 st+="<div class="+"\"panel panel-default\""+">";
+	          	   st+="<div class="+"\"panel-body\""+"id=\"forcomment\""+">";
+	          	   st+="<div class="+"\"row\""+">";
+	          	   st+="<div class="+"\"col-md-12\""+">";
+	          		 st+="<div class=\" col-sm-2\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].u1.emailID+"/profilePic.jpg\""+" /></div>";
+	                // st+="<div class=\" col-sm-5\"><p><font size="+"\"4\""+"color="+"\"blue\""+">"+data[i].name+"</font></p></div>" ;
+	     st+="<a href=\"friendTimeline.html\" OnClick=\"go2(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].u1.fname+"\""+"data-trigger="+"\"hover\""+"data-html="+"\"true\""+"data-content ="+"\"Lives in: "+data[i].u1.hometown+" <br>Highschool: "+data[i].u1.highschool+"\">"+"<font size="+"\"4\""+"color="+"\"blue\""+">"+data[i].u1.fname+" "+data[i].u1.lname + "</font></a>";
+	                  	   
+	          	 	st+="<br><br><br>";
+	          	   st+="<p id="+"\"forstatus\""+">"+"<font size="+"\"4\""+"color="+"\"RED\""+">"+"Review "+(++count)+" : </font>"+"<font size="+"\"4\""+"color="+"\"Green\""+">"+data[i].review_desc+"</font></p>" ;
+	          	   st+="</div></div><hr>";
+	     		  st+="</div></div>";
+	     		  
+	     		  }   // for loop end
+	     	
+	     		 st=st.replace("undefined","");
+	      	   $("#abcd1").html(st);   
+	     	   
+	     	   }//if ends 
+	     	   },//success ends  
+
+	     	 
+			error: function(e){  
+				alert('Error121212: ' + e);  
+				alert(e.toString());
+		}		
+	 
+	}); //ajax call ends
+		
+	  
+	  
+	 	window.go2 = function(e1){
+	  		 
+			   var friendUserID= $(e1).attr('id');
+			   $.cookie("ID1",friendUserID);
+			   //window.location.replace("friendTimeline.html");
+	  	  
+			
+		   }
+				
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+ window.dele=function(e1){
+	 
+	 var eid= $(e1).attr('id');
+	 var obj={eID:eid};
+	 var myJSON=JSON.stringify(obj);
+	  $.ajax({ 
+		  url: "http://localhost:8080/DemoFB/webapi/event/deleteEvent",
+		  type: "DELETE",
+		  dataType: "text",
+		  contentType : "application/json",
+		  data : myJSON,
+		  crossDomain: true,
+		  processData: true,
+		  
+		  
+		  success: function(response){  
+			   
+		      // we have the response  
+			   if(response!=null){
+				 
+				  // alert(response);
+				  
+				  window.location.replace("Event.html");
+			   }
+			   else{
+				   }
+			   
+			},
+			error: function(e){  
+				alert('Error121212: ' + e);  
+				alert(e.toString());
+		}				
+		}); 
+	 
+ }
+	   
+	
+	
+  
+  
+  
+  
+	window.go = function(e1){
+		 
+		   var friendUserID= $(e1).attr('id');
+		   $.cookie("ID2",friendUserID);
+		   window.location.replace("EventDetail.html");
+	  
+		
+	   }
+		
+  
+  
+  
+  
+  
+	   
+	   
+});// READY FUNCTION END HERE
+jQuery(document).ajaxComplete(function () {
+	 $('[data-toggle="popover"]').popover({placement:'left'})  
+	}); 
+</SCRIPT>
+
+
+<body>
+<div class="wrapper">
+			<div class="box">
+				  <div class="row row-offcanvas row-offcanvas-right">
+				 
+				
+					<!-- main right col -->
+					<div class="column col-sm-12 col-xs-12" id="main">
+						
+						<!-- top nav -->
+						<div class="navbar navbar-blue navbar-static-top">  
+							<div class="navbar-header">
+							  <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+								<span class="sr-only">Toggle</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							  </button>
+							  <a href="#" class="navbar-brand logo">f</a>
+							</div>
+							<nav class="collapse navbar-collapse " role="navigation" align="center">
+							<form class="navbar-form navbar-left" action="Search.html">
+								<div class="input-group input-group-sm" style="max-width:480px;">
+								  <input class="form-control" placeholder="Search" name="srch-term" id="srch-term" type="text">
+								  <div class="input-group-btn">
+									<button class="btn btn-default" type="submit" id="search" "><i class="glyphicon glyphicon-search"></i></button>
+								  </div>
+								</div>
+							</form>
+							<ul class="nav navbar-nav navbar-center">
+							<li>
+								<a href="timeLine1.html" id="userName"><i class="glyphicon glyphicon-user" ></i></a>
+							  </li>
+							  <li>
+								<a href="userHome1.html"><i class="glyphicon glyphicon-home"></i> Home</a>
+							  </li>
+							  <li>
+								<a href="userFriend.html">Find Friends</a>
+							  </li>
+							  
+							  <li>
+								<a href="todoPage.html" title="Friend Requests"><i class="glyphicon glyphicon-user"></i><span class="badge">9</span></a>
+							  </li>
+							    <li>
+								<a href="todoPage.html" title="Mesages"><i class="glyphicon glyphicon-envelope"></i><span class="badge">3</span></a>
+							  </li>
+							  
+							   <li>
+								<a href="todoPage.html" title="Notifications"><i class="glyphicon glyphicon-cloud"></i><span class="badge">5</span></a>
+							  </li>
+							
+							</ul>
+							<ul class="nav navbar-nav navbar-right">
+							<li>
+							<button type="submit" class="btn btn-primary" id="logoutButton1">Logout</button>
+							</li>
+							</ul>
+							</nav>
+						</div>
+						
+						<div class="padding">
+							<div class="full col-sm-12">
+							  
+								<!-- content -->                      
+								<div class="row">
+				
+								
+									 <!-- main col sidebar left --> 
+								 <div class="col-sm-3 col-xs-3">
+								 	   <div class="panel panel-default">
+										 <div class="panel-heading"><h4>coming user</h4></div>
+										  <div class="panel-body">
+											<div class="list-group">
+										  <p id="allUserList"></p>
+										  	  </div>
+									   	  </div>
+									   </div>
+								      
+								 	   <div class="panel panel-default">
+										 <div class="panel-heading"><h4>May-be-coming</h4></div>
+										  <div class="panel-body">
+											<div class="list-group">
+										  <p id="allUserList1"></p>
+										  	  </div>
+									   	  
+									   </div>
+								     
+								      </div>
+									 
+									 
+								      <div class="panel panel-default">
+										 <div class="panel-heading"><h4>Not-Coming</h4></div>
+										  <div class="panel-body">
+											<div class="list-group">
+										  <p id="allUserList2"></p>
+										  	  </div>
+									   	  
+									   </div>
+								     
+								      </div>
+								     
+								      </div> 
+								     
+								 <!-- main col left --> 
+								 <div class="col-sm-5 col-xs-5">
+                                   <div id="abcd">
+                                
+  <div class="panel-body" id="eventdetail">
+ 
+   <p id="showevent"></p>
+  
+ 
+  
+</div>
+ 
+ 
+ 
+</div> <!--  div of panel default for status update 1 -->
+
+
+
+   <div class="well"> 
+										   <form class="form-horizontal" role="form">
+											<h4>Review for event</h4>
+											 <div class="form-group" style="padding:14px;">
+											  <textarea class="form-control" placeholder="Post your review here please" id="posttext"></textarea>
+											</div>
+											<button class="btn btn-primary pull-right" type="button" id="postbutton">Submit</button>
+											<ul class="list-inline">
+											<li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li>
+											<li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li>
+											<li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li>
+											</ul>
+										 	
+										   </form>
+									  </div>
+   
+
+<div id="abcd1">
+  <div class="panel-body" id="forcomment">
+    <!-- Post metadata -->
+    <div class="row">
+      <div class="col-md-10">
+        <div class="media"><!-- for name pic  -->
+        </div>
+      </div>
+      </div>
+    <!-- Post content -->
+    <div class="row">
+      <div class="col-md-12">
+      <p id="status_name"></p>
+       <p id="forstatus"></p>  <!-- status text -->
+      </div>
+    </div>
+  
+ </div> <!--  div of panel body for status update 1 -->
+ <!-- panel body footer -->
+
+ 
+</div> <!--  div of panel default for status update 1 -->
+		
+
+
+
+
+								   
+		
+                                    </div>
+										   <!-- main col right -->
+							  <div class="col-sm-3 col-xs-3" >
+									   
+									   <div class="panel panel-default">
+										 <div class="panel-heading"><h4>My Friends</h4></div>
+										  <div class="panel-body">
+											<div class="list-group">
+										  <p id="allFriends"></p>
+										  	  </div>
+									   	  </div>
+									   </div>
+									
+									   
+									
+								  </div>
+								  
+								  </div><!--/row-->
+							  
+							  
+							  
+							</div><!-- /col-9 -->
+						</div><!-- /padding -->
+					</div>
+					<!-- /main -->
+				  
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+								   
+</body>
+</html>
