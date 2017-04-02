@@ -17,14 +17,19 @@
         
         $(document).ready(function() {
         	
+        	var ID = $.cookie("ID");
+        	if(ID==null)
+        	{
+        		window.location.replace("appHome.html");
+        	}
         	
-        	var foo = $.cookie("ID");
+        	
          	$.ajax({
         		 type: "GET",
     	        contentType: "text/plain",  //send data to server in this format
     	        url:"http://localhost:8080/DemoFB/webapi/user/retrive",
     	        dataType: "JSON",  //expect response of this type
-    	        data: foo,
+    	        data: ID,
                   
                   success: function(response){  
                       // we have the response  
@@ -56,10 +61,9 @@
                  	
                  	
       	  $("#logoutButton1").click(function(e){
-     		  //alert("logout success");
-         	  // var obj = JSON.parse(JSON.stringify(resp));
-         	   window.location.replace("appHome.html");
-     	           	   	        	
+
+              $.cookie("ID",null);
+              window.location.replace("appHome.html");
      	       
      	   });//logout button ends ends
      	   
@@ -175,21 +179,44 @@
                     
     	   });//search button ends ends
     	   
+    	   
+    		$('a[href="#uName"]').click(function(){
+         		if(ID!=null)
+         		{window.location.replace("timeLine1.html"); 
+         		}
+         		});
+    	   
+    		$('a[href="#uHome"]').click(function(){
+         		if(ID!=null)
+         		{window.location.replace("userHome1.html"); 
+         		}
+         		});
+    		$('a[href="#uFriend"]').click(function(){
+         		if(ID!=null)
+         		{window.location.replace("userFriend.html"); 
+         		}
+         		});
+    	   
 
      	  $("#createGroup").click(function(e){
       	  
             // window.location.replace("todoPage.html");
              var group_name=$("input#group_name").val();
+             var group_privacy=$("input#group_privacy").val();
+             var obj = { group_name:group_name,group_privacy:group_privacy
+              		  };  
+            	var myJSON = JSON.stringify(obj);
+            	document.write(myJSON);
              $.ajax({
      	        type: "POST",
-     	        contentType: "text/plain",  //send data to server in this format
+     	        contentType: "application/json",  //send data to server in this format
      	        url:"http://localhost:8080/DemoFB/webapi/group/create_group",
      	        dataType: "text",  //expect response of this type
-     	        data: group_name,
+     	        data: myJSON,
      	        success: function(resp){
      	            
      	            if(resp!=null){
-     	   	                    	// alert("group created");
+     	   	                    	 alert("group created");
      	                    	   window.location.replace("myGroups.html");
      	            }	
      	            else
@@ -205,7 +232,6 @@
      	        }
      	    });
      	    
-             
              
              
              
@@ -264,13 +290,13 @@
 							</form>
 							<ul class="nav navbar-nav navbar-center">
 							<li>
-								<a href="timeLine1.html" id="userName"><i class="glyphicon glyphicon-user"></i> User Name</a>
+								<a href="#uName" id="userName"><i class="glyphicon glyphicon-user"></i> User Name</a>
 							  </li>
 							  <li>
-								<a href="userHome1.html"><i class="glyphicon glyphicon-home"></i> Home</a>
+								<a href="#uHome"><i class="glyphicon glyphicon-home"></i> Home</a>
 							  </li>
 							  <li>
-								<a href="userFriend.html">Find Friends</a>
+								<a href="#uFriend">Find Friends</a>
 							  </li>
 							  
 							  <li>
@@ -474,6 +500,11 @@
           <label for="group_name" >Group Name:</label>
           <input type="text"  id="group_name" style="margin-left:10px;">
         </div>
+        </div>
+         <div class="form-group">
+          <label for="group_name" >Privacy:</label>
+          <input type="text"  id="group_privacy" placeholder="public or private" style="margin-left:30px;">
+        </div>
         <br>     
     </div>
        
@@ -482,7 +513,6 @@
        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div>
-      </div>
     
        </form>
     </div>

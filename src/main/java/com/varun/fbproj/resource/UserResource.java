@@ -196,6 +196,7 @@ public class UserResource {
 		user1.setCityOfWork(user.getCityOfWork());
 		user1.setHighschool(user.getHighschool());
 		user1.setDate(user.getDate());
+		
 				if(UpdateService.UpdateUserService(user1))
 		{
 			System.out.println(user1.getCollege());
@@ -229,6 +230,23 @@ public class UserResource {
 	 
     }//retrive method ends here
     
+    
+    @GET
+    @Path("/retrive_email")
+    @Consumes({MediaType.TEXT_PLAIN})
+	@Produces({MediaType.APPLICATION_JSON})
+    public User retriveByEmail(String emailID) throws JsonParseException, JsonMappingException, IOException 
+    {
+    	
+    	System.out.println("Inside retrive email method ");
+    	System.out.println("emailID="+emailID);
+    	System.out.println();
+		User u1= RetriveService.getUserAllData(emailID);
+		
+		System.out.println(u1.getDate());
+		return u1;
+	 
+    }//retrive method ends here
     
     @POST
 	@Path("/uploadProfilePic")
@@ -312,6 +330,50 @@ public class UserResource {
 	 
     }// method ends here
     
+    //this method is used to filter the search by name based on more fields
+    @GET
+    @Path("/filterSearch")
+    @Consumes({MediaType.TEXT_PLAIN})
+	@Produces({MediaType.APPLICATION_JSON})
+    public ArrayList<User> SearchPeopleFilter(@CookieParam("ID") String jwt,@CookieParam("key") String key,@CookieParam("college1") String college1,@CookieParam("highschool1") String highschool1,@CookieParam("hometown1") String hometown1,@CookieParam("cityOfWork1") String cityOfWork1) throws JsonParseException, JsonMappingException, IOException 
+    {
+    	
+    	System.out.println("Inside searchFilter method ");
+    	System.out.println("jwt string ="+ jwt);
+    	Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(jwt).getBody();
+    	System.out.println("Subject: " + claims.getSubject());	
+		String emailID=claims.getSubject();	
+		
+		ArrayList<User> u1 = new ArrayList<User>();
+		System.out.println("searching "+key);
+		String gname=key.replaceAll("%20", " ");
+		System.out.println("searching "+college1);
+		String gname1=college1.replaceAll("%20", " ");
+		System.out.println("searching "+highschool1);
+		String gname2=highschool1.replaceAll("%20", " ");
+		System.out.println("searching "+hometown1);
+		String gname3=hometown1.replaceAll("%20", " ");
+		System.out.println("searching "+cityOfWork1);
+		String gname4=cityOfWork1.replaceAll("%20", " ");
+		//if name is non empty, filter using searcgFriendsFilter function
+		if(!key.isEmpty())u1=SearchFriendService.searchFriendsFilter(emailID,gname,gname1,gname2,gname3,gname4);
+		else return null;
+		return u1;
+	 
+    }// method ends here
+    
+    
+    @GET
+    @Path("/check")
+   // @Consumes({MediaType.TEXT_PLAIN})
+	@Produces({MediaType.TEXT_PLAIN})
+    public String checkresult() throws JsonParseException, JsonMappingException, IOException 
+    {System.out.println("CHECK");
+    	return "yes";
+	 
+    }
     
     @GET
     @Path("/retrivename/{email}")

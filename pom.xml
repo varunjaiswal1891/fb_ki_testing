@@ -109,6 +109,14 @@
 </dependency>
 
 
+<!-- https://mvnrepository.com/artifact/org.eclipse.core/resources -->
+<dependency>
+    <groupId>org.eclipse.core</groupId>
+    <artifactId>resources</artifactId>
+    <version>3.3.0-v20070604</version>
+</dependency>
+
+
 
        
       <!-- https://mvnrepository.com/artifact/org.bitbucket.b_c/jose4j -->
@@ -117,6 +125,10 @@
     <artifactId>jose4j</artifactId>
     <version>0.4.0</version>
 </dependency>
+        
+
+        
+        
         
         
     </dependencies>
