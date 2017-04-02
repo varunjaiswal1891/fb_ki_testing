@@ -660,7 +660,7 @@ $(function () {
 	   $("#findmyFriends").click(function(e){
 		      alert("search in progress...");
 		            var name=$("input#searchname").val();
-		            $.cookie("name",name);
+		            $.cookie("key",name);
 		            alert(name);
 		      		//var lname=$("input#searchname").val();
 		            var college=$("input#searchclg").val();
@@ -897,7 +897,7 @@ jQuery(document).ajaxComplete(function (e) {
 										  <div class="panel-body">
 										  	
  												
- 	   <form id="contact" action="Search1.html" >
+ 	   <form id="contact" action="Search.html" >
     <div class="input-group input-group-sm" style="max-width:480px;">
    
     <fieldset>

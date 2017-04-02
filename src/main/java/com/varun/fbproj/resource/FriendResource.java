@@ -390,7 +390,7 @@ public class FriendResource {
 	@GET
     @Path("/findFriends")
 	@Produces({MediaType.APPLICATION_JSON})
-    public static ArrayList<User> findAllMyFriend(@CookieParam("ID") String jwt,@CookieParam("name") String name,@CookieParam("college") String college,
+    public static ArrayList<User> findAllMyFriend(@CookieParam("ID") String jwt,@CookieParam("key") String name,@CookieParam("college") String college,
     		@CookieParam("hometown") String hometown,@CookieParam("cityOfWork") String cityOfWork,
     		@CookieParam("highschool") String highschool,@CookieParam("friends") String friends) throws JsonParseException, JsonMappingException, IOException{
 	
