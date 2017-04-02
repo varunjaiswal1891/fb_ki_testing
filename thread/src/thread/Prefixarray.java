@@ -1,0 +1,89 @@
+package thread;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Prefixarray {
+	
+public static void main(String args[]) throws IOException
+{
+	 BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
+
+	 System.out.println("enter the patern string");
+	 String   str= br.readLine();
+	 System.out.println("enter the text string");
+	 String text=br.readLine();
+	  int arr[]= prefix_Array(str);
+	kmp(arr,str,text);
+}
+public static int [] prefix_Array(String str){
+	
+	int len= str.length();
+	int arr[]= new int[len];
+	arr[0]=0;
+	int j=0;
+	for(int i=1;i<len;)
+	{
+		if(str.charAt(j)==str.charAt(i))
+		{
+		    arr[i]=j+1;
+		    j++;
+		    i++;
+		}
+		else if(j==0)
+		{
+			arr[i]=0;
+			i++;
+		}
+		else 
+		{
+		   j=arr[j-1];	
+		}
+	}
+	for(int i=0;i<len;i++)
+	{
+		System.out.print(arr[i]+" ");
+	}
+	return arr;
+}
+  public static void kmp(int arr[], String pat,String text) // kmp algorithms for string matching
+  {
+	int tlen=text.length();
+	int plen=pat.length();
+	int j=0;
+	int index=-1;
+
+	int flag=0;
+	for(int i=0;i<tlen;i++)
+	{
+		if(text.charAt(i)==pat.charAt(j))
+		{	
+			if(index==-1)
+				index=i;
+			
+			j++;
+		}
+		else if(j==0)
+			   index=-1 ;
+		else 
+		{
+		   j=arr[j-1];
+		   index=i-j;
+		   i--;
+		  
+		}
+		if(j==plen)
+		{
+			flag=1;
+			break;
+		}
+		
+	}
+	  if(flag==1)
+		  System.out.println("patter is found at "+index);
+	  else System.out.println("pattern is not found");
+	  
+  }
+
+}

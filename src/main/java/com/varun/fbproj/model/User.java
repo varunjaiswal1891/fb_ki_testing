@@ -19,9 +19,19 @@ public class User {
 		private String hometown;
 		private String cityOfWork;
 		private String highschool;
+		private String bestplace;
 		
 		
-		
+		public String getBestplace() {
+			return bestplace;
+		}
+
+
+		public void setBestplace(String bestplace) {
+			this.bestplace = bestplace;
+		}
+
+
 		private String user_token;
 		
 		public User()
@@ -35,7 +45,7 @@ public class User {
 				String mob_no,String college,
 				String placeOfWork,String hometown,
 				String cityOfWork,String highschool,			
-				String user_token
+				String user_token , String bestplace
 				) {
 			super();
 			this.userID=userID;
@@ -52,6 +62,7 @@ public class User {
 			this.cityOfWork=cityOfWork;
 			this.highschool=highschool;
 			this.user_token=user_token;
+			this.bestplace=bestplace;
 		}
 
 		@JsonProperty(value = "userID")

@@ -18,6 +18,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	var x=$.cookie("ID");
+	var l=$.cookie("ID7");
 	
 	var firstemail;
 	var secondemail;
@@ -362,13 +363,14 @@ $(function () {
              	for (var i=0; i < data.length; i++){
              		
          			Frequest+="<div class=\"panel-body\" id=\"div"+data[i].emailID+"\">";
-					Frequest+="<div class=\"pull-left col-sm-3\"><img class=\"img-responsive\" alt=\"logo\" src=\"users/"+data[i].emailID+"/profilePic.jpg\" /></div>";
+					Frequest+="<div class=\"pull-left col-sm-3\"><img class=\"img-responsive\" alt=\"logo\" src=\"users/"+data[i].emailID+"/profilePic.jpg\" / "+"\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-html="+"\"true\""+"data-content ="+"\"Best place: "+data[i].bestplace+" <br>DOB: "+data[i].date+"/>"+" </div>";
 					Frequest+="<a href=\"#\">"+data[i].fname+" "+data[i].lname+"</span></a>";
 					Frequest+="<div class=\"text-right\">";
 					Frequest+="<button type=\"button\" class=\"btn btn-primary\" id=\""+data[i].emailID+"\" OnClick=\"accept(this);\">Confirm<span class=\"glyphicon glyphicon-plus\"></span></button>";
 					Frequest+="<a class="+"\"btn btn-primary\""+" id=\"delete"+data[i].emailID+"\" "+"href=\"\""+" OnClick=\"del(this);\">Delete request</a>";
 					Frequest+="<a class="+"\"btn btn-primary\""+" id="+"\"done"+data[i].emailID+"\" href=\"\""+" style=\"visibility: hidden\";>Cancelled</a></div></div>";
-               		
+    //allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>";
+			                    		
              	}
              	Frequest=Frequest.replace("undefined","");
          	
@@ -387,8 +389,75 @@ $(function () {
      					//alert(e.toString());
    			}				
      
-	  });
+	  }); 
 });
+	$("#bestplaceretrive").click(function(e){
+		 var bestplace=$('#sport option:selected').text();
+          
+		 $.cookie("ID7",bestplace);
+
+		 
+		 
+			 $.ajax({ 
+	            url: "http://localhost:8080/DemoFB/webapi/friendRequest/giveMyRequests",
+	            type: "GET",
+	            dataType: "json",
+	            crossDomain: true,
+	            processData: true,
+	            
+	            
+	            success: function(response){  
+	         	   
+	                // we have the response  
+	         	   if(response!=null){
+	                var data =JSON.parse(JSON.stringify(response));  
+	                 var Frequest;
+	         	 
+	               
+	             	for (var i=0; i < data.length; i++){
+	             		
+	         			Frequest+="<div class=\"panel-body\" id=\"div"+data[i].emailID+"\">";
+						Frequest+="<div class=\"pull-left col-sm-3\"><img class=\"img-responsive\" alt=\"logo\" src=\"users/"+data[i].emailID+"/profilePic.jpg\" / "+"\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-html="+"\"true\""+"data-content ="+"\"Best place: "+data[i].bestplace+" <br>DOB: "+data[i].date+" </div>";
+						Frequest+="<a href=\"#\">"+data[i].fname+" "+data[i].lname+"</span></a>";
+						Frequest+="<div class=\"text-right\">";
+						Frequest+="<button type=\"button\" class=\"btn btn-primary\" id=\""+data[i].emailID+"\" OnClick=\"accept(this);\">Confirm<span class=\"glyphicon glyphicon-plus\"></span></button>";
+						Frequest+="<a class="+"\"btn btn-primary\""+" id=\"delete"+data[i].emailID+"\" "+"href=\"\""+" OnClick=\"del(this);\">Delete request</a>";
+						Frequest+="<a class="+"\"btn btn-primary\""+" id="+"\"done"+data[i].emailID+"\" href=\"\""+" style=\"visibility: hidden\";>Cancelled</a></div></div>";
+	    //allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>";
+					       		
+	             	}
+	             	Frequest=Frequest.replace("undefined","");
+	         	
+	         	   $("#Frequest").html(Frequest);
+	         	   
+	        
+	                }  
+	                
+	                else
+	             	   {
+	             	  alert("something wrong");
+	             	   }
+	              },
+		    
+	   			error: function(e){  
+	     					//alert('Error121212: ' + e);  
+	     					//alert(e.toString());
+	   			}				
+	     
+		  });
+	  
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+	
+	});
+	
+	
 	
 	$("#logoutButton1").click(function(e){
 		  var foo = $.cookie("ID");
@@ -594,7 +663,7 @@ $(function () {
 });//document ready ends here
 
 jQuery(document).ajaxComplete(function () {
-	 $('[data-toggle="popover"]').popover({placement:'left'})  
+	 $('[data-toggle="popover"]').popover({placement:'right'})  
 	}); 
 </script>
 
@@ -658,6 +727,19 @@ jQuery(document).ajaxComplete(function () {
                                 	<a type="submit" class="" id="logoutButton1">Logout</a> 
                              	
                              </li>
+                             <li>
+         <label for="sport">Best-place (select one):</label>
+         <select class="form-control" id="sport" style="margin-left:1px; " width="5px">
+        <option>Bangalore</option>
+        <option>NewYork</option>
+        <option>Tokyo</option>
+        <option>All</option>
+      </select>
+                             
+                             </li>
+                             <li>
+                             <a type="submit" class="" id="bestplaceretrive">send</a>
+                             </li>
 							 <li role="separator" class="divider"></li>
 
 							</ul>
@@ -667,7 +749,7 @@ jQuery(document).ajaxComplete(function () {
                         </div>
 				
 					  
-					  
+		 
 						
 							<div class="full col-sm-12">
 							  

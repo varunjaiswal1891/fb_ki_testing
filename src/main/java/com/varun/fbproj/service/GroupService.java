@@ -29,14 +29,27 @@ public class GroupService {
 	            ps.setString(1,group_name);
 				ps.setString(2,emailID);//it is the emailID of owner 
 	            ps.executeUpdate();		
+	        // retriving groupid from Group1
+	            String query12="select gid from Group1 where group_name=? and owner=?";
+	            PreparedStatement ps12 = connect.con.prepareStatement(query12);
+	            ps12.setString(1,group_name);
+	            ps12.setString(2, emailID);
+	            ResultSet result = ps12.executeQuery();
+	            int gid=0;
+	            while(result.next()){
+	            	gid=result.getInt(1);
+	            }
+	            
 	            
 	            
 	            //adding owner to other table also
-	            String query1 = "insert into UserGroup(group_name,emailID) values (?,?)";
+	            String query1 = "insert into UserGroup(group_name,emailID1,emailID2,gid) values (?,?,?,?)";
 	            PreparedStatement ps1 = connect.con.prepareStatement(query1);
 	            ps1.setString(1,group_name);
-				ps1.setString(2,emailID);//it is the emailID of user being added to the group
-	            ps1.executeUpdate();
+				ps1.setString(2,emailID);//it is the emailID of owner of group
+				ps1.setString(3,emailID);// it is emailID of member of group thatis owner is member of group
+				ps1.setInt(4,gid);
+				ps1.executeUpdate();
 	            
 	            
 				connect.stop();
@@ -48,7 +61,7 @@ public class GroupService {
 	}//create group method ends here
 	
 	
-	public static boolean addUserGroup(String group_name,String emailID)
+	public static boolean addUserGroup(String group_name,String emailID,String ownerEmailID)
 	{
 		try {
 
@@ -59,11 +72,28 @@ public class GroupService {
 	            	check=connect.start();
 	            	System.out.println("trying connection for adding people to the group");
 	            }
-	            String query = "insert into UserGroup(group_name,emailID) values (?,?)";
+	            
+	            
+	         // retriving groupid from Group1
+	            String query12="select gid from Group1 where group_name=? and owner=?";
+	            PreparedStatement ps12 = connect.con.prepareStatement(query12);
+	            ps12.setString(1,group_name);
+	            ps12.setString(2, ownerEmailID);
+	            ResultSet result = ps12.executeQuery();
+	            int gid=0;
+	            while(result.next()){
+	            	gid=result.getInt(1);
+	            }
+	            
+	            
+	            
+	            String query = "insert into UserGroup(group_name,emailID1,emailID2,gid) values (?,?,?,?)";
 	            PreparedStatement ps = connect.con.prepareStatement(query);
 	            ps.setString(1,group_name);
-				ps.setString(2,emailID);//it is the emailID of user being added to the group
-	            ps.executeUpdate();		
+				ps.setString(2,ownerEmailID);//it is the emailID of owner of the group;
+				ps.setString(3,emailID);  // it is the emailID of user that member of the group;
+				ps.setInt(4,gid); 
+				ps.executeUpdate();		
 				connect.stop();
 				return true;
 			} catch (Exception e) {
@@ -85,7 +115,7 @@ public class GroupService {
 	            	check=connect.start();
 	            	System.out.println("trying connection for getting all my groups");
 	            }
-	            String query = "select group_name from UserGroup where emailID=?";
+	            String query = "select * from UserGroup where emailID2=?";
 	            PreparedStatement ps = connect.con.prepareStatement(query);
 	            ps.setString(1,emailID);
 	            
@@ -93,11 +123,12 @@ public class GroupService {
 				
 					while (result.next()) {
 				
-					String e1=result.getString("group_name");
-					System.out.println("e1="+e1);
+					String e1=result.getString(1);
+					int gid=result.getInt(4);
+					//System.out.println("e1="+e1);
 					//al_groups.add(e1);
 					Group g1=new Group();
-					g1=RetriveService.getGroupAllData(e1);
+					g1=RetriveService.getGroupAllData(e1,gid);
 					al_groups.add(g1);
 					
 				}
@@ -126,46 +157,34 @@ public class GroupService {
 	            	check=connect.start();
 	            	System.out.println("trying connection for deleting group");
 	            }
-	            String query1="select owner from Group1 where group_name=?";
+	            String query1="select owner from Group1 where group_name=? and owner=?";
 	            PreparedStatement ps1 = connect.con.prepareStatement(query1);
 	            ps1.setString(1,group_name);
+	            ps1.setString(2,myEmailID );
 	            ResultSet result = ps1.executeQuery();
 				
 				while (result.next()) {
-			     String e1=result.getString("owner");
-				 System.out.println("e1="+e1);
-				 if(e1.equals(myEmailID))  //he is the owner so delete group
-				 {
 					 
-					 String query3="delete from UserGroup where group_name=?";
+					 String query3="delete from UserGroup where group_name=? and emailID1=?";
 			            PreparedStatement ps3 = connect.con.prepareStatement(query3);
 			            ps3.setString(1,group_name);
-			            int y= ps3.executeUpdate();
-					 
-					 if(y>0)
-					 {
-					 
-					 String query2="delete from Group1 where group_name=?";
+			            ps3.setString(2,myEmailID );
+			             ps3.executeUpdate();
+					
+					    String query2="delete from Group1 where group_name=? and owner=?";
 			            PreparedStatement ps2 = connect.con.prepareStatement(query2);
 			            ps2.setString(1,group_name);
-			            int x=  ps2.executeUpdate();
-			            if(x>0)
-			            {
-			            	System.out.println(" one Group deleted successfully ");
-			            	return true;
-			            }
-					 } 
-				 }
-				 else
-				 {
-					 System.out.println("You are not admin ... so cannot delete group");
-					 return false;
-				 }
+			            ps2.setString(2,myEmailID );
+			             ps2.executeUpdate();
+					  
+				 
+				
 				
 			}//while ends
 	            
 	            		
 				connect.stop();
+				return true;
 			} catch (Exception e) {
 				e.printStackTrace();
 		  }
@@ -186,9 +205,10 @@ public class GroupService {
 	            	check=connect.start();
 	            	System.out.println("trying connection for deleting people from the group");
 	            }
-	            String query1="select owner from Group1 where group_name=?";
+	            String query1="select owner from Group1 where group_name=? and owner=?";
 	            PreparedStatement ps1 = connect.con.prepareStatement(query1);
 	            ps1.setString(1,group_name);
+	            ps1.setString(2,owner);
 	            ResultSet result = ps1.executeQuery();
 				
 				while (result.next()) {
@@ -197,9 +217,11 @@ public class GroupService {
 				 if(e1.equals(owner))  //he is the owner so delete the user
 				 {
 					 
-					 String query2="delete from UserGroup where emailID=?";
+					 String query2="delete from UserGroup where emailID2=? and emailID1=? and group_name=?";
 			            PreparedStatement ps2 = connect.con.prepareStatement(query2);
 			            ps2.setString(1,emailID);
+			            ps2.setString(2,owner);
+			            ps2.setString(3,group_name);
 			            int x= ps2.executeUpdate();
 			            if(x>0)
 			            {
@@ -237,19 +259,21 @@ public class GroupService {
 	            	System.out.println("trying connection for leave group");
 	            }
 	            
-	            String query1="select owner from Group1 where group_name=?";
+	            String query1="select owner from Group1 where group_name=? and owner=?";
 	            PreparedStatement ps1 = connect.con.prepareStatement(query1);
 	            ps1.setString(1,group_name);
+	            ps1.setString(2, emailID);
 	            ResultSet result = ps1.executeQuery();
-				
-				while (result.next()) {
-			     String e1=result.getString("owner");
-				 System.out.println("e1="+e1);
-				 if(!e1.equals(emailID))  //not owner so delete from group
+				result.last();
+				int row= result.getRow();
+				result.beforeFirst();
+		
+				 if(row==0)  //not owner so delete from group
 				 {
-					 String query2="delete from UserGroup where emailID=?";
+					 String query2="delete from UserGroup where emailID2=? and group_name=?";
 			            PreparedStatement ps2 = connect.con.prepareStatement(query2);
 			            ps2.setString(1,emailID);
+			            ps2.setString(2,group_name);
 			            int x= ps2.executeUpdate();
 			            
 			            if(x>0)
@@ -260,61 +284,74 @@ public class GroupService {
 			            
 					 
 				 }
-				 else
+			 else
 				 {
-					 //owner wants to leave
-					 //1.remove owner from UserGroup first
-					 String query2="delete from UserGroup where emailID=?";
-			            PreparedStatement ps2 = connect.con.prepareStatement(query2);
-			            ps2.setString(1,emailID);
-			            int x= ps2.executeUpdate();
-			            
-			            if(x>0)
-			            {
-			            	System.out.println(" one user deleted  from again ");
-			            	//2.select a group member and make him admin now
-			            	//select emailID from UserGroup where group_name='office' order by RAND() LIMIT 1;
-			            	String query = "select emailID from UserGroup where group_name=? order by RAND() LIMIT 1";
-				            PreparedStatement ps = connect.con.prepareStatement(query);
-				            ps.setString(1,group_name);
-				            
-				              ResultSet rs2 = ps.executeQuery();
-							
-								while (rs2.next()) {
-							
-								 e1=rs2.getString("emailID");
-								 //now make this emaiID as new owner of that group
-								 System.out.println("random emailID ="+e1);
-								 String q3="update Group1 set owner=? where group_name=?";
-						            PreparedStatement ps3 = connect.con.prepareStatement(q3);
-						            ps3.setString(1,e1);
-						            ps3.setString(2, group_name);
-						            int y= ps3.executeUpdate();
-						         
-						            if(y>0)
-						            {
-						            	System.out.println("New owner assigned to group");
-						            	return true;
-						            }
-								 
-								}
+				 
+					   query1="select emailID2 from UserGroup where group_name=? and emailID1=?"; 
+					// count number of member in particular group
+			            PreparedStatement ps12 = connect.con.prepareStatement(query1);
+			            ps12.setString(1,group_name);
+			            ps12.setString(2, emailID);
+			            ResultSet result1 = ps1.executeQuery();
+			            result1.last();
+						 row= result.getRow();
+						result1.beforeFirst();
+						System.out.println("number of rows "+row);
+			            	if(row==1) // only owner is member of this group
+			            	{
+			            		String query2="delete from UserGroup where emailID2=? and group_name=?";
+					            PreparedStatement ps2 = connect.con.prepareStatement(query2);
+					            ps2.setString(1,emailID);
+					            ps2.setString(2,group_name);
+					             ps2.executeUpdate();
+					             query2="delete from Group1 where owner=? and group_name=?";
+						             ps2 = connect.con.prepareStatement(query2);
+						            ps2.setString(1,emailID);
+						            ps2.setString(2,group_name);
+						             ps2.executeUpdate();
+					             
+			            	}
+			         
+			            	else  // make some other to owner of that group
+			            	{
+			            		
+			            		String query12 = "delete from UserGroup where group_name=? and emailID2=? ";
+			                    PreparedStatement ps11 = connect.con.prepareStatement(query12);
+			                    ps11.setString(1,group_name);
+			                    ps11.setString(2,emailID);
+			                      ps11.executeUpdate();
+			            		
+			            		String query = "select emailID2 from UserGroup where group_name=? and emailID1=? order by RAND() LIMIT 1";
+			                    PreparedStatement ps = connect.con.prepareStatement(query);
+			                    ps.setString(1,group_name);
+			                    ps.setString(2,emailID);
+			                      ResultSet rs2 = ps.executeQuery();
+			                   String   e2=rs2.getString("emailID");
+			                   query="update Group1 set owner=? where group_name=? and owner=?";
+			                   PreparedStatement ps3 = connect.con.prepareStatement(query);
+		                          ps3.setString(1,e2);
+		                          ps3.setString(2, group_name);
+		                          ps3.setString(3, emailID);
+		                          ps3.executeUpdate();
+			                 
+		                          query="update UserGroup set emailID1=? where group_name=? and emailID1=?";
+				                    ps3 = connect.con.prepareStatement(query);
+			                          ps3.setString(1,e2);
+			                          ps3.setString(2, group_name);
+			                          ps3.setString(3, emailID);
+			                          ps3.executeUpdate();
 			            	
-			            }//if x>0 over
+			            	}
+				
+				 
+				 }//outer else ends
 			            
 
 
-				 }//outer else ends
-				}//while ends
-	            
-	            
-	            
-	            
-	            
-	            
-	            
 	            
 	            		
 				connect.stop();
+				return true;
 			} catch (Exception e) {
 				e.printStackTrace();
 		  }
@@ -454,7 +491,7 @@ public class GroupService {
  }//method getStatusByGroup ends here
 
 	
-public  static ArrayList<User> getGroupMembers(String group_name){
+public  static ArrayList<User> getGroupMembers(String group_name,String userEmailID){
 		    
 		 String result;
 		 DBAccess db= new DBAccess();
@@ -464,26 +501,42 @@ public  static ArrayList<User> getGroupMembers(String group_name){
 		  System.out.println("trying connection in get all members of group");
 		  check= db.start();
 	  }
-	  String sql="select emailID from UserGroup where group_name= ?";
-	 
+	      System.out.println(group_name+userEmailID);
+	  String sql="select emailID1 from UserGroup where group_name= ? and emailID2=?";
 	  PreparedStatement pstmnt=db.con.prepareStatement(sql);
 	  pstmnt.setString(1,group_name); 
+	  pstmnt.setString(2,userEmailID); 
 	  ResultSet rs= pstmnt.executeQuery();
+	  rs.next();
+	  String e1=rs.getString("emailID1");
+	  System.out.println("owner email id is "+e1);
+	  
+	   sql="select emailID2 from UserGroup where group_name= ? and emailID1=?";
+	  PreparedStatement pstmnt1=db.con.prepareStatement(sql);
+	  pstmnt1.setString(1,group_name); 
+	  pstmnt1.setString(2,e1); 
+	  ResultSet rs1= pstmnt1.executeQuery();
+	  
+	  
+	  
+	  
 	  ArrayList<User> user_list= new ArrayList<User>();
-	  if(rs!=null){
-		  
-		  while (rs.next()) {
-			  User u1=new User();
-			  String e1=rs.getString("emailID");
-			  u1=RetriveService.getUserAllData(e1);
-			  user_list.add(u1);
+	 
+	  if(rs1!=null){
 		
+		  while (rs1.next()) {
+			  User u1=new User();
+			  String e11=rs1.getString(1);
+			  u1=RetriveService.getUserAllData(e11);
+			  user_list.add(u1);
+		System.out.println(e11+"Is added");
 			}
 	  }
 	  else{
 		  System.out.println("resultset empty");
 	  }
 	  db.stop();
+	  System.out.println("database is stop");
 	  return user_list;
 	}
 	catch(Exception e){
@@ -495,7 +548,7 @@ public  static ArrayList<User> getGroupMembers(String group_name){
 
 
 
-public  static User getGroupAdmin(String group_name){
+public  static User getGroupAdmin(int gid){
     
 	 String result;
 	 DBAccess db= new DBAccess();
@@ -505,10 +558,10 @@ public  static User getGroupAdmin(String group_name){
 	  System.out.println("trying connection in get all members of group");
 	  check= db.start();
  }
- String sql="select owner from Group1 where group_name= ?";
+ String sql="select owner from Group1 where gid=?";
 
  PreparedStatement pstmnt=db.con.prepareStatement(sql);
- pstmnt.setString(1,group_name); 
+ pstmnt.setInt(1,gid);  
  ResultSet rs= pstmnt.executeQuery();
  User u1=new User();
  if(rs!=null){
@@ -517,7 +570,7 @@ public  static User getGroupAdmin(String group_name){
 		  
 		  String e1=rs.getString("owner");
 		  u1=RetriveService.getUserAllData(e1);
-		
+		break;
 	
 		}
  }
@@ -533,6 +586,66 @@ catch(Exception e){
 
 return  null;
 }//method get Admin of Group ends here
+
+//geting owneremailId from groupname and member emailID 
+public static String getOwnerId(String group_name, String myEmailID){
+	
+	try {
+
+    	  DBAccess connect = new DBAccess();
+          boolean check=false;
+          while(check==false)
+          {
+          	check=connect.start();
+          	System.out.println("trying connection for deleting group");
+          }
+          String query1="select emailID1 from UserGroup where group_name=? and emailID2=?";
+          PreparedStatement ps1 = connect.con.prepareStatement(query1);
+          ps1.setString(1,group_name);
+          ps1.setString(2,myEmailID );
+          ResultSet result = ps1.executeQuery();
+          while(result.next()){
+        	  String e1= result.getString("emailID1");
+        	  connect.stop();
+        	  return e1;
+          }
+          
+	}
+	catch(Exception e){
+		
+	}
+	return null;
+}
+
+
+public static String getGroupNamefromGid(int gid) {
+
+	try {
+
+  	  DBAccess connect = new DBAccess();
+        boolean check=false;
+        while(check==false)
+        {
+        	check=connect.start();
+        	System.out.println("trying connection for deleting group");
+        }
+        String query1="select group_name from Group1 where  gid=?";
+        PreparedStatement ps1 = connect.con.prepareStatement(query1);
+        ps1.setInt(1,gid);
+        ResultSet result = ps1.executeQuery();
+        while(result.next()){
+      	  String e1= result.getString("group_name");
+      	  connect.stop();
+      	  return e1;
+        }
+        
+	}
+	catch(Exception e){
+		
+	}
+	
+	return null;
+}
 
 
 

@@ -196,6 +196,7 @@ public class UserResource {
 		user1.setCityOfWork(user.getCityOfWork());
 		user1.setHighschool(user.getHighschool());
 		user1.setDate(user.getDate());
+		user1.setBestplace(user.getBestplace());
 				if(UpdateService.UpdateUserService(user1))
 		{
 			System.out.println(user1.getCollege());

@@ -95,6 +95,7 @@ public class RetriveService {
 					u.setHometown(result.getString(11));
 					u.setCityOfWork(result.getString(12));
 					u.setHighschool(result.getString(13));
+					u.setBestplace(result.getString(14));
 					
 					connect.stop();
 						return u;
@@ -116,7 +117,7 @@ public class RetriveService {
     }//method ends here
 	
 	
-	public static Group getGroupAllData(String group_name)
+	public static Group getGroupAllData(String group_name,int gid)
 	{
 		
 		try {
@@ -129,8 +130,9 @@ public class RetriveService {
             	System.out.println("trying connection");
             }
 			PreparedStatement prepStatement = connect.con
-					.prepareStatement("select * from Group1 where group_name = ? ");
+					.prepareStatement("select * from UserGroup where group_name = ? and gid=? ");
 			prepStatement.setString(1,group_name);
+			prepStatement.setInt(2,gid );
 
 			ResultSet result = prepStatement.executeQuery();
 			if (result != null) {
@@ -138,6 +140,7 @@ public class RetriveService {
 					Group g1=new Group();
 					g1.setGroup_name(result.getString(1));
 					g1.setOwner(result.getString(2));
+					g1.setGid(result.getInt(4));
 					connect.stop();
 						return g1;				
 					

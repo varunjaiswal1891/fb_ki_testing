@@ -79,12 +79,13 @@
              	   if(response!=null){
                     var data =JSON.parse(JSON.stringify(response));  
                      var myGroups;
-             	 
+             //	 alert("we get the resposne for show my group");
                    	for (var i=0; i < data.length; i++){
                    		myGroups+="<div class=\"panel-body\">"; 
                    		//myGroups+="<a OnClick=\"go_group(this);\">"+data[i].group_name+"</a>";
-                   		myGroups+="<a href=\"groupPage.html\" OnClick=\"go_group(this);\" id=\""+data[i].group_name +"\">"+   data[i].group_name+"</a>"	
+                   		myGroups+="<a href=\"groupPage.html\" OnClick=\"go_group(this);\" id=\""+data[i].gid +"\">"+   data[i].group_name+"</a>"	
                    		myGroups+="</div>";
+               //    		alert(data[i].gid);
     					     	}
                  	
                    	myGroups=myGroups.replace("undefined","");
@@ -111,7 +112,7 @@
          		 
      		   var groupID= $(e1).attr('id');
      		   $.cookie("ID_group",groupID);  
-     		
+     		//alert(groupID);
      	   }
     	  
      	   

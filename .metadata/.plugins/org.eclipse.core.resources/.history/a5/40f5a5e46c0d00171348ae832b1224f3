@@ -1,0 +1,95 @@
+package thread;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class longest_palindromic_substring {
+
+	public static void main(String args[]) throws IOException
+	{
+	   BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
+	   System.out.println("enter the string");
+	   String str= br.readLine();
+	   //lps(str);
+	   Longest_palindromic_subsequence(str);
+	}
+	
+	public static void lps(String str)
+	{
+		int len= str.length();
+		int max_len=1;
+		int s_index=0;
+		int arr[][]= new int [len][len];
+		for(int i=0;i<len;i++)  // 1 character is always palindrome
+		{
+			arr[i][i]=1;
+		}
+		for(int i=0;i<len-1;i++)   // check for 2 character
+		 {
+			if(str.charAt(i)==str.charAt(i+1))
+			{
+				arr[i][i+1]=1;
+				s_index=i;
+				max_len=2;
+			}
+			
+			else arr[i][i+1]=0;
+			
+		 }
+		 
+		
+		for(int i=3;i<=len;i++)
+		 {
+			 for(int j=0;j<len-i+1;j++)
+			 {
+				if(str.charAt(j)==str.charAt(j+i-1)&& arr[j+1][j+i-2]==1)
+				{
+					s_index=j;
+					if(max_len<i)
+						max_len=i;
+					arr[j][j+i-1]=1;
+				}
+				else arr[j][j+i-1]=0;
+			 }
+			 
+			 
+		 }
+		str=str.substring(s_index,s_index+ max_len);
+		System.out.println(str); 
+		
+	}
+	public static void Longest_palindromic_subsequence(String str)
+	{
+		int len=str.length();
+		int lps[][]= new int[len][len];
+		for(int i=0;i<len;i++)
+		{
+			for(int j=0;j<len;i++)
+				lps[i][j]=0;
+			
+		}
+		for(int i=0;i<len;i++)
+			 lps[i][i]=1;
+		for(int i=2;i<=len;i++){
+			for(int j=0;j<len-i+1;j++){
+				if(str.charAt(j)==str.charAt(j+i-1))
+				{
+				lps[j][i]=2+lps[j+1][i-1];	
+				}
+				else
+				{
+				 lps[j][i]=Math.max(lps[j][i-1], lps[j+1][i]);	
+				}
+			}
+		}
+		for(int i=0;i<len;i++)
+		{
+			for(int j=0;j<len;i++)
+				System.out.print(lps[i][j]+" ");
+			System.out.println();
+		}
+	}
+	
+}
+

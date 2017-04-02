@@ -27,9 +27,9 @@ public class UserImageService {
 			fileName=""+Calendar.getInstance().getTimeInMillis()+fileName;
 			//InputStream buffer=toBufferedImage(fileInputStream,100,100);
 
-			String path="/home/varun/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/images/";
+			String path="/home/subham/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/images/";
 			//System.out.print("/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/images/");
-			String profilePicPath="/home/varun/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/";
+			String profilePicPath="/home/subham/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/";
 			//String path="/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/images/";
 			//System.out.print("/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/images/");
 			//String profilePicPath="/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/";
@@ -46,7 +46,7 @@ public class UserImageService {
 			            }
 			                
 			}outputStream.close();outputStream1.close();
-			ImageIcon icon = new ImageIcon("/home/varun/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/profilePic.jpg");
+			ImageIcon icon = new ImageIcon("/home/subham/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/profilePic.jpg");
 
 			//ImageIcon icon = new ImageIcon("/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/profilePic.jpg");
 
@@ -62,7 +62,7 @@ public class UserImageService {
 
 
 
-File outputfile = new File("/home/varun/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/tn.jpg");
+File outputfile = new File("/home/subham/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/tn.jpg");
 
 //File outputfile = new File("/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/tn.jpg");
 

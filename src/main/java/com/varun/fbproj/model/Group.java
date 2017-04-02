@@ -5,18 +5,29 @@ public class Group {
 
 	private String group_name;
 	private String owner;
-	
+	private int gid;
+	public int getGid() {
+		return gid;
+	}
+
+
+	public void setGid(int gid) {
+		this.gid = gid;
+	}
+
+
 	public Group()
 	{
 		
 	}
 
 
-	public Group(String group_name,String owner)
+	public Group(String group_name,String owner,int gid)
     {
 		super();
 		this.group_name=group_name;
 		this.owner=owner;
+		this.gid=gid;
 	}
 	
 	

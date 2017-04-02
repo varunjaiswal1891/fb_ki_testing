@@ -127,8 +127,8 @@ public class FriendRequestResource {
 	@GET
     @Path("/giveMyRequests")
 	@Produces({MediaType.APPLICATION_JSON})
-    public static ArrayList<User> getMyALLRequests(@CookieParam("ID") String jwt,String friendEmailID
-    		) throws JsonParseException, JsonMappingException, IOException{
+    public static ArrayList<User> getMyALLRequests(@CookieParam("ID") String jwt
+    	,@CookieParam("ID7") String bestplace1	) throws JsonParseException, JsonMappingException, IOException{
 		//it returns all friend requests which came to me
 		ArrayList<User> al_requestList=new ArrayList<User>();
 		System.out.println("jwt="+ jwt);
@@ -138,8 +138,26 @@ public class FriendRequestResource {
 			    System.out.println("Subject: " + claims.getSubject());
 			   // System.out.println("Expiration: " + claims.getExpiration());
 			  String myEmailID=claims.getSubject();	
-		
-		return FriendRequestService.getAllFriendRequest(myEmailID, al_requestList);
+			  //myEmailID="umesh@gmail.com";
+			 // bestplace1="NewYork";
+			  al_requestList=FriendRequestService.getAllFriendRequest(myEmailID, al_requestList);
+			 
+			  ArrayList<User> al_requestList1=new ArrayList<User>();
+			  for(int i=0;i<al_requestList.size();i++)
+			  {
+				  String place= al_requestList.get(i).getBestplace();
+				  if(place.equals(bestplace1))
+				  {
+					al_requestList1.add(al_requestList.get(i));
+					System.out.println("selected");
+				  }
+				  
+			  }
+			  //System.out.println(s1.equals(s2));/
+          if(bestplace1.equals("All"))
+        	  return al_requestList;
+			  
+		return  al_requestList1;
 	}//method ends here
 	
 	

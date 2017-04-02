@@ -18,7 +18,42 @@
         $(document).ready(function() {
         	var f1,l1;
         	var group_name = $.cookie("ID_group");
-        	document.getElementById("group_name").innerHTML=group_name;
+        	//document.getElementById("group_name").innerHTML=group_name;
+        	
+        	
+        	  $.ajax({
+				  url: "http://localhost:8080/DemoFB/webapi/group/getgroupname",
+	                type: "GET",
+	                crossDomain: true,
+	                processData: true,
+	                
+
+	                
+	                success: function(response){  
+	             	   
+	                    // we have the response  
+	             	   if(response!=null){
+	                    
+	             		  document.getElementById("group_name").innerHTML=response;
+	             	 
+	            
+	                    }  
+	                    
+	                    else
+	                 	   {
+	                 	  alert("something wrong in adding member");
+	                 	   }
+	                  },
+       
+      error: function(jqXHR, textStatus, errorThrown){
+      }    
+                 
+                 
+                 });       //ajax call ends
+        	
+        	
+        	
+        	
         	var foo = $.cookie("ID");
          	$.ajax({
         		 type: "GET",
@@ -145,7 +180,7 @@
     	          window.addMember = function(e1){
     	            	 
     	            	 var emailid= $(e1).attr('id');
-    	            	 	var obj1={emailID:emailid};
+    	            	 	var obj1={emailID2:emailid};
     	            	 var jsonobj=JSON.stringify(obj1);
     	            	 $.ajax({ 
     	                     url: "http://localhost:8080/DemoFB/webapi/group/addUser_group",

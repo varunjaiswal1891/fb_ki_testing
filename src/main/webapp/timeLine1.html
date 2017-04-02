@@ -103,6 +103,7 @@ $(document).ready(function() {
                                    document.getElementById("School").innerHTML="HighSchool   : "+obj.highschool;
                                    document.getElementById("name").innerHTML=obj.fname+" "+obj.lname;
                                    document.getElementById("DOB").innerHTML="DOB       : "+obj.date;
+                                   document.getElementById("bestplace").innerHTML="Best-place       : "+obj.bestplace;
                                    document.getElementById("Mob").innerHTML="Contact   : "+obj.mob_no;
                                    document.getElementById("college").innerHTML="College      : "+obj.college;
                                    document.getElementById("work").innerHTML="Work Place   : "+obj.placeOfWork;
@@ -199,6 +200,21 @@ window.go = function(e1){
         
        }
 
+/* $('#selectCountries').change(function () {
+    var selectedOptions = $('#selectCountries option:selected');
+    if (selectedOptions.length > 0) {
+        var resultString = '';
+        selectedOptions.each(function () {
+            resultString += 'Value = ' + $(this).val() +
+                ', Text = ' + $(this).text() + '<br/>';
+               // alert($(this).val);
+        });
+        $('#divResult').html(resultString);
+    }
+    //alert(selectedOptions);
+});
+	 */		 
+      
 
               
               
@@ -238,10 +254,12 @@ window.go = function(e1){
           var cityOfWork=$("input#workcity").val();
           var highschool=$("input#highschool").val();
           //var sport=$('#sport option:selected').text();
+          var bestplace=$('#sport option:selected').text();
+       //   alert(bestplace);
           
           var obj = { mob_no:mob_no,college:college,placeOfWork:placeOfWork,
                   hometown:hometown,cityOfWork:cityOfWork,highschool:highschool
-                  };  
+                , bestplace:bestplace };  
           var myJSON = JSON.stringify(obj);
               
             //document.write(myJSON);
@@ -862,6 +880,8 @@ window.go = function(e1){
       <pre class="media-left" id="town"></pre>        <br>
       <pre class="media-left" id="workCity"></pre>    <br>
       <pre class="media-left" id="School"></pre><br>
+       <pre class="media-left" id="bestplace"></pre><br>
+      
    <!--     <pre class="media-left">Sports :</pre><p id="sportID" class="media-right"></p>    <br>  -->
                                             
                                             
@@ -1056,6 +1076,24 @@ window.go = function(e1){
           <label for="highschool" >HighSchool:</label>
           <input type="text"  id="highschool" style="margin-left:10px;">
         </div>
+        
+        
+        <div class="form-group">
+         <div class="col-md-3">
+         <label for="sport">Best-place</label>
+         <select class="form-control" id="sport" style="margin-left:1px; " width="5px">
+        <option>Bangalore</option>
+        <option>NewYork</option>
+        <option>Tokyo</option>
+        <option>London</option>
+      </select>
+      </div>
+        </div>
+        
+        
+        
+        
+    <!--     <div id="divResult"></div> -->
              <br>
              
     <!--     <div class="form-group">
@@ -1069,6 +1107,18 @@ window.go = function(e1){
         </div>
              <br>      
              -->
+    <!--     <div class="form-group">
+    <select id="selectCountries" multiple="multiple">
+        <option selected="selected" value="USA">United States</option>
+        <option value="IND">India</option>
+        <option value="UK">United Kingdom</option>
+        <option value="CA">Canada</option>
+        <option value="AU">Australia</option>
+    </select>
+        </div>
+    <br>
+        -->
+       
        
     </div>
     

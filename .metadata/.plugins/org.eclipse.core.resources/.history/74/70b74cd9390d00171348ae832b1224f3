@@ -1,0 +1,24 @@
+package thread;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class longest_palindromic_substring {
+
+	public static void main(String args[]) throws IOException
+	{
+	   BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
+	   System.out.println("enter the string");
+	   String str= br.readLine();
+	   lps(str);
+	}
+	
+	public static void lps(String str)
+	{
+		
+		
+	}
+	
+}
+

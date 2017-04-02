@@ -11,7 +11,18 @@
         <script type="text/javascript" src="Jquery/jquery-3.1.1.js"></script>
  		<script type="text/javascript" src="Jquery/jquery.cookie.js"></script>
   		<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>  
-        
+       <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+           <link rel="stylesheet" href="/resources/demos/style.css">
+          
+           <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+            <script type="text/javascript" src="Jquery/jquery.popupoverlay.js"></script>
+          <style>
+  label { width: 100px; }
+   hr.myhrline{
+     margin: 1px;
+      width: 550px;
+  }
+  </style>
         
         <script type="text/javascript">
         
@@ -60,9 +71,10 @@
          var loc=$("input#location").val();
          var esd=$("input#datepicker").val();
          var eed=$("input#datepicker1").val();
-        
+         var eventType=$('#Etype option:selected').text();
+        alert(eventType);
          var obj = { ename:ename,hname:hname,location:loc,
-       		  event_date:esd,event_end_date:eed
+       		  event_date:esd,event_end_date:eed,eventType:eventType
        		  };  
      	var myJSON = JSON.stringify(obj);
          	//alert(myJSON);
@@ -80,7 +92,7 @@
     	   	                    	
     	            	 var obj1 = JSON.parse(JSON.stringify(resp));
                     	 // alert(obj1);
-                    	 window.location.replace("Event.html");
+                    	window.location.replace("Event.html");
     	            	//  location.reload();
     	            }	
     	            else
@@ -98,6 +110,7 @@
 	        	
 	       
 	   }); // create ajax call end
+  
     		
     		
     		
@@ -352,9 +365,71 @@
 
 }); 
 }//unlike fun ends
+// ajax call for getting todsay is your birthday or not if your birthday than event is created automatically
+$.ajax({ 
+    url: "http://localhost:8080/DemoFB/webapi/event/todayYourBirthday",
+    type: "GET",
+    crossDomain: true,
+    processData: true,
+    
+    
+    success: function(response){  
+ 	   
+        // we have the response  
+ 	   if(response!=null){
+             
+ 		   if(response=="true")
+            	{
+ 			  var st="";
+ 			  st+= "<p"+"><font size="+"\"3\""+"color="+"\"blue\""+">"+"Today is your's birthday"+"</font></p>"; 
+            	 $('#bd').html(st);
+            	
+            	// your birthday event is created    		  
+            	         
+            				 $.ajax({
+            	    	        type: "GET",
+            	    	        url:"http://localhost:8080/DemoFB/webapi/event/create_birthday_event",
+            	    	        dataType: "text",  //expect response of this type
+            	    	        success: function(resp){
+            	    	            
+            	    	            if(resp!=null){
+            	    	   	                    	
+            	                    	 // alert(obj1);
+            	                    	// window.location.replace("Event.html");
+            	    	            	//  location.reload();
+            	    	            }	
+            	    	            else
+            	    	            {
+            	    	            	alert("update failed.. ")
+            	    	            	//window.location.replace("timeLine1.html");
+            	    	            }	
+            	    	            
+            	    	            
+            	    	        },
+            	    	        error: function(jqXHR, textStatus, errorThrown){
+            	    	            alert('logout error: ' + textStatus);
+            	    	        }
+            	    	    });
+            		        	
+            		       
+            	}
+            	  
+            	
+ 	       
+ 	   }
+        
+ 	   
+ 	   
+	},
+	error: function(e){  
+			alert('Error121212: ' + e);  
+			alert(e.toString());
+	}				
 
-    			 
-    			 
+});     			 
+    
+
+
     			 
    
 
@@ -892,6 +967,8 @@
 										 <div class="panel-heading"> <h4>Trending</h4></div>
 										  <div class="panel-body">
 										  	<div class="list-group">
+										  	<div id="bd"></div>
+										  	<br>
  												 <a href="todoPage.html" class="list-group-item">Virat Kohli</a>
   												 <a href="todoPage.html" class="list-group-item">Varun Dhawan</a>
   												 <a href="todoPage.html" class="list-group-item">David Guetta</a>
@@ -1074,6 +1151,20 @@
       <div class="modal-body">
         <div class="container">
         
+        <br>
+         <div class="form-group">
+         <div class="col-md-3">
+         <label for="Event-type:">Event-type</label>
+         <select class="form-control" id="Etype" style="margin-left:0px; " width="5px">
+        <option>Public</option>
+        <option>Private</option>
+       
+      </select>
+      </div>
+        </div>
+     <br>
+     <br>
+        <br>
         <br>
         <div class="form-group">
           <label for="event-name" >Event name:</label>

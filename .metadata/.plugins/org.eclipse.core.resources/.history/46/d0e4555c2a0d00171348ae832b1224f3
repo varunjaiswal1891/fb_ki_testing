@@ -1,0 +1,25 @@
+package thread;
+
+public class demo1 extends Thread
+{
+	public void run()
+	{
+	  for(int i=0;i<10;i++){
+		  System.out.println(i+" ");
+	  }
+	}
+	
+}
+
+
+
+ class demo {
+
+	public static void main(String[] args) {
+		demo1 obj= new demo1();
+		Thread t= new Thread(obj);
+		t.start();
+            System.out.println("hii");
+	}
+
+}
