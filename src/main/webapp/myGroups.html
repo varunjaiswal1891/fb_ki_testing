@@ -202,16 +202,21 @@
       	  
             // window.location.replace("todoPage.html");
              var group_name=$("input#group_name").val();
+             var group_privacy=$("input#group_privacy").val();
+             var obj = { group_name:group_name,group_privacy:group_privacy
+              		  };  
+            	var myJSON = JSON.stringify(obj);
+            	document.write(myJSON);
              $.ajax({
      	        type: "POST",
-     	        contentType: "text/plain",  //send data to server in this format
+     	        contentType: "application/json",  //send data to server in this format
      	        url:"http://localhost:8080/DemoFB/webapi/group/create_group",
      	        dataType: "text",  //expect response of this type
-     	        data: group_name,
+     	        data: myJSON,
      	        success: function(resp){
      	            
      	            if(resp!=null){
-     	   	                    	// alert("group created");
+     	   	                    	 alert("group created");
      	                    	   window.location.replace("myGroups.html");
      	            }	
      	            else
@@ -227,7 +232,6 @@
      	        }
      	    });
      	    
-             
              
              
              
@@ -496,6 +500,11 @@
           <label for="group_name" >Group Name:</label>
           <input type="text"  id="group_name" style="margin-left:10px;">
         </div>
+        </div>
+         <div class="form-group">
+          <label for="group_name" >Privacy:</label>
+          <input type="text"  id="group_privacy" placeholder="public or private" style="margin-left:30px;">
+        </div>
         <br>     
     </div>
        
@@ -504,7 +513,6 @@
        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div>
-      </div>
     
        </form>
     </div>

@@ -106,7 +106,7 @@
     		
     		
     			  $.ajax({
-    				  url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
+    				  url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriendsuggest",
     	                type: "GET",
     	                dataType: "json",
     	                contentType : "application/json",
@@ -132,7 +132,7 @@
     	    					     	}
     	                 	
     	                 allFriends=allFriends.replace("undefined","");
-    	             	   $("#showsuggestedfriends").html(allFriends);
+    	           	   $("#showsuggestedfriends").html(allFriends);
     	            
     	                    }  
     	                    
@@ -616,7 +616,7 @@
                  		allFriends+="</div>";
     					     	}
                  	
-                 allFriends=allFriends.replace("undefined","");
+                allFriends=allFriends.replace("undefined","");
              	   $("#allFriends").html(allFriends);
             
                     }  
@@ -784,7 +784,25 @@
                      
      	   });//create group button ends ends
      	    
-    	   
+     	 var modalform1 = $('#uploadPic');
+         modalform1.submit(function() {
+         var fd1 = new FormData($('#uploadPic')[0]);
+         console.log(fd1);
+         alert("uploading");
+         $.ajax({
+         type : modalform1.attr('method'),
+         url : modalform1.attr('action'),
+         data : fd1,
+         enctype : 'multipart/form-data',
+         processData : false, // Important!
+
+         contentType : "text",
+         cache : false,
+         
+        
+         
+         });          
+         });  
 
         }); //document ready ends 
         
@@ -860,6 +878,14 @@
 						<div class="padding">
 							<div class="full col-sm-12">
 							  
+				<!--  		   <form id="uploadPic"action="http://localhost:8080/DemoFB/webapi/group/uploadPic" method="post" enctype="multipart/form-data">
+        <p id="uploadPhoto">
+        Change profile pic:<input type="file" name="file" size="45" onchange="this.form.submit()" class="filestyle" data-classButton="btn btn-primary" data-input="false" data-classIcon="icon-plus" data-buttonText="Your label here."/>
+        </p>
+        <input type="text" name="userId" id="PhotoId"  style="display: none;">
+        
+    </form> -->
+    
 								<!-- content -->
 								<div class="row">
 								<label for="group_name" style="font-size:20px" >Group Name</label>

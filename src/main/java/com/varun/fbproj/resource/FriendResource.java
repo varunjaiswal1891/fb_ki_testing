@@ -55,8 +55,32 @@ public class FriendResource {
 		
 		ArrayList<User> al_friends=new ArrayList<User>();
          System.out.println("fetching all my friends list");
+         
+         System.out.println("Umesh Rao");
 		
 		return GetMyAllFriends.getMyFriends(al_friends,myEmailID);	
+	
+	}//findMyFriend method ends here
+	
+	@GET
+    @Path("/getMyAllFriendsuggest")
+	@Produces({MediaType.APPLICATION_JSON})
+    public static ArrayList<User> getAllMyFriendsuggest(@CookieParam("ID") String jwt,@CookieParam("ID_group") String group_name 
+    		) throws JsonParseException, JsonMappingException, IOException{
+	
+		System.out.println("inside get my all friends");
+		System.out.println("jwt="+ jwt);
+		Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(jwt).getBody();
+			    System.out.println("Subject: " + claims.getSubject());
+			   // System.out.println("Expiration: " + claims.getExpiration());
+			  String myEmailID=claims.getSubject();
+	
+		ArrayList<User> al_friends=new ArrayList<User>();
+         System.out.println("fetching all my friends list");
+		
+		return GetMyAllFriends.getMyFriendsuggestion(al_friends,myEmailID,group_name);	
 	
 	}//findMyFriend method ends here
 	

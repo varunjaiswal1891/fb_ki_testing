@@ -60,6 +60,7 @@
         	}	
 
         	var foo = $.cookie("ID");
+        	
          	$.ajax({
         		 type: "GET",
     	        contentType: "text/plain",  //send data to server in this format
@@ -196,7 +197,10 @@
                        // we have the response  
                 	   if(response!=null){
                        var data =JSON.parse(JSON.stringify(response));  
-                   	                       
+
+                       
+                  //     console.log(data);
+                   	              
                        
                        var st;
                        var fname,lname;
@@ -535,6 +539,7 @@
                  		  */
                  		 
                  		var statusdesc= document.getElementById("posttext").value;
+                 		
                  		 //alert(x);
                  		 var obj2={status_desc:statusdesc,feeling:feeling,timelineid:timelineid};
                  		 var mahjson=JSON.stringify(obj2);
@@ -548,7 +553,11 @@
      	    	   
      	    	  if(resp!=null){
      	    		  
+
+     	    		 alert(resp);
+
      	    		  alert(resp);
+
      	    		 $('#posttext').val('');
      	    		location.reload();
      	    		  
@@ -649,7 +658,7 @@
                  		allFriends+="</div>";
     					     	}
                  	
-                 allFriends=allFriends.replace("undefined","");
+                allFriends=allFriends.replace("undefined","");
              	   $("#allFriends").html(allFriends);
             
                     }  
@@ -686,12 +695,17 @@
       	  
             // window.location.replace("todoPage.html");
              var group_name=$("input#group_name").val();
+             var group_privacy=$("input#group_privacy").val();
+             var obj = { group_name:group_name,group_privacy:group_privacy
+              		  };  
+            	var myJSON = JSON.stringify(obj);
+            	//document.write(myJSON);
              $.ajax({
      	        type: "POST",
-     	        contentType: "text/plain",  //send data to server in this format
+     	        contentType: "application/json",  //send data to server in this format
      	        url:"http://localhost:8080/DemoFB/webapi/group/create_group",
      	        dataType: "text",  //expect response of this type
-     	        data: group_name,
+     	        data: myJSON,
      	        success: function(resp){
      	            
      	            if(resp!=null){
@@ -1203,6 +1217,10 @@
           <label for="group_name" >Group Name:</label>
           <input type="text"  id="group_name" style="margin-left:10px;">
         </div>
+         <div class="form-group">
+          <label for="group_name" >Privacy:</label>
+          <input type="text"  id="group_privacy" placeholder="public or private" style="margin-left:10px;">
+        </div>
         <br>     
     </div>
        
@@ -1301,14 +1319,14 @@
      
      
      
-             <script>
+          <!--   <script>
   $( function() {
     $( "#datepicker" ).datepicker({dateFormat: "yy-mm-dd"});
   } );
   $( function() {
 	    $( "#datepicker1" ).datepicker({dateFormat: "yy-mm-dd"});
 	  } );
-  </script>
+  </script> -->
      
 		
 		
