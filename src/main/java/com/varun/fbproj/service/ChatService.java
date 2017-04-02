@@ -224,9 +224,9 @@ public class ChatService {
 											ch.get(i).setStatus("NEW");
 										flag=1;
 									}	
-									if(flag==0)
+								}	if(flag==0)
 										ch.add(c1);
-								}
+								
 								
 								}
 						  for(int i=0;i<ch.size();i++)
