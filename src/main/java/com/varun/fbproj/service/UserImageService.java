@@ -98,5 +98,3 @@ ImageIO.write(bi, "jpg", outputfile);
 
 	
 }//class ends here
-
-

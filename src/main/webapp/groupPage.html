@@ -16,6 +16,16 @@
         <script type="text/javascript">
         
         $(document).ready(function() {
+        	
+
+        	var ID = $.cookie("ID");
+        	if(ID==null)
+        	{
+        		window.location.replace("appHome.html");
+        	}
+        	
+        	
+        	
         	var f1,l1;
         	var group_name = $.cookie("ID_group");
         	document.getElementById("group_name").innerHTML=group_name;
@@ -212,7 +222,7 @@
                     	   st+="<div class="+"\"panel-body\""+"id=\"forcomment\""+">";
                     	   st+="<div class="+"\"row\""+">";
                     	   st+="<div class="+"\"col-md-12\""+">";
-                    	   st+="<p><font size="+"\"5\""+"color="+"\"blue\""+">"+data[i].emailID+"</font></p>" ;
+                    	   st+="<p><font size="+"\"5\""+"color="+"\"blue\""+">"+data[i].name+"</font></p>" ;
                     	   
                     	 	st+="<hr>";
                     	   st+="<p id="+"\"forstatus\""+">"+data[i].status_desc+"</p>" ;
@@ -567,9 +577,8 @@
                  	
                  	
       	  $("#logoutButton1").click(function(e){
-     		  //alert("logout success");
-         	  // var obj = JSON.parse(JSON.stringify(resp));
-         	   window.location.replace("appHome.html");
+     		  $.cookie("ID",null);
+      		  window.location.replace("appHome.html");
      	           	   	        	
      	       
      	   });//logout button ends ends
@@ -717,7 +726,23 @@
             
     	   });//search button ends ends
     	   
-    	   
+    	   $('a[href="#uName"]').click(function(){
+        		if(ID!=null)
+        		{window.location.replace("timeLine1.html"); 
+        		}
+        		});
+   	   
+   		$('a[href="#uHome"]').click(function(){
+        		if(ID!=null)
+        		{window.location.replace("userHome1.html"); 
+        		}
+        		});
+   		$('a[href="#uFriend"]').click(function(){
+        		if(ID!=null)
+        		{window.location.replace("userFriend.html"); 
+        		}
+        		});
+   	   
     	   
     	   
     	   
@@ -821,13 +846,13 @@
 							</form>
 							<ul class="nav navbar-nav navbar-center">
 							<li>
-								<a href="timeLine1.html" id="userName"><i class="glyphicon glyphicon-user"></i> User Name</a>
+								<a href="#uName" id="userName"><i class="glyphicon glyphicon-user"></i> User Name</a>
 							  </li>
 							  <li>
-								<a href="userHome1.html"><i class="glyphicon glyphicon-home"></i> Home</a>
+								<a href="#uHome"><i class="glyphicon glyphicon-home"></i> Home</a>
 							  </li>
 							  <li>
-								<a href="userFriend.html">Find Friends</a>
+								<a href="#uFriend">Find Friends</a>
 							  </li>
 							  
 							  <li>

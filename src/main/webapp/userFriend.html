@@ -16,7 +16,7 @@
         
 
 <script type="text/javascript">
-$(document).ready(function() {
+$(document).ready(function() {var abc;
 	var x=$.cookie("ID");
 	
 	var firstemail;
@@ -176,7 +176,7 @@ $(function () {
        	
        	
        	
-       	$.ajax({ 
+        	$.ajax({ 
             url: "http://localhost:8080/DemoFB/webapi/friend/peopleYouMay_KnowMutualFriends",
             type: "GET",
             dataType: "json",
@@ -193,7 +193,8 @@ $(function () {
                  var mayKnow;
          	 
              	for (var i=0; i < data.length; i++){
-         		    mayKnow+="<div class="+"\"panel-body\""+">";
+         		    //alert("bestplaceis"+data[i].bestPlace);
+             		mayKnow+="<div class="+"\"panel-body\""+">";
                		mayKnow+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
                		mayKnow+="<a href="+"\"#\""+"onmouseover=\"mutual(this)\""+" id="+data[i].userID+">"+data[i].fname+" "+data[i].lname+"</span></a>";
                		mayKnow+="<div class="+"\"text-right\""+">";
@@ -218,7 +219,7 @@ $(function () {
      					alert(e.toString());
    			}				
      
-	  });
+	  }); 
        	$.ajax({ 
             url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
             type: "GET",
@@ -346,7 +347,7 @@ $(function () {
             url: "http://localhost:8080/DemoFB/webapi/friendRequest/giveMyRequests",
             type: "GET",
             dataType: "json",
-            contentType : "application/json",
+            
             crossDomain: true,
             processData: true,
             
@@ -357,12 +358,11 @@ $(function () {
          	   if(response!=null){
                 var data =JSON.parse(JSON.stringify(response));  
                  var Frequest;
-         	 
-               
+         	   
              	for (var i=0; i < data.length; i++){
              		
          			Frequest+="<div class=\"panel-body\" id=\"div"+data[i].emailID+"\">";
-					Frequest+="<div class=\"pull-left col-sm-3\"><img class=\"img-responsive\" alt=\"logo\" src=\"users/"+data[i].emailID+"/profilePic.jpg\" /></div>";
+					Frequest+="<div class=\"pull-left col-sm-3\"><img class=\"img-responsive\" alt=\"logo\" src=\"users/"+data[i].emailID+"/profilePic.jpg\"" +"data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-html="+"\"true\""+"data-content ="+"\"BestPlace: "+data[i].bestPlace+" <br>Date ofBirth: "+data[i].date+"\" /></div>";
 					Frequest+="<a href=\"#\">"+data[i].fname+" "+data[i].lname+"</span></a>";
 					Frequest+="<div class=\"text-right\">";
 					Frequest+="<button type=\"button\" class=\"btn btn-primary\" id=\""+data[i].emailID+"\" OnClick=\"accept(this);\">Confirm<span class=\"glyphicon glyphicon-plus\"></span></button>";
@@ -389,6 +389,8 @@ $(function () {
      
 	  });
 });
+	
+
 	
 	$("#logoutButton1").click(function(e){
 		  var foo = $.cookie("ID");
@@ -726,6 +728,20 @@ jQuery(document).ajaxComplete(function () {
 										<div class="list-group">
 										<div id="Frequest"></div>
 										<p id="Frequest"></p>
+										<!-- <form id="placechoice1" action=#>
+									  <div class="form-group">
+         <label for="bestplace">BestPlace(select one):</label>
+      <select class="form-group" name="bestplaces" id="bestplace" style="margin-left:10px;">
+        <option value="Bangalore">Bangalore</option>
+        <option value="Tokyo">Tokyo</option>
+        <option value="Pataya">Pataya</option>
+        <option value="All">All</option>
+      </select>
+        <input type="button" id = "placechoice" class="btn" value="Submitchoice" style="height:40px; width:60%;">	 
+	
+        </div></form>
+     -->    
+				
 									  </div>
 									  </div>
 								   
@@ -865,8 +881,11 @@ jQuery(document).ajaxComplete(function () {
 		<p id="allFriends"></p>
 			</div>
 		  </div>			    
+		
+		
+		
 		</div>
-									   
+							   
 									
 								  </div>
 								  

@@ -27,6 +27,8 @@ import com.varun.fbproj.service.StatusService;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 @WebService()
@@ -46,16 +48,24 @@ public class StatusResource {
 	}
     
     
+
     /* this method working good we post from userhome1 page*/
     @POST
     @Path("/addStatus")
    // @Consumes({MediaType.TEXT_PLAIN})
+
+    @POST
+    @Path("/addStatus")
+    @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.TEXT_PLAIN})
-    public String addStatus(@CookieParam("ID") String jwt,String statusdesc)throws JsonParseException, JsonMappingException, IOException{
+    public String addStatus(@CookieParam("ID") String jwt,Status obj)throws JsonParseException, JsonMappingException, IOException{
 
     	
     	System.out.println("token: "+jwt);
-    	System.out.println("desc: "+statusdesc);
+    	System.out.println("desc: "+obj.getStatus_desc());
+    	System.out.println("feeing: "+obj.getFeeling());
+    	System.out.println("timelineid: "+obj.getTimelineid());
+    	
     	Claims claims = Jwts.parser()         
 			       .setSigningKey("secret".getBytes("UTF-8"))
 			       .parseClaimsJws(jwt).getBody();
@@ -64,8 +74,10 @@ public class StatusResource {
 			  String myEmailID=claims.getSubject();
 			  //String myEmailID="shubham@gmail.com";
 			  Status status = new Status();
-			  
-    	status.setStatus_desc(statusdesc);
+		status.setFeeling(obj.getFeeling());
+		status.setTimelineid(obj.getTimelineid());
+		
+    	status.setStatus_desc(obj.getStatus_desc());
        	status.setEmailID(myEmailID);
        	status.setGroup_name("undefined");
     	if(s1.addStatus1(status)){
@@ -75,6 +87,7 @@ public class StatusResource {
     		return "status not posted";
     } // end of addStatus
     
+       
     
     /* this method working good*/
     @POST
@@ -163,7 +176,7 @@ public class StatusResource {
     
     
     
-    //this method gives all mere and my frineds k status to be shown on userhome page
+  //this method gives all mere and my frineds k status to be shown on userhome page
     @GET
     @Path("/getAllStatus")
 	@Produces({MediaType.APPLICATION_JSON})
@@ -176,11 +189,17 @@ public class StatusResource {
 			       .parseClaimsJws(jwt).getBody();
 			    System.out.println("Subject: " + claims.getSubject());
 			    String myEmailID=claims.getSubject();
+
     	//String myEmailID="shubham@gmail.com";
     	ArrayList<Status> status_list= new ArrayList<Status>();
     	ArrayList<Status> status_list1= new ArrayList<Status>();
+    
+   
+    	ArrayList<Status> status_list= new ArrayList<Status>(); 
+
     	//it gives mere all status
-		status_list.addAll(s1.getAllDetailsOfEachStatus(myEmailID)); 
+    	String str="home";
+		status_list.addAll(s1.getAllDetailsOfEachStatus(myEmailID,str)); 
     	System.out.println("length is :"+status_list.size());
 		
 		 
@@ -190,9 +209,10 @@ public class StatusResource {
 		for(int i=0;i<al_friends.size();i++)
 		{
 			String e1=al_friends.get(i).getEmailID();
-			status_list.addAll(s1.getAllDetailsOfEachStatus(e1));
+			status_list.addAll(s1.getAllDetailsOfEachStatus(e1,str));
 			
 		}
+
 		ArrayList<String> asl= new ArrayList<String>();
 	asl=GroupService.getgroupname(myEmailID);
 		    for(int i=0;i<status_list.size();i++){
@@ -209,6 +229,34 @@ public class StatusResource {
 		    	}
 		    }
 		return status_list1;
+		
+		
+		for(int i=0;i<al_friends.size();i++)
+		{
+			String e1=al_friends.get(i).getEmailID();
+			
+			for(int j=0;j<al_friends.size();j++)
+			{	
+			
+				String e2=al_friends.get(j).getEmailID();
+				
+					
+					status_list.addAll(s1.getAllDetailsOfEachStatus(e1,e2));
+				
+				
+		    }
+	    }
+		
+		Collections.sort(status_list,new Comparator<Status>(){
+            @Override
+            public int compare(Status u1,Status u2){
+                return u1.getStatusID()<u2.getStatusID()?-1:1;
+            }
+        });
+		
+		
+		return status_list;
+
 		   
     }//getALLStatusByUser ends here
     
@@ -227,8 +275,29 @@ public class StatusResource {
     	
     	ArrayList<Status> status_list= new ArrayList<Status>(); 
     	//it gives mere all status
-		status_list.addAll(s1.getAllDetailsOfEachStatus(myEmailID)); 
+    	String str0="home";
+		status_list.addAll(s1.getAllDetailsOfEachStatus(myEmailID,str0)); 
     
+		ArrayList<User> al_friends2=new ArrayList<User>();
+        System.out.println("fetching all my friends ke status");		
+		al_friends2=GetMyAllFriends.getMyFriends(al_friends2,myEmailID);
+		for(int i=0;i<al_friends2.size();i++)
+		{
+			String e1=al_friends2.get(i).getEmailID();
+			status_list.addAll(s1.getAllDetailsOfEachStatus(e1,myEmailID));
+			
+		}
+		status_list.addAll(s1.getAllDetailsOfEachStatus(myEmailID,myEmailID));
+		
+		
+		Collections.sort(status_list,new Comparator<Status>(){
+            @Override
+            public int compare(Status u1,Status u2){
+                return u1.getStatusID()<u2.getStatusID()?-1:1;
+            }
+        });
+		
+		
 		return status_list;
     }//method ends here
     
@@ -241,8 +310,30 @@ public class StatusResource {
     	
     	ArrayList<Status> status_list= new ArrayList<Status>(); 
     	//it gives mere all status
-		status_list.addAll(s1.getAllDetailsOfEachStatus(u1.getEmailID())); 
-    
+    	String str1="home";
+		status_list.addAll(s1.getAllDetailsOfEachStatus(u1.getEmailID(),str1)); 
+		System.out.println("status_listttttttttttttttttttttttttttttttttttttttttttt"+u1.getEmailID());
+		
+		
+		
+		 ArrayList<User> al_friends1=new ArrayList<User>();
+         System.out.println("fetching all my friends ke status");		
+		al_friends1=GetMyAllFriends.getMyFriends(al_friends1,u1.getEmailID());
+		for(int i=0;i<al_friends1.size();i++)
+		{
+			String e1=al_friends1.get(i).getEmailID();
+			status_list.addAll(s1.getAllDetailsOfEachStatus(e1,u1.getEmailID()));
+			
+		}
+		status_list.addAll(s1.getAllDetailsOfEachStatus(u1.getEmailID(),u1.getEmailID()));
+		
+		Collections.sort(status_list,new Comparator<Status>(){
+            @Override
+            public int compare(Status u1,Status u2){
+                return u1.getStatusID()<u2.getStatusID()?-1:1;
+            }
+        });
+		
 		return status_list;
     }
     

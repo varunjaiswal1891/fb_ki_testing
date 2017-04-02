@@ -108,6 +108,8 @@ $(document).ready(function() {
                                    document.getElementById("work").innerHTML="Work Place   : "+obj.placeOfWork;
                                    document.getElementById("town").innerHTML="HomeTown     : "+obj.hometown;
                                    document.getElementById("workCity").innerHTML="City of Work : "+obj.cityOfWork;
+                                   document.getElementById("bestplace").innerHTML="Best Place : "+obj.bestPlace;
+                                   
                                    document.getElementById("mob_no").defaultValue =obj.mob_no;
                                    document.getElementById("college").defaultValue =obj.college;
                                    document.getElementById("highschool").defaultValue =obj.highschool;
@@ -237,10 +239,10 @@ window.go = function(e1){
           var hometown=$("input#hometown").val();
           var cityOfWork=$("input#workcity").val();
           var highschool=$("input#highschool").val();
-          //var sport=$('#sport option:selected').text();
-          
+          var bestplace=$('select#bestplace option:selected').text();
+          alert("bestplace"+bestplace);
           var obj = { mob_no:mob_no,college:college,placeOfWork:placeOfWork,
-                  hometown:hometown,cityOfWork:cityOfWork,highschool:highschool
+                  hometown:hometown,cityOfWork:cityOfWork,highschool:highschool,bestPlace:bestplace
                   };  
           var myJSON = JSON.stringify(obj);
               
@@ -624,16 +626,27 @@ window.go = function(e1){
 }); 
 }
               $("#postbutton").click(function(e){
-                  
+            	  $.ajax({
+            	        type: "POST",
+            	        contentType: "text/plain",  //send data to server in this format
+            	        url:"http://localhost:8080/DemoFB/webapi/friend/getmyemail",
+            	        dataType: "text",  //expect response of this type
+            	        data: x,
+            	       success: function(resp){
+            	           
+            	          if(resp!=null){
+            	        	
                   
                   var statusdesc= document.getElementById("posttext").value;
-                   //alert(x);
+                  var obj2={status_desc:statusdesc,timelineid:resp};
+                  var mahjson=JSON.stringify(obj2);
+                  //alert(x);
                    $.ajax({
             type: "POST",
-            contentType: "text/plain",  //send data to server in this format
+            contentType: "application/json",  //send data to server in this format
             url:"http://localhost:8080/DemoFB/webapi/status/addStatus",
             dataType: "text",  //expect response of this type
-            data: statusdesc,
+            data: mahjson,
            success: function(resp){
                
               if(resp!=null){
@@ -655,10 +668,27 @@ window.go = function(e1){
         }     
                    
                    
-                   });             
+             });
                    
-               });          
+            }
+            	          else{
+            	        	  alert("getid failed");
+            	        	  }
+            	          
+            	          
+            	       },          
+                   error: function(e){  
+                       alert('inside add status: ' + e);  
+                       alert(e.toString());
+               }                
+
+       });      
               
+            	          
+            	          
+      });          
+        
+        
                
                
               $("#comment").click(function(){
@@ -862,7 +892,7 @@ window.go = function(e1){
       <pre class="media-left" id="town"></pre>        <br>
       <pre class="media-left" id="workCity"></pre>    <br>
       <pre class="media-left" id="School"></pre><br>
-   <!--     <pre class="media-left">Sports :</pre><p id="sportID" class="media-right"></p>    <br>  -->
+       <pre class="media-left" id="bestplace">Best Places :</pre><p class="media-right"></p>    <br>  
                                             
                                             
                                             
@@ -899,6 +929,8 @@ window.go = function(e1){
     <div class="row">
       <div class="col-md-12">
       <p id="status_name"></p>
+      <p id="feelings"></p>
+      
        <p id="forstatus"></p>  <!-- status text -->
       </div>
     </div>
@@ -1058,17 +1090,17 @@ window.go = function(e1){
         </div>
              <br>
              
-    <!--     <div class="form-group">
-         <label for="sel1">Sports (select one):</label>
-      <select class="form-control" id="sport" style="margin-left:10px;">
-        <option>Cricket</option>
-        <option>Football</option>
-        <option>Tennis</option>
-        <option>Baseball</option>
+      <div class="form-group">
+         <label for="bestplace">SBestPlace (select one):</label>
+      <select class="form-group" name="bestplaces" id="bestplace" style="margin-left:10px;">
+        <option value="Bangalore">Bangalore</option>
+        <option value="Tokyo">Tokyo</option>
+        <option value="Pataya">Pataya</option>
+        <option value="Malasia">Malasia</option>
       </select>
         </div>
              <br>      
-             -->
+             
        
     </div>
     

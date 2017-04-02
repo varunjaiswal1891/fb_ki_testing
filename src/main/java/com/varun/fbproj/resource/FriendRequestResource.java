@@ -127,19 +127,21 @@ public class FriendRequestResource {
 	@GET
     @Path("/giveMyRequests")
 	@Produces({MediaType.APPLICATION_JSON})
-    public static ArrayList<User> getMyALLRequests(@CookieParam("ID") String jwt,String friendEmailID
+    public static ArrayList<User> getMyALLRequests(@CookieParam("ID") String jwt
     		) throws JsonParseException, JsonMappingException, IOException{
 		//it returns all friend requests which came to me
-		ArrayList<User> al_requestList=new ArrayList<User>();
-		System.out.println("jwt="+ jwt);
+		ArrayList<User> al_requestList=new ArrayList<User>();	
 		Claims claims = Jwts.parser()         
 			       .setSigningKey("secret".getBytes("UTF-8"))
 			       .parseClaimsJws(jwt).getBody();
 			    System.out.println("Subject: " + claims.getSubject());
 			   // System.out.println("Expiration: " + claims.getExpiration());
 			  String myEmailID=claims.getSubject();	
+		al_requestList=FriendRequestService.getAllFriendRequest(myEmailID, al_requestList);
 		
-		return FriendRequestService.getAllFriendRequest(myEmailID, al_requestList);
+		
+		
+		return al_requestList;
 	}//method ends here
 	
 	
