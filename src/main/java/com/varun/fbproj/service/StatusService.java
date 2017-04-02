@@ -25,12 +25,30 @@ public class StatusService {
 			 }
 			 String  status_desc=s1.getStatus_desc(); 
 			 String emailID=s1.getEmailID();
+			 String feeling=s1.getFeeling();
+			 String timelineid=s1.getTimelineid();
+			 
+			 
+			 String query = "insert into status(status_desc,emailID,group_name,feeling,timelineid) values(?,?,?,?,?)";
+			 PreparedStatement pstmnt = db.con.prepareStatement(query);
+			 pstmnt.setString(1,status_desc);
+			 pstmnt.setString(2,emailID);
+			 pstmnt.setString(3,s1.getGroup_name());
+			 pstmnt.setString(4,feeling);
+			 pstmnt.setString(5,timelineid);
+				
+			 pstmnt.executeUpdate();
+			 
+			 
+			 
+			/* String  status_desc=s1.getStatus_desc(); 
+			 String emailID=s1.getEmailID();
 				 	String query = "insert into status(status_desc,emailID,group_name) values(?,?,?)";
 				 	PreparedStatement pstmnt = db.con.prepareStatement(query);
 				 	pstmnt.setString(1,status_desc);
 				 	pstmnt.setString(2,emailID);
 				 	pstmnt.setString(3, s1.getGroup_name());
-				 	pstmnt.executeUpdate();
+				 	pstmnt.executeUpdate();*/
 				 	db.stop();
 				 	return true;
 			
@@ -91,17 +109,7 @@ public class StatusService {
 				 	return true;
 			 }
 
-			 String query = "insert into status(status_desc,emailID,group_name,feeling,timelineid) values(?,?,?,?,?)";
-			 PreparedStatement pstmnt = db.con.prepareStatement(query);
-			 pstmnt.setString(1,status_desc);
-			 pstmnt.setString(2,emailID);
-			 pstmnt.setString(3,s1.getGroup_name());
-			 pstmnt.setString(4,feeling);
-			 pstmnt.setString(5,timelineid);
-				
-			 pstmnt.executeUpdate();
-			 db.stop();
-			 return true;
+			
 
 		  }
 		  catch (Exception e) 

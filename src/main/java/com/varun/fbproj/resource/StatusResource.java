@@ -49,10 +49,6 @@ public class StatusResource {
     
     
 
-    /* this method working good we post from userhome1 page*/
-    @POST
-    @Path("/addStatus")
-   // @Consumes({MediaType.TEXT_PLAIN})
 
     @POST
     @Path("/addStatus")
@@ -195,7 +191,7 @@ public class StatusResource {
     	ArrayList<Status> status_list1= new ArrayList<Status>();
     
    
-    	ArrayList<Status> status_list= new ArrayList<Status>(); 
+    	//ArrayList<Status> status_list= new ArrayList<Status>(); 
 
     	//it gives mere all status
     	String str="home";
@@ -228,7 +224,7 @@ public class StatusResource {
 		    		status_list1.add(status_list.get(i));
 		    	}
 		    }
-		return status_list1;
+		
 		
 		
 		for(int i=0;i<al_friends.size();i++)
@@ -247,7 +243,7 @@ public class StatusResource {
 		    }
 	    }
 		
-		Collections.sort(status_list,new Comparator<Status>(){
+		Collections.sort(status_list1,new Comparator<Status>(){
             @Override
             public int compare(Status u1,Status u2){
                 return u1.getStatusID()<u2.getStatusID()?-1:1;
@@ -255,7 +251,7 @@ public class StatusResource {
         });
 		
 		
-		return status_list;
+		return status_list1;
 
 		   
     }//getALLStatusByUser ends here
