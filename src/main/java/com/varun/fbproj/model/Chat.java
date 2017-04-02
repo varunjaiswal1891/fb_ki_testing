@@ -8,7 +8,9 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 public class Chat {
 
 	private String senderEmail;
+	private String senderName;
 	private String receiverEmail;
+	private String receiverName;
 	private String status;
 	private String message;
 	private String time;
@@ -16,14 +18,32 @@ public class Chat {
 	public Chat(){
 		
 	}
-	public Chat(String senderEmail, String receiverEmail, String status, String message,String time) {
+	
+	public Chat(String senderEmail, String senderName, String receiverEmail, String receiverName, String status,
+			String message, String time) {
 		super();
 		this.senderEmail = senderEmail;
+		this.senderName = senderName;
 		this.receiverEmail = receiverEmail;
+		this.receiverName = receiverName;
 		this.status = status;
 		this.message = message;
-		this.time=time;
+		this.time = time;
 	}
+
+	public String getSenderName() {
+		return senderName;
+	}
+	public void setSenderName(String senderName) {
+		this.senderName = senderName;
+	}
+	public String getReceiverName() {
+		return receiverName;
+	}
+	public void setReceiverName(String receiverName) {
+		this.receiverName = receiverName;
+	}
+	
 	public String getTime() {
 		return time;
 	}

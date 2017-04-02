@@ -57,10 +57,10 @@ public class ChatResource {
 	@POST
 	@Path("/addNew")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.TEXT_PLAIN)
-	public String addNew(@CookieParam("ID") String jwt,Chat c) throws JsonParseException, JsonMappingException, IOException
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Chat> addNew(@CookieParam("ID") String jwt,Chat c) throws JsonParseException, JsonMappingException, IOException
 	{
-		System.out.println("Inside addNew method");
+		System.out.println("Inside chat resource");
 		System.out.println("jwt="+ jwt);
 		Claims claims = Jwts.parser()         
 			       .setSigningKey("secret".getBytes("UTF-8"))
@@ -77,7 +77,7 @@ public class ChatResource {
 			  c.setTime(date.toString());
 			  if(ChatService.postMsg(c))
 			  {
-				  return "message sent success";
+				  return ChatService.getAll(c);
 			  }
 			 return null;
 		
@@ -100,6 +100,23 @@ public class ChatResource {
 			  String emailID=claims.getSubject();
 			  c.setReceiverEmail(emailID);
 			  ch=ChatService.fetchNew(c);
+		return ch;
+	}
+	@GET
+	@Path("/getMyAllConversations")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Chat> fetchConversations(@CookieParam("ID") String jwt) throws JsonParseException, JsonMappingException, IOException
+	{
+		System.out.println("inside recent");
+		ArrayList<Chat> ch = new ArrayList<Chat>();
+		System.out.println("jwt="+ jwt);
+		Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(jwt).getBody();
+			    System.out.println("Subject of recent: " + claims.getSubject());
+			    System.out.println("Expiration of recent: " + claims.getExpiration());
+			  String emailID=claims.getSubject();
+			  ch=ChatService.fetchAllConversations(emailID);
 		return ch;
 	}
 	
