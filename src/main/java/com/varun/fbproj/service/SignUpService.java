@@ -77,8 +77,8 @@ public class SignUpService {
 						
 						//System.out.println("YES");
             check=connect.stop();
-
-            new File("/home/athira/ooad5/fb_ki_testing/src/main/webapp/users/"+u1.getEmailID()+"/images/").mkdirs();
+            new File("/home/varun/git/fb_ki_testing/src/main/webapp/users/"+u1.getEmailID()+"/images/").mkdirs();
+            new File("/home/varun/git/fb_ki_testing/src/main/webapp/users/"+u1.getEmailID()+"/groups/").mkdirs();
 
             return true;
         }}

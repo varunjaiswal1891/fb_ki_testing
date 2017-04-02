@@ -19,7 +19,22 @@
   
 
 <script type="text/javascript">
-$(document).ready(function(){
+
+
+$(document).ready(function() {
+	
+	
+
+	var ID = $.cookie("ID");
+	if(ID==null)
+	{
+		window.location.replace("appHome.html");
+	}
+	
+	
+	
+	
+
 	var x=$.cookie("ID");
 	//document.write(x);
 	$("#logoutForm").submit(function(e){
@@ -206,53 +221,38 @@ $(document).ready(function(){
 		 	  }); 
 			   }
 
-	   	   
-	   $("#homeButton").click(function(e){
-		   window.location.replace("userHome1.html");
-	   }); 	   
 	
 	
 	
 	  $("#logoutButton1").click(function(e){
-		   var foo = $.cookie("ID");
-      	 //alert("logout success");
+		 $.cookie("ID",null);
    	   window.location.replace("appHome.html");	  
 			
-	   /* $.ajax({
-	        type: "DELETE",
-	        contentType: "text/plain",  //send data to server in this format
-	        url:"http://localhost:8080/DemoFB/webapi/user/logout",
-	        dataType: "text",  //expect response of this type
-	        data: foo,
-	        success: function(resp){
-	            //alert("succes done");
-	            //alert(data);
-	            
-	            if(resp!=null){
-	            			
-	                    	 alert("logout success");
-	                    	  // var obj = JSON.parse(JSON.stringify(resp));
-	                    	   window.location.replace("appHome.html");
-	                    	   $.removeCookie("ID");
-	                    	  
-	            }	
-	            else
-	            {
-	            	alert("logout failed.. ");
-	            	window.location.replace("appHome.html");
-	            }	
-	            
-
-	            
-	        },
-	        error: function(jqXHR, textStatus, errorThrown){
-	            alert('logout error: ' + textStatus);
-	        }
-	    });*/
-	           	
-	        	
-	       
 	   });//logout button ends ends
+	   
+	   
+	    $('a[href="#uName"]').click(function(){
+    		if(ID!=null)
+    		{window.location.replace("timeLine1.html"); 
+    		}
+    		});
+	   
+		$('a[href="#uHome"]').click(function(){
+    		if(ID!=null)
+    		{window.location.replace("userHome1.html"); 
+    		}
+    		});
+		$('a[href="#uFriend"]').click(function(){
+    		if(ID!=null)
+    		{window.location.replace("userFriend.html"); 
+    		}
+    		});
+	   
+       
+	   
+	   
+	   
+	   
 	   $("#search").click(function(e){
  		  
            var key=$("input#srch-term").val();
@@ -354,13 +354,13 @@ $(document).ready(function(){
                             </form>
                             <ul class="nav navbar-nav navbar-center">
                             <li>
-                                <a href="timeLine1.html" id="userName"><i class="glyphicon glyphicon-user"></i> User Name</a>
+                                <a href="#uName" id="userName"><i class="glyphicon glyphicon-user"></i> User Name</a>
                               </li>
                               <li>
-                                <a href="userHome1.html"><i class="glyphicon glyphicon-home"></i> Home</a>
+                                <a href="#uHome"><i class="glyphicon glyphicon-home"></i> Home</a>
                               </li>
                               <li>
-                                <a href="userFriend.html"><i class="glyphicon glyphicon-user"></i> Find Friends</a>
+                                <a href="#uFriend"><i class="glyphicon glyphicon-user"></i> Find Friends</a>
                               </li>
                               <li>
                                 <a href="todoPage.html" title="Friend Requests"><i class="glyphicon glyphicon-user"></i><span class="badge">9</span></a>
