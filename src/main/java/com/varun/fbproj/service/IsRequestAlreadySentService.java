@@ -28,13 +28,12 @@ public class IsRequestAlreadySentService {
 		
 			if (result.next()) {
 				System.out.println("yes I had already sent the request for id's"+emailID1+" "+emailID2);
+				return true;
 				
-				i=1;
 				
 			}	//if ends
 			connect.stop();
-			if(i==1)
-				return true;
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
