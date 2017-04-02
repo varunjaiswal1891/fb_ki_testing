@@ -103,7 +103,7 @@ $(document).ready(function() {
 		 	$.ajax({
         		 type: "GET",
     	        contentType: "text/plain",  //send data to server in this format
-    	        url:"http://localhost:8080/DemoFB/webapi/user/search",
+    	        url:"http://localhost:8080/DemoFB/webapi/friend/findFriends",
     	        dataType: "JSON",  //expect response of this type
     	        data: foo,
                   
@@ -410,7 +410,7 @@ $(document).ready(function() {
  											  <div class="panel panel-default">
 										<div class="panel-heading"> <h4>Filter Result</h4></div>
 										  <div class="panel-body">	
- 	   <form id="contact" action="Search2.html" >
+ 	   <form id="contact" action="Search.html" >
     <div class="input-group input-group-sm" style="max-width:480px;">
    <div>
 	 <fieldset>
