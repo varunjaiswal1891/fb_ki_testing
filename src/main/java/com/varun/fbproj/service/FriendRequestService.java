@@ -203,7 +203,7 @@ public class FriendRequestService {
 	
 	public static boolean removeFriendRequest(String myEmailID,String suggestEmailID)
 	{
-		//this method removes a friend suggestion that came to me
+		//this method removes a friend suggestion that is being shown in the current users page
 		try {
 
 	      	  DBAccess connect = new DBAccess();

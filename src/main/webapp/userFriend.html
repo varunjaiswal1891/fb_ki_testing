@@ -197,7 +197,6 @@ $(function () {
                		mayKnow+="<a href="+"\"#\""+"onmouseover=\"mutual(this)\""+" id="+data[i].userID+">"+data[i].fname+" "+data[i].lname+"</span></a>";
                		mayKnow+="<div class="+"\"text-right\""+">";
                		mayKnow+="<button type="+"\"button\""+" class="+"\"btn btn-primary\" id=\""+data[i].emailID+"\" OnClick=\"add(this);\""+" \">Add Friend<span class="+"\"glyphicon glyphicon-plus\""+"></span></button>";
-               		mayKnow+="<a class="+"\"btn btn-primary\""+" id=\"remove"+data[i].emailID+"\""+" href=\"\""+" OnClick=\"remv(this);\">Remove</a>"; 
                		mayKnow+="<a class="+"\"btn btn-primary\""+" id="+"\"SentReq"+data[i].emailID+"\" href=\"\""+" style=\"visibility: hidden\";>Request Sent</a></div></div>";
                			
              	}
@@ -452,7 +451,7 @@ $(function () {
 						req+=friendEmailID;
 						 document.getElementById(chk).style.visibility = 'hidden';
 						 document.getElementById(req).style.visibility = 'visible';
-						 location.reload();
+						 window.location.reload();
 						 
              		 
                     }  
@@ -470,6 +469,9 @@ $(function () {
          
  	  }); 
 	   }
+	   
+	  
+	   
 	   window.del = function(e1){
 			 
 		   var friendEmailID= $(e1).attr('id');
@@ -559,58 +561,6 @@ $(function () {
  	  }); 
        }
 	   
-	   window.remv = function(e1){
-		   var people= $(e1).attr('id');
-		  people=people.replace("remove","");
-		 alert(people);
-		   $.cookie("people",people);
-		//alert(people);
-		alert("Trying..abcde")
-		$.ajax({ 
-            url: "http://localhost:8080/DemoFB/webapi/friend/peopleYouMay_KnowMutualFriendss",
-            type: "GET",
-            dataType: "json",
-          //  contentType : "application/json",
-            crossDomain: true,
-            processData: true,
-            
-            
-            success: function(response){  
-         	   
-                // we have the response  
-         	   if(response!=null){
-                var data =JSON.parse(JSON.stringify(response));  
-                 var mayKnoww;
-         	 
-             	for (var i=0; i < data.length; i++){
-         		    mayKnoww+="<div class="+"\"panel-body\""+">";
-               		mayKnoww+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
-               		mayKnoww+="<a href="+"\"#\""+"onmouseover=\"mutual(this)\""+" id="+data[i].userID+">"+data[i].fname+" "+data[i].lname+"</span></a>";
-               		mayKnoww+="<div class="+"\"text-right\""+">";
-               		mayKnoww+="<button type="+"\"button\""+" class="+"\"btn btn-primary\" id=\""+data[i].emailID+"\" OnClick=\"add(this);\""+" \">Add Friend<span class="+"\"glyphicon glyphicon-plus\""+"></span></button>";
-               		mayKnoww+="<a class="+"\"btn btn-primary\""+" id=\"remove"+data[i].emailID+"\""+" href=\"\""+" OnClick=\"remv(this);\">Remove</a>"; 
-               		mayKnoww+="<a class="+"\"btn btn-primary\""+" id="+"\"SentReq"+data[i].emailID+"\" href=\"\""+" style=\"visibility: hidden\";>Request Sent</a></div></div>";
-               			
-             	}
-             mayKnoww=mayKnoww.replace("undefined","");
-         	   $("#abcde").html(mayKnoww);
-        
-                }  
-                
-                else
-             	   {
-             	  alert("something wrong");
-             	   }
-              },
-	    
-   			error: function(e){  
-     					alert('Error121212: ' + e);  
-     					alert(e.toString());
-   			}				
-     
-	  });
-    
-       }
 	   
 	   window.accept = function(e1){
 			 
@@ -787,9 +737,7 @@ jQuery(document).ajaxComplete(function () {
 								 <!-- main col left --> 
 								 <div class="col-sm-4 col-xs-4">
 								   
-							
 
-								   
 								   <div class="pre-scrollable" style="background-color: #d8dfea;height:250px ;margin-bottom:.5cm;margin-top:.5cm">
 								    <div class="panel panel-default">
 										<div class="panel-heading"> <h4>Friends Suggestions</h4></div>
@@ -825,14 +773,18 @@ jQuery(document).ajaxComplete(function () {
 
 										  </div>
 										
-										<div id="abcde">
-										</div>
-								   
-									  
-								   
-									  
+									
+										<div class="panel panel-default">
+										<div class="panel-heading"> <h4>People You May Know</h4></div>
+										 	
+										  	<div class="list-group">
+										  	<p id="abcde"></p>
+ 												<!--  <a href="todoPage.html" class="list-group-item">The Logical Indian</a>
+  												 <a href="todoPage.html" class="list-group-item">C programming</a>
+  												 -->	 
+											</div>
 
-										
+										  </div>
 								   
 								  </div>
 								  

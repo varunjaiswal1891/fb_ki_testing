@@ -25,23 +25,6 @@ $(document).ready(function() {
 	$("#logoutForm").submit(function(e){
 	        e.preventDefault();
 	 });
-	$("#filtermyFriends").click(function(e){
-	      alert("filtering in progress...");
-	           
-	            var college1=$("input#filterclg").val();
-	            $.cookie("college1",college1);
-	           // alert(college1);
-	            var hometown1=$("input#filterhome").val();
-	            $.cookie("hometown1",hometown1);
-	         //alert(hometown1);
-	            var cityOfWork1=$("input#filtercity").val();
-	            $.cookie("cityOfWork1",cityOfWork1);
-			//alert(cityOfWork1);
-	            var highschool1=$("input#filterschool").val();
-	            $.cookie("highschool1",highschool1);
-				//alert(highschool1);
-	          
- 		});  
 
 	$(function(){
 		var foo = $.cookie("ID");
@@ -83,7 +66,7 @@ $(document).ready(function() {
 		 	$.ajax({
         		 type: "GET",
     	        contentType: "text/plain",  //send data to server in this format
-    	        url:"http://localhost:8080/DemoFB/webapi/user/search",
+    	        url:"http://localhost:8080/DemoFB/webapi/user/filterSearch",
     	        dataType: "JSON",  //expect response of this type
     	        data: foo,
                   
@@ -467,47 +450,7 @@ $(document).ready(function() {
 					</div>
 					<!-- /sidebar -->
 				  
-				  
-				<div class="col-sm-3 col-xs-3">
-				
- 											  <div class="panel panel-default">
-										<div class="panel-heading"> <h4>Filter Result</h4></div>
-										  <div class="panel-body">	
- 	   <form id="contact" action="Search2.html" >
-    <div class="input-group input-group-sm" style="max-width:480px;">
-   
-	 <fieldset>
-      Hometown: <input placeholder="Filter using hometown" type="text" id="filterhome">
-    </fieldset>
-	<br>
-	<fieldset>
-      Current city: <input placeholder="Filter using current city" type="text" id="filtercity">
-    </fieldset>
-	<br>
-	<fieldset>
-      High School: <input placeholder="Filter using high school" id="filterschool" type="text" >
-    </fieldset>
-	<br>
-	<fieldset>
-      College: <input placeholder="Filter using college name" type="text" id="filterclg" >
-    </fieldset>
-	<br>
-	
-   <div class="input-group-btn">
-		<button type="submit" id="filtermyFriends" class="btn btn-primary btn-sm" style="margin-top:.5cm">Filter Friends</button>
-		</div>
-		</div>
-      
-  
-  </form>
-  </div>
-  </div>									  
-  </div>
-										
-									 
-				  
-				  
-				<div class="col-sm-5 col-xs-5">
+				<div class="col-sm-7 col-xs-7">
 				
 					<div class="panel panel-default">
 										<div class="panel-heading"><h4>Search Result:</h4></div>
@@ -516,11 +459,20 @@ $(document).ready(function() {
 										<p id="SearchResult"></p>
 									  </div>
 									  </div>	
+									  
+									  
+									  
+									  	
 				</div>
 				
 				
+								  
+														
+									
+								   
+																	  
 								   <!-- main col right -->
-								  <div class=" col-sm-2 col-xs-2 affix" style="float:right; left:970px; top:20px;" >
+								  <div class=" col-sm-3 col-xs-3 affix" style="float:right; left:970px; top:20px;" >
     	 <br>
 	   <div class="panel panel-primary" style="float:right; left:970px; top:30px; min-height: 2000px">
 	   <div class="panel-heading"><h4>My Friends</h4></div>
@@ -542,11 +494,6 @@ $(document).ready(function() {
 				  
 				</div>
 			</div>
-			
-			
-
-			
-			
 		
         <script type="text/javascript" src="assets/js/jquery.js"></script>
         <script type="text/javascript" src="assets/js/bootstrap.js"></script>

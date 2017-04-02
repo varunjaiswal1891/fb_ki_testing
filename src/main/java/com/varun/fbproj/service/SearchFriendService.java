@@ -30,7 +30,6 @@ public class SearchFriendService {
 	            {
 	            
 	            	PreparedStatement prepStatement = connect.con.prepareStatement("select * from User where fname like ? or lname like ? or concat(fname,' ',lname)=? ");
-	            	//PreparedStatement prepStatement = connect.con.prepareStatement("select * from User where concat(fname,' ',lname)=? ");
 	            	//it searches like %name% like statement of sql
 	            	prepStatement.setString(1,"%"+ splited[i] +"%");
 	            	prepStatement.setString(2,"%"+ splited[i] +"%");
@@ -117,6 +116,68 @@ return null;
 		
 	}//method ends here
 
+//this method is used to apply filter to a search result.	
+	public static ArrayList<User> searchFriendsFilter(String emailID,String searchName,String college,String highschool,String hometown,String cityOfWork)
+	{
+		
+		try {
+
+	      	  DBAccess connect = new DBAccess();
+	            boolean check=false;
+	            while(check==false)
+	            {
+	            	check=connect.start();
+	            	System.out.println("trying connection in Filter..");
+	            }
+	            
+	            String[] splited = searchName.split("\\s+");
+	            
+	            for(int i=0;i<splited.length;i++)
+	            {
+	            
+	            	PreparedStatement prepStatement = connect.con.prepareStatement("select * from User where (fname like ? or lname like ?) and (college like ? and hometown like ? and cityOfWork like ? and highschool like ?) ");
+	            	//it searches like %name% like statement of sql
+	            	prepStatement.setString(1,"%"+ splited[i] +"%");
+	            	prepStatement.setString(2,"%"+ splited[i] +"%");
+	            	prepStatement.setString(3,"%"+ college +"%");
+	            	prepStatement.setString(4,"%"+ hometown +"%");
+	            	prepStatement.setString(5,"%"+ cityOfWork +"%");
+	            	prepStatement.setString(6,"%"+ highschool +"%");
+	            	
+					ResultSet result = prepStatement.executeQuery();
+					ArrayList<User> u1 = new ArrayList<User>();
+						while (result.next()) {
+						String e1=result.getString("emailID");	
+						User u_obj=new User();
+						u_obj=RetriveService.getUserAllData(e1);
+						if(IsMyFriendService.isMyFriend(emailID, e1))
+						{u_obj.setMob_no("1");}
+						else if(IsRequestAlreadySentService.isRequestAlreadySent(emailID, e1))
+						{u_obj.setMob_no("2");}
+						else
+						{u_obj.setMob_no("0");}
+						if(!u_obj.getEmailID().equals(emailID))
+						{u1.add(u_obj);}
+						
+					}
+						return u1;
+				  
+					
+	            }//for ends here
+	            
+
+					
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+return null;
+		
+		
+	}//method ends here
+
+	
+	//this service is used to apply filters and search for friends.
 	public static ArrayList<User> searchForFriends(String emailID,String name,String college,String hometown,String cityOfWork,String highschool,String friends)
 	{
 		try {
@@ -126,7 +187,7 @@ return null;
 	            while(check==false)
 	            {
 	            	check=connect.start();
-	            	System.out.println("trying connection in findmyFriends....Hello!!");
+	            	System.out.println("trying connection in findmyFriends...!!");
 	            }
 	            
 	            String[] splited = name.split("\\s+");
@@ -178,13 +239,7 @@ return null;
 	            	
 					while (result.next()) {
 					String e1=result.getString("emailID");	
-					
-					/*for(User data: u1)
-					{
-						String email=data.getEmailID();
-					if(!IsMyFriendService.isMyFriend(email, e1))
-						u1.remove(data);
-					}	*/
+				
 					
 					Iterator<User> iter = u1.iterator();
 
@@ -203,283 +258,8 @@ return u1;
 				e.printStackTrace();
 				return null;
 			}
-//return null;
+
 	}
 	
-/*	public static void searchFriends1(String emailID,String searchName,ArrayList<User> al_friends)
-	{
-		
-		try {
-
-	      	  DBAccess connect = new DBAccess();
-	            boolean check=false;
-	            while(check==false)
-	            {
-	            	check=connect.start();
-	            	System.out.println("trying connection");
-	            }
-	            
-	            String[] splited = searchName.split("\\s+");
-	            
-	            for(int i=0;i<splited.length;i++)
-	            {
-	            
-	            	PreparedStatement prepStatement = connect.con.prepareStatement("select * from User where fname like ? or lname like ?");
-	            	//it searches like %name% like statement of sql
-	            	prepStatement.setString(1,"%"+ splited[i] +"%");
-	            	prepStatement.setString(2,"%"+ splited[i] +"%");
-									
-					ResultSet result = prepStatement.executeQuery();
-				//	ArrayList<User> u1 = new ArrayList<User>();
-						while (result.next()) {
-						String e1=result.getString("emailID");	
-						User u_obj=new User();
-						u_obj=RetriveService.getUserAllData(e1);
-						if(IsMyFriendService.isMyFriend(emailID, e1))
-						{u_obj.setMob_no("1");}
-						else if(IsRequestAlreadySentService.isRequestAlreadySent(emailID, e1))
-						{u_obj.setMob_no("2");}
-						else
-						{u_obj.setMob_no("0");}
-						if(!u_obj.getEmailID().equals(emailID) && !al_friends.contains(u_obj))
-						{al_friends.add(u_obj);}
-						
-					}
-						//return u1;
-				  
-					
-	            }//for ends here
-	            
-
-					
-			} catch (Exception e) {
-				e.printStackTrace();
-			//	return null;
-			}
-//return null;
-		
-		
-	}//method ends here
-
-	public static void searchFriends2(String emailID,String searchName,ArrayList<User> al_friends)
-	{
-		
-		try {
-
-	      	  DBAccess connect = new DBAccess();
-	            boolean check=false;
-	            while(check==false)
-	            {
-	            	check=connect.start();
-	            	System.out.println("trying connection");
-	            }
-	            
-	            String[] splited = searchName.split("\\s+");
-	            
-	            for(int i=0;i<splited.length;i++)
-	            {
-	            
-	            	PreparedStatement prepStatement = connect.con.prepareStatement("select * from User where college like ?");
-	            	//it searches like %name% like statement of sql
-	            	prepStatement.setString(1,"%"+ splited[i] +"%");
-	            //	prepStatement.setString(2,"%"+ splited[i] +"%");
-									
-					ResultSet result = prepStatement.executeQuery();
-				//	ArrayList<User> u1 = new ArrayList<User>();
-						while (result.next()) {
-						String e1=result.getString("emailID");	
-						User u_obj=new User();
-						u_obj=RetriveService.getUserAllData(e1);
-						if(IsMyFriendService.isMyFriend(emailID, e1))
-						{u_obj.setMob_no("1");}
-						else if(IsRequestAlreadySentService.isRequestAlreadySent(emailID, e1))
-						{u_obj.setMob_no("2");}
-						else
-						{u_obj.setMob_no("0");}
-						if(!u_obj.getEmailID().equals(emailID) && !al_friends.contains(u_obj))
-						{al_friends.add(u_obj);}
-						
-					}
-						//return u1;
-				  
-					
-	            }//for ends here
-	            
-
-					
-			} catch (Exception e) {
-				e.printStackTrace();
-				//return null;
-			}
-//return null;
-		
-		
-	}
-	
-	
-	public static void searchFriends3(String emailID,String searchName,ArrayList<User> al_friends)
-	{
-		
-		try {
-
-	      	  DBAccess connect = new DBAccess();
-	            boolean check=false;
-	            while(check==false)
-	            {
-	            	check=connect.start();
-	            	System.out.println("trying connection");
-	            }
-	            
-	            String[] splited = searchName.split("\\s+");
-	            
-	            for(int i=0;i<splited.length;i++)
-	            {
-	            
-	            	PreparedStatement prepStatement = connect.con.prepareStatement("select * from User where hometown like ? ");
-	            	//it searches like %name% like statement of sql
-	            	prepStatement.setString(1,"%"+ splited[i] +"%");
-	            	//prepStatement.setString(2,"%"+ splited[i] +"%");
-									
-					ResultSet result = prepStatement.executeQuery();
-				//	ArrayList<User> u1 = new ArrayList<User>();
-						while (result.next()) {
-						String e1=result.getString("emailID");	
-						User u_obj=new User();
-						u_obj=RetriveService.getUserAllData(e1);
-						if(IsMyFriendService.isMyFriend(emailID, e1))
-						{u_obj.setMob_no("1");}
-						else if(IsRequestAlreadySentService.isRequestAlreadySent(emailID, e1))
-						{u_obj.setMob_no("2");}
-						else
-						{u_obj.setMob_no("0");}
-						if(!u_obj.getEmailID().equals(emailID) && !al_friends.contains(u_obj))
-						{al_friends.add(u_obj);}
-						
-					}
-						//return u1;
-				  
-					
-	            }//for ends here
-	            
-
-					
-			} catch (Exception e) {
-				e.printStackTrace();
-				//return null;
-			}
-//return null;
-		
-		
-	}
-	
-	public static void searchFriends4(String emailID,String searchName,ArrayList<User> al_friends)
-	{
-		
-		try {
-
-	      	  DBAccess connect = new DBAccess();
-	            boolean check=false;
-	            while(check==false)
-	            {
-	            	check=connect.start();
-	            	System.out.println("trying connection");
-	            }
-	            
-	            String[] splited = searchName.split("\\s+");
-	            
-	            for(int i=0;i<splited.length;i++)
-	            {
-	            
-	            	PreparedStatement prepStatement = connect.con.prepareStatement("select * from User where cityOfWork like ? ");
-	            	//it searches like %name% like statement of sql
-	            	prepStatement.setString(1,"%"+ splited[i] +"%");
-	            	//prepStatement.setString(2,"%"+ splited[i] +"%");
-									
-					ResultSet result = prepStatement.executeQuery();
-				//	ArrayList<User> u1 = new ArrayList<User>();
-						while (result.next()) {
-						String e1=result.getString("emailID");	
-						User u_obj=new User();
-						u_obj=RetriveService.getUserAllData(e1);
-						if(IsMyFriendService.isMyFriend(emailID, e1))
-						{u_obj.setMob_no("1");}
-						else if(IsRequestAlreadySentService.isRequestAlreadySent(emailID, e1))
-						{u_obj.setMob_no("2");}
-						else
-						{u_obj.setMob_no("0");}
-						if(!u_obj.getEmailID().equals(emailID) && !al_friends.contains(u_obj))
-						{al_friends.add(u_obj);}
-						
-					}
-						//return u1;
-				  
-					
-	            }//for ends here
-	            
-
-					
-			} catch (Exception e) {
-				e.printStackTrace();
-				//return null;
-			}
-//return null;
-		
-		
-	}
-	
-	public static void searchFriends5(String emailID,String searchName,ArrayList<User> al_friends)
-	{
-		
-		try {
-
-	      	  DBAccess connect = new DBAccess();
-	            boolean check=false;
-	            while(check==false)
-	            {
-	            	check=connect.start();
-	            	System.out.println("trying connection");
-	            }
-	            
-	            String[] splited = searchName.split("\\s+");
-	            
-	            for(int i=0;i<splited.length;i++)
-	            {
-	            
-	            	PreparedStatement prepStatement = connect.con.prepareStatement("select * from User where highschool like ? ");
-	            	//it searches like %name% like statement of sql
-	            	prepStatement.setString(1,"%"+ splited[i] +"%");
-	            //	prepStatement.setString(2,"%"+ splited[i] +"%");
-									
-					ResultSet result = prepStatement.executeQuery();
-				//	ArrayList<User> u1 = new ArrayList<User>();
-						while (result.next()) {
-						String e1=result.getString("emailID");	
-						User u_obj=new User();
-						u_obj=RetriveService.getUserAllData(e1);
-						if(IsMyFriendService.isMyFriend(emailID, e1))
-						{u_obj.setMob_no("1");}
-						else if(IsRequestAlreadySentService.isRequestAlreadySent(emailID, e1))
-						{u_obj.setMob_no("2");}
-						else
-						{u_obj.setMob_no("0");}
-						if(!u_obj.getEmailID().equals(emailID) && !al_friends.contains(u_obj))
-						{al_friends.add(u_obj);}
-						
-					}
-						//return u1;
-				  
-					
-	            }//for ends here
-	            
-
-					
-			} catch (Exception e) {
-				e.printStackTrace();
-				//return null;
-			}
-//return null;
-		
-		
-	}*/
 	
 }//class ends here
