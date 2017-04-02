@@ -6,11 +6,16 @@
         <meta charset="utf-8">
         <title>Facebook</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <link href="assets/css/bootstrap.css" rel="stylesheet">
+       <link href="assets/css/bootstrap.css" rel="stylesheet">
         <link href="assets/css/facebook.css" rel="stylesheet">
         <script type="text/javascript" src="Jquery/jquery-3.1.1.js"></script>
  		<script type="text/javascript" src="Jquery/jquery.cookie.js"></script>
   		<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>  
+       <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+           <link rel="stylesheet" href="/resources/demos/style.css">
+        
+           <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+            <script type="text/javascript" src="Jquery/jquery.popupoverlay.js"></script>  
         <style>
         .dropdown-submenu {
     position: relative;
@@ -76,16 +81,6 @@
               		  }
               		  trend = trend.replace("undefined","");
                       	   $("#trending").html(trend);
-              		 // $('#trending').append(JSON.stringify(data.articles[2].title))
-              		//})
-              		
-              		
-              		
-              		//var source = 'cnn'
-              		//var request = `https://newsapi.org/v1/articles?source=`+source+`&apiKey=a35ddf5f1c5f49638660efae1cd74ec0`
-              		//console.log(request)
-              		//$.getJSON(request, (data) => {
-              		  //console.log(data);
               		  var trends;
               		  for(var i=5;i<10;i++){
               			  //alert(i);
@@ -112,68 +107,7 @@
         	});     
 
         	
-      /*
-      News API is a simple and easy-to-use API that returns JSON metadata for the headlines currently published on a
-      range of news sources and blogs. It is used to display live news headlines in our site!
-      
-      In this project news source is CNN.
-      
-      API keys allow you to access the REST API and allow access to JSON data. 
-      Each user and service account can have multiple API keys.
-      An API key is the name given to some form of secret token which is submitted alongside web service (or similar) requests 
-      in order to identify the origin of the request. The key may be included in some digest of the request content to further 
-      verify the origin and to prevent tampering with the values.
-
-      Typically, it is used to identify the source of a request positively, it acts as a form of authentication,
-      which can lead to access control.
-    
-      apikey used here is - a35ddf5f1c5f49638660efae1cd74ec0
-      
-      */  	
-        	
-        	
-        	var source = 'cnn'
-        		var request = `https://newsapi.org/v1/articles?source=`+source+`&apiKey=a35ddf5f1c5f49638660efae1cd74ec0`
-        		console.log(request)
-        		$.getJSON(request, (data) => {
-        		  console.log(data);
-        		  var trend;
-        		  for(var i=0;i<5;i++){
-        			  //alert(i);
-        			  
-        		  trend +="<a href=\""+data.articles[i].url+"\""+"class="+"\" glyphicon glyphicon-globe list-group-item\""+"target="+"\"_blank\""+">"+data.articles[i].title+"</a>";
-        		 // <a href="todoPage.html" class="list-group-item">Virat Kohli</a>
-        		  }
-        		  trend = trend.replace("undefined","");
-                	   $("#trending").html(trend);
-        		 // $('#trending').append(JSON.stringify(data.articles[2].title))
-        		//})
-        		
-        		
-        		
-        		//var source = 'cnn'
-        		//var request = `https://newsapi.org/v1/articles?source=`+source+`&apiKey=a35ddf5f1c5f49638660efae1cd74ec0`
-        		//console.log(request)
-        		//$.getJSON(request, (data) => {
-        		  //console.log(data);
-        		  var trends;
-        		  for(var i=5;i<10;i++){
-        			  //alert(i);
-        			  
-        		trends +="<li>";	  
-        		trends +="<a href=\""+data.articles[i].url+"\""+"class="+"\" glyphicon glyphicon-globe list-group-item\""+"target="+"\"_blank\""+">"+  data.articles[i].title+"</a>";
-        		trends +="</li>";
-        		  }
-        		  trends = trends.replace("undefined","");
-                	   $("#xs-menu-news").html(trends);
-        	
-        		})
-        	
-        	
-        	
-        //	<span class="glyphicon glyphicon-globe"></span>
-        	
-  
+        
         	
         	
         	
@@ -233,7 +167,7 @@
            	   if(response!=null){
                   var data =JSON.parse(JSON.stringify(response));
                   
-                   var Notify="<h5>(Noting New)</h5>";
+                   var Notify="<h5>(Nothing New)</h5>";
 
            	     
            	   
@@ -259,50 +193,55 @@
        
   	  });//ajax call end
 
-    		 $("#createEvent").click(function(e){
+  	$("#createEvent").click(function(e){
 		  
-         var ename=$("input#eventname").val();
-         var hname=$("input#hostname").val();
-         var loc=$("input#location").val();
-         var esd=$("input#datepicker").val();
-         var eed=$("input#datepicker1").val();
-        
-         var obj = { ename:ename,hname:hname,location:loc,
-       		  event_date:esd,event_end_date:eed
-       		  };  
-     	var myJSON = JSON.stringify(obj);
-         
+        var ename=$("input#eventname").val();
+        var hname=$("input#hostname").val();
+        var loc=$("input#location").val();
+        var esd=$("input#datepicker").val();
+        var eed=$("input#datepicker1").val();
+        var eventType=$('#Etype option:selected').text();
+       //alert(eventType);
+       var time=$("input#myTime1").val();
+      // alert(time);
+        var obj = { ename:ename,hname:hname,location:loc,
+      		  event_date:esd,event_end_date:eed,eventType:eventType,
+      		  time:time};  
+    	var myJSON = JSON.stringify(obj);
+        	//alert(myJSON);
+			//document.write(myJSON);
 	   
 			 $.ajax({
-    	        type: "PUT",
-    	        contentType: "application/json",  //send data to server in this format
-    	        url:"http://localhost:8080/DemoFB/webapi/event/create_event",
-    	        dataType: "text",  //expect response of this type
-    	        data: myJSON,
-    	        success: function(resp){
-    	            
-    	            if(resp!=null){
-    	   	                    	
-    	            	 var obj1 = JSON.parse(JSON.stringify(resp));
-                    	 // alert(obj1);
-                    	 window.location.replace("Event.html");
-    	            	//  location.reload();
-    	            }	
-    	            else
-    	            {
-    	            	alert("update failed.. ")
-    	            	//window.location.replace("timeLine1.html");
-    	            }	
-    	            
-    	            
-    	        },
-    	        error: function(jqXHR, textStatus, errorThrown){
-    	            alert('logout error: ' + textStatus);
-    	        }
-    	    });
+   	        type: "PUT",
+   	        contentType: "application/json",  //send data to server in this format
+   	        url:"http://localhost:8080/DemoFB/webapi/event/create_event",
+   	        dataType: "text",  //expect response of this type
+   	        data: myJSON,
+   	        success: function(resp){
+   	            
+   	            if(resp!=null){
+   	   	                    	
+   	            	 var obj1 = JSON.parse(JSON.stringify(resp));
+                   	 // alert(obj1);
+                   	 window.location.replace("Event.html");
+   	            	//  location.reload();
+   	            }	
+   	            else
+   	            {
+   	            	alert("update failed.. ")
+   	            	//window.location.replace("timeLine1.html");
+   	            }	
+   	            
+   	            
+   	        },
+   	        error: function(jqXHR, textStatus, errorThrown){
+   	            alert('logout error: ' + textStatus);
+   	        }
+   	    });
 	        	
 	       
-	   }); // create ajax call end
+	   }); // create event ajax call end
+
     		
     		
     		
@@ -946,6 +885,16 @@
            		 })  
            	}); 
         
+        
+        
+ $( function() {
+	    $( "#datepicker" ).datepicker({dateFormat: "yy-mm-dd"});
+	  } );
+	  $( function() {
+		    $( "#datepicker1" ).datepicker({dateFormat: "yy-mm-dd"});
+		  } );
+
+        
         </script>
         
     </head>
@@ -1075,10 +1024,10 @@
 							<br>
 							<ul class="nav hidden-xs" id="xs-menu">
 							
-				<input type="button" id ="popup1" class="btn btn-primary" value="Ad" data-toggle="modal" data-target="">	</br>		
-				<input type="button" id ="popup2" class="btn btn-primary" value="Page" data-toggle="modal" data-target=""></br>
-				<input type="button" id ="popup3" class="btn btn-primary" value="Group" data-toggle="modal" data-target="#groupModal"></br>
-				<input type="button" id ="popup4" class="btn btn-primary" value="Event" data-toggle="modal" data-target="#myModalevent">
+				<input type="button" id ="popup1" class="btn btn-primary" value="Ad" data-toggle="modal" onclick="location.href='todoPage.html'" data-target="" style="min-width:80px;">	</br>		
+				<input type="button" id ="popup2" class="btn btn-primary" value="Page" data-toggle="modal" onclick="location.href='todoPage.html'" data-target=""  data-target="" style="min-width:80px;"></br>
+				<input type="button" id ="popup3" class="btn btn-primary" value="Group" data-toggle="modal" data-target="#groupModal" style="min-width:80px;"></br>
+				<input type="button" id ="popup4" class="btn btn-primary" value="Event" data-toggle="modal" data-target="#myModalevent" style="min-width:80px;">
 							
 							
 						</ul>
@@ -1437,7 +1386,7 @@
         
         
         
-   <div id="myModalevent" class="modal fade" role="dialog">
+    <div id="myModalevent" class="modal fade" role="dialog">
   <div class="modal-dialog" >
     <!-- Modal content-->
 <form action="" id="updateevent">
@@ -1448,7 +1397,20 @@
       </div>
       <div class="modal-body">
         <div class="container">
-        
+        <br>
+          <div class="form-group">
+         <div class="col-md-3">
+         <label for="Event-type:">Event-type</label>
+         <select class="form-control" id="Etype" style="margin-left:0px; " width="5px">
+        <option>Public</option>
+        <option>Private</option>
+       
+      </select>
+      </div>
+        </div>
+     <br>
+     <br>
+        <br>
         <br>
         <div class="form-group">
           <label for="event-name" >Event name:</label>
@@ -1476,6 +1438,20 @@
           <input type="text" placeholder="yyyy-mm-dd"  id="datepicker1" style="margin-left:10px;">
         </div>
              <br>
+             
+             <br>
+          <div class="form-group">
+          
+            <label for="Event-date" >Time</label>
+             <input type="text" id="myTime1" placeholder="hh:mm Am/hh:mm PM" style="margin-left:10px;">
+    
+          
+          </div>
+        
+   
+        
+             <br>
+             
     </div>
     
      
@@ -1490,7 +1466,6 @@
        </form>
     </div>
   </div>
-     
      
      
              <script>

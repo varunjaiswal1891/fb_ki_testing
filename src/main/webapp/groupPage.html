@@ -17,7 +17,46 @@
         
         $(document).ready(function() {
         	
+      	  $.ajax({ 
+              url: "http://localhost:8080/DemoFB/webapi/chat/getMyAllConversations",
+              type: "GET",
+              dataType: "json",
+              
+              crossDomain: true,
+              processData: true,
+              
+              
+              success: function(response){  
+           	   
+                  // we have the response  
+           	   if(response!=null){
+                  var data =JSON.parse(JSON.stringify(response));
+                  
+                   var Notify="<h5>(Nothing New)</h5>";
 
+           	     
+           	   
+                 	for (var i=0; i < data.length; i++){
+                 			if(data[i].status=="NEW")
+                 		 Notify="<h5>(New Messages)</h5>";
+                 	}
+               
+           	   $("#notify").html(Notify);
+          
+                  }  
+                  
+                  else
+               	   {
+               	  alert("something wrong");
+               	   }
+                },
+  	    
+     			error: function(e){  
+       					alert('Error121212: ' + e);  
+       					alert(e.toString());
+     			}				
+       
+  	  });//ajax call end
         	var ID = $.cookie("ID");
         	if(ID==null)
         	{
@@ -1050,12 +1089,12 @@ jQuery(document).ajaxComplete(function (e) {
 					    
 						<ul class="nav hidden-xs" id="xs-menu">
 							
-							<li><a href="todoPage.html"><i class="glyphicon glyphicon-list"></i> News Feed</a></li>
-							<li><a href="todoPage.html"><i class="glyphicon glyphicon-envelope"></i> Message</a></li>
-						</ul>	
+							<li><a href="userHome1.html"><i class="glyphicon glyphicon-list"></i> News Feed</a></li>
+							<li><a href="message.html"><i class="glyphicon glyphicon-envelope"></i> Message<h5 id="notify"></h5></a></li>
+							</ul>	
 							<b>Explore</b>
 							<ul class="nav hidden-xs see-more" id="xs-menu" >
-							<li><a href="#"><i class="glyphicon glyphicon-refresh"></i> Events</a></li>
+							<li><a href="Event.html"><i class="glyphicon glyphicon-refresh"></i> Events</a></li>
 							<li><a href="myGroups.html"><i class="glyphicon glyphicon-refresh"></i> Groups</a></li>
 							<li><a href="todoPage.html"><i class="glyphicon glyphicon-refresh"></i> Pages</a></li>
 											</ul>
@@ -1088,11 +1127,11 @@ jQuery(document).ajaxComplete(function (e) {
 							<br>
 							<ul class="nav hidden-xs" id="xs-menu">
 							
-				<input type="button" id ="popup1" class="btn btn-primary" value="Ad" data-toggle="modal" data-target="">	</br>		
-				<input type="button" id ="popup2" class="btn btn-primary" value="Page" data-toggle="modal" data-target=""></br>
-				<input type="button" id ="popup3" class="btn btn-primary" value="Group" data-toggle="modal" data-target="#groupModal"></br>
-				<input type="button" id ="popup4" class="btn btn-primary" value="Event" data-toggle="modal" data-target="">
-							
+				<input type="button" onclick="location.href='todoPage.html'" id ="popup1" class="btn btn-primary" value="Ad" data-toggle="modal" data-target="" style="min-width:80px;">	</br>		
+				<input type="button" onclick="location.href='todoPage.html'" id ="popup2" class="btn btn-primary" value="Page" data-toggle="modal" data-target="" style="min-width:80px;"></br>
+				<input type="button" id ="popup3" class="btn btn-primary" value="Group" data-toggle="modal" data-target="#groupModal" style="min-width:80px;"></br>
+				<input type="button" id ="popup4" class="btn btn-primary" value="Event" data-toggle="modal" data-target="#myModalevent" style="min-width:80px;">
+						
 							
 						</ul>
 						<!-- <ul class="list-unstyled hidden-xs" id="sidebar-footer" style="background-color: #E9EAED">

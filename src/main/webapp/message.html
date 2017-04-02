@@ -6,14 +6,16 @@
         <meta charset="utf-8">
         <title>Facebook</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <link href="assets/css/bootstrap.css" rel="stylesheet">
+<link href="assets/css/bootstrap.css" rel="stylesheet">
         <link href="assets/css/facebook.css" rel="stylesheet">
         <script type="text/javascript" src="Jquery/jquery-3.1.1.js"></script>
  		<script type="text/javascript" src="Jquery/jquery.cookie.js"></script>
   		<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>  
-       
-
+       <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+           <link rel="stylesheet" href="/resources/demos/style.css">
         
+           <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+            <script type="text/javascript" src="Jquery/jquery.popupoverlay.js"></script>
    
         <script type="text/javascript">
    
@@ -21,8 +23,99 @@
         
         
         $(document).ready(function() {
-        	             	
         	
+          	$("#createEvent").click(function(e){
+      		  
+                var ename=$("input#eventname").val();
+                var hname=$("input#hostname").val();
+                var loc=$("input#location").val();
+                var esd=$("input#datepicker").val();
+                var eed=$("input#datepicker1").val();
+                var eventType=$('#Etype option:selected').text();
+               //alert(eventType);
+               var time=$("input#myTime1").val();
+              // alert(time);
+                var obj = { ename:ename,hname:hname,location:loc,
+              		  event_date:esd,event_end_date:eed,eventType:eventType,
+              		  time:time};  
+            	var myJSON = JSON.stringify(obj);
+                	//alert(myJSON);
+        			//document.write(myJSON);
+        	   
+        			 $.ajax({
+           	        type: "PUT",
+           	        contentType: "application/json",  //send data to server in this format
+           	        url:"http://localhost:8080/DemoFB/webapi/event/create_event",
+           	        dataType: "text",  //expect response of this type
+           	        data: myJSON,
+           	        success: function(resp){
+           	            
+           	            if(resp!=null){
+           	   	                    	
+           	            	 var obj1 = JSON.parse(JSON.stringify(resp));
+                           	 // alert(obj1);
+                           	 window.location.replace("Event.html");
+           	            	//  location.reload();
+           	            }	
+           	            else
+           	            {
+           	            	alert("update failed.. ")
+           	            	//window.location.replace("timeLine1.html");
+           	            }	
+           	            
+           	            
+           	        },
+           	        error: function(jqXHR, textStatus, errorThrown){
+           	            alert('logout error: ' + textStatus);
+           	        }
+           	    });
+        	        	
+        	       
+        	   }); // create event ajax call end
+        	   
+
+        	
+        	             	
+      	  $.ajax({ 
+              url: "http://localhost:8080/DemoFB/webapi/chat/getMyAllConversations",
+              type: "GET",
+              dataType: "json",
+              
+              crossDomain: true,
+              processData: true,
+              
+              
+              success: function(response){  
+           	   
+                  // we have the response  
+           	   if(response!=null){
+                  var data =JSON.parse(JSON.stringify(response));
+                  
+                   var Notify="<h5>(Nothing New)</h5>";
+
+           	     
+           	   
+                 	for (var i=0; i < data.length; i++){
+                 			if(data[i].status=="NEW")
+                 		 Notify="<h5>(New Messages)</h5>";
+                 	}
+               
+           	   $("#notify").html(Notify);
+          
+                  }  
+                  
+                  else
+               	   {
+               	  alert("something wrong");
+               	   }
+                },
+  	    
+     			error: function(e){  
+       					alert('Error121212: ' + e);  
+       					alert(e.toString());
+     			}				
+       
+  	  });//ajax call end
         	var ID = $.cookie("ID");
         	if(ID==null)
         	{
@@ -435,8 +528,8 @@
 						<ul class="nav hidden-xs" id="xs-menu">
 							
 							<li><a href="userHome1.html"><i class="glyphicon glyphicon-list"></i> News Feed</a></li>
-							<li><a href="message.html"><i class="glyphicon glyphicon-envelope"></i> Message</a></li>
-						</ul>	
+							<li><a href="message.html"><i class="glyphicon glyphicon-envelope"></i> Message<h5 id="notify"></h5></a></li>
+							</ul>	
 							<b>Explore</b>
 							<ul class="nav hidden-xs see-more" id="xs-menu" >
 							<li><a href="Event.html"><i class="glyphicon glyphicon-refresh"></i> Events</a></li>
@@ -472,11 +565,10 @@
 							<br>
 							<ul class="nav hidden-xs" id="xs-menu">
 							
-				<input type="button" id ="popup1" class="btn btn-primary" value="Ad" data-toggle="modal" data-target="">	</br>		
-				<input type="button" id ="popup2" class="btn btn-primary" value="Page" data-toggle="modal" data-target=""></br>
-				<input type="button" id ="popup3" class="btn btn-primary" value="Group" data-toggle="modal" data-target="#groupModal"></br>
-				<input type="button" id ="popup4" class="btn btn-primary" value="Event" data-toggle="modal" data-target="#myModalevent">
-							
+			<input type="button" id ="popup1" onclick="location.href='todoPage.html'" class="btn btn-primary" value="Ad" data-toggle="modal" data-target="" style="min-width:80px;">	</br>		
+				<input type="button" id ="popup2"  onclick="location.href='todoPage.html'" class="btn btn-primary" value="Page" data-toggle="modal" data-target="" style="min-width:80px;"></br>
+				<input type="button" id ="popup3" class="btn btn-primary" value="Group" data-toggle="modal" data-target="#groupModal" style="min-width:80px;"></br>
+				<input type="button" id ="popup4" class="btn btn-primary" value="Event" data-toggle="modal" data-target="#myModalevent" style="min-width:80px;">
 							
 						</ul>
 						
@@ -558,8 +650,102 @@
           </div>
         </div> 
 
+
+<div id="myModalevent" class="modal fade" role="dialog">
+  <div class="modal-dialog" >
+    <!-- Modal content-->
+<form action="" id="updateevent">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Create Event</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+        <br>
+          <div class="form-group">
+         <div class="col-md-3">
+         <label for="Event-type:">Event-type</label>
+         <select class="form-control" id="Etype" style="margin-left:0px; " width="5px">
+        <option>Public</option>
+        <option>Private</option>
+       
+      </select>
+      </div>
+        </div>
+     <br>
+     <br>
+        <br>
+        <br>
+        <div class="form-group">
+          <label for="event-name" >Event name:</label>
+          <input type="text"  id="eventname" style="margin-left:10px;">
+        </div>
+     <br>
+      <div class="form-group">
+          <label for="Host-name" >Hostname:</label>
+          <input type="text"  id="hostname" style="margin-left:10px;">
+        </div>
+             <br>
+             <div class="form-group">
+          <label for="Location" >Location:</label>
+          <input type="text"  id="location" style="margin-left:10px;">
+        </div>
+             <br>
+      
+        <div class="form-group">
+          <label for="Event-date" >Event-start-date:</label>
+          <input type="text"  id="datepicker" placeholder="yyyy-mm-dd" style="margin-left:10px;">
+        </div>
+             <br>
+             <div class="form-group">
+          <label for="Event-date" >Event-end-date:</label>
+          <input type="text" placeholder="yyyy-mm-dd"  id="datepicker1" style="margin-left:10px;">
+        </div>
+             <br>
+             
+             <br>
+          <div class="form-group">
+          
+            <label for="Event-date" >Time</label>
+             <input type="text" id="myTime1" placeholder="hh:mm Am/hh:mm PM" style="margin-left:10px;">
+    
+          
+          </div>
         
+   
         
+             <br>
+             
+    </div>
+    
+     
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+       <input type="button" id ="createEvent" class="btn btn-primary" value="CreatenewEvent" data-dismiss="modal" >
+     
+      </div>
+    </div>
+      </div>
+    
+       </form>
+    </div>
+  </div>
+     
+        
+           
+             <script>
+  $( function() {
+    $( "#datepicker" ).datepicker({dateFormat: "yy-mm-dd"});
+  } );
+  $( function() {
+	    $( "#datepicker1" ).datepicker({dateFormat: "yy-mm-dd"});
+	  } );
+
+  
+  
+  </script>
+       
 
 		
 		
