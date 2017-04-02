@@ -20,6 +20,7 @@ import com.varun.fbproj.model.Status;
 import com.varun.fbproj.model.User;
 import com.varun.fbproj.service.CommentService;
 import com.varun.fbproj.service.GetMyAllFriends;
+import com.varun.fbproj.service.GroupService;
 import com.varun.fbproj.service.LikeService;
 import com.varun.fbproj.service.RetriveService;
 import com.varun.fbproj.service.StatusService;
@@ -45,10 +46,10 @@ public class StatusResource {
 	}
     
     
-    /* this method working good*/
+    /* this method working good we post from userhome1 page*/
     @POST
     @Path("/addStatus")
-    @Consumes({MediaType.TEXT_PLAIN})
+   // @Consumes({MediaType.TEXT_PLAIN})
     @Produces({MediaType.TEXT_PLAIN})
     public String addStatus(@CookieParam("ID") String jwt,String statusdesc)throws JsonParseException, JsonMappingException, IOException{
 
@@ -61,12 +62,13 @@ public class StatusResource {
 			    System.out.println("Subject: " + claims.getSubject());
 			   // System.out.println("Expiration: " + claims.getExpiration());
 			  String myEmailID=claims.getSubject();
-			  
+			  //String myEmailID="shubham@gmail.com";
 			  Status status = new Status();
 			  
     	status.setStatus_desc(statusdesc);
        	status.setEmailID(myEmailID);
-    	if(s1.addStatus(status)){
+       	status.setGroup_name("undefined");
+    	if(s1.addStatus1(status)){
     	    System.out.println("post submitted properly");
     		return "You posted";
     	}
@@ -174,8 +176,9 @@ public class StatusResource {
 			       .parseClaimsJws(jwt).getBody();
 			    System.out.println("Subject: " + claims.getSubject());
 			    String myEmailID=claims.getSubject();
-    	
-    	ArrayList<Status> status_list= new ArrayList<Status>(); 
+    	//String myEmailID="shubham@gmail.com";
+    	ArrayList<Status> status_list= new ArrayList<Status>();
+    	ArrayList<Status> status_list1= new ArrayList<Status>();
     	//it gives mere all status
 		status_list.addAll(s1.getAllDetailsOfEachStatus(myEmailID)); 
     	System.out.println("length is :"+status_list.size());
@@ -190,8 +193,22 @@ public class StatusResource {
 			status_list.addAll(s1.getAllDetailsOfEachStatus(e1));
 			
 		}
-			//System.out.println("likes = "+status_list.get(0).getLikesCount());	 
-		return status_list;
+		ArrayList<String> asl= new ArrayList<String>();
+	asl=GroupService.getgroupname(myEmailID);
+		    for(int i=0;i<status_list.size();i++){
+		    	String gname=status_list.get(i).getGroup_name();
+		    	int flag=0;
+		    	for(int j=0;j<asl.size();j++){
+		    		if(gname.equals(asl.get(j))){
+		    			flag=1;
+		    			break;
+		    		} 
+		    	}
+		    	if(flag==0){
+		    		status_list1.add(status_list.get(i));
+		    	}
+		    }
+		return status_list1;
 		   
     }//getALLStatusByUser ends here
     

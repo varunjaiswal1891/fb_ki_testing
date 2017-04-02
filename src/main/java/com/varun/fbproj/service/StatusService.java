@@ -15,6 +15,36 @@ public class StatusService {
 
 	DBAccess db= new DBAccess();
 	
+	
+	 public boolean addStatus1(Status s1){
+		  try{
+			 boolean check=false;
+			 while(check!=true){
+				 System.out.println("trying connection");
+				check= db.start();
+			 }
+			 String  status_desc=s1.getStatus_desc(); 
+			 String emailID=s1.getEmailID();
+				 	String query = "insert into status(status_desc,emailID,group_name) values(?,?,?)";
+				 	PreparedStatement pstmnt = db.con.prepareStatement(query);
+				 	pstmnt.setString(1,status_desc);
+				 	pstmnt.setString(2,emailID);
+				 	pstmnt.setString(3, s1.getGroup_name());
+				 	pstmnt.executeUpdate();
+				 	db.stop();
+				 	return true;
+			
+		  }
+		  catch (Exception e) 
+	      {
+	          System.out.println(e.getMessage());
+	      }
+		
+		 return false;  
+	   }//add status ends here
+	
+	
+	
 	 public boolean addStatus(Status s1){
 		  try{
 			 boolean check=false;
@@ -25,14 +55,38 @@ public class StatusService {
 			 String  status_desc=s1.getStatus_desc(); 
 			 String emailID=s1.getEmailID();
 			 
-			 String query = "insert into status(status_desc,emailID,group_name) values(?,?,?)";
-			 PreparedStatement pstmnt = db.con.prepareStatement(query);
-			 pstmnt.setString(1,status_desc);
-			 pstmnt.setString(2,emailID);
-			 pstmnt.setString(3, s1.getGroup_name());
-			 pstmnt.executeUpdate();
-			 db.stop();
-			 return true;
+			 String query1="select privacy from Group1 where group_name=?";
+			 PreparedStatement pstmnt1 = db.con.prepareStatement(query1);
+			 pstmnt1.setString(1, s1.getGroup_name());
+			 ResultSet rs5= pstmnt1.executeQuery();
+			 rs5.next();
+			 String privacy = rs5.getString("privacy");
+			 System.out.println(privacy);
+			// int flag=0;
+			 if(privacy.equals("public"))
+			 {
+				 	String query = "insert into status(status_desc,emailID,group_name) values(?,?,?)";
+				 	PreparedStatement pstmnt = db.con.prepareStatement(query);
+				 	pstmnt.setString(1,status_desc);
+				 	pstmnt.setString(2,emailID);
+				 	pstmnt.setString(3, s1.getGroup_name());
+				 	pstmnt.executeUpdate();
+				 	db.stop();
+				 	System.out.println("we are in elese ------------------------ part");
+				 	return true;
+			 }
+			 else
+			 {
+				 String query10 = "insert into privategroupstatus(status_desc,emailID,group_name) values(?,?,?)";
+				 	PreparedStatement pstmnt = db.con.prepareStatement(query10);
+				 	pstmnt.setString(1,status_desc);
+				 	pstmnt.setString(2,emailID);
+				 	pstmnt.setString(3, s1.getGroup_name());
+				 	pstmnt.executeUpdate();
+				 	db.stop();
+				 	System.out.println("we are in elese part");
+				 	return true;
+			 }
 		  }
 		  catch (Exception e) 
 	      {
@@ -50,12 +104,29 @@ public class StatusService {
 				check= db.start();
 			 }
 			 //String status_id=s1.getStatusID();
-			 String query = "UPDATE status SET flag=? where statusID = ?";
-	         PreparedStatement pstmnt = db.con.prepareStatement(query);
-	         pstmnt.setInt(1,0);
-			 pstmnt.setInt(2,s1.getStatusID());
-			 pstmnt.executeUpdate();
-			
+			 String query1="select privacy from Group1 where group_name=?";
+			 PreparedStatement pstmnt1 = db.con.prepareStatement(query1);
+			 pstmnt1.setString(1, s1.getGroup_name());
+			 ResultSet rs5= pstmnt1.executeQuery();
+			 rs5.next();
+			 String privacy = rs5.getString("privacy");
+			 System.out.println(privacy);
+			 if(privacy.equals("public"))
+			 {
+				 String query = "UPDATE status SET flag=? where statusID = ?";
+				 PreparedStatement pstmnt = db.con.prepareStatement(query);
+				 pstmnt.setInt(1,0);
+				 pstmnt.setInt(2,s1.getStatusID());
+				 pstmnt.executeUpdate();
+			 }
+			 else
+			 {
+				 String query = "UPDATE privategroupstatus SET flag=? where statusID = ?";
+				 PreparedStatement pstmnt = db.con.prepareStatement(query);
+				 pstmnt.setInt(1,0);
+				 pstmnt.setInt(2,s1.getStatusID());
+				 pstmnt.executeUpdate();
+			 }
 			 db.stop();
 			 return true;
 		  }
@@ -140,6 +211,7 @@ public class StatusService {
 					status_obj.setCreated(String.valueOf(rs.getTimestamp(3)));
 					status_obj.setEmailID(emailID);
 					status_obj.setFlag(rs.getInt(5));
+					status_obj.setGroup_name(rs.getString(6));
 					//statusArrayList.add(status_obj);	
 
 		         
