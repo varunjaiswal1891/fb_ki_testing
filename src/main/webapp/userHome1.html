@@ -810,7 +810,7 @@ margin-left:20px;
      	        type: "POST",
      	        contentType: "application/json",  //send data to server in this format
 
-     	        url:"http://localhost:8085/DemoFB/webapi/status/addStatus",
+     	        url:"http://localhost:8080/DemoFB/webapi/status/addStatus",
      	        dataType: "json",  //expect response of this type
 
      	        data: mahjson,
@@ -836,7 +836,7 @@ margin-left:20px;
                  	                
                  	              	type:"POST",
                  	              	contentType:false,
-                 	              	url: "http://localhost:8085/DemoFB/webapi/user/uploadProfilePic2",
+                 	              	url: "http://localhost:8080/DemoFB/webapi/user/uploadProfilePic2",
                  	                processData: false,
                  	                data: form_data,                         // Setting the data attribute of ajax with file_data
                  	                success: function(){
@@ -849,7 +849,7 @@ margin-left:20px;
                  	                     
                  		
                  		
-                 		});                  
+                 		});    ///inner ajax ends              
 
      	    		  
 
@@ -859,7 +859,7 @@ margin-left:20px;
 
      	    		 $('#posttext').val('');
      	    		location.reload();
-     	    		  
+                 		} 
      	    	  }
      	    	  else{
      	    		
@@ -874,42 +874,10 @@ margin-left:20px;
                  		 
                  		 
                 });    		 
-                 		 
-       	        /*  } 
-       	             else
-       	            	 {
-       	            	 alert("error inside retriving mailid"); 
-       	            	 }
-       	           },
-       	            	error: function(jqXHR, textStatus, errorThrown){
-       	    	            alert('status posting error: ' + textStatus);
-       	    	        }	 
-       	                  		 
-       	                  		 
-       	     });      	   
-       	                       
-       	     */                   
+                 	             
 
        	                       
-       	                       
-                 		location.reload();
-                 		 
-                 		}
-           	    	  }
-           	    	  else{
-           	    		
-           	    		  alert("null");
-           	    	  }
-           	    	   
-           	       },
-           	       
-           	      error: function(jqXHR, textStatus, errorThrown){
-         	            alert('text status posting error: ' + textStatus);
-         	        }	 
-                       		 
-                       		 
-               });    		 
-                 		
+
          	
        });      	
                  	
@@ -1084,7 +1052,7 @@ margin-left:20px;
                 $.ajax({
                     type: "POST",
                     contentType: "application/json",  //send data to server in this format
-                    url:"http://localhost:8085/DemoFB/webapi/group/create_group",
+                    url:"http://localhost:8080/DemoFB/webapi/group/create_group",
                     dataType: "text",  //expect response of this type
                     data: myJSON,
                     success: function(resp){
@@ -1337,15 +1305,7 @@ margin-left:20px;
 
 											</div>  
 											
-<!-- <label for="business">Feeling</label>
 
-<select id="business" name="business">
-	<option value="">Select</option>
-	<option value="Second Choice">Second Choice</option>
-	<option value="Third Choice">Third Choice</option>
-	<option value="Fourth Choice">Fourth Choice</option>
-</select>									
- -->	
  <div class="dropdown">
   <button class="btn pull-left dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
     Feeling
@@ -1361,26 +1321,7 @@ margin-left:20px;
   </ul>
 </div>
  	
- <!-- 	 <div class="img-container2" >
-      <div class="img-text offset1">
-      <div class="dropup">
-      <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Change
-      <span class="caret"></span>  
-  </button>
-  <ul class="dropdown-menu">
-    <li>
-    <form id="uploadPic"action="http://localhost:8085/DemoFB/webapi/user/uploadProfilePic" method="post" enctype="multipart/form-data">
-        <p id="uploadPhoto">
-        Change profile pic:<input type="file" name="file" size="45" onchange="this.form.submit()" class="filestyle" data-classButton="btn btn-primary" data-input="false" data-classIcon="icon-plus" data-buttonText="Your label here."/>
-        </p>
-        <input type="text" name="userId" id="PhotoId"  style="display: none;">
-        
-    </form>
-    </li>
-   
-    </ul>
-      </div></div></div> -->
+ 
    <br><br>
  	 <form id="FormId">
         <label for="file-select">Choose photo</label>
@@ -1406,107 +1347,13 @@ margin-left:20px;
 								   
 								   
 <div id="abcd">
-  <!-- <div class="panel-body" id="forcomment">
-    Post metadata
-    <div class="row">
-      <div class="col-md-10">
-        <div class="media">for name pic 
-        </div>
-      </div>
-      </div>
-    Post content
-    <div class="row">
-      <div class="col-md-12">
-      <p id="status_name"></p>
-
-      <p id="status_name2"></p>
-      <br>
-        <p id="feelings"></p>
-       <ul type="disc">
-        <li id="time"></li>
-       </ul> 
-       <p id="forstatus"></p>  status text
-
-       <p id="forstatus"></p>  <!-- status text -->
-
-      </div>
-    </div>
+     </div></div>
   <hr>  
-  <div class="row">
- <div class="col-md-12">
-   <ul class="list-inline">
-     <li>
-     <a href="#thumbs-up"><span class="glyphicon glyphicon-thumbs-up" style="color:#3b5998"></span> <font color="#3b5998">Like</font></a>
-     </li>
-      <li>
-     <a href="#thumbs-up"><span class="glyphicon glyphicon-thumbs-down" style="color:#3b5998"></span> <font color="#3b5998">Unlike</font></a>
-     </li>
-     <li>
-     <a href="#" id="comment"><span class="glyphicon glyphicon-comment" style="color:#3b5998"></span> <font color="#3b5998">Comment</font></a>
-     </li>
-     
-   </ul>
- </div>
-  </div>
- </div>  div of panel body for status update 1
- panel body footer
- <div class="panel-footer" id="o">
- <div class="row">
-   <div class="col-md-12">  
-      <p id="likescount"></p>
-      
-      <br>
-   </div> 
-   
-  </div>
   
-  
-  <hr>
-  <div class="pre-scrollable" style="height:10px;">
 
-        <p id="output_name"></p>
-        
-       <p id="outputname"></p>
 
-       <p id="output"></p>
-       <br>
-       <hr>
-     
-  </div> 
-   
-   <ul>
-   <li class="media">
-      <div class="media-body">
-        <div class="input-group">
-          <input type="text" class="form-control" id="comment_d" placeholder="Write a comment...">
-          <span class="input-group-btn">
-            <button type="button" class="btn btn-primary pull-right" id="commentAdd">
-              Post Comment
-            </button>
-          </span>
-        </div>
-      </div>
-    </li>
-   </ul>
-   
-  
- 
-  
-</div>
- 
- 
- 
-</div>  
-								   
-							
-		  	   
-									 										
-								   
-								  </div>
-								  </div>
-
-								  <!-- main col center -->
-								  <!-- <div class="col-sm-2 col-xs-2">
+								
+						 <div class="col-sm-2 col-xs-2">
 									   
 								
 
@@ -1530,9 +1377,9 @@ margin-left:20px;
     							<div class="accordion-heading">
       								<ul class="nav hidden-xs see-more" id="xs-menu-news">
       								<li><a class="accordion-toggle" id = "see-more-news" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwwo"> See More ...
-      								</li>
+      								</a></li>
       								</ul>
-      								</a>
+      								
     							</div>
   							</div>  
 									  
@@ -1544,6 +1391,10 @@ margin-left:20px;
 							
 		
 								  </div>
+								  
+							
+		
+								  
 								  
  								  
 								  
@@ -1560,17 +1411,7 @@ margin-left:20px;
 								  
 								  
 								  
-							   </div><!--/row-->
-							  
-							  
-							  
-							</div><!-- /col-9 -->
-						</div><!-- /padding -->
-					</div>
-					<!-- /main -->
-				  
-				</div>
-			</div>
+						
 <div id="MutualModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 		  <div class="modal-dialog">
 		  <div class="modal-content">

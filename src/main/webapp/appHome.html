@@ -21,7 +21,8 @@ $("#signupForm").submit(function(e){
 $("#loginForm").submit(function(e){
     e.preventDefault();
 });
-	
+
+
   $("#create_account").click(function(e){
 	
            var firstName=$("input#firstname").val();
@@ -87,7 +88,11 @@ $("#loginForm").submit(function(e){
             //alert(data);
             
             if(resp!=null){
-            			
+            	$.cookie("college","");
+            	$.cookie("hometown","");
+            	$.cookie("cityOfWork","");
+            	$.cookie("highschool","");
+            	$.cookie("friends","");
                     	 //alert(resp);
                     	  // var obj = JSON.parse(JSON.stringify(resp));
                     	  // window.location.replace("timeLine1.html");
@@ -151,6 +156,11 @@ $("#loginForm").submit(function(e){
                   if(resp!=null){
 	
                 	  document.cookie = "ID="+resp+";"+ "expires=Thu, 18 Dec 2019 12:00:00 UTC"; 
+                	  $.cookie("college","");
+                	  $.cookie("hometown","");
+                	  $.cookie("cityOfWork","");
+                	  $.cookie("highschool","");
+                	  $.cookie("friends","");
                 	  window.location.replace("userHome1.html");
                 	   
                  }

@@ -143,6 +143,8 @@ $(document).ready(function() {
          	   
            		*/
            }
+           if(data.length==0)
+          		allevent="<h3>No Events Yet</h3>";
         	
         allevent=allevent.replace("undefined","");
         
@@ -215,7 +217,8 @@ $(document).ready(function() {
 					  }
 				  	
 			        alllist1=alllist1.replace("undefined","");
-			        
+			        if(data.length==0)
+                   		alllist1="<h3>No Invitation Yet</h3>";
 			    	   $("#allinvitationlist").html(alllist1);
 			    	 //  alert( $("#allEvent1").html());
 			   }
@@ -282,7 +285,8 @@ $(document).ready(function() {
 					  }
 				  	
 			        alllist2=alllist2.replace("undefined","");
-			        
+			        if(data.length==0)
+                   		alllist2="<h3>No Events Yet</h3>";
 			    	   $("#yourincomingevent").html(alllist2);
 			    	   //$("#showevent").html(alllist2);
 			    	 //  alert( $("#allEvent1").html());
@@ -340,7 +344,8 @@ $(document).ready(function() {
 					  }
 				  	
 			        alllist2=alllist2.replace("undefined","");
-			        
+			        if(data.length==0)
+                   		alllist2="<h3>No Events Yet</h3>";
 			    	  // $("#yourincomingevent").html(alllist2);
 			    	   $("#showevent").html(alllist2);
 			    	 //  alert( $("#allEvent1").html());
@@ -663,7 +668,8 @@ window.maybe1=function(e1){
 					  }
 				  	
 			        allnoti=allnoti.replace("undefined","");
-			        
+			        if(data.length==0)
+                   		allnoti="<h3>None Yet</h3>";
 			    	   $("#alleventnotifications").html(allnoti);
              
 	            }	
@@ -743,7 +749,8 @@ window.maybe1=function(e1){
 					  }
 				  	
 			        allnoti=allnoti.replace("undefined","");
-			        
+			        if(data.length==0)
+                   		allnoti="<h3>None Yet</h3>";
 			    	   $("#alleventnotifications1").html(allnoti);
           
 	            }	

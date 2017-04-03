@@ -49,11 +49,6 @@ public class Group {
 		this.owner = owner;
 	}
 	
-	public String getGroup_privacy() {
-		return group_privacy;
-	}
-	public void setGroup_privacy(String group_privacy) {
-		this.group_privacy = group_privacy;
-	}
+	
 	
 }//class ends

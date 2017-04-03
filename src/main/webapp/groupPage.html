@@ -863,7 +863,7 @@ margin-left:20px;
      	        type: "POST",
 
      	        contentType: "application/json",  //send data to server in this format
-     	        url:"http://localhost:8085/DemoFB/webapi/group/addStatus",
+     	        url:"http://localhost:8080/DemoFB/webapi/group/addStatus",
      	        dataType: "json",  //expect response of this type
      	        data: mahjson,
 
@@ -887,15 +887,18 @@ margin-left:20px;
                  	                
                  	              	type:"POST",
                  	              	contentType:false,
-                 	              	url: "http://localhost:8085/DemoFB/webapi/user/uploadProfilePic2",
+                 	              	url: "http://localhost:8080/DemoFB/webapi/user/uploadProfilePic2",
                  	                processData: false,
                  	                data: form_data,                         // Setting the data attribute of ajax with file_data
-                 	                success: function(){
-                 	      				location.reload();
+                 	                success: function(resp){
+                 	     	    	   
+                 	      	    	  if(resp!=null){
+                 	      	    		 //alert("image upload done"); 
+                 	      	    	  }
                  		      	       },
                  	          	       
                  	          	      error: function(){
-                 	        	            alert('status posting error');
+                 	        	            //alert('status posting errorrrrrrrrrrr');
                  	        	        }	 
                  	                     
                  		
@@ -1119,7 +1122,7 @@ margin-left:20px;
 	    		 
 	    			
 	    			$.ajax({ 
-	                    url: "http://localhost:8085/DemoFB/webapi/status/getAllLikeName",
+	                    url: "http://localhost:8080/DemoFB/webapi/status/getAllLikeName",
 	                    type: "POST",
 	                    dataType: "json",
 	                    contentType : "application/json",
