@@ -14,7 +14,16 @@ public class Chat {
 	private String status;
 	private String message;
 	private String time;
+	private int chatID;
 	
+	public int getChatID() {
+		return chatID;
+	}
+
+	public void setChatID(int chatID) {
+		this.chatID = chatID;
+	}
+
 	public Chat(){
 		
 	}
