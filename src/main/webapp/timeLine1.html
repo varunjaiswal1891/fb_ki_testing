@@ -4,13 +4,16 @@
   <title>Your Timeline</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
- <script type="text/javascript" src="Jquery/jquery-3.1.1.js"></script>
- <script type="text/javascript" src="Jquery/jquery.cookie.js"></script>
-  <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/css/bootstrap.css" rel="stylesheet">
+         <link href="assets/css/bootstrap.css" rel="stylesheet">
         <link href="assets/css/facebook.css" rel="stylesheet">
+        <script type="text/javascript" src="Jquery/jquery-3.1.1.js"></script>
+        <script type="text/javascript" src="Jquery/jquery.cookie.js"></script>
+        <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>  
+
+
+        <script type="text/javascript" src="assets/js/jquery.js"></script>
+        <script type="text/javascript" src="assets/js/bootstrap.js"></script>
         
-  <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>  
   <script type="text/javascript" src="Jquery/jquery.popupoverlay.js"></script>
   <style>
   label { width: 100px; }
@@ -164,7 +167,7 @@ $(document).ready(function() {
                                    document.getElementById("work").innerHTML="Work Place   : "+obj.placeOfWork;
                                    document.getElementById("town").innerHTML="HomeTown     : "+obj.hometown;
                                    document.getElementById("workCity").innerHTML="City of Work : "+obj.cityOfWork;
-                                   document.getElementById("bestplace").innerHTML="Best Place : "+obj.bestPlace;
+                                  // document.getElementById("bestplace").innerHTML="Best Place : "+obj.bestPlace;
                                    
                                    document.getElementById("mob_no").defaultValue =obj.mob_no;
                                    document.getElementById("college").defaultValue =obj.college;
@@ -216,15 +219,16 @@ $(document).ready(function() {
                   var data =JSON.parse(JSON.stringify(response));  
                    var allFriends;
            	 
-                 	for (var i=0; i < data.length; i++){
-               		 allFriends+="<div class=\"panel-body\">";
-               
-          	 allFriends+='<a href="friendTimeline.html" OnClick=go(this); data-html="true"  data-placement="left" data-toggle="popover"  data-trigger="click hover" data-content=\'<div class="item active"><img src="users/'+data[i].emailID+'/cover.jpg" class=" img-responsive" width="1000" height="400" style="float:left;"><div><div class="img-container" style="display:inline-block;"><img class="img-thumbnail" src="users/'+data[i].emailID+'/profilePic.jpg" style="width:60px;height:60px;/"></div><div class="text" style="display:inline-block;margin-left:0.2cm;"><p><strong>'+data[i].fname+" "+data[i].lname+'</strong></p></div><div style="margin-left:1.5cm;"><p style="color:grey"><span class="glyphicon glyphicon-home"></span> <b>'  +'Lives in: '+ '</b> '+ data[i].hometown+'<br/><br/><span class="glyphicon glyphicon-gift"></span> <b>Born on: </b> '+ data[i].date +'<br><br><a href="#" style="color:grey"; OnClick=mutual(this); id='+data[i].userID+'><span class="glyphicon glyphicon-user"></span> See Mutual Friends</p></div></div>\'>'+'<img src="users/'+data[i].emailID+'/profilePic.jpg" style="width:20px;height:20px;">'+data[i].fname+" "+data[i].lname+'</a><br/>';
+                 	 
+                	for (var i=0; i < data.length; i++){
+              		 allFriends+="<div class=\"panel-body\">";
+              
+         	 allFriends+='<a href="friendTimeline.html" OnClick=go(this); id="'+data[i].userID+'" data-html="true"  data-placement="left" data-toggle="popover"  data-trigger="click hover" data-content=\'<div class="item active"><img src="users/'+data[i].emailID+'/cover.jpg" class=" img-responsive" width="1000" height="400" style="float:left;"><div><div class="img-container" style="display:inline-block;"><img class="img-thumbnail" src="users/'+data[i].emailID+'/profilePic.jpg" style="width:60px;height:60px;/"></div><div class="text" style="display:inline-block;margin-left:0.2cm;"><p><strong>'+data[i].fname+" "+data[i].lname+'</strong></p></div><div style="margin-left:1.5cm;"><p style="color:grey"><span class="glyphicon glyphicon-home"></span> <b>'  +'Lives in: '+ '</b> '+ data[i].hometown+'<br/><br/><span class="glyphicon glyphicon-gift"></span> <b>Born on: </b> '+ data[i].date +'<br><br><a href="#" style="color:grey"; OnClick=mutual(this); id='+data[i].userID+'><span class="glyphicon glyphicon-user"></span> See Mutual Friends</p></div></div>\'>'+'<img src="users/'+data[i].emailID+'/profilePic.jpg" style="width:20px;height:20px;">'+data[i].fname+" "+data[i].lname+'</a><br/>';
 
-                       allFriends+="</div>";
-               		allFriends+="</div>";
-  					     	}
-               	
+                      allFriends+="</div>";
+              		allFriends+="</div>";
+ 					     	}
+              	               	
                allFriends=allFriends.replace("undefined","");
            	   $("#allFriends").html(allFriends);
           
@@ -359,10 +363,10 @@ window.mutual=function(e1){
           var hometown=$("input#hometown").val();
           var cityOfWork=$("input#workcity").val();
           var highschool=$("input#highschool").val();
-          var bestplace=$('select#bestplace option:selected').text();
-          alert("bestplace"+bestplace);
+         // var bestplace=$('select#bestplace option:selected').text();
+          //alert("bestplace"+bestplace);
           var obj = { mob_no:mob_no,college:college,placeOfWork:placeOfWork,
-                  hometown:hometown,cityOfWork:cityOfWork,highschool:highschool,bestPlace:bestplace
+                  hometown:hometown,cityOfWork:cityOfWork,highschool:highschool
                   };  
           var myJSON = JSON.stringify(obj);
               
@@ -1177,8 +1181,7 @@ window.mutual=function(e1){
       <pre class="media-left" id="town"></pre>        <br>
       <pre class="media-left" id="workCity"></pre>    <br>
       <pre class="media-left" id="School"></pre><br>
-       <pre class="media-left" id="bestplace">Best Places :</pre><p class="media-right"></p>    <br>  
-                                            
+      <br>
                                             
                                             
                                             </div></div>
@@ -1411,18 +1414,7 @@ window.mutual=function(e1){
           <label for="highschool" >HighSchool:</label>
           <input type="text"  id="highschool" style="margin-left:10px;">
         </div>
-             <br>
-             
-      <!-- <div class="form-group">
-         <label for="bestplace">SBestPlace (select one):</label>
-      <select class="form-group" name="bestplaces" id="bestplace" style="margin-left:10px;">
-        <option value="Bangalore">Bangalore</option>
-        <option value="Tokyo">Tokyo</option>
-        <option value="Pataya">Pataya</option>
-        <option value="Malasia">Malasia</option>
-      </select>
-        </div>
-       -->       <br>      
+                 
              
        
     </div>
