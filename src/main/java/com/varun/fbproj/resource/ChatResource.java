@@ -14,16 +14,8 @@ import javax.ws.rs.core.MediaType;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.varun.fbproj.model.Comment;
-import com.varun.fbproj.model.Likes;
-import com.varun.fbproj.model.Status;
-import com.varun.fbproj.model.User;
 import com.varun.fbproj.service.ChatService;
-import com.varun.fbproj.service.CommentService;
-import com.varun.fbproj.service.GetMyAllFriends;
-import com.varun.fbproj.service.LikeService;
-import com.varun.fbproj.service.RetriveService;
-import com.varun.fbproj.service.StatusService;
+import com.varun.fbproj.service.GroupService;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -119,6 +111,44 @@ public class ChatResource {
 			  ch=ChatService.fetchAllConversations(emailID);
 		return ch;
 	}
+	@GET
+	@Path("/deletemessage1")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String deleteConversations(@CookieParam("ID") String jwt,@CookieParam("FID") String friendID) throws JsonParseException, JsonMappingException, IOException
+	{
+		
+		    friendID=friendID.replaceAll("%40", "@");
+		System.out.println("jwt="+ jwt);
+		Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(jwt).getBody();
+			    System.out.println("Subject of recent: " + claims.getSubject());
+			    System.out.println("Expiration of recent: " + claims.getExpiration());
+			  String emailID=claims.getSubject();
+			  System.out.println("myemailID is"+emailID+" "+"friendemailidis "+friendID);
+		
+			  String s=ChatService.deleteyourAllMessage(emailID,friendID);
+			  return s;
+	}
+	
+	@POST
+    @Path("/deleteonly1")
+	@Consumes({MediaType.TEXT_PLAIN})
+	@Produces({MediaType.TEXT_PLAIN})
+    public String deleteSinglemessage(@CookieParam("ID") String jwt,int chatID,@CookieParam("FID") String friendID) throws IOException{
+	
+		  friendID=friendID.replaceAll("%40", "@");
+		System.out.println("jwt="+ jwt);
+		Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(jwt).getBody();
+			    System.out.println("Subject: " + claims.getSubject());
+			  String myEmailID=claims.getSubject();
+		
+
+			  String s=ChatService.deleteyouroneMessage(myEmailID,friendID,chatID);
+		return s;
+	}//method create group ends here
 	
 	
 }//class ends here
