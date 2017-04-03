@@ -44,23 +44,27 @@ $("#loginForm").submit(function(e){
            
         if(firstName=="" || lastName=="" || emailID=="" ||re_email=="" || password=="")
         	{
-        		alert("Please fill all the fields");
-        		window.location.replace("appHome.html");
+        	document.getElementById("signupFail").innerHTML="Please fill all the fields";
+        		//alert("Please fill all the fields");
+        		//window.location.replace("appHome.html");
         	}
         else  if (atpos<1 || dotpos<atpos+2 || dotpos+2>=emailID.length) {
-            alert("Not a valid e-mail address.");
-            window.location.replace("appHome.html");
+        	document.getElementById("signupFail").innerHTML="Not a valid e-mail address.Enter again";
+        	//alert("Not a valid e-mail address.");
+            //window.location.replace("appHome.html");
             
      	   }
         else if(emailID != re_email)
         	{
-        	     alert("email and confirm email do not match");
-        	     window.location.replace("appHome.html");
+        	document.getElementById("signupFail").innerHTML="email and confirm email do not match.Enter again";
+        	     //alert("email and confirm email do not match");
+        	     //window.location.replace("appHome.html");
         	}
         else if((password.length)<5)
     	{
-    	   alert("Password should be minimum 6 characters.");
-    	   window.location.replace("appHome.html");
+        	document.getElementById("signupFail").innerHTML="Password should be minimum 6 characters.Enter again";	
+    	   //alert("Password should be minimum 6 characters.");
+    	   //window.location.replace("appHome.html");
     	}
         else
         {
@@ -75,7 +79,7 @@ $("#loginForm").submit(function(e){
     $.ajax({
         type: "POST",
         contentType: "application/json",  //send data to server in this format
-        url:"http://localhost:8085/DemoFB/webapi/user/signup",
+        url:"http://localhost:8080/DemoFB/webapi/user/signup",
         dataType: "text",  //expect response of this type
         data: myJSON,
         success: function(resp){
@@ -97,14 +101,16 @@ $("#loginForm").submit(function(e){
             }	
             else
             {
-            	alert("Signup failed..emailID already exists. ")
-            	window.location.replace("appHome.html");
+            	 document.getElementById("signupFail").innerHTML="Signup failed..emailID already exists.Try again ";  	
+            	//alert("Signup failed..emailID already exists. ")
+            	//window.location.replace("appHome.html");
             }	
 
             
         },
         error: function(jqXHR, textStatus, errorThrown){
-            alert('add user error: ' + textStatus);
+        	document.getElementById("signupFail").innerHTML="signup error..try again";
+        	//alert('add user error: ' + textStatus);
         }
     });
            	
@@ -121,7 +127,8 @@ $("#loginForm").submit(function(e){
           
        if(emailID=="" || pwd1=="")
        	{
-       		alert("Please fill all the fields");
+    	   document.getElementById("incorrectLogin").innerHTML="Please fill all the fields";
+       		//alert("Please fill all the fields");
        	}
        else
        {
@@ -132,7 +139,7 @@ $("#loginForm").submit(function(e){
           //meaning we are expecting JSON data in response from the server
           $.ajax({
        	   
-       	   url: "http://localhost:8085/DemoFB/webapi/user/login",
+       	   url: "http://localhost:8080/DemoFB/webapi/user/login",
               type: "POST",
               dataType: "text",
               data: myJSON,
@@ -149,9 +156,10 @@ $("#loginForm").submit(function(e){
                  }
                   else
                	   {
-               	   alert("login failed.. incorrect username or password.. try again");
+                   document.getElementById("incorrectLogin").innerHTML="login failed.. incorrect username or password.. try again";		  
+               	   //alert("login failed.. incorrect username or password.. try again");
                	   //$.removeCookie("ID");
-               	   window.location.replace("appHome.html");
+               	   //window.location.replace("appHome.html");
                	   }
                 },  
                 error: function(e){  
@@ -187,13 +195,16 @@ $("#loginForm").submit(function(e){
           <input type="password" class="form-control" placeholder="Password" id="password1" style="margin-top:40px">
         </div>
         <button type="submit" id="loginButton" class="btn btn-default" style="margin-top:40px">Log In</button>
+      	<div id="incorrectLogin" style="color:white;" ></div>
       </form>
     </div>
 
 </nav>
 <nav class="navbar navbar-default" style="background-color:white;min-height:500px; background-color:#e1e8ed;">
 	<img src="148670969337123.png" alt="connecting people" width="580" height="380" style="margin-left:10em; margin-top:30px">
+	
 	<form class="navbar-form navbar-right" action="#" id="signupForm">
+		<div id="signupFail" style="color:red;"></div>	
 		<h1 style="color: black; margin-right:6em; margin-top:0px"><i class="fa fa-shield"></i>Create an account</h1>
 		<h5 style="color: black;">It's free and always will be.</h5>
 		<input type="text" class="form-control" placeholder="First name" id="firstname" style="margin-top:15px">
@@ -376,6 +387,7 @@ $("#loginForm").submit(function(e){
 					<small> receive SMS message notifications from Facebook and can opt out at any time.
 				</small></br>
 				<input type="button" id = "create_account" class="btn btn-success" value="Create account" style="height:40px; width:60%;">	 
+				
 	</form>
 </nav>
 </body>

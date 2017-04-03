@@ -6,11 +6,16 @@
         <meta charset="utf-8">
         <title>Facebook</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <link href="assets/css/bootstrap.css" rel="stylesheet">
+       <link href="assets/css/bootstrap.css" rel="stylesheet">
         <link href="assets/css/facebook.css" rel="stylesheet">
         <script type="text/javascript" src="Jquery/jquery-3.1.1.js"></script>
  		<script type="text/javascript" src="Jquery/jquery.cookie.js"></script>
   		<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>  
+       <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+           <link rel="stylesheet" href="/resources/demos/style.css">
+        
+           <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+            <script type="text/javascript" src="Jquery/jquery.popupoverlay.js"></script>  
         <style>
   
 p.leftpadding11{
@@ -62,9 +67,72 @@ margin-left:20px;
 </style>
         
        
-        <script type="text/javascript">
+        
+         <style>
+        
+
+    </style>
+           
+        
+
+        
+   
+        <script type="text/javascript">        
+   
+    	
+        
         
         $(document).ready(function() {
+        	
+        	
+            /*
+            News API is a simple and easy-to-use API that returns JSON metadata for the headlines currently published on a
+            range of news sources and blogs. It is used to display live news headlines in our site!
+            
+            In this project news source is CNN.
+            
+            API keys allow you to access the REST API and allow access to JSON data. 
+            Each user and service account can have multiple API keys.
+            An API key is the name given to some form of secret token which is submitted alongside web service (or similar) requests 
+            in order to identify the origin of the request. The key may be included in some digest of the request content to further 
+            verify the origin and to prevent tampering with the values.
+
+            Typically, it is used to identify the source of a request positively, it acts as a form of authentication,
+            which can lead to access control.
+          
+            apikey used here is - a35ddf5f1c5f49638660efae1cd74ec0
+            
+            */  	
+              	
+              	
+              	var source = 'cnn'
+              		var request = `https://newsapi.org/v1/articles?source=`+source+`&apiKey=a35ddf5f1c5f49638660efae1cd74ec0`
+              		console.log(request)
+              		$.getJSON(request, (data) => {
+              		  console.log(data);
+              		  var trend;
+              		  for(var i=0;i<5;i++){
+              			  //alert(i);
+              			  
+              		  trend +="<a href=\""+data.articles[i].url+"\""+"class="+"\" glyphicon glyphicon-globe list-group-item\""+"target="+"\"_blank\""+">"+data.articles[i].title+"</a>";
+              		 // <a href="todoPage.html" class="list-group-item">Virat Kohli</a>
+              		  }
+              		  trend = trend.replace("undefined","");
+                      	   $("#trending").html(trend);
+              		  var trends;
+              		  for(var i=5;i<10;i++){
+              			  //alert(i);
+              			  
+              		trends +="<li>";	  
+              		trends +="<a href=\""+data.articles[i].url+"\""+"class="+"\" glyphicon glyphicon-globe list-group-item\""+"target="+"\"_blank\""+">"+  data.articles[i].title+"</a>";
+              		trends +="</li>";
+              		  }
+              		  trends = trends.replace("undefined","");
+                      	   $("#xs-menu-news").html(trends);
+              	
+              		})
+              	
+            
         	var feeling;
         	var timelineid="home";
         	var emailID;
@@ -74,17 +142,30 @@ margin-left:20px;
         		  $(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="caret"></span>');
         		  feeling=  $(this).parents(".dropdown").find('.btn').val($(this).data('value')).text();
         			alert(feeling);	 
-        	});        	
+        	});     
+
         	
+        
+        	
+        	
+        	
+        	var ID = $.cookie("ID");
+        	if(ID==null)
+        	{
+        		window.location.replace("appHome.html");
+        	}	
+
         	var foo = $.cookie("ID");
+
          	
         	
         	
         	
         	$.ajax({
+
         		 type: "GET",
     	        contentType: "text/plain",  //send data to server in this format
-    	        url:"http://localhost:8085/DemoFB/webapi/user/retrive",
+    	        url:"http://localhost:8080/DemoFB/webapi/user/retrive",
     	        dataType: "JSON",  //expect response of this type
     	        data: foo,
                   
@@ -116,57 +197,101 @@ margin-left:20px;
     		//alert(foo);
     		 		
     		
-    		
-    		 $("#createEvent").click(function(e){
+    			  $.ajax({ 
+              url: "http://localhost:8080/DemoFB/webapi/chat/getMyAllConversations",
+              type: "GET",
+              dataType: "json",
+              
+              crossDomain: true,
+              processData: true,
+              
+              
+              success: function(response){  
+           	   
+                  // we have the response  
+           	   if(response!=null){
+                  var data =JSON.parse(JSON.stringify(response));
+                  
+                   var Notify="<h5>(Nothing New)</h5>";
+
+           	     
+           	   
+                 	for (var i=0; i < data.length; i++){
+                 			if(data[i].status=="NEW")
+                 		 Notify="<h5>(New Messages)</h5>";
+                 	}
+               
+           	   $("#notify").html(Notify);
+          
+                  }  
+                  
+                  else
+               	   {
+               	  alert("something wrong");
+               	   }
+                },
+  	    
+     			error: function(e){  
+       					alert('Error121212: ' + e);  
+       					alert(e.toString());
+     			}				
+       
+  	  });//ajax call end
+
+  	$("#createEvent").click(function(e){
 		  
-         var ename=$("input#eventname").val();
-         var hname=$("input#hostname").val();
-         var loc=$("input#location").val();
-         var esd=$("input#datepicker").val();
-         var eed=$("input#datepicker1").val();
-        
-         var obj = { ename:ename,hname:hname,location:loc,
-       		  event_date:esd,event_end_date:eed
-       		  };  
-     	var myJSON = JSON.stringify(obj);
-         	//alert(myJSON);
+        var ename=$("input#eventname").val();
+        var hname=$("input#hostname").val();
+        var loc=$("input#location").val();
+        var esd=$("input#datepicker").val();
+        var eed=$("input#datepicker1").val();
+        var eventType=$('#Etype option:selected').text();
+       //alert(eventType);
+       var time=$("input#myTime1").val();
+      // alert(time);
+        var obj = { ename:ename,hname:hname,location:loc,
+      		  event_date:esd,event_end_date:eed,eventType:eventType,
+      		  time:time};  
+    	var myJSON = JSON.stringify(obj);
+        	//alert(myJSON);
 			//document.write(myJSON);
 	   
 			 $.ajax({
-    	        type: "PUT",
-    	        contentType: "application/json",  //send data to server in this format
-    	        url:"http://localhost:8085/DemoFB/webapi/event/create_event",
-    	        dataType: "text",  //expect response of this type
-    	        data: myJSON,
-    	        success: function(resp){
-    	            
-    	            if(resp!=null){
-    	   	                    	
-    	            	 var obj1 = JSON.parse(JSON.stringify(resp));
-                    	 // alert(obj1);
-                    	 window.location.replace("Event.html");
-    	            	//  location.reload();
-    	            }	
-    	            else
-    	            {
-    	            	alert("update failed.. ")
-    	            	//window.location.replace("timeLine1.html");
-    	            }	
-    	            
-    	            
-    	        },
-    	        error: function(jqXHR, textStatus, errorThrown){
-    	            alert('logout error: ' + textStatus);
-    	        }
-    	    });
+   	        type: "PUT",
+   	        contentType: "application/json",  //send data to server in this format
+   	        url:"http://localhost:8080/DemoFB/webapi/event/create_event",
+   	        dataType: "text",  //expect response of this type
+   	        data: myJSON,
+   	        success: function(resp){
+   	            
+   	            if(resp!=null){
+   	   	                    	
+   	            	 var obj1 = JSON.parse(JSON.stringify(resp));
+                   	 // alert(obj1);
+                   	 window.location.replace("Event.html");
+   	            	//  location.reload();
+   	            }	
+   	            else
+   	            {
+   	            	alert("update failed.. ")
+   	            	//window.location.replace("timeLine1.html");
+   	            }	
+   	            
+   	            
+   	        },
+   	        error: function(jqXHR, textStatus, errorThrown){
+   	            alert('logout error: ' + textStatus);
+   	        }
+   	    });
 	        	
 	       
-	   }); // create ajax call end
+	   }); // create event ajax call end
+
     		
     		
     		
     			$.ajax({ 
-                   url: "http://localhost:8085/DemoFB/webapi/status/getAllStatus",
+                   url: "http://localhost:8080/DemoFB/webapi/status/getAllStatus",
                    type: "GET",
                    dataType: "json",
                    contentType : "application/json",
@@ -179,8 +304,13 @@ margin-left:20px;
                        // we have the response  
                 	   if(response!=null){
                        var data =JSON.parse(JSON.stringify(response));  
+
                        //alert("This is th email id: "+emailID);
-                       console.log("dekho ise: "+data);
+                       //console.log("dekho ise: "+data);
+
+                  //     console.log(data);
+                   	              
+                       
                        var st;
                        var fname,lname;
                        
@@ -222,6 +352,7 @@ margin-left:20px;
                                st+="<p id="+"\"feelings\""+"class="+"\"leftpadding\""+"><font size="+"\"2\""+"color="+"\"#A4A4A4\""+">"+data[i].feeling+"<font></p>" ;
                                
                              
+
                              	  }
                             
                                else if((data[i].name2!=null)&&(data[i].feeling!=null))
@@ -240,6 +371,42 @@ margin-left:20px;
                                   */
                                  /* $(status_name).appendTo('#text_color');
                         	   document.getElementById("forstatus").style.color="blue"; */
+
+                             /* $(status_name).appendTo('#text_color');
+                    	   document.getElementById("forstatus").style.color="blue"; */
+  /*                  	 	st+="<br><br><br>";
+                    	   st+="<p id="+"\"forstatus\""+">"+data[i].status_desc+"</p>" ;
+                    	   st+="</div></div><hr>";
+                    	   st+="<div class="+"\"row\""+">";
+                    	   st+="<div class="+"\"col-md-12\""+">";
+                    	   st+="<ul class="+"\"list-inline\""+">";
+                    	   st+="<li>";
+                    	   st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+" OnClick=\"like(this);\"><span class="+"\"glyphicon glyphicon-thumbs-up\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Like</font></a>";
+                    	   st+="</li>";
+                    	   /* st+="<li>";
+                    	   st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+" OnClick=\"unlike(this);\""+"><span class="+"\"glyphicon glyphicon-thumbs-down\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Unlike</font></a>";
+                    	   st+="</li>"; 
+                    	   st+="<li>";
+                    	   st+= "<a href="+"\"#\""+ "id=\""+data[i].statusID+"\""+"><span class="+"\"glyphicon glyphicon-comment\"" +"style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Comment</font></a>";
+                    	   st+="</li></ul></div></div>";
+                    	   st+="</div>";
+                    	   st+="<div class="+"\"panel-footer\"" +"id="+"\"o\""+">";
+                    	   st+="<div class="+"\"row\""+">";
+                           st+="<div class="+"\"col-md-12\""+">";
+                           st+="<a id="+"\"likescount\""+">"+data[i].likesCount+"</a>";
+                           st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+"onmouseover=\"likehover(this)\"><span style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Likes</font></a>";
+                           st+="<p id="+"\"likescount\""+">"+data[i].unlikes_count+" Unlikes"+"</p><br></div></div>";
+                           
+                           st+="<hr>"; 
+                    	   st+="<div class="+"\"pre-scrollable\""+" style="+"\"height:100px;\""+">";
+                    	   for(var j=0;j<data[i].a.length;j++)
+                		  
+                    			   
+                		   {
+                    		    st+="<div class=\" col-sm-2\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
+                    		    st+= "<div class=\" col-sm-5\"><p id="+"\"outputname\""+"><font size="+"\"3\""+"color="+"\"blue\""+">"+data[i].a[j].name+"</font></p></div>"; 
+                        	 	st+="<br><br><br>";
+*/
                         	  
 
          		   st+="</div>";
@@ -355,7 +522,6 @@ margin-left:20px;
                 	   }    //outer for ends        
                 	   }//if ends 
                 	   },//success ends  
-
                 	 
     			error: function(e){  
 					alert('Error121212: ' + e);  
@@ -386,7 +552,7 @@ margin-left:20px;
     	    		 
     	    			
     	    			$.ajax({ 
-    	                    url: "http://localhost:8085/DemoFB/webapi/status/getAllLikeName",
+    	                    url: "http://localhost:8080/DemoFB/webapi/status/getAllLikeName",
     	                    type: "POST",
     	                    dataType: "json",
     	                    contentType : "application/json",
@@ -459,7 +625,7 @@ margin-left:20px;
     				   
     				   
     				   $.ajax({ 
-                url: "http://localhost:8085/DemoFB/webapi/status/incrementLike",
+                url: "http://localhost:8080/DemoFB/webapi/status/incrementLike",
                 type: "POST",
                 dataType: "text",
                 contentType : "application/json",
@@ -472,6 +638,7 @@ margin-left:20px;
              	   
                     // we have the response  
              	   if(response!=null){
+
              		  location.reload();
                       
              		  /* alert("integer set to: "+response);
@@ -483,8 +650,7 @@ margin-left:20px;
       				  alert(chk);
       				  
       				   document.getElementById(chk).style.color="#ff0000";
-             		  } */
-
+             		  }*/
              	   }
              	   else{
              		   }
@@ -496,9 +662,7 @@ margin-left:20px;
 			}				
  
 }); 
-
 }//like fun ends
-
     			 
     			 window.unlike = function(e1){
     				 
@@ -509,7 +673,7 @@ margin-left:20px;
   				   
   				   
   				   $.ajax({ 
-              url: "http://localhost:8085/DemoFB/webapi/status/decrementLike",
+              url: "http://localhost:8080/DemoFB/webapi/status/decrementLike",
               type: "POST",
               dataType: "text",
               contentType : "application/json",
@@ -532,15 +696,12 @@ margin-left:20px;
 					alert('Error121212: ' + e);  
 					alert(e.toString());
 			}				
-
 }); 
 }//unlike fun ends
-
     			 
     			 
     			 
    
-
     			 window.comment = function(e1){
     				 
     				   var statusid= $(e1).attr('id');
@@ -557,7 +718,7 @@ margin-left:20px;
     				   
     			   
     				   $.ajax({ 
-                url: "http://localhost:8085/DemoFB/webapi/status/addComment",
+                url: "http://localhost:8080/DemoFB/webapi/status/addComment",
                 type: "POST",
                 dataType: "text",
                 contentType : "application/json",
@@ -586,12 +747,13 @@ margin-left:20px;
 }); 
 }
     		
+
     			
     		
                  	$.ajax({
                  		 type: "GET",
              	        contentType: "text/plain",  //send data to server in this format
-             	        url:"http://localhost:8085/DemoFB/webapi/user/retrive",
+             	        url:"http://localhost:8080/DemoFB/webapi/user/retrive",
              	        dataType: "JSON",  //expect response of this type
              	        data: foo,
     	                   
@@ -618,23 +780,44 @@ margin-left:20px;
     	          			}				
     	            
     	    	  });
+
          /*  pppppppoooooooooooooossssssstttttttt*/
                  	 $("#postbutton").click(function(e){
                  		 
+                 		/* 
+                 		$.ajax({
+                    		 type: "GET",
+                	        contentType: "text/plain",  //send data to server in this format
+                	        url:"http://localhost:8080/DemoFB/webapi/user/retrive",
+                	        dataType: "JSON",  //expect response of this type
+                	        data: foo,
+       	                   
+                              success: function(response){  
+       	                       // we have the response  
+       	                       if(response!=null){
+       	                    	  // alert("data fetched");
+       	                    	   var obj = JSON.parse(JSON.stringify(response));
+                 		 			var myemailid=obj.emailID;
+                 		  */
+
                  		 
                  		var statusdesc= document.getElementById("posttext").value;
+                 		
                  		 //alert(x);
                  		 var obj2={status_desc:statusdesc,feeling:feeling,timelineid:timelineid};
                  		 var mahjson=JSON.stringify(obj2);
                  		 $.ajax({
      	        type: "POST",
      	        contentType: "application/json",  //send data to server in this format
+
      	        url:"http://localhost:8085/DemoFB/webapi/status/addStatus",
      	        dataType: "json",  //expect response of this type
+
      	        data: mahjson,
      	        success: function(resp){
      	    	   
      	    	  if(resp!=null){
+
      	    		 var obj1 = JSON.parse(JSON.stringify(resp));
               	   	 var statusid=obj1.statusID;
               	   console.log(statusid);
@@ -667,6 +850,46 @@ margin-left:20px;
                  		
                  		
                  		});                  
+
+     	    		  
+
+     	    		 alert(resp);
+
+     	    		  alert(resp);
+
+     	    		 $('#posttext').val('');
+     	    		location.reload();
+     	    		  
+     	    	  }
+     	    	  else{
+     	    		
+     	    		  alert("null");
+     	    	  }
+     	    	   
+     	       },
+     	       
+     	      error: function(jqXHR, textStatus, errorThrown){
+   	            alert('status posting error: ' + textStatus);
+   	        }	 
+                 		 
+                 		 
+                });    		 
+                 		 
+       	        /*  } 
+       	             else
+       	            	 {
+       	            	 alert("error inside retriving mailid"); 
+       	            	 }
+       	           },
+       	            	error: function(jqXHR, textStatus, errorThrown){
+       	    	            alert('status posting error: ' + textStatus);
+       	    	        }	 
+       	                  		 
+       	                  		 
+       	     });      	   
+       	                       
+       	     */                   
+
        	                       
        	                       
                  		location.reload();
@@ -695,7 +918,6 @@ margin-left:20px;
                  	$("#comment").click(function(){
                  	    /* $(this).next("#forcomment").slideToggle(200)
                  	           .find("comment_d").focus(); */
-
                  	           
                  	           
                  	    return false;
@@ -707,57 +929,57 @@ margin-left:20px;
                  	
                  	
       	  $("#logoutButton1").click(function(e){
-     		  //alert("logout success");
-         	  // var obj = JSON.parse(JSON.stringify(resp));
+     		
          	   window.location.replace("appHome.html");
      	           	   	        	
      	       
      	   });//logout button ends ends
      	   
      	   
-     	   	$.ajax({ 
-                url: "http://localhost:8085/DemoFB/webapi/friend/getMyAllFriends",
-                type: "GET",
-                dataType: "json",
-                contentType : "application/json",
-                crossDomain: true,
-                processData: true,
-                
-                
-                success: function(response){  
-             	   
-                    // we have the response  
-             	   if(response!=null){
-                    var data =JSON.parse(JSON.stringify(response));  
-                     var allFriends;
-             	 console.log(data);
-                   	for (var i=0; i < data.length; i++){
-                 		 allFriends+="<div class=\"panel-body\">";
-                 		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
-                 		allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-html="+"\"true\""+"data-content ="+"\"Lives in: "+data[i].hometown+" <br>Highschool: "+data[i].highschool+"\">"+data[i].fname+" "+data[i].lname + "</a>";
-               // allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  " data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>"; 		
-                 		//  allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID+"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
-                         allFriends+="</div>";
-                 		allFriends+="</div>";
-    					     	}
-                 	
-                 allFriends=allFriends.replace("undefined","");
-             	   $("#allFriends").html(allFriends);
-            
-                    }  
-                    
-                    else
-                 	   {
-                 	  alert("something wrong");
-                 	   }
-                  },
-    	    
-       			error: function(e){  
-         					alert('Error121212: ' + e);  
-         					alert(e.toString());
-       			}				
-         
-    	  });//ajax call end
+
+     	  $.ajax({ 
+              url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
+              type: "GET",
+              dataType: "json",
+              contentType : "application/json",
+              crossDomain: true,
+              processData: true,
+              
+              
+              success: function(response){  
+           	   
+                  // we have the response  
+           	   if(response!=null){
+                  var data =JSON.parse(JSON.stringify(response));  
+                   var allFriends;
+           	 
+                 	for (var i=0; i < data.length; i++){
+               		 allFriends+="<div class=\"panel-body\">";
+               
+          	 allFriends+='<a href="friendTimeline.html" OnClick=go(this); data-html="true"  data-placement="left" data-toggle="popover"  data-trigger="click hover" data-content=\'<div class="item active"><img src="users/'+data[i].emailID+'/cover.jpg" class=" img-responsive" width="1000" height="400" style="float:left;"><div><div class="img-container" style="display:inline-block;"><img class="img-thumbnail" src="users/'+data[i].emailID+'/profilePic.jpg" style="width:60px;height:60px;/"></div><div class="text" style="display:inline-block;margin-left:0.2cm;"><p><strong>'+data[i].fname+" "+data[i].lname+'</strong></p></div><div style="margin-left:1.5cm;"><p style="color:grey"><span class="glyphicon glyphicon-home"></span> <b>'  +'Lives in: '+ '</b> '+ data[i].hometown+'<br/><br/><span class="glyphicon glyphicon-gift"></span> <b>Born on: </b> '+ data[i].date +'<br><br><a href="#" style="color:grey"; OnClick=mutual(this); id='+data[i].userID+'><span class="glyphicon glyphicon-user"></span> See Mutual Friends</p></div></div>\'>'+'<img src="users/'+data[i].emailID+'/profilePic.jpg" style="width:20px;height:20px;">'+data[i].fname+" "+data[i].lname+'</a><br/>';
+
+                       allFriends+="</div>";
+               		allFriends+="</div>";
+  					     	}
+               	
+               allFriends=allFriends.replace("undefined","");
+           	   $("#allFriends").html(allFriends);
+          
+                  }  
+                  
+                  else
+               	   {
+               	  alert("something wrong");
+               	   }
+                },
+  	    
+     			error: function(e){  
+       					alert('Error121212: ' + e);  
+       					alert(e.toString());
+     			}				
+       
+  	  });//ajax call end
+    	
     	  
          	window.go = function(e1){
        		 
@@ -768,13 +990,84 @@ margin-left:20px;
      		
      	   }
 
+  	  
+         	 window.mutual=function(e1){
+        		 var foo=$(e1).attr('id');
+        		  $.cookie("ID5",foo); 
+        		//  alert(foo);
+        			$.ajax({ 
+                        url: "http://localhost:8080/DemoFB/webapi/friend/count_of_MutualFriends",
+                        type: "GET",
+                        dataType: "json",
+                        contentType : "application/json",
+                        crossDomain: true,
+                        processData: true,
+                        
+                        
+                        success: function(response){  
+                     	   
+                            // we have the response  
+                     	   if(response!=null){
+                            // alert("data is come");
+                     		  var data =JSON.parse(JSON.stringify(response));
+        						 
+                     		    var st;
+                                // $("#showlikesnames").html(st);
+                                 for (var i=0; i < data.length; i++){
+                              	st+="<div>";
+                              	st+="<font size="+"\"4\">"+data[i].fname+data[i].lname+"</font>";
+                              	// st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].emailID+"\""+" OnClick=\"suggest(this)"+";\">Suggest</button>";
+                              	// st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].emailID+"\""+" OnClick=\"suggestignore(this);\">Ignore</button>";
+                              	 st+="</div>"; 
+                              	 st+="<hr>";
+                               
+                              	 
+                                } 
+                                 
+                                 st=st.replace("undefined","");
+                              	 $("#showMutualnames").html(st);
+                                 
+                                 $('#MutualModal').modal({
+                                     show: true
+                                 });
+                                
+                                
+                             
+                            
+                     	   
+                     	   
+                     	   
+                     	   
+                     	   
+                     	   }  
+                            
+                            else
+                         	   {
+                         	  alert("something wrong");
+                         	   }
+                          },
+         	    
+               			error: function(e){  
+                 					alert('Error121212: ' + e);  
+                 					alert(e.toString());
+               			}				
+                 
+         	  }); 
+        	
+        	  
+        	  }//mutual fun ends here
+  	  
+  	  
+  	  
+  	 
     	  
     	  $("#search").click(function(e){
      	    var key=$("input#srch-term").val();
             $.cookie("key",key);
-                    
+                  //  alert(key);
     	   });//search button ends ends
     	   
+
     	   $("#createGroup").click(function(e){
     		   var group_privacy=$("#group_privacy option:selected").val();
                // window.location.replace("todoPage.html");
@@ -814,6 +1107,7 @@ margin-left:20px;
                 });
                 
                              
+
              
              
              
@@ -821,26 +1115,56 @@ margin-left:20px;
      	   });//create group button ends ends
      	    
     	   
-    	   
-    	   
-    	   
-    	 /*  $("a#openGroupForm").click(function(e) {
-    		      e.preventDefault();
-    		      $("#myModal").dialog({height:300});
-    	   });*/
-    	   
-
         }); //document ready ends 
         
-        jQuery(document).ajaxComplete(function () {
-       	 $('[data-toggle="popover"]').popover({placement:'left'})  
-       	}); 
+ jQuery(document).ajaxComplete(function (e) {
+        	
+        	var originalLeave = $.fn.popover.Constructor.prototype.leave;
+        	$.fn.popover.Constructor.prototype.leave = function(obj){
+        	  var self = obj instanceof this.constructor ?
+        	    obj : $(obj.currentTarget)[this.type](this.getDelegateOptions()).data('bs.' + this.type)
+        	  var container, timeout;
+
+        	  originalLeave.call(this, obj);
+
+        	  if(obj.currentTarget) {
+        	    container = $(obj.currentTarget).siblings('.popover')
+        	    timeout = self.timeout;
+        	    container.one('mouseenter', function(){
+        	      //We entered the actual popover – call off the dogs
+        	      clearTimeout(timeout);
+        	      //Let's monitor popover content instead
+        	      container.one('mouseleave', function(){
+        	        $.fn.popover.Constructor.prototype.leave.call(self, self);
+        	      });
+        	    })
+        	  }
+        	};
+        	
+        	
+        	
+        	
+        	 $('[data-toggle="popover"]').popover({
+           		 placement:'left',
+           		 delay:{show: 50, hide: 400}
+           		 })  
+           	}); 
+        
+        
+        
+ $( function() {
+	    $( "#datepicker" ).datepicker({dateFormat: "yy-mm-dd"});
+	  } );
+	  $( function() {
+		    $( "#datepicker1" ).datepicker({dateFormat: "yy-mm-dd"});
+		  } );
+
         
         </script>
         
     </head>
     
-    <body>
+     <body>
         
         <div class="wrapper">
 			<div class="box">
@@ -919,7 +1243,7 @@ margin-left:20px;
 				
 								
 									<!-- sidebar -->
-				 	<div class="column col-sm-2 col-xs-2 "   style="background-color: #E9EAED">
+				 		<div class="column col-sm-2 col-xs-2 "   style="background-color: #E9EAED">
 				   
 						 <ul class="nav">
 							<li><a href="#" data-toggle="offcanvas" class="visible-xs text-center"><i class="glyphicon glyphicon-chevron-right"></i></a></li>
@@ -927,8 +1251,8 @@ margin-left:20px;
 					    
 						<ul class="nav hidden-xs" id="xs-menu">
 							
-							<li><a href="todoPage.html"><i class="glyphicon glyphicon-list"></i> News Feed</a></li>
-							<li><a href="todoPage.html"><i class="glyphicon glyphicon-envelope"></i> Message</a></li>
+							<li><a href="userHome1.html"><i class="glyphicon glyphicon-list"></i> News Feed</a></li>
+							<li><a href="message.html"><i class="glyphicon glyphicon-envelope"></i> Message<h5 id="notify"></h5></a></li>
 						</ul>	
 							<b>Explore</b>
 							<ul class="nav hidden-xs see-more" id="xs-menu" >
@@ -965,10 +1289,10 @@ margin-left:20px;
 							<br>
 							<ul class="nav hidden-xs" id="xs-menu">
 							
-				<input type="button" id ="popup1" class="btn btn-primary" value="Ad" data-toggle="modal" data-target="">	</br>		
-				<input type="button" id ="popup2" class="btn btn-primary" value="Page" data-toggle="modal" data-target=""></br>
-				<input type="button" id ="popup3" class="btn btn-primary" value="Group" data-toggle="modal" data-target="#groupModal"></br>
-				<input type="button" id ="popup4" class="btn btn-primary" value="Event" data-toggle="modal" data-target="#myModalevent">
+				<input type="button" id ="popup1" class="btn btn-primary" value="Ad" data-toggle="modal" onclick="location.href='todoPage.html'" data-target="" style="min-width:80px;">	</br>		
+				<input type="button" id ="popup2" class="btn btn-primary" value="Page" data-toggle="modal" onclick="location.href='todoPage.html'" data-target=""  data-target="" style="min-width:80px;"></br>
+				<input type="button" id ="popup3" class="btn btn-primary" value="Group" data-toggle="modal" data-target="#groupModal" style="min-width:80px;"></br>
+				<input type="button" id ="popup4" class="btn btn-primary" value="Event" data-toggle="modal" data-target="#myModalevent" style="min-width:80px;">
 							
 							
 						</ul>
@@ -996,20 +1320,21 @@ margin-left:20px;
 					  
 					</div>
 					<!-- /sidebar -->
+	
 				  
 				
 				
 				
 								  
-								 <!-- main col left -->
-								  
+								 <!-- main col left --> 
 								 <div class="col-sm-5 col-xs-5">
-								   			
+								   
 										<div class="well"> 
 										   <form class="form-horizontal" role="form">
 											<h4>What's New</h4>
 											 <div class="form-group" style="padding:14px;">
 											  <textarea class="form-control" placeholder="Update your status" id="posttext"></textarea>
+
 											</div>  
 											
 <!-- <label for="business">Feeling</label>
@@ -1067,6 +1392,10 @@ margin-left:20px;
  										
 											                  
  											<button class="btn btn-primary pull-right col-sm-1" type="button" id="postbutton">Post</button><ul class="list-inline"><li><a href=""><!-- <i class="glyphicon glyphicon-upload"></i> --></a></li></ul>
+
+											
+									<!-- 		<button class="btn btn-primary pull-right" type="button" id="postbutton">Post</button><ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
+                    -->
 										 	<!-- <div class="form-group" style="padding:14px;">
 											  <textarea class="form-control" placeholder="Update your status"></textarea>
 											</div>
@@ -1076,14 +1405,6 @@ margin-left:20px;
 									  </div>
 								   
 								   
-
-
-
-
-
-
-
-
 <div id="abcd">
   <!-- <div class="panel-body" id="forcomment">
     Post metadata
@@ -1097,6 +1418,7 @@ margin-left:20px;
     <div class="row">
       <div class="col-md-12">
       <p id="status_name"></p>
+
       <p id="status_name2"></p>
       <br>
         <p id="feelings"></p>
@@ -1104,6 +1426,9 @@ margin-left:20px;
         <li id="time"></li>
        </ul> 
        <p id="forstatus"></p>  status text
+
+       <p id="forstatus"></p>  <!-- status text -->
+
       </div>
     </div>
   <hr>  
@@ -1171,54 +1496,63 @@ margin-left:20px;
  
  
  
-</div>  div of panel default for status update 1
+</div>  
 								   
 							
 		  	   
 									 										
 								   
 								  </div>
- -->								  </div>
+								  </div>
+
 								  <!-- main col center -->
 								  <!-- <div class="col-sm-2 col-xs-2">
 									   
 								
 
-									   <div class="panel panel-default">
-										 <div class="panel-heading"> <h4>Trending</h4></div>
+									   <div class="panel panel-default" style="width:240px;">
+										 <div class="panel-heading"><img src="http://heatherbarmstrong.com/images/made/assets/img/uploads/press/logo/Cnn-logo-11_350_178_80grayrepl-e4e4e4-000-2a3b54.jpg" class="img-rounded" width="150" height="50" style=" margin-left:15px; margin-top:10px;"><br> <h3>News Headlines </h3></div>
 										  <div class="panel-body">
-										  	<div class="list-group">
- 												 <a href="todoPage.html" class="list-group-item">Virat Kohli</a>
+										  	<div class="list-group" id="trending">
+ 												<!--  <a href="todoPage.html" class="list-group-item">Virat Kohli</a>
   												 <a href="todoPage.html" class="list-group-item">Varun Dhawan</a>
-  												 <a href="todoPage.html" class="list-group-item">David Guetta</a>
-											</div>
+  												 <a href="todoPage.html" class="list-group-item">David Guetta</a> -->
+											 </div>
 
+								<div class="accordion-group">
+    							<div id="collapseTwwo" class="accordion-body collapse">
+     								 <div class="accordion-inner">
+      									  <ul class="nav hidden-xs see-more" id="xs-menu-news">
+										</ul>
+      
+     								 </div>
+    							</div>
+    							<div class="accordion-heading">
+      								<ul class="nav hidden-xs see-more" id="xs-menu-news">
+      								<li><a class="accordion-toggle" id = "see-more-news" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwwo"> See More ...
+      								</li>
+      								</ul>
+      								</a>
+    							</div>
+  							</div>  
+									  
+
+
+				
 										  </div>
 									   </div>
-									
-									   <div class="panel panel-default">
-										<div class="panel-heading"> <h4>Suggested Pages</h4></div>
-										 										  <div class="panel-body">
-										  	<div class="list-group">
- 												 <a href="todoPage.html" class="list-group-item">The Logical Indian</a>
-  												 <a href="todoPage.html" class="list-group-item">C programming</a>
-  												
-											</div>
-
-										  </div>
-										
-									  </div>
-									
+							
+		
 								  </div>
 								  
- -->								  
+ 								  
 								  
 								   <!-- main col right -->
 								   <div class=" col-sm-3 col-xs-3 affix" style="float:right; left:970px; top:20px;" >
     	 <br>
-	   <div class="panel panel-primary" style="float:right; left:970px; top:30px; min-height: 2000px">
+	   <div class="panel panel-primary" style="float:right;  top:30px; min-height: 2000px ; width:250px">
 	   <div class="panel-heading"><h4>My Friends</h4></div>
-		<div class="pre-scrollable" style="max-height:580px;overflow-y: scroll;">   
+		<div class="pre-scrollable" style="max-height:580px;overflow-y: scroll;width:400px">   
 		<p id="allFriends"></p>
 			</div>
 		  </div>			    
@@ -1237,7 +1571,37 @@ margin-left:20px;
 				  
 				</div>
 			</div>
-		
+<div id="MutualModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog">
+		  <div class="modal-content">
+			  <div class="modal-header">
+			 
+				  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Hide</button>
+					<h4>your Mutual friends</h4>
+			  </div>
+			  <div class="modal-body">
+				  <form class="form center-block">
+					<div class="form-group" id="showMutualnames">
+					
+					 <!--  <textarea class="form-control input-lg" autofocus="" placeholder="What do you want to share?"></textarea> -->
+					</div>
+				  </form>
+			  </div>
+			  <div class="modal-footer">
+				  <div>
+				 <!--  <button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Post</button> -->
+					<!-- <ul class="pull-left list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul> -->
+				  </div>	
+			  </div>
+		  </div>
+		  </div>
+		</div> 		
+
+
+
+
+
+
 
 
 		<!--post modal-->
@@ -1365,7 +1729,7 @@ margin-left:20px;
         
         
         
-   <div id="myModalevent" class="modal fade" role="dialog">
+    <div id="myModalevent" class="modal fade" role="dialog">
   <div class="modal-dialog" >
     <!-- Modal content-->
 <form action="" id="updateevent">
@@ -1376,7 +1740,20 @@ margin-left:20px;
       </div>
       <div class="modal-body">
         <div class="container">
-        
+        <br>
+          <div class="form-group">
+         <div class="col-md-3">
+         <label for="Event-type:">Event-type</label>
+         <select class="form-control" id="Etype" style="margin-left:0px; " width="5px">
+        <option>Public</option>
+        <option>Private</option>
+       
+      </select>
+      </div>
+        </div>
+     <br>
+     <br>
+        <br>
         <br>
         <div class="form-group">
           <label for="event-name" >Event name:</label>
@@ -1404,6 +1781,20 @@ margin-left:20px;
           <input type="text" placeholder="yyyy-mm-dd"  id="datepicker1" style="margin-left:10px;">
         </div>
              <br>
+             
+             <br>
+          <div class="form-group">
+          
+            <label for="Event-date" >Time</label>
+             <input type="text" id="myTime1" placeholder="hh:mm Am/hh:mm PM" style="margin-left:10px;">
+    
+          
+          </div>
+        
+   
+        
+             <br>
+             
     </div>
     
      
@@ -1418,7 +1809,6 @@ margin-left:20px;
        </form>
     </div>
   </div>
-     
      
      
              <script>

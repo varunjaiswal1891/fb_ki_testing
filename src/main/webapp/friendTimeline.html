@@ -76,7 +76,7 @@
                  $.ajax({
         type: "POST",
         contentType: "text/plain",  //send data to server in this format
-        url:"http://localhost:8085/DemoFB/webapi/friend/getmyemail",
+        url:"http://localhost:8080/DemoFB/webapi/friend/getmyemail",
         dataType: "text",  //expect response of this type
         data: x,
        success: function(resp){
@@ -93,7 +93,7 @@
               $.ajax({
       	        type: "POST",
       	        contentType: "application/json",  //send data to server in this format
-      	        url:"http://localhost:8085/DemoFB/webapi/friend/getfriendemail",
+      	        url:"http://localhost:8080/DemoFB/webapi/friend/getfriendemail",
       	        dataType: "text",  //expect response of this type
       	        data: myjson,
       	       success: function(resp){
@@ -154,7 +154,7 @@
         	  $.ajax({
         	        type:"POST",
         	        contentType: "application/json",  //send data to server in this format
-        	        url:"http://localhost:8085/DemoFB/webapi/friend/suggestedFriends",
+        	        url:"http://localhost:8080/DemoFB/webapi/friend/suggestedFriends",
         	        dataType: "json",  //expect response of this type
         	        data: j,
         	       success: function(resp){
@@ -218,7 +218,7 @@
            	 	var obj1={firstemailid:first,secondemailid:second,suggestedemailid:suggestemailid};
            	 var jsonobj=JSON.stringify(obj1);
            	 $.ajax({ 
-                    url: "http://localhost:8085/DemoFB/webapi/friend/confirmsuggestion",
+                    url: "http://localhost:8080/DemoFB/webapi/friend/confirmsuggestion",
                     type: "POST",
                     dataType: "text",
                     contentType : "application/json",
@@ -266,7 +266,7 @@
     				  
                        
                        $.ajax({ 
-                url: "http://localhost:8085/DemoFB/webapi/status/incrementLike",
+                url: "http://localhost:8080/DemoFB/webapi/status/incrementLike",
                 type: "POST",
                 dataType: "text",
                 contentType : "application/json",
@@ -312,7 +312,7 @@
                        
                    
                        $.ajax({ 
-                url: "http://localhost:8085/DemoFB/webapi/status/addComment",
+                url: "http://localhost:8080/DemoFB/webapi/status/addComment",
                 type: "POST",
                 dataType: "text",
                 contentType : "application/json",
@@ -352,7 +352,7 @@
                          $.ajax({
                  	        type: "POST",
                  	        contentType: "application/json",  //send data to server in this format
-                 	        url:"http://localhost:8085/DemoFB/webapi/friend/getfriendemail",
+                 	        url:"http://localhost:8080/DemoFB/webapi/friend/getfriendemail",
                  	        dataType: "text",  //expect response of this type
                  	        data: myjson1,
                  	       success: function(resp){
@@ -369,7 +369,7 @@
                          $.ajax({
                 type: "POST",
                 contentType: "application/json",  //send data to server in this format
-                url:"http://localhost:8085/DemoFB/webapi/status/addStatus",
+                url:"http://localhost:8080/DemoFB/webapi/status/addStatus",
                 dataType: "text",  //expect response of this type
                 data: mahjson,
                success: function(resp){
@@ -433,7 +433,7 @@
           $.ajax({
              type: "GET",
               contentType: "text/plain",  //send data to server in this format
-              url:"http://localhost:8085/DemoFB/webapi/user/retrive",
+              url:"http://localhost:8080/DemoFB/webapi/user/retrive",
               dataType: "JSON",  //expect response of this type
               data: foo,
                    
@@ -472,10 +472,10 @@
     //alert(foo);
       $.ajax({
                  type: "GET",
-                  contentType: "text/plain",  //send data to server in this format
-                  url:"http://localhost:8085/DemoFB/webapi/user/retrive_other",
+                    //send data to server in this format
+                  url:"http://localhost:8080/DemoFB/webapi/user/retrive_other",
                   dataType: "JSON",  //expect response of this type
-                  data:other_jwt,
+                  
                      
                        success: function(response){  
                          // we have the response  
@@ -523,7 +523,7 @@
           $.ajax({
      		 type: "GET",
  	        contentType: "text/plain",  //send data to server in this format
- 	        url:"http://localhost:8085/DemoFB/webapi/friend/myFriendOrNot",
+ 	        url:"http://localhost:8080/DemoFB/webapi/friend/myFriendOrNot",
  	        dataType: "text",  //expect response of this type
  	       success: function(response){  
                // we have the response  
@@ -570,7 +570,7 @@
 
                     //ajax call to show my all friends on my friend ki timeline
    	$.ajax({ 
-                url: "http://localhost:8085/DemoFB/webapi/friend/getMyAllFriends",
+                url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
                 type: "GET",
                 dataType: "json",
                 contentType : "application/json",
@@ -625,7 +625,7 @@
              	var other_userID = $.cookie("ID1");
                 //this ajax call to get all my status on my  other ke timeline page pe
                         $.ajax({ 
-                   url: "http://localhost:8085/DemoFB/webapi/status/getOtherAllStatus",
+                   url: "http://localhost:8080/DemoFB/webapi/status/getOtherAllStatus",
                    type: "GET",
                    dataType: "json",
                    contentType : "application/json",
@@ -792,7 +792,7 @@ for (var i=data.length-1; i >=0; i--){
            	    		 
            	    			
            	    			$.ajax({ 
-           	                    url: "http://localhost:8085/DemoFB/webapi/status/getAllLikeName",
+           	                    url: "http://localhost:8080/DemoFB/webapi/status/getAllLikeName",
            	                    type: "POST",
            	                    dataType: "json",
            	                    contentType : "application/json",

@@ -8,7 +8,7 @@ public class IsRequestAlreadySentService {
 	public static boolean isRequestAlreadySent(String emailID1,String emailID2)
 	{
 	try {
-
+		int i=0;
     	  DBAccess connect = new DBAccess();
           boolean check=false;
           while(check==false)
@@ -25,12 +25,15 @@ public class IsRequestAlreadySentService {
 			
 			
 			ResultSet result = prepStatement.executeQuery();
+		
 			if (result.next()) {
 				System.out.println("yes I had already sent the request for id's"+emailID1+" "+emailID2);
-				
 				return true;
 				
-			}	//if ends	
+				
+			}	//if ends
+			connect.stop();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

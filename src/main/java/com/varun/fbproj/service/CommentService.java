@@ -1,11 +1,15 @@
 package com.varun.fbproj.service;
 
+
+import java.sql.PreparedStatement;
+
 import java.sql.ResultSet;
 
 import com.mysql.jdbc.PreparedStatement;
 import com.varun.fbproj.model.Comment;
 
 public class CommentService {
+
 
     DBAccess db= new DBAccess();
     

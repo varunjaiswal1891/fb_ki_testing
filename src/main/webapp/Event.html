@@ -13,7 +13,7 @@
   		<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>  
        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
            <link rel="stylesheet" href="/resources/demos/style.css">
-          
+        
            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
             <script type="text/javascript" src="Jquery/jquery.popupoverlay.js"></script>
           <style>
@@ -22,6 +22,16 @@
      margin: 1px;
       width: 550px;
   }
+  
+  body {
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 14px;
+}
+.container {
+    padding: 20px;
+}
+  
+  
   </style>
 
 <script type="text/javascript">
@@ -35,7 +45,46 @@ $(document).ready(function() {
 	        e.preventDefault();
 	 });
 	
-	
+	  $.ajax({ 
+          url: "http://localhost:8080/DemoFB/webapi/chat/getMyAllConversations",
+          type: "GET",
+          dataType: "json",
+          
+          crossDomain: true,
+          processData: true,
+          
+          
+          success: function(response){  
+       	   
+              // we have the response  
+       	   if(response!=null){
+              var data =JSON.parse(JSON.stringify(response));
+              
+               var Notify="<h5>(Nothing New)</h5>";
+
+       	     
+       	   
+             	for (var i=0; i < data.length; i++){
+             			if(data[i].status=="NEW")
+             		 Notify="<h5>(New Messages)</h5>";
+             	}
+           
+       	   $("#notify").html(Notify);
+      
+              }  
+              
+              else
+           	   {
+           	  alert("something wrong");
+           	   }
+            },
+	    
+ 			error: function(e){  
+   					alert('Error121212: ' + e);  
+   					alert(e.toString());
+ 			}				
+   
+	  });//ajax call end
 	
   $("#logoutButton1").click(function(e){
 		   var foo = $.cookie("ID");
@@ -46,7 +95,7 @@ $(document).ready(function() {
 	   
 	   
 	$.ajax({ 
-        url: "http://localhost:8085/DemoFB/webapi/event/retrive_event",
+        url: "http://localhost:8080/DemoFB/webapi/event/retrive_event",
         type: "GET",
         dataType: "json",
         contentType : "application/json",
@@ -67,17 +116,32 @@ $(document).ready(function() {
         	//   allevent+="<div class="+"\"panel-body\""+"id=\"forcomment\""+">";
         	   allevent+="<div class="+"\"row\""+">";
         	   allevent+="<div class="+"\"col-md-12\""+">";
+        	   allevent+="<br><br>";
         	   allevent+="<a href=\"EventDetail.html\" id=\""+data[i].eID+"\" OnClick=\"go(this);\"><p><font size="+"\"3\""+"color="+"\"blue\""+">"+"Event name:"+data[i].ename+"</font></p></a>" ;
         	   allevent+="<hr>";
-        	   allevent+="<p><font size="+"\"3\""+">"+"Hostname: "+data[i].hname+"</font></p><br>" ;
-        	   allevent+="<p><font size="+"\"3\""+">"+"Event-date: "+data[i].event_date+"</font></p><br>" ;
-        	   allevent+="<a href=\"EventDetail.html\" id=\""+data[i].eID+"\" OnClick=\"go(this);\">Invite-Friend</a> &nbsp;";
-        	   allevent+="<a href=\"#\" id=\""+data[i].eID+"\" OnClick=\"dele(this);\">DELETE</a>";
+        	   allevent+="<p><font size="+"\"3\"color=\"Green\""+">"+"Host-name: "+data[i].hname+"</font></p><br>" ;
+        	   allevent+="<p><font size="+"\"3\" color=\"Green\" "+">"+"Event-date: "+data[i].event_date+"</font></p><br>" ;
+        	   allevent+="<p><font size="+"\"3\"color=\"Green\""+">"+"Event-time: "+data[i].time+"</font></p><br>" ;
+        	   allevent+="<p><font size="+"\"3\"color=\"Green\""+">"+"Event-location: "+data[i].location+"</font></p><br>" ;
+        	  // allevent+="<a href=\"EventDetail.html\" id=\""+data[i].eID+"\" OnClick=\"go(this);\">Invite-Friend</a> &nbsp;";
+        	  allevent+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right \""+"id=\""+data[i].eID+"\""+" OnClick=\"go(this);\">Invite-Friend</button>"; 
+        	  allevent+="<a href="+"\"#\""+"id=\""+data[i].eID+"\""+" OnClick=\"dele(this);\""+"><span class="+"\"glyphicon glyphicon-trash\""+ "style="+"\"color:#3b5998\""+"></span> <font size=\"3\" color="+"\"#3b5998\""+">Delete</font></a>";
+        	   
+        	 // allevent+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right \""+"id=\""+data[i].eID+"\""+" OnClick=\"dele(this);\">Delete</button>";
+        	  // allevent+="<a href=\"#\" id=\""+data[i].eID+"\" OnClick=\"dele(this);\">DELETE</a>";
+        	 
         	   allevent+="</div>";
+        	   allevent+="<br>";
                 allevent+="</div>";
                 allevent+="</div>";
                 //allevent+="</div>";
-		           
+                /* allevent+="<span class="+"\"glyphicon glyphicon-trash\""+">";
+           		allevent+="<button type="+"\"button\""+" class="+"\"btn btn-primary \""+"id=\""+data[i].eID+"\""+" OnClick=\"dele(this);\">Delete</button>";
+           		allevent+="</span>";
+           		<span class="+"\"glyphicon glyphicon-trash\""+ "style="+"\"color:#3b5998\""+"></span> ;
+           		allevent+="<a href="+"\"#\""+"id=\""+data[i].eID+"\""+" OnClick=\"dele(this);\""+"><span class="+"\"glyphicon glyphicon-trash\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Delete</font></a>";
+         	   
+           		*/
            }
         	
         allevent=allevent.replace("undefined","");
@@ -104,7 +168,7 @@ $(document).ready(function() {
        
 // ajax call for retrive event invitation
 	  $.ajax({ 
-		  url: "http://localhost:8085/DemoFB/webapi/event/retriveEventInvitaionlist",
+		  url: "http://localhost:8080/DemoFB/webapi/event/retriveEventInvitaionlist",
 		  type: "GET",
 	        dataType: "json",
 	        contentType : "application/json",
@@ -128,13 +192,22 @@ $(document).ready(function() {
 			        	//   allevent+="<div class="+"\"panel-body\""+"id=\"forcomment\""+">";
 			        	   alllist1+="<div class="+"\"row\""+">";
 			        	   alllist1+="<div class="+"\"col-md-12\""+">";
-			        	   alllist1+="<p><font size="+"\"3\""+">"+"Event-Name: "+data[i].ename+"</font></p><br>" ;
-			        	   alllist1+="<p><font size="+"\"3\""+">"+"Host-Name: "+data[i].hname+"</font></p><br>" ;
-			        	   alllist1+="<p><font size="+"\"3\""+">"+"Location: "+data[i].location+"</font></p><br>" ;
-			        	   alllist1+="<p><font size="+"\"3\""+">"+"Event-date: "+data[i].event_date+"</font></p><br>" ;
-			        	   alllist1+="<a href=\"#\" id=\""+data[i].eID+"\" OnClick=\"accept1(this);\">Going</a> &ensp; &ensp;";
-			        	   alllist1+="<a href=\"#\" id=\""+data[i].eID+"\" OnClick=\"reject1(this);\"> NOT Going</a><br>";
-			        	//   alllist+="<hr>";
+			        	   alllist1+="<br>";
+			        	   alllist1+="<a href=\"EventDetail1.html\" id=\""+data[i].eID+"\" OnClick=\"go1(this);\"><p><font size="+"\"3\""+"color="+"\"blue\""+">"+"Event name:"+data[i].ename+"</font></p></a>" ;
+				           // alllist1+="<hr class=\"myhrline\">";
+	        	          // alllist1+="<br>";
+				            alllist1+="<p><font size="+"\"3\" color=\"Green\" "+">"+"Host-Name: "+data[i].hname+"</font></p><br>" ;
+				        	   alllist1+="<p><font size="+"\"3\"color=\"Green\""+">"+"Location: "+data[i].location+"</font></p><br>" ;
+				        	   alllist1+="<p><font size="+"\"3\"color=\"Green\""+">"+"Event-date: "+data[i].event_date+"</font></p><br>" ;
+				        	   alllist1+="<p><font size="+"\"3\"color=\"Green\""+">"+"Event-time: "+data[i].time+"</font></p><br>";
+				        	   alllist1+="<button type="+"\"button\""+" class="+"\"btn btn-success btn-sm pull-left \""+"id=\""+data[i].eID+"\""+" OnClick=\"accept1(this);\">Going</button>"; 
+				        	  // alllist1+="<a href=\"#\" id=\""+data[i].eID+"\" OnClick=\"accept1(this);\">Going</a> &ensp; &ensp;";
+			        	   //alllist1+="<a href=\"#\" id=\""+data[i].eID+"\" OnClick=\"reject1(this);\"> NOT Going</a><br>";
+			        	   //alllist1+="<a href=\"#\" id=\""+data[i].eID+"\" OnClick=\"maybe1(this);\"> May-be</a><br>";
+			        	   alllist1+="<button type="+"\"button\""+" class="+"\"btn btn-warning btn-sm   \""+"id=\""+data[i].eID+"\""+" OnClick=\"maybe1(this);\">Maybe</button>"; 
+			        	   alllist1+="<button type="+"\"button\""+" class="+"\" btn btn-danger btn-sm pull-right \""+"id=\""+data[i].eID+"\""+" OnClick=\"reject1(this);\">NotGoing</button>"; 
+				        	 	   
+			        	//alllist+="<hr>";
 			        	   alllist1+="</div>";
 			                alllist1+="</div>";
 			                alllist1+="</div>";
@@ -166,9 +239,9 @@ $(document).ready(function() {
   
   
   
-  
+  // ajax call for retriving your incoimg event
 	  $.ajax({ 
-		  url: "http://localhost:8085/DemoFB/webapi/event/retriveincomingInvitaionlist",
+		  url: "http://localhost:8080/DemoFB/webapi/event/retriveincomingInvitaionlist",
 		  type: "GET",
 	        dataType: "json",
 	        contentType : "application/json",
@@ -191,11 +264,13 @@ $(document).ready(function() {
 			        	//   allevent+="<div class="+"\"panel-body\""+"id=\"forcomment\""+">";
 			        	  // alllist2+="<div class="+"\"row\""+">";
 			        	   //alllist2+="<div class="+"\"\""+">";
-			        	   alllist2+="<p><font size="+"\"3\""+">"+"Event-Name: "+data[i].ename+"</font></p><br>" ;
-			        	   alllist2+="<p><font size="+"\"3\""+">"+"Host-Name: "+data[i].hname+"</font></p><br>" ;
-			        	   alllist2+="<p><font size="+"\"3\""+">"+"Location: "+data[i].location+"</font></p><br>" ;
-			        	   alllist2+="<p><font size="+"\"3\""+">"+"Event-date: "+data[i].event_date+"</font></p><br>" ;
-			     
+			        	 alllist2+="<a href=\"EventDetail1.html\" id=\""+data[i].eID+"\" OnClick=\"go1(this);\"><p><font size="+"\"3\""+"color="+"\"blue\""+">"+"Event name:"+data[i].ename+"</font></p></a>" ;
+			            alllist2+="<hr class=\"myhrline\">";
+        	           alllist2+="<br>";
+			            alllist2+="<p><font size="+"\"3\" color=\"Green\" "+">"+"Host-Name: "+data[i].hname+"</font></p><br>" ;
+			        	   alllist2+="<p><font size="+"\"3\"color=\"Green\""+">"+"Location: "+data[i].location+"</font></p><br>" ;
+			        	   alllist2+="<p><font size="+"\"3\"color=\"Green\""+">"+"Event-date: "+data[i].event_date+"</font></p><br>" ;
+			        	   alllist2+="<p><font size="+"\"3\"color=\"Green\""+">"+"Event-time: "+data[i].time+"</font></p><br>";
 			        	//alllist2+="<hr>";
 			        	
 			        	   //alllist2+="</div>";
@@ -209,6 +284,115 @@ $(document).ready(function() {
 			        alllist2=alllist2.replace("undefined","");
 			        
 			    	   $("#yourincomingevent").html(alllist2);
+			    	   //$("#showevent").html(alllist2);
+			    	 //  alert( $("#allEvent1").html());
+			   }
+			   else{
+				   }
+			   
+			},
+			error: function(e){  
+				alert('Error121212: ' + e);  
+				alert(e.toString()+"error in invitation");
+		}				
+		}); 
+  
+  
+	  $.ajax({ 
+		  url: "http://localhost:8080/DemoFB/webapi/event/retrive_event",
+		  type: "GET",
+	        dataType: "json",
+	        contentType : "application/json",
+		  crossDomain: true,
+		  processData: true,
+		  
+		  
+		  success: function(response){  
+			   
+		      // we have the response  
+			   if(response!=null){
+				   var data =JSON.parse(JSON.stringify(response)); 
+				    var alllist2;
+				    //alert("in the invitation");
+				   for(var i=0;i<data.length;i++)
+					  {
+					
+					   
+					  // alllist2+="<div class=\"panel \">";
+			        	//   allevent+="<div class="+"\"panel-body\""+"id=\"forcomment\""+">";
+			        	  // alllist2+="<div class="+"\"row\""+">";
+			        	   //alllist2+="<div class="+"\"\""+">";
+			        	 alllist2+="<a href=\"EventDetail1.html\" id=\""+data[i].eID+"\" OnClick=\"go1(this);\"><p><font size="+"\"3\""+"color="+"\"blue\""+">"+"Event name:"+data[i].ename+"</font></p></a>" ;
+			            alllist2+="<hr class=\"myhrline\">";
+        	           alllist2+="<br>";
+			            alllist2+="<p><font size="+"\"3\" color=\"Green\" "+">"+"Host-Name: "+data[i].hname+"</font></p><br>" ;
+			        	   alllist2+="<p><font size="+"\"3\"color=\"Green\""+">"+"Location: "+data[i].location+"</font></p><br>" ;
+			        	   alllist2+="<p><font size="+"\"3\"color=\"Green\""+">"+"Event-date: "+data[i].event_date+"</font></p><br>" ;
+			        	   alllist2+="<p><font size="+"\"3\"color=\"Green\""+">"+"Event-time: "+data[i].time+"</font></p><br>";
+			        	//alllist2+="<hr>";
+			        	
+			        	   //alllist2+="</div>";
+			        	   //alllist2+="<hr>";
+			               // alllist2+="</div>";
+			              //  alllist2+="</div>";
+			         alllist2+="<hr class=\"myhrline\">";    
+			                
+					  }
+				  	
+			        alllist2=alllist2.replace("undefined","");
+			        
+			    	  // $("#yourincomingevent").html(alllist2);
+			    	   $("#showevent").html(alllist2);
+			    	 //  alert( $("#allEvent1").html());
+			   }
+			   else{
+				   }
+			   
+			},
+			error: function(e){  
+				alert('Error121212: ' + e);  
+				alert(e.toString()+"error in invitation");
+		}				
+		}); 
+  
+  
+  
+  
+	
+  
+  
+	// ajax call for retriving your incoimg event
+	  $.ajax({ 
+		  url: "http://localhost:8080/DemoFB/webapi/event/friendBirthdayList",
+		  type: "GET",
+		  crossDomain: true,
+		  processData: true,
+		  
+		  
+		  success: function(response){  
+			   
+		      // we have the response  
+			   if(response!=null){
+				   var data =JSON.parse(JSON.stringify(response)); 
+				    var allFriends;
+				    //alert("in the invitation");
+				   for(var i=0;i<data.length;i++)
+					  {
+					   allFriends+="<div class=\"panel-body\">";
+               		 allFriends+="<div class=\"pull-left col-sm-1\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
+               		allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go2(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-html="+"\"true\""+"data-content ="+"\"Lives in: "+data[i].hometown+" <br>DOB: "+data[i].date+"\">"+data[i].fname+" "+data[i].lname +"  "+"<br>DOB:"+data[i].date+ "</a>";
+             // allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  " data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>"; 		
+               		//  allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID+"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
+                       allFriends+="</div>";
+               		allFriends+="</div>";
+					
+			         allFriends+="<hr class=\"myhrline\">";    
+			                
+					  }
+				  	
+			        allFriends=allFriends.replace("undefined","");
+			        
+			    	   $("#yourincomingbirthday").html(allFriends);
 			    	 //  alert( $("#allEvent1").html());
 			   }
 			   else{
@@ -242,7 +426,7 @@ $(document).ready(function() {
 			
 		
 			 $.ajax({ 
-				  url: "http://localhost:8085/DemoFB/webapi/event/inviteapproved",
+				  url: "http://localhost:8080/DemoFB/webapi/event/inviteapproved",
 				  type: "GET",
 				  dataType: "text",
 				  crossDomain: true,
@@ -276,7 +460,7 @@ window.reject1=function(e1){
 	//alert(eid);
 	$.cookie("ID4",eid);
 	$.ajax({ 
-		  url: "http://localhost:8085/DemoFB/webapi/event/inviterejected",
+		  url: "http://localhost:8080/DemoFB/webapi/event/inviterejected",
 		  type: "GET",
 		  dataType: "text",
 		  crossDomain: true,
@@ -301,14 +485,51 @@ window.reject1=function(e1){
 		}				
 		}); 
 }
-				
+
+
+
+
+window.maybe1=function(e1){
+	
+	var eid= $(e1).attr('id');
+	//alert(eid);
+	$.cookie("ID11",eid);
+	$.ajax({ 
+		  url: "http://localhost:8080/DemoFB/webapi/event/invitemaybe",
+		  type: "GET",
+		  dataType: "text",
+		  crossDomain: true,
+		  processData: true,
+		  
+		  
+		  success: function(response){  
+			   
+		      // we have the response  
+			   if(response!=null){
+				 
+				  // alert(response);
+				 location.reload();
+			   }
+			   else{
+				   }
+			   
+			},
+			error: function(e){  
+				alert('Error121212: ' + e);  
+				alert(e.toString());
+		}				
+		}); 
+}
+
+
+
  window.dele=function(e1){
 	 
 	 var eid= $(e1).attr('id');
 	 var obj={eID:eid};
 	 var myJSON=JSON.stringify(obj);
 	  $.ajax({ 
-		  url: "http://localhost:8085/DemoFB/webapi/event/deleteEvent",
+		  url: "http://localhost:8080/DemoFB/webapi/event/deleteEvent",
 		  type: "DELETE",
 		  dataType: "text",
 		  contentType : "application/json",
@@ -347,11 +568,27 @@ window.reject1=function(e1){
 		 
 		   var friendUserID= $(e1).attr('id');
 		   $.cookie("ID2",friendUserID);
-		   //window.location.replace("friendTimeline.html");
+		   window.location.replace("EventDetail.html");
 	  
 		
 	   }
 		
+	window.go1 = function(e1){
+		 
+		   var friendUserID= $(e1).attr('id');
+		   $.cookie("ID2",friendUserID);
+		   window.location.replace("EventDetail1.html");
+	  
+		
+	   }
+	window.go2 = function(e1){
+ 		 
+		   var friendUserID= $(e1).attr('id');
+		   $.cookie("ID1",friendUserID);
+		   //window.location.replace("friendTimeline.html");
+	  
+		
+	   }
   
   
 	  // create event call	 
@@ -362,10 +599,13 @@ window.reject1=function(e1){
          var loc=$("input#location").val();
          var esd=$("input#datepicker").val();
          var eed=$("input#datepicker1").val();
-        
+         var eventType=$('#Etype option:selected').text();
+        //alert(eventType);
+        var time=$("input#myTime1").val();
+       // alert(time);
          var obj = { ename:ename,hname:hname,location:loc,
-       		  event_date:esd,event_end_date:eed
-       		  };  
+       		  event_date:esd,event_end_date:eed,eventType:eventType,
+       		  time:time};  
      	var myJSON = JSON.stringify(obj);
          	//alert(myJSON);
 			//document.write(myJSON);
@@ -373,7 +613,7 @@ window.reject1=function(e1){
 			 $.ajax({
     	        type: "PUT",
     	        contentType: "application/json",  //send data to server in this format
-    	        url:"http://localhost:8085/DemoFB/webapi/event/create_event",
+    	        url:"http://localhost:8080/DemoFB/webapi/event/create_event",
     	        dataType: "text",  //expect response of this type
     	        data: myJSON,
     	        success: function(resp){
@@ -401,10 +641,125 @@ window.reject1=function(e1){
 	       
 	   }); // create ajax call end
   
-  
-  
-  
-  
+// ajax call for notifications of deleted event	   
+ 	 $.ajax({
+	        type: "GET",
+	        url:"http://localhost:8080/DemoFB/webapi/event/eventnotification",
+	        crossDomain: true,
+			  processData: true,
+	        success: function(resp){
+	            
+	            if(resp!=null){
+	   	                    	
+	            	 var data = JSON.parse(JSON.stringify(resp));
+                       var allnoti; 
+	            	 for(var i=0;i<data.length;i++)
+					  {
+					    allnoti+="<div class=\"panel-body\">";
+		                allnoti+="<p"+">"+"<font size="+"\"4\""+"color="+"\"Green\""+">"+"Event  "+" : </font>"+"<font size="+"\"4\""+"color="+"\"Green\""+">"+data[i].ename+" is Deleted </font></p>" ;
+			          	  allnoti+="</div>";
+	                    allnoti+="<hr class=\"myhrline\">";    
+			                
+					  }
+				  	
+			        allnoti=allnoti.replace("undefined","");
+			        
+			    	   $("#alleventnotifications").html(allnoti);
+             
+	            }	
+	            else
+	            {
+	            	alert("update failed.. ")
+	            	//window.location.replace("timeLine1.html");
+	            }	
+	            
+	            
+	        },
+	        error: function(jqXHR, textStatus, errorThrown){
+	            alert('logout error: ' + textStatus);
+	        }
+	    });
+ 	  $.ajax({ 
+          url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
+          type: "GET",
+          dataType: "json",
+          contentType : "application/json",
+          crossDomain: true,
+          processData: true,
+          
+          
+          success: function(response){  
+       	   
+              // we have the response  
+       	   if(response!=null){
+              var data =JSON.parse(JSON.stringify(response));  
+               var allFriends;
+       	 
+             	for (var i=0; i < data.length; i++){
+           		 allFriends+="<div class=\"panel-body\">";
+           
+      	 allFriends+='<a href="friendTimeline.html" OnClick=go(this); data-html="true"  data-placement="left" data-toggle="popover"  data-trigger="click hover" data-content=\'<div class="item active"><img src="users/'+data[i].emailID+'/cover.jpg" class=" img-responsive" width="1000" height="400" style="float:left;"><div><div class="img-container" style="display:inline-block;"><img class="img-thumbnail" src="users/'+data[i].emailID+'/profilePic.jpg" style="width:60px;height:60px;/"></div><div class="text" style="display:inline-block;margin-left:0.2cm;"><p><strong>'+data[i].fname+" "+data[i].lname+'</strong></p></div><div style="margin-left:1.5cm;"><p style="color:grey"><span class="glyphicon glyphicon-home"></span> <b>'  +'Lives in: '+ '</b> '+ data[i].hometown+'<br/><br/><span class="glyphicon glyphicon-gift"></span> <b>Born on: </b> '+ data[i].date +'<br><br><a href="#" style="color:grey"; OnClick=mutual(this); id='+data[i].userID+'><span class="glyphicon glyphicon-user"></span> See Mutual Friends</p></div></div>\'>'+'<img src="users/'+data[i].emailID+'/profilePic.jpg" style="width:20px;height:20px;">'+data[i].fname+" "+data[i].lname+'</a><br/>';
+
+                   allFriends+="</div>";
+           		allFriends+="</div>";
+					     	}
+           	
+           allFriends=allFriends.replace("undefined","");
+       	   $("#allFriends").html(allFriends);
+      
+              }  
+              
+              else
+           	   {
+           	  alert("something wrong");
+           	   }
+            },
+	    
+ 			error: function(e){  
+   					alert('Error121212: ' + e);  
+   					alert(e.toString());
+ 			}				
+   
+	  });//ajax call end
+ // ajax call for event update notification
+ 	 $.ajax({
+	        type: "GET",
+	        url:"http://localhost:8080/DemoFB/webapi/event/eventupdatenotification",
+	        crossDomain: true,
+			  processData: true,
+	        success: function(resp){
+	            
+	            if(resp!=null){
+	   	                    	
+	            	 var data = JSON.parse(JSON.stringify(resp));
+                    var allnoti; 
+	            	 for(var i=0;i<data.length;i++)
+					  {
+					    allnoti+="<div class=\"panel-body\">";
+		                allnoti+="<p"+">"+"<font size="+"\"4\""+"color="+"\"Green\""+">"+"Event  "+" : </font>"+"<font size="+"\"4\""+"color="+"\"Green\""+">"+data[i].ename+" is Updated </font></p>" ;
+			          	  allnoti+="</div>";
+	                    allnoti+="<hr class=\"myhrline\">";    
+			                
+					  }
+				  	
+			        allnoti=allnoti.replace("undefined","");
+			        
+			    	   $("#alleventnotifications1").html(allnoti);
+          
+	            }	
+	            else
+	            {
+	            	alert("update failed.. ")
+	            	//window.location.replace("timeLine1.html");
+	            }	
+	            
+	            
+	        },
+	        error: function(jqXHR, textStatus, errorThrown){
+	            alert('logout error: ' + textStatus);
+	        }
+	    });
+  	
 	   
 	   
 });// READY FUNCTION END HERE
@@ -474,6 +829,8 @@ jQuery(document).ajaxComplete(function () {
 							</nav>
 						</div>
 						
+						
+						
 						<div class="padding">
 							<div class="full col-sm-12">
 							  
@@ -491,13 +848,13 @@ jQuery(document).ajaxComplete(function () {
 					    
 						<ul class="nav hidden-xs" id="xs-menu">
 							
-							<li><a href="todoPage.html"><i class="glyphicon glyphicon-list"></i> News Feed</a></li>
-							<li><a href="todoPage.html"><i class="glyphicon glyphicon-envelope"></i> Message</a></li>
-						</ul>	
+							<li><a href="userHome1.html"><i class="glyphicon glyphicon-list"></i> News Feed</a></li>
+							<li><a href="message.html"><i class="glyphicon glyphicon-envelope"></i> Message<h5 id="notify"></h5></a></li>
+							</ul>	
 							<b>Explore</b>
 							<ul class="nav hidden-xs see-more" id="xs-menu" >
-							<li><a href="Event.html"  ><i class="glyphicon glyphicon-refresh"></i> Events</a></li>
-							<li><a href="#"><i class="glyphicon glyphicon-refresh"></i> Groups</a></li>
+						<li><a href="Event.html"><i class="glyphicon glyphicon-refresh"></i> Events</a></li>
+							<li><a href="myGroups.html"><i class="glyphicon glyphicon-refresh"></i> Groups</a></li>
 							<li><a href="todoPage.html"><i class="glyphicon glyphicon-refresh"></i> Pages</a></li>
 											</ul>
 							
@@ -528,12 +885,12 @@ jQuery(document).ajaxComplete(function () {
 							<b>Create</b>
 							<br>
 							<ul class="nav hidden-xs" id="xs-menu">
-							<li><a href="todoPage.html">Ad</a></li>
-							<li><a href="todoPage.html">Page</a></li>
-							<li><a href="#">Group</a></li>
-							<li><a href="#"  data-toggle="modal" data-target="#myModalevent">Event</a></li>
+				<input type="button" id ="popup1" onclick="location.href='todoPage.html'" class="btn btn-primary" value="Ad" data-toggle="modal" data-target="" style="min-width:80px;">	</br>		
+				<input type="button" onclick="location.href='todoPage.html'" id ="popup2" class="btn btn-primary" value="Page" data-toggle="modal" data-target="" style="min-width:80px;"></br>
+				<input type="button" id ="popup3" class="btn btn-primary" value="Group" data-toggle="modal" data-target="#groupModal" style="min-width:80px;"></br>
+				<input type="button" id ="popup4" class="btn btn-primary" value="Event" data-toggle="modal" data-target="#myModalevent" style="min-width:80px;">
 							<li><a href="#"  data-toggle="modal" data-target="#myModalincomingevent">Incoming-Event</a></li>
-							
+							<li><a href="#"  data-toggle="modal" data-target="#myModalincomingbirthday">Incoming-Birthday</a></li>
 						</ul>
 						<!-- <ul class="list-unstyled hidden-xs" id="sidebar-footer" style="background-color: #E9EAED">
 							<li>
@@ -563,37 +920,62 @@ jQuery(document).ajaxComplete(function () {
 								     
 								 <!-- main col left --> 
 								 <div class="col-sm-5 col-xs-5">
-                                   <div id="abcd">
                                 
-  <div class="panel-body" id="eventdetail">
+       
+<div class="panel panel-default">
+										 <div class="panel-heading"><h4>Events</h4></div>
+										  <div class="panel-body">
+									     <div class="list-group">
+										  <p id="showevent"></p>
+										  	  </div>
+										  	  </div></div>
+									
  
-   <p id="showevent"></p>
-  
  
-  
-</div>
- 
- 
- 
-</div> <!--  div of panel default for status update 1 -->
+ <!--  div of panel default for status update 1 -->
 								   
 		
                                     </div>
 										   <!-- main col right -->
 							  <div class="col-sm-3 col-xs-3" >
 									   
-									   <div class="panel panel-default">
+									  
+									<div class="panel panel-default">
+										 <div class="panel-heading"><h4>Event-Delete-Notification</h4></div>
+										  <div class="panel-body">
+									     <div class="list-group">
+										  <p id="alleventnotifications"></p>
+										  	  </div>
+										  	  </div></div>
+										  	  
+										  	  <div class="panel panel-default">
+										 <div class="panel-heading"><h4>Event-Update-Notification</h4></div>
+										  <div class="panel-body">
+									     <div class="list-group">
+										  <p id="alleventnotifications1"></p>
+										  	  </div>
+										  	  </div></div>
+									 <div class="panel panel-default">
 										 <div class="panel-heading"><h4>Event Invitation list</h4></div>
 										  <div class="panel-body">
 											<div class="list-group">
 										  <p id="allinvitationlist"></p>
 										  	  </div>
+										  	
 									   	  </div>
 									   </div>
-									
-									   
-									
 								  </div>
+									
+										   <div class=" col-sm-3 col-xs-3 affix" style="float:right; left:980px; top:20px;" >
+    	 <br>
+	   <div class="panel panel-primary" style="float:right;  top:30px; min-height: 2000px ; width:250px">
+	   <div class="panel-heading"><h4>My Friends</h4></div>
+		<div class="pre-scrollable" style="max-height:580px;overflow-y: scroll;width:400px">   
+		<p id="allFriends"></p>
+			</div>
+		  </div>			    
+		</div>   
+								
 								  
 								  </div><!--/row-->
 							  
@@ -623,7 +1005,20 @@ jQuery(document).ajaxComplete(function () {
       </div>
       <div class="modal-body">
         <div class="container">
-        
+        <br>
+          <div class="form-group">
+         <div class="col-md-3">
+         <label for="Event-type:">Event-type</label>
+         <select class="form-control" id="Etype" style="margin-left:0px; " width="5px">
+        <option>Public</option>
+        <option>Private</option>
+       
+      </select>
+      </div>
+        </div>
+     <br>
+     <br>
+        <br>
         <br>
         <div class="form-group">
           <label for="event-name" >Event name:</label>
@@ -651,6 +1046,20 @@ jQuery(document).ajaxComplete(function () {
           <input type="text" placeholder="yyyy-mm-dd"  id="datepicker1" style="margin-left:10px;">
         </div>
              <br>
+             
+             <br>
+          <div class="form-group">
+          
+            <label for="Event-date" >Time</label>
+             <input type="text" id="myTime1" placeholder="hh:mm Am/hh:mm PM" style="margin-left:10px;">
+    
+          
+          </div>
+        
+   
+        
+             <br>
+             
     </div>
     
      
@@ -692,6 +1101,34 @@ jQuery(document).ajaxComplete(function () {
        </form>
     </div>
   </div>
+   
+        <div id="myModalincomingbirthday" class="modal fade" role="dialog">
+  <div class="modal-dialog" >
+    <!-- Modal content-->
+<form action="" id="showbirthday">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Friend's Incoming Birthday</h4>
+      </div>
+      <div class="modal-body" >
+        <div class="container" id="yourincomingbirthday">
+       
+    </div>
+    
+     
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+       
+     
+      </div>
+    </div>
+      </div>
+    
+       </form>
+    </div>
+  </div>
+     
      
      
      
@@ -705,16 +1142,15 @@ jQuery(document).ajaxComplete(function () {
   $( function() {
 	    $( "#datepicker1" ).datepicker({dateFormat: "yy-mm-dd"});
 	  } );
+
+  
+  
   </script>
      
 		
+
 		
-		
-		
-		
-		
-		
-		
+
 		
 		
 		

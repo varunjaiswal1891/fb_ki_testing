@@ -38,6 +38,7 @@ public class GetMyAllFriends {
 					
 				}
 			  	
+					connect.stop();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -46,6 +47,63 @@ public class GetMyAllFriends {
 		return al_friends;
 	}
 	
+	public static ArrayList<User> getMyFriendsuggestion(ArrayList<User> al_friends,String myEmailID,String group_name) //here myEmailID is fetched from jwt token
+	{
+		
+		try {
+
+	      	  DBAccess connect = new DBAccess();
+	            boolean check=false;
+	            while(check==false)
+	            {
+	            	check=connect.start();
+	            	System.out.println("trying connection");
+	            }
+	            
+	            ArrayList<String> al_friends1=new ArrayList<String>();
+	           
+	            PreparedStatement prepStatement1 = connect.con.prepareStatement("select emailID from UserGroup "
+						+ "where group_name = ? ");
+				prepStatement1.setString(1,group_name);
+				ResultSet result1 = prepStatement1.executeQuery();					
+					while(result1.next())
+					{
+						String e1=result1.getString("emailID");
+						al_friends1.add(e1);
+					}
+					
+				PreparedStatement prepStatement = connect.con.prepareStatement("select friendEmailID from UserFriends "
+						+ "where myEmailID = ? and status=?");
+				prepStatement.setString(1,myEmailID);
+				prepStatement.setString(2,"Accepted");
+				
+				ResultSet result = prepStatement.executeQuery();
+					
+					while (result.next()) {
+				
+					String e1=result.getString("friendEmailID");
+					if(al_friends1.contains(e1))
+					{
+						//do nothing
+					}
+					else{
+					User u_obj=new User();	
+					u_obj=RetriveService.getUserAllData(e1);				
+					//adding user objects of my friends to arraylist
+					al_friends.add(u_obj);
+					}
+				}
+					
+						
+						
+			  	
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		System.out.println("Friend list="+al_friends);
+		return al_friends;
+	}
 	
 	public static ArrayList<User> getMyFriends(ArrayList<User> al_friends, String myEmailID,
 			String myEmailID1) {
@@ -85,6 +143,42 @@ public class GetMyAllFriends {
 		return al_friends;
 	}
 	
-	
+	/*public static ArrayList<User> findMyFriends(ArrayList<User> al_friends,String myEmailID) //here myEmailID is fetched from jwt token
+	{
+		
+		try {
+
+	      	  DBAccess connect = new DBAccess();
+	            boolean check=false;
+	            while(check==false)
+	            {
+	            	check=connect.start();
+	            	System.out.println("trying connection in search friends...");
+	            }
+	           
+				PreparedStatement prepStatement = connect.con.prepareStatement("select friendEmailID from UserFriends "
+						+ "where myEmailID = ? and status=?");
+				prepStatement.setString(1,myEmailID);
+				prepStatement.setString(2,"Accepted");
+				
+				ResultSet result = prepStatement.executeQuery();
+				
+					while (result.next()) {
+				
+					String e1=result.getString("friendEmailID");	
+					User u_obj=new User();	
+					u_obj=RetriveService.getUserAllData(e1);				
+					//adding user objects of my friends to arraylist
+					al_friends.add(u_obj);
+					
+				}
+			  	
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		System.out.println("Friend list="+al_friends);
+		return al_friends;
+	}*/
 	
 }//class ends here

@@ -13,6 +13,7 @@ import javax.ws.rs.CookieParam;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -55,8 +56,32 @@ public class FriendResource {
 		
 		ArrayList<User> al_friends=new ArrayList<User>();
          System.out.println("fetching all my friends list");
+         
+         System.out.println("Umesh Rao");
 		
 		return GetMyAllFriends.getMyFriends(al_friends,myEmailID);	
+	
+	}//findMyFriend method ends here
+	
+	@GET
+    @Path("/getMyAllFriendsuggest")
+	@Produces({MediaType.APPLICATION_JSON})
+    public static ArrayList<User> getAllMyFriendsuggest(@CookieParam("ID") String jwt,@CookieParam("ID_group") String group_name 
+    		) throws JsonParseException, JsonMappingException, IOException{
+	
+		System.out.println("inside get my all friends");
+		System.out.println("jwt="+ jwt);
+		Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(jwt).getBody();
+			    System.out.println("Subject: " + claims.getSubject());
+			   // System.out.println("Expiration: " + claims.getExpiration());
+			  String myEmailID=claims.getSubject();
+	
+		ArrayList<User> al_friends=new ArrayList<User>();
+         System.out.println("fetching all my friends list");
+		
+		return GetMyAllFriends.getMyFriendsuggestion(al_friends,myEmailID,group_name);	
 	
 	}//findMyFriend method ends here
 	
@@ -91,7 +116,7 @@ public class FriendResource {
 	                System.out.println("Subject: " + claims.getSubject());
 	               // System.out.println("Expiration: " + claims.getExpiration());
 	              String myEmailID=claims.getSubject();
-	        
+	             
 	        ArrayList<User> al_friends=new ArrayList<User>();
 	        ArrayList<User> al_mutual_friends=new ArrayList<User>();
 	         System.out.println("fetching all my friends list");
@@ -112,18 +137,19 @@ public class FriendResource {
 	                String e2=temp.get(j).getEmailID();
 	                System.out.println("e2="+e2);
 	                /** if frnd ka frnd is not my frnd then add it to list of mutualfrnds**/
-	                if(!IsMyFriendService.isMyFriend(myEmailID, e2))
+	                if(!(IsMyFriendService.isMyFriend(myEmailID, e2)) && !(IsRequestAlreadySentService.isRequestAlreadySent(myEmailID,e2)) && !(IsRequestAlreadyReceived.isRequestAlreadyReceived(myEmailID,e2)) )
 	                {
 	                    System.out.println("yes add to people you may know");
 	                    User u1=new User();
 	                    u1=RetriveService.getUserAllData(e2);
 	                    al_mutual_friends.add(u1);
-	                }            
+	                }      
+	               
 	            }//for loop j wala end
 	            
 	        }//for loop i wala end
 	        
-	         for(int j=0;j<al_mutual_friends.size();j++)
+	        for(int j=0;j<al_mutual_friends.size();j++)
 	            {
 	                String e2=al_mutual_friends.get(j).getEmailID();  // e2 will contain the email id from which some may belong to  request already sent or received or people u mayknow
 	                System.out.println("e2="+e2);    
@@ -168,9 +194,6 @@ public class FriendResource {
 	            
 	            } 
 	            
-	            
-	        
-	        
 	        System.out.println("list ="+ al_mutual_friends);
 	        Collections.sort(al_mutual_friends,new Comparator<User>(){
 	            @Override
@@ -191,11 +214,14 @@ public class FriendResource {
 	                }
 	            }
 	        }
+	        System.out.println("REAL and NEW ppl u may know..!!");
 	        return mutual_friends_new;    
 	    
 	    }//people you may know method ends here
-	    
-	
+	 
+	 
+	 //removes a person from people you may know
+	  
 	
 	@POST
     @Path("/suggestedFriends")
@@ -230,13 +256,6 @@ public class FriendResource {
 			
 	
 	}//suggestedFriend method ends here
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	@POST
@@ -318,9 +337,6 @@ public class FriendResource {
 	
 	}//findMyFriend method ends here
 	
-	
-	
-	
 	@GET
     @Path("/count_of_MutualFriends")
 	@Produces({MediaType.APPLICATION_JSON})
@@ -334,10 +350,13 @@ public class FriendResource {
 			    System.out.println("Subject: " + claims.getSubject());
 			   // System.out.println("Expiration: " + claims.getExpiration());
 			  String myEmailID=claims.getSubject();
+			  System.out.println("myEmailID is.............."+myEmailID);
 	//System.out.println(email+"------------------");
 	String email=RetriveService.emailIDfromuID(userID);
+	System.out.println("------------------"+email+"------------------");
 	ArrayList<User> al_friends=new ArrayList<User>();
 		ArrayList<User> al_mutual_friends=new ArrayList<User>();
+		ArrayList<User> al_mutual_friends1=new ArrayList<User>();
        //  System.out.println("fetching all my friends list");
 		al_friends=GetMyAllFriends.getMyFriends(al_friends,myEmailID);// al_friends containg your friend list
 		al_mutual_friends=GetMyAllFriends.getMyFriends(al_mutual_friends,email);
@@ -355,16 +374,59 @@ public class FriendResource {
 	    			   
 	    		   }
 	    	   }
-	    	   if(flag==0)
-	    		   al_mutual_friends.remove(j);
+	    	   if(flag==1)
+	    		   al_mutual_friends1.add(al_mutual_friends.get(j));
 	       }	    
 		    
 		
 		
 	//	System.out.println("list ="+ al_mutual_friends);
-		return al_mutual_friends;	
+		return al_mutual_friends1;	
 	
 	}//count_of_MutualFriends
+	
+	
+	//this method is used to search for friends by filtering based on multiple fields
+	@GET
+    @Path("/findFriends")
+	@Produces({MediaType.APPLICATION_JSON})
+    public static ArrayList<User> findAllMyFriend(@CookieParam("ID") String jwt,@CookieParam("key") String name,@CookieParam("college") String college,
+    		@CookieParam("hometown") String hometown,@CookieParam("cityOfWork") String cityOfWork,
+    		@CookieParam("highschool") String highschool,@CookieParam("friends") String friends) throws JsonParseException, JsonMappingException, IOException{
+	
+		System.out.println("inside FIND my all friends");
+		System.out.println("jwt="+ jwt);
+		Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(jwt).getBody();
+			    System.out.println("Subject: " + claims.getSubject());
+			  String myEmailID=claims.getSubject();
+		
+		ArrayList<User> al_friends=new ArrayList<User>();
+         System.out.println("fetching my search list");
+         System.out.println("------------"+friends+"------------");
+ 		System.out.println("searching... "+name);
+ 		String gname1=name.replaceAll("%20", " ");
+ 		System.out.println("searching... "+college);
+ 		String gname2=college.replaceAll("%20", " ");
+ 		System.out.println("searching... "+hometown);
+ 		String gname3=hometown.replaceAll("%20", " ");
+ 		System.out.println("searching... "+cityOfWork);
+ 		String gname4=cityOfWork.replaceAll("%20", " ");
+ 		System.out.println("searching... "+highschool);
+ 		String gname5=highschool.replaceAll("%20", " ");
+ 		String gname6=friends.replaceAll("%20", " ");
+ 		System.out.println("Friends="+friends+".");
+ 		al_friends=SearchFriendService.searchForFriends(myEmailID,gname1,gname2,gname3,gname4,gname5,gname6);
+ 		if(al_friends.isEmpty())
+ 			return null;
+ 		else
+ 		return al_friends;
+			
+	}//findMyFriend method ends here
+
+	
+	
 	
 	
 	

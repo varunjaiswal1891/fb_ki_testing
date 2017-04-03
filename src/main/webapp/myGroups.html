@@ -16,7 +16,46 @@
         <script type="text/javascript">
         
         $(document).ready(function() {
-        	
+      	  $.ajax({ 
+              url: "http://localhost:8080/DemoFB/webapi/chat/getMyAllConversations",
+              type: "GET",
+              dataType: "json",
+              
+              crossDomain: true,
+              processData: true,
+              
+              
+              success: function(response){  
+           	   
+                  // we have the response  
+           	   if(response!=null){
+                  var data =JSON.parse(JSON.stringify(response));
+                  
+                   var Notify="<h5>(Nothing New)</h5>";
+
+           	     
+           	   
+                 	for (var i=0; i < data.length; i++){
+                 			if(data[i].status=="NEW")
+                 		 Notify="<h5>(New Messages)</h5>";
+                 	}
+               
+           	   $("#notify").html(Notify);
+          
+                  }  
+                  
+                  else
+               	   {
+               	  alert("something wrong");
+               	   }
+                },
+  	    
+     			error: function(e){  
+       					alert('Error121212: ' + e);  
+       					alert(e.toString());
+     			}				
+       
+  	  });//ajax call end
         	var ID = $.cookie("ID");
         	if(ID==null)
         	{
@@ -27,7 +66,7 @@
          	$.ajax({
         		 type: "GET",
     	        contentType: "text/plain",  //send data to server in this format
-    	        url:"http://localhost:8085/DemoFB/webapi/user/retrive",
+    	        url:"http://localhost:8080/DemoFB/webapi/user/retrive",
     	        dataType: "JSON",  //expect response of this type
     	        data: ID,
                   
@@ -69,7 +108,7 @@
      	   
      	   
      	   	$.ajax({ 
-                url: "http://localhost:8085/DemoFB/webapi/group/show_my_groups",
+                url: "http://localhost:8080/DemoFB/webapi/group/show_my_groups",
                 type: "GET",
                 dataType: "json",
                 contentType : "application/json",
@@ -120,7 +159,7 @@
     	  
      	   
      	   	$.ajax({ 
-                url: "http://localhost:8085/DemoFB/webapi/friend/getMyAllFriends",
+                url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
                 type: "GET",
                 dataType: "json",
                 contentType : "application/json",
@@ -202,13 +241,21 @@
       	  
             // window.location.replace("todoPage.html");
              var group_name=$("input#group_name").val();
+
              alert(group_name);
+
+             var group_privacy=$("input#group_privacy").val();
+             var obj = { group_name:group_name,group_privacy:group_privacy
+              		  };  
+            	var myJSON = JSON.stringify(obj);
+            	
+
              $.ajax({
      	        type: "POST",
-     	        contentType: "text/plain",  //send data to server in this format
-     	        url:"http://localhost:8085/DemoFB/webapi/group/create_group",
+     	        contentType: "application/json",  //send data to server in this format
+     	        url:"http://localhost:8080/DemoFB/webapi/group/create_group",
      	        dataType: "text",  //expect response of this type
-     	        data: group_name,
+     	        data: myJSON,
      	        success: function(resp){
      	            
      	            if(resp!=null){
@@ -228,7 +275,6 @@
      	        }
      	    });
      	    
-             
              
              
              
@@ -332,12 +378,12 @@
 					    
 						<ul class="nav hidden-xs" id="xs-menu">
 							
-							<li><a href="todoPage.html"><i class="glyphicon glyphicon-list"></i> News Feed</a></li>
-							<li><a href="todoPage.html"><i class="glyphicon glyphicon-envelope"></i> Message</a></li>
-						</ul>	
+							<li><a href="userHome1.html"><i class="glyphicon glyphicon-list"></i> News Feed</a></li>
+							<li><a href="message.html"><i class="glyphicon glyphicon-envelope"></i> Message<h5 id="notify"></h5></a></li>
+							</ul>	
 							<b>Explore</b>
 							<ul class="nav hidden-xs see-more" id="xs-menu" >
-							<li><a href="#"><i class="glyphicon glyphicon-refresh"></i> Events</a></li>
+							<li><a href="Event.html"><i class="glyphicon glyphicon-refresh"></i> Events</a></li>
 							<li><a href="myGroups.html"><i class="glyphicon glyphicon-refresh"></i> Groups</a></li>
 							<li><a href="todoPage.html"><i class="glyphicon glyphicon-refresh"></i> Pages</a></li>
 											</ul>
@@ -371,11 +417,11 @@
 							<br>
 							<ul class="nav hidden-xs" id="xs-menu">
 							
-				<input type="button" id ="popup1" class="btn btn-primary" value="Ad" data-toggle="modal" data-target="">	</br>		
-				<input type="button" id ="popup2" class="btn btn-primary" value="Page" data-toggle="modal" data-target=""></br>
-				<input type="button" id ="popup3" class="btn btn-primary" value="Group" data-toggle="modal" data-target="#groupModal"></br>
-				<input type="button" id ="popup4" class="btn btn-primary" value="Event" data-toggle="modal" data-target="">
-							
+				<input type="button"  onclick="location.href='todoPage.html'" id ="popup1" class="btn btn-primary" value="Ad" data-toggle="modal" data-target="" style="min-width:80px;">	</br>		
+				<input type="button"  onclick="location.href='todoPage.html'" id ="popup2" class="btn btn-primary" value="Page" data-toggle="modal" data-target="" style="min-width:80px;"></br>
+				<input type="button" id ="popup3" class="btn btn-primary" value="Group" data-toggle="modal" data-target="#groupModal" style="min-width:80px;"></br>
+				<input type="button" id ="popup4" class="btn btn-primary" value="Event" data-toggle="modal" data-target="#myModalevent" style="min-width:80px;">
+						
 							
 						</ul>
 						<!-- <ul class="list-unstyled hidden-xs" id="sidebar-footer" style="background-color: #E9EAED">
@@ -479,6 +525,11 @@
 		</div> 
 		
 		
+		
+		
+		
+		
+		
 		        <div id="groupModal" class="modal fade" role="dialog">
   <div class="modal-dialog" >
 
@@ -497,6 +548,11 @@
           <label for="group_name" >Group Name:</label>
           <input type="text"  id="group_name" style="margin-left:10px;">
         </div>
+        </div>
+         <div class="form-group">
+          <label for="group_name" >Privacy:</label>
+          <input type="text"  id="group_privacy" placeholder="public or private" style="margin-left:30px;">
+        </div>
         <br>     
     </div>
        
@@ -505,7 +561,6 @@
        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div>
-      </div>
     
        </form>
     </div>

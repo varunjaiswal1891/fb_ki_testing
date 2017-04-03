@@ -14,6 +14,7 @@ public class IsMyFriendService {
 
 	      	  DBAccess connect = new DBAccess();
 	            boolean check=false;
+	            int i=0;
 	            while(check==false)
 	            {
 	            	check=connect.start();
@@ -28,14 +29,19 @@ public class IsMyFriendService {
 				
 				
 				ResultSet result = prepStatement.executeQuery();
+				
 				if (result.next()) {
 					System.out.println("yes he is my friend");
-					return true;
+					i=1;
 					
 				}	//if ends	
+				connect.stop();
+				if(i==1)
+					return true;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		
 		return false;
 	}
 	
