@@ -6,16 +6,14 @@
         <meta charset="utf-8">
         <title>Facebook</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<link href="assets/css/bootstrap.css" rel="stylesheet">
+        <link href="assets/css/bootstrap.css" rel="stylesheet">
         <link href="assets/css/facebook.css" rel="stylesheet">
         <script type="text/javascript" src="Jquery/jquery-3.1.1.js"></script>
  		<script type="text/javascript" src="Jquery/jquery.cookie.js"></script>
   		<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>  
-       <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-           <link rel="stylesheet" href="/resources/demos/style.css">
+       
+
         
-           <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-            <script type="text/javascript" src="Jquery/jquery.popupoverlay.js"></script>
    
         <script type="text/javascript">
    
@@ -24,109 +22,7 @@
         
         $(document).ready(function() {
         	             	
-        	  $( function() {
-        		    $( "#datepicker" ).datepicker({dateFormat: "yy-mm-dd"});
-        		  } );
-        		  $( function() {
-        			    $( "#datepicker1" ).datepicker({dateFormat: "yy-mm-dd"});
-        			  } );
-
-        		  
-        		  
         	
-        	$("#createEvent").click(function(e){
-        		  
-                var ename=$("input#eventname").val();
-                var hname=$("input#hostname").val();
-                var loc=$("input#location").val();
-                var esd=$("input#datepicker").val();
-                var eed=$("input#datepicker1").val();
-                var eventType=$('#Etype option:selected').text();
-               //alert(eventType);
-               var time=$("input#myTime1").val();
-              // alert(time);
-                var obj = { ename:ename,hname:hname,location:loc,
-              		  event_date:esd,event_end_date:eed,eventType:eventType,
-              		  time:time};  
-            	var myJSON = JSON.stringify(obj);
-                	//alert(myJSON);
-        			//document.write(myJSON);
-        	   
-        			 $.ajax({
-           	        type: "PUT",
-           	        contentType: "application/json",  //send data to server in this format
-           	        url:"http://localhost:8080/DemoFB/webapi/event/create_event",
-           	        dataType: "text",  //expect response of this type
-           	        data: myJSON,
-           	        success: function(resp){
-           	            
-           	            if(resp!=null){
-           	   	                    	
-           	            	 var obj1 = JSON.parse(JSON.stringify(resp));
-                           	 // alert(obj1);
-                           	 window.location.replace("Event.html");
-           	            	//  location.reload();
-           	            }	
-           	            else
-           	            {
-           	            	alert("update failed.. ")
-           	            	//window.location.replace("timeLine1.html");
-           	            }	
-           	            
-           	            
-           	        },
-           	        error: function(jqXHR, textStatus, errorThrown){
-           	            alert('logout error: ' + textStatus);
-           	        }
-           	    });
-        	        	
-        	       
-        	   }); // create event ajax call end
-        	   
-
-        	
-        	
-        	
-      	  $.ajax({ 
-              url: "http://localhost:8080/DemoFB/webapi/chat/getMyAllConversations",
-              type: "GET",
-              dataType: "json",
-              
-              crossDomain: true,
-              processData: true,
-              
-              
-              success: function(response){  
-           	   
-                  // we have the response  
-           	   if(response!=null){
-                  var data =JSON.parse(JSON.stringify(response));
-                  
-                   var Notify="<h5>(Nothing New)</h5>";
-
-           	     
-           	   
-                 	for (var i=0; i < data.length; i++){
-                 			if(data[i].status=="NEW")
-                 		 Notify="<h5>(New Messages)</h5>";
-                 	}
-               
-           	   $("#notify").html(Notify);
-          
-                  }  
-                  
-                  else
-               	   {
-               	  alert("something wrong");
-               	   }
-                },
-  	    
-     			error: function(e){  
-       					alert('Error121212: ' + e);  
-       					alert(e.toString());
-     			}				
-       
-  	  });//ajax call end
         	var ID = $.cookie("ID");
         	if(ID==null)
         	{
@@ -167,6 +63,47 @@
    	  });
     		//alert(foo);
     		 		
+    				  $.ajax({ 
+              url: "http://localhost:8080/DemoFB/webapi/chat/getMyAllConversations",
+              type: "GET",
+              dataType: "json",
+              
+              crossDomain: true,
+              processData: true,
+              
+              
+              success: function(response){  
+           	   
+                  // we have the response  
+           	   if(response!=null){
+                  var data =JSON.parse(JSON.stringify(response));
+                  
+                   var Notify="<h5>(Noting New)</h5>";
+
+           	     
+           	   
+                 	for (var i=0; i < data.length; i++){
+                 			if(data[i].status=="NEW")
+                 		 Notify="<h5>(New Messages)</h5>";
+                 	}
+               
+           	   $("#notify").html(Notify);
+          
+                  }  
+                  
+                  else
+               	   {
+               	  alert("something wrong");
+               	   }
+                },
+  	    
+     			error: function(e){  
+       					alert('Error121212: ' + e);  
+       					alert(e.toString());
+     			}				
+       
+  	  });//ajax call end
+    		
     		
     		
     		 $("#createEvent").click(function(e){
@@ -249,16 +186,29 @@
                      var allFriends;
 
              	 
+             	 
+              /*       <div class="chat-sidebar">
+                     <div class="sidebar-name">
+                        
+                         <a href="javascript:register_popup('narayan-prusty', 'Narayan Prusty');">
+                             <img width="30" height="30" src="" />
+                             <span>Narayan Prusty</span>
+                         </a>
+                     </div>*/
                      
-                     for (var i=0; i < data.length; i++){
-                  		 allFriends+="<div class=\"panel-body\">";
-                  
-             	 allFriends+='<a href="friendTimeline.html" OnClick=go(this); id="'+data[i].userID+'" data-html="true"  data-placement="left" data-toggle="popover"  data-trigger="click hover" data-content=\'<div class="item active"><img src="users/'+data[i].emailID+'/cover.jpg" class=" img-responsive" width="1000" height="400" style="float:left;"><div><div class="img-container" style="display:inline-block;"><img class="img-thumbnail" src="users/'+data[i].emailID+'/profilePic.jpg" style="width:60px;height:60px;/"></div><div class="text" style="display:inline-block;margin-left:0.2cm;"><p><strong>'+data[i].fname+" "+data[i].lname+'</strong></p></div><div style="margin-left:1.5cm;"><p style="color:grey"><span class="glyphicon glyphicon-home"></span> <b>'  +'Lives in: '+ '</b> '+ data[i].hometown+'<br/><br/><span class="glyphicon glyphicon-gift"></span> <b>Born on: </b> '+ data[i].date +'<br><br><a href="#" style="color:grey"; OnClick=mutual(this); id='+data[i].userID+'><span class="glyphicon glyphicon-user"></span> See Mutual Friends</p></div></div>\'>'+'<img src="users/'+data[i].emailID+'/profilePic.jpg" style="width:20px;height:20px;">'+data[i].fname+" "+data[i].lname+'</a><br/>';
-
-                          allFriends+="</div>";
-                  		allFriends+="</div>";
-     					     	}
-
+                     
+                     
+                   	for (var i=0; i < data.length; i++){
+                 		 allFriends+="<div class=\"panel-body\">";
+                 		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
+                 		allFriends+="<a href=\"javascript:register_popup(\'"+data[i].emailID+"\',\'"+ data[i].fname+"\');\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-html="+"\"true\""+"data-content ="+"\"Lives in: "+data[i].hometown+" <br>Highschool: "+data[i].highschool+"\">"+data[i].fname+" "+data[i].lname + "</a>";
+                 //		allFriends+="<a href=\"javascript:register_popup('xxx', 'xxx');\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-html="+"\"true\""+"data-content ="+"\"Lives in: "+data[i].hometown+" <br>Highschool: "+data[i].highschool+"\">"+data[i].fname+" "+data[i].lname + "</a>";
+               // allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  " data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>"; 		
+                 		//  allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID+"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
+                         allFriends+="</div>";
+                 		allFriends+="</div>";
+    					     	}
+                 	
                  allFriends=allFriends.replace("undefined","");
              	   $("#allFriends").html(allFriends);
             
@@ -324,14 +274,19 @@
                			 chating+="<div class=\"row\">";
                			 chating+="<h3><font size="+"\"3\""+"color="+"\"black\" style=\"float:left\">"+data[i].senderName+"</font></h3>" ;
                          chating+="</div><h5>"+data[i].message+"</h5></div>" ;
+                         chating+="<a href="+"\"#\""+"id=\""+data[i].chatID+"\""+" OnClick=\"deleteonly(this);\" style=\"float:right\""+"><span class="+"\"glyphicon glyphicon-trash\""+ "style="+"\"color:#3b5998\""+"></span></a>";
+                         chating+="<hr>";
+                       
                			 }
                			 else
                			 {
                			 chating+="<div class=\"row\">";
                			 chating+="<h3 style=\"float:right;\"><font size="+"\"3\""+"color="+"\"black\" style=\"float:left\">"+data[i].senderName+"</font></h3>" ;
                          chating+="</div><div class=\"row\"><h5 style=\"float:right;\">"+data[i].message+"</h5></div>" ;
+                         chating+="<a href="+"\"#\""+"id=\""+data[i].chatID+"\"  "+" OnClick=\"deleteonly(this);\""+"><span class="+"\"glyphicon glyphicon-trash\""+ "style="+"\"color:#3b5998\""+"></span></a>";
+                         chating+="<hr>";
                			 }
-               		chating+="<hr>";
+               		
                			 }
              	
              	   $("#chat").html(chating);
@@ -342,7 +297,7 @@
                     
                     else
                  	   {
-                 	  alert("something wrongrrrrrrrrrrr");
+                 	  alert("something wrong");
                  	   }
                   },
     	    
@@ -361,7 +316,13 @@
     		  var msg=$("#msgtext").val();
     		  var obj = {senderEmail:foo,receiverEmail:foo1,message:msg };  
               var myJSON = JSON.stringify(obj);
-            
+              $('#msgtext').val('');
+
+             if(msg=="")
+            	 {
+            	 alert("enter message");
+            	 }
+             else {    
       	 	$.ajax({ 
       	 		
                   url: "http://localhost:8080/DemoFB/webapi/chat/addNew",
@@ -391,21 +352,23 @@
                			 chating+="<div class=\"row\">";
                			 chating+="<h3><font size="+"\"3\""+"color="+"\"black\" style=\"float:left\">"+data[i].senderName+"</font></h3>" ;
                          chating+="</div><h5>"+data[i].message+"</h5></div>" ;
+                         chating+="<a href="+"\"#\""+"id=\""+data[i].chatID+"\""+" OnClick=\"deleteonly(this);\" style=\"float:right\""+"><span class="+"\"glyphicon glyphicon-trash\""+ "style="+"\"color:#3b5998\""+"></span></a>";
+                           
                			 }
                			 else
                			 {
                			 chating+="<div class=\"row\">";
                			 chating+="<h3 style=\"float:right;\"><font size="+"\"3\""+"color="+"\"black\" style=\"float:left\">"+data[i].senderName+"</font></h3>" ;
                          chating+="</div><div class=\"row\"><h5 style=\"float:right;\">"+data[i].message+"</h5></div>" ;
+                         chating+="<a href="+"\"#\""+"id=\""+data[i].chatID+"\""+" OnClick=\"deleteonly(this);\" "+"><span class="+"\"glyphicon glyphicon-trash\""+ "style="+"\"color:#3b5998\""+"></span></a>";
+                         
                			 }
                		chating+="<hr>";
                				 
                			 }
-               
-                   //var temp=document.getElementById("msgtext").val(); 
-                   //temp.reset();
+                    
                	   $("#chat").html(chating);
-               	   $('#msgtext').val('');	
+               	
                       }  
                       
                       else
@@ -420,6 +383,7 @@
          			}				
            
       	  });//ajax call end
+             }
     	        	        
      	       
      	   });//SendButton button ends ends
@@ -431,6 +395,73 @@
          	  
      		
      	   }
+     	   window.deleteonly=function(ed){
+     		   var chatID=$(ed).attr('id');
+     		   //alert(chatID);
+     		   
+     		  $.ajax({
+       	        type: "POST",
+       	        contentType: "text/plain",  //send data to server in this format
+       	        url:"http://localhost:8080/DemoFB/webapi/chat/deleteonly1",
+       	        dataType: "text",  //expect response of this type
+       	        data: chatID,
+       	        success: function(resp){
+       	            
+       	            if(resp!=null){
+       	   	                    
+       	            	location.reload();
+       	            }	
+       	            else
+       	            {
+       	            	alert("message not delete");
+       	            	
+       	            }	
+       	            
+       	            
+       	        },
+       	        error: function(jqXHR, textStatus, errorThrown){
+       	            alert('delete error: ' + textStatus);
+       	        }
+       	    });
+     		   
+     		   
+     		   
+     	   }
+     	   
+     	   
+     	   
+     	   $("#deleteallmessage").click(function(e){
+     		   
+     		 //  alert("delete message");
+     		 
+     		   $.ajax({
+       	        type: "GET",
+       	        url:"http://localhost:8080/DemoFB/webapi/chat/deletemessage1",
+       	     crossDomain: true,
+             processData: true,
+       	        success: function(resp){
+       	            
+       	            if(resp!=null){
+       	         	location.reload();
+       	   	                    	// alert("message deleted");
+       	                    	  
+       	            }	
+       	            else
+       	            {
+       	            	alert("message not deleted ");
+       	            	
+       	            }	
+       	            
+       	            
+       	        },
+       	        error: function(jqXHR, textStatus, errorThrown){
+       	            alert('logout error: ' + textStatus);
+       	        }
+       	    });
+     		   
+     		   
+     		   
+     	   });
     	  
     	  $("#search").click(function(e){
      	    var key=$("input#srch-term").val();
@@ -547,16 +578,9 @@
                              
 							 <li role="separator" class="divider"></li>
    
-							<li> <div class="dropdown">
-  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-  <span class="caret"></span></button>
-  <ul class="dropdown-menu">
-    
+	
     <li><a type="submit" class="" id="logoutButton1">Logout</a></li>
-  </ul>
-</div> 
-							
-							</li>
+  
 							</ul>
                            
                             
@@ -580,7 +604,6 @@
 						</ul> 
 					    
 						<ul class="nav hidden-xs" id="xs-menu">
-							
 							<li><a href="userHome1.html"><i class="glyphicon glyphicon-list"></i> News Feed</a></li>
 							<li><a href="message.html"><i class="glyphicon glyphicon-envelope"></i> Message<h5 id="notify"></h5></a></li>
 						</ul>	
@@ -619,11 +642,10 @@
 							<br>
 							<ul class="nav hidden-xs" id="xs-menu">
 							
-				<input type="button" id ="popup1"  onclick="location.href='todoPage.html'" class="btn btn-primary" value="Ad" data-toggle="modal" data-target="" style="min-width:80px;">	</br>		
-				<input type="button" id ="popup2"  onclick="location.href='todoPage.html'" class="btn btn-primary" value="Page" data-toggle="modal" data-target="" style="min-width:80px;"></br>
-				<input type="button" id ="popup3" class="btn btn-primary" value="Group" data-toggle="modal" data-target="#groupModal" style="min-width:80px;"></br>
-				<input type="button" id ="popup4" class="btn btn-primary" value="Event" data-toggle="modal" data-target="#myModalevent" style="min-width:80px;">
-						
+				<li>	<input type="button" id ="popup1" class="btn btn-primary" style="min-width :80px" value=" Ad " data-toggle="modal" data-target=""></li>		
+			<li>	<input type="button" id ="popup2" class="btn btn-primary" style="min-width:80px" value="Page" data-toggle="modal" data-target=""></li>
+			<li>	<input type="button" id ="popup3" class="btn btn-primary" style="min-width :80px"  value="Group" data-toggle="modal" data-target="#groupModal"></li>
+				<li> <input type="button" id ="popup4" class="btn btn-primary" style="min-width :80px"  value="Event" data-toggle="modal" data-target="#myModalevent"></li>
 							
 						</ul>
 						
@@ -647,16 +669,20 @@
 					<!-- /sidebar -->
 				  <!-- main column -->
 				<div class="col-sm-7 col-xs-7">
-					
+			
 				<div class="panel panel-primary">
 				<div class="panel-heading"><p id="msghead"></p></div>
 				<div class="pre-scrollable" style="max-height:580px;overflow-y: scroll; min-height: 400px; max-height:400px; ">   
 		<div id="toScroll"><p id="chat"></p></div>
 		</div>
 				</div>
-				  <div class="well"> 
+				   
+				<div>  
+				  
+				  <button class="btn btn-primary pull-right" type="button" id="deleteallmessage">Delete-Conversation</button></div>
+		         
            <form class="form-horizontal" role="form">
-                                            
+            		                     
              
               <textarea class="form-control" placeholder="Type a message" id="msgtext"></textarea>
           
@@ -693,88 +719,7 @@
 		
         
 
-		        
-    <div id="myModalevent" class="modal fade" role="dialog">
-  <div class="modal-dialog" >
-    <!-- Modal content-->
-<form action="" id="updateevent">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Create Event</h4>
-      </div>
-      <div class="modal-body">
-        <div class="container">
-        <br>
-          <div class="form-group">
-         <div class="col-md-3">
-         <label for="Event-type:">Event-type</label>
-         <select class="form-control" id="Etype" style="margin-left:0px; " width="5px">
-        <option>Public</option>
-        <option>Private</option>
-       
-      </select>
-      </div>
-        </div>
-     <br>
-     <br>
-        <br>
-        <br>
-        <div class="form-group">
-          <label for="event-name" >Event name:</label>
-          <input type="text"  id="eventname" style="margin-left:10px;">
-        </div>
-     <br>
-      <div class="form-group">
-          <label for="Host-name" >Hostname:</label>
-          <input type="text"  id="hostname" style="margin-left:10px;">
-        </div>
-             <br>
-             <div class="form-group">
-          <label for="Location" >Location:</label>
-          <input type="text"  id="location" style="margin-left:10px;">
-        </div>
-             <br>
-      
-        <div class="form-group">
-          <label for="Event-date" >Event-start-date:</label>
-          <input type="text"  id="datepicker" placeholder="yyyy-mm-dd" style="margin-left:10px;">
-        </div>
-             <br>
-             <div class="form-group">
-          <label for="Event-date" >Event-end-date:</label>
-          <input type="text" placeholder="yyyy-mm-dd"  id="datepicker1" style="margin-left:10px;">
-        </div>
-             <br>
-             
-             <br>
-          <div class="form-group">
-          
-            <label for="Event-date" >Time</label>
-             <input type="text" id="myTime1" placeholder="hh:mm Am/hh:mm PM" style="margin-left:10px;">
-    
-          
-          </div>
-        
-   
-        
-             <br>
-             
-    </div>
-    
-     
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-       <input type="button" id ="createEvent" class="btn btn-primary" value="CreatenewEvent" data-dismiss="modal" >
-     
-      </div>
-    </div>
-      </div>
-    
-       </form>
-    </div>
-  </div>
- 
+		
 		
 		
         
