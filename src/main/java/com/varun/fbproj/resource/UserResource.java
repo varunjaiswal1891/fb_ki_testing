@@ -34,6 +34,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.google.gson.*;
 import com.varun.fbproj.model.User;
+import com.varun.fbproj.service.GroupService;
 import com.varun.fbproj.service.LoginService;
 import com.varun.fbproj.service.LogoutService;
 import com.varun.fbproj.service.RetriveNameService;
@@ -290,11 +291,11 @@ public class UserResource {
    	public  String updateProfilePic1(
    			
    	        @FormDataParam("file") InputStream fileInputStream,
-   	        @FormDataParam("file") FormDataContentDisposition fileFormDataContentDisposition,@CookieParam("ID") String token,@FormDataParam("status_id") int statusid
+   	        @FormDataParam("file") FormDataContentDisposition fileFormDataContentDisposition,@CookieParam("ID") String token,@FormDataParam("status_id") int statusid,@CookieParam("ID_group") String group_name
    	   		) throws UnsupportedJwtException, MalformedJwtException, SignatureException, IllegalArgumentException, UnsupportedEncodingException, URISyntaxException {
    	    	
    	    String fileName = null;
-   	    
+   	 String gname=group_name.replaceAll("%20", " ");
    	    String uploadFilePath = null;
    	    System.out.print("backend");
    	    System.out.print(token);
@@ -309,10 +310,13 @@ public class UserResource {
    	    fileName = fileFormDataContentDisposition.getFileName();
    	   String statusid1=Integer.toString(statusid);
    	 System.out.println("fillle");
- 	   
-   	     uploadFilePath=new UserImageService().uploadProfilePic2(fileInputStream, fileName,token,emailID,statusid1);
+ 	   String privacy=GroupService.getPrivacy(gname);
+   	     uploadFilePath=new UserImageService().uploadProfilePic2(fileInputStream, fileName,token,emailID,statusid1,privacy);
    	  System.out.println("filllessss");
-  	 
+  	 if(uploadFilePath.equals(null))
+  	 {
+  		 return null;
+  	 }
    	    return "Got it";
    	     
     

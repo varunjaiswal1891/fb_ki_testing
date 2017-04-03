@@ -1,7 +1,6 @@
 
 package com.varun.fbproj.service;
 import java.util.Calendar;
-
 import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -933,5 +932,44 @@ public static ArrayList<String> getgroupname(String myEmailID) {
     }
     
     return asl;
+}
+public static String getPrivacy(String gname) {
+	String privacy="";
+	
+	DBAccess db= new DBAccess();
+    boolean check=false;
+ try{
+     while(check!=true){
+      System.out.println("trying connection in privacy");
+      check= db.start();
+ }
+     
+     //getting the group names from which the user has left
+ String sql="select privacy from Group1 where group_name=?";
+
+ PreparedStatement pstmnt=db.con.prepareStatement(sql);
+   pstmnt.setString(1,gname);
+ ResultSet rs= pstmnt.executeQuery();
+
+ if(rs!=null){
+      
+      while (rs.next()) {
+          
+          privacy=rs.getString(1);
+           
+    
+        }
+ }
+ 
+ db.stop();
+}
+catch(Exception e){
+    
+}
+
+	
+	
+	
+	return privacy;
 }
 }//class ends

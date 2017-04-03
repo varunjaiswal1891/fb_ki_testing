@@ -121,7 +121,7 @@
                     // we have the response  
              	   if(response!=null){
                     var data =JSON.parse(JSON.stringify(response));  
-                     var myGroups;
+                     var myGroups="";
              	 
                    	for (var i=0; i < data.length; i++){
                    		myGroups+="<div class=\"panel-body\">"; 
@@ -130,7 +130,9 @@
                    		myGroups+="</div>";
     					     	}
                  	
-                   	myGroups=myGroups.replace("undefined","");
+                   
+                   	if(data.length==0)
+                   		myGroups="<h3>No Groups Yet</h3>";
                    	//alert(myGroups);
              	   $("#myGroups").html(myGroups);
             

@@ -29,9 +29,9 @@ public class UserImageService {
 			fileName=""+Calendar.getInstance().getTimeInMillis()+fileName;
 			//InputStream buffer=toBufferedImage(fileInputStream,100,100);
 
-			String path="/home/umesh/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/images/";
+			String path="/home/varun/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/images/";
 			//System.out.print("/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/images/");
-			String profilePicPath="/home/umesh/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/";
+			String profilePicPath="/home/varun/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/";
 			//String path="/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/images/";
 			//System.out.print("/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/images/");
 			//String profilePicPath="/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/";
@@ -50,7 +50,7 @@ public class UserImageService {
 			            }
 			                
 			}outputStream.close();outputStream1.close();
-			ImageIcon icon = new ImageIcon("/home/umesh/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/profilePic.jpg");
+			ImageIcon icon = new ImageIcon("/home/varun/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/profilePic.jpg");
 
 			//ImageIcon icon = new ImageIcon("/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/profilePic.jpg");
 
@@ -66,7 +66,7 @@ public class UserImageService {
 
 
 
-File outputfile = new File("/home/umesh/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/tn.jpg");
+File outputfile = new File("/home/varun/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/tn.jpg");
 
 //File outputfile = new File("/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/tn.jpg");
 
@@ -99,18 +99,22 @@ ImageIO.write(bi, "jpg", outputfile);
         g.dispose();  
         return dimg;  
     }
+    
+    
+    
+    
 	public String uploadProfilePic2(InputStream fileInputStream,
-			String fileName, String token, String emailID,String statusid) {
+			String fileName, String token, String emailID,String statusid,String privacy) {
 		OutputStream outputStream=null;
 		OutputStream outputStream1=null;
 		//getEmailId s1=new getEmailId();
 		//String email=s1.getemailId(token);
 		fileName=""+Calendar.getInstance().getTimeInMillis()+fileName;
 		//InputStream buffer=toBufferedImage(fileInputStream,100,100);
-
-		String path="/home/vishal/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/";
+		
+		String path="/home/varun/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/";
 		//System.out.print("/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/images/");
-		String profilePicPath="/home/vishal/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/";
+		String profilePicPath="/home/varun/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/";
 		//String path="/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/images/";
 		//System.out.print("/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/images/");
 		//String profilePicPath="/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/";
@@ -124,12 +128,31 @@ ImageIO.write(bi, "jpg", outputfile);
 				 check= db.start();
 			  }
 	    
-			  String query1="update status set flag=0 where statusID=?";	   
-			  PreparedStatement pstmnt=db.con.prepareStatement(query1);
-			  pstmnt.setInt(1,Integer.parseInt(statusid)); // user_id is the one sent in paramater
-			   // timelineid is the one sent in paramater
 			  
-			 pstmnt.executeUpdate();
+			  if(privacy.equals("public"))
+			  {
+				
+				  
+				  String query1="update status set flag=0 where statusID=?";	   
+				  PreparedStatement pstmnt=db.con.prepareStatement(query1);
+				  pstmnt.setInt(1,Integer.parseInt(statusid)); // user_id is the one sent in paramater
+				   // timelineid is the one sent in paramater
+				  
+				 pstmnt.executeUpdate();
+				  
+			  }
+			  else if(privacy.equals("private"))
+			  {	 
+				  System.out.println("staus ID ypppppppppppppp="+statusid);
+				  String query1="update privategroupstatus set flag=0 where statusID=?";	   
+				  PreparedStatement pstmnt=db.con.prepareStatement(query1);
+				  pstmnt.setInt(1,Integer.parseInt(statusid)); // user_id is the one sent in paramater
+				   // timelineid is the one sent in paramater
+				  
+				 pstmnt.executeUpdate();  
+			  }
+			  
+				
 		}
 			  catch(Exception e){e.printStackTrace();}
 			  
@@ -146,10 +169,11 @@ ImageIO.write(bi, "jpg", outputfile);
 			outputStream=new FileOutputStream(new File(path+fileName));
 		
 		outputStream1=new FileOutputStream(new File(profilePicPath+statusid+".jpg"));
-		int read = 0,temp=0;;
+		int read = 0,temp=0;
 		            byte[] bytes = new byte[1024];
 		            while ((read = fileInputStream.read(bytes)) != -1) {
 		            { 
+		            System.out.println();	
 		            outputStream.write(bytes, 0, read);
 		            outputStream1.write(bytes, 0, read);
 		            temp=read;

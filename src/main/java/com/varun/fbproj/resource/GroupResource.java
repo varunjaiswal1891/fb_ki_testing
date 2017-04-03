@@ -158,6 +158,9 @@ return "user left group";
 }
 return  null;
 }// delete a group ends here
+
+
+
 //This resource class is used to add status
    @POST
    @Path("/addStatus")
@@ -165,6 +168,7 @@ return  null;
    @Produces({MediaType.APPLICATION_JSON})
    public Status addStatus(@CookieParam("ID") String jwt,@CookieParam("ID_group") String group_name,Status obj)throws JsonParseException, JsonMappingException, IOException{
 
+	System.out.println("--------------------------uuuuuuuuuuuuuuuuuuuuuuu");   
     String gname=group_name.replaceAll("%20", " ");
     System.out.println("token: "+jwt);
     System.out.println("desc: "+obj.getStatus_desc());

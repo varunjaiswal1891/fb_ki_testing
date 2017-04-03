@@ -859,7 +859,7 @@ window.mutual=function(e1){
             type: "POST",
             contentType: "application/json",  //send data to server in this format
 
-            url:"http://localhost:8085/DemoFB/webapi/status/addStatus",
+            url:"http://localhost:8080/DemoFB/webapi/status/addStatus",
             dataType: "json",  //expect response of this type
 
             data: mahjson,
@@ -887,7 +887,7 @@ window.mutual=function(e1){
               	                
               	              	type:"POST",
               	              	contentType:false,
-              	              	url: "http://localhost:8085/DemoFB/webapi/user/uploadProfilePic2",
+              	              	url: "http://localhost:8080/DemoFB/webapi/user/uploadProfilePic2",
               	                processData: false,
               	                data: form_data,                         // Setting the data attribute of ajax with file_data
               	                success: function(){

@@ -73,7 +73,7 @@ public int addStatus(Status s1){
          try{
             boolean check=false;
             while(check!=true){
-                System.out.println("trying connection");
+                System.out.println("trying connection ppppppppppppppppp");
                check= db.start();
             }
             String  status_desc=s1.getStatus_desc(); 
@@ -119,6 +119,7 @@ String timelineid=s1.getTimelineid();
             }
             else
             {
+            System.out.println("in private else if oooooooooooooooooooo");	
             String query = "insert into privategroupstatus(status_desc,emailID,group_name,feeling,timelineid) values(?,?,?,?,?)";
       PreparedStatement pstmnt = db.con.prepareStatement(query);
       pstmnt.setString(1,status_desc);
@@ -130,7 +131,7 @@ String timelineid=s1.getTimelineid();
       pstmnt.executeUpdate();
        
        
-      String query134 = "select max(statusID) as statusID from  status where   emailID=?";
+      String query134 = "select max(statusID) as statusID from  privategroupstatus where   emailID=?";
       PreparedStatement pstmnt134=db.con.prepareStatement(query134);
      
       pstmnt134.setString(1,emailID);

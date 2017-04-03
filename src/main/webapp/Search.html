@@ -41,26 +41,26 @@ $(document).ready(function() {
 	        e.preventDefault();
 	 });
 	$("#filtermyFriends").click(function(e){
-	      alert("filtering in progress...");
+	     
 	           
-	            var college1=$("input#filterclg").val();
-	            $.cookie("college1",college1);
+	            var college=$("input#filterclg").val();
+	            $.cookie("college",college);
 	           // alert(college1);
-	            var hometown1=$("input#filterhome").val();
-	            $.cookie("hometown1",hometown1);
+	            var hometown=$("input#filterhome").val();
+	            $.cookie("hometown",hometown);
 	         //alert(hometown1);
-	            var cityOfWork1=$("input#filtercity").val();
-	            $.cookie("cityOfWork1",cityOfWork1);
+	            var cityOfWork=$("input#filtercity").val();
+	            $.cookie("cityOfWork",cityOfWork);
 			//alert(cityOfWork1);
-	            var highschool1=$("input#filterschool").val();
-	            $.cookie("highschool1",highschool1);
+	            var highschool=$("input#filterschool").val();
+	            $.cookie("highschool",highschool);
 				//alert(highschool1);
-	             var friends1 = [];
+	             var friends = [];
             $.each($("input[name='tick']:checked"), function(){            
-                friends1.push($(this).val());
+                friends.push($(this).val());
             });
-                friends1=friends1.join(" ");
-		           $.cookie("friends1",friends1);
+                friends=friends.join(" ");
+		           $.cookie("friends",friends);
  		});  
 
 	$(function(){
@@ -100,73 +100,85 @@ $(document).ready(function() {
 	            
 	    	  });
         
-		 	$.ajax({
+		 	 $.ajax({
         		 type: "GET",
-    	        contentType: "text/plain",  //send data to server in this format
+    	       // contentType: "text/plain",  //send data to server in this format
     	        url:"http://localhost:8080/DemoFB/webapi/friend/findFriends",
     	        dataType: "JSON",  //expect response of this type
-    	        data: foo,
+    	       // data: foo,
                   
                   success: function(response){  
                       // we have the response  
                       if(response!=null){
                    	  // alert("data fetched");
-                    	  var data =JSON.parse(JSON.stringify(response));  
-                          var SearchResult;
-                        
-                      	for (var i=0; i < data.length; i++){
-                      	
-                      		if(data[i].mob_no=="0")
-                      		{
-                  		    SearchResult+="<div class="+"\"panel-body\""+">";
-                  		    SearchResult+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
-                  			SearchResult+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
-                  			SearchResult+="<div class="+"\"text-right\""+">";
-                  			SearchResult+="<button type="+"\"button\""+" class="+"\"btn btn-primary\" id=\""+data[i].emailID+"\" OnClick=\"add(this);\""+" \">Add Friend<span class="+"\"glyphicon glyphicon-plus\""+"></span></button>";
-                  			SearchResult+="<a class="+"\"btn btn-primary\""+" id="+"\"SentReq"+data[i].emailID+"\" "+" style=\"visibility: hidden\";>Request Sent<span class="+"\"glyphicon glyphicon-ok\""+"></span></a></div></div>";
-                   			
-                      		}
-                      	else if(data[i].mob_no=="1"){
-                      		SearchResult+="<div class="+"\"panel-body\""+">";
-                  		    SearchResult+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
-                  			SearchResult+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
-                  			SearchResult+="<div class="+"\"text-right\""+">";
-                  			SearchResult+="<button type="+"\"button\""+" class="+"\"btn btn-primary\">Friends<span class="+"\"glyphicon glyphicon-ok\""+"></span></button></div></div>";
-                  				
-                      	}
-                      	else{
-                      	   SearchResult+="<div class="+"\"panel-body\""+">";
-                 		    SearchResult+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
-                 			SearchResult+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
-                 			SearchResult+="<div class="+"\"text-right\""+">";
-                 			SearchResult+="<a class="+"\"btn btn-primary\""+" id="+"\"SentReq"+data[i].emailID+"\" "+" >Request Sent<span class="+"\"glyphicon glyphicon-ok\""+"></span></a></div></div>";
-                  			
-                      	}
-                      	}
-                      	
-                    	if(data.length==0)
-                      		SearchResult="<h3>No Record Found</h3>";
-                       
-                      	SearchResult=SearchResult.replace("undefined","");
-                      
-                  	   $("#SearchResult").html(SearchResult);
-                 
-                      }  
-                      
-                      else
-                   	   {
-                    	  var SearchResult;
-                    	  SearchResult="<h3>No Record Found</h3>";
-                    	  $("#SearchResult").html(SearchResult);
-                   	   }
-                    },
-   	    
-         			error: function(e){  
-           					alert('Error121212: ' + e);  
-           					alert(e.toString());
-         			}				
-           
-   	  }); //ajacx ends
+                   	   var obj = JSON.parse(JSON.stringify(response));
+                   	   //alert(obj.emailID);
+                   	   //alert(obj.fname);
+                   	   //alert(obj.highschool);
+	                    	  // document.getElementById("userName").innerHTML=obj.fname+" "+obj.lname;
+	                    	  // document.getElementById("srch-term").defaultValue =key;
+	                    	  var data =JSON.parse(JSON.stringify(response));  
+	                    	   var SearchResult;
+	                           
+	                         	for (var i=0; i < data.length; i++){
+	                         	
+	                         		if(data[i].mob_no=="0")
+	                         		{
+	                     		    SearchResult+="<div class="+"\"panel-body\""+">";
+	                     		    SearchResult+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
+	                     			SearchResult+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
+	                     			SearchResult+="<div class="+"\"text-right\""+">";
+	                     			SearchResult+="<button type="+"\"button\""+" class="+"\"btn btn-primary\" id=\""+data[i].emailID+"\" OnClick=\"add(this);\""+" \">Add Friend<span class="+"\"glyphicon glyphicon-plus\""+"></span></button>";
+	                     			SearchResult+="<a class="+"\"btn btn-primary\""+" id="+"\"SentReq"+data[i].emailID+"\" "+" style=\"visibility: hidden\";>Request Sent<span class="+"\"glyphicon glyphicon-ok\""+"></span></a></div></div>";
+	                      			
+	                         		}
+	                         	else if(data[i].mob_no=="1"){
+	                         		SearchResult+="<div class="+"\"panel-body\""+">";
+	                     		    SearchResult+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
+	                     			SearchResult+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
+	                     			SearchResult+="<div class="+"\"text-right\""+">";
+	                     			SearchResult+="<button type="+"\"button\""+" class="+"\"btn btn-primary\">Friends<span class="+"\"glyphicon glyphicon-ok\""+"></span></button></div></div>";
+	                     				
+	                         	}
+	                         	else{
+	                         	   SearchResult+="<div class="+"\"panel-body\""+">";
+	                    		    SearchResult+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
+	                    			SearchResult+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
+	                    			SearchResult+="<div class="+"\"text-right\""+">";
+	                    			SearchResult+="<a class="+"\"btn btn-primary\""+" id="+"\"SentReq"+data[i].emailID+"\" "+" >Request Sent<span class="+"\"glyphicon glyphicon-ok\""+"></span></a></div></div>";
+	                     			
+	                         	}
+	                         	}
+	                         	
+	                      // 	if(data.length==0)
+	                         		//SearchResult="<h3>No Record Found</h3>";
+	                           
+					            $.cookie("college","");
+					            $.cookie("hometown","");
+					            $.cookie("cityOfWork","");
+							    $.cookie("highschool","");
+							    $.cookie("friends","");
+	                         	SearchResult=SearchResult.replace("undefined","");
+	                         
+	                     	   $("#SearchResult").html(SearchResult);
+	                     	   
+	                    
+	                         }  
+	                         
+	                         else
+	                      	   {
+	                       	  var SearchResult;
+	                       	  SearchResult="<h3>No Record Found</h3>";
+	                       	  $("#SearchResult").html(SearchResult);
+	                      	   }
+	                       },
+	      	    
+	            			error: function(e){  
+	              					alert('Error121212: ' + e);  
+	              					alert(e.toString());
+	            			}				
+	       
+   	  });
 	});//fun ends
    
 	window.go = function(e1){
