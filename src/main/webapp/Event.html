@@ -759,6 +759,84 @@ window.maybe1=function(e1){
  			}				
    
 	  });//ajax call end
+	  
+	  
+
+  	 window.mutual=function(e1){
+ 		 var foo=$(e1).attr('id');
+ 		  $.cookie("ID5",foo); 
+ 		//  alert(foo);
+ 			$.ajax({ 
+                 url: "http://localhost:8080/DemoFB/webapi/friend/count_of_MutualFriends",
+                 type: "GET",
+                 dataType: "json",
+                 contentType : "application/json",
+                 crossDomain: true,
+                 processData: true,
+                 
+                 
+                 success: function(response){  
+              	   
+                     // we have the response  
+              	   if(response!=null){
+                     // alert("data is come");
+              		  var data =JSON.parse(JSON.stringify(response));
+ 						 
+              		    var st;
+              		   if(data.length==0){
+                            st+="<div><p>No Mutual Friends Found for this friend</p></div>";
+                            }
+                         // $("#showlikesnames").html(st);
+                         else{
+                          for (var i=0; i < data.length; i++){
+                       	st+="<div>";
+                       	st+="<font size="+"\"4\">"+data[i].fname+data[i].lname+"</font>";
+                       	// st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].emailID+"\""+" OnClick=\"suggest(this)"+";\">Suggest</button>";
+                       	// st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].emailID+"\""+" OnClick=\"suggestignore(this);\">Ignore</button>";
+                       	 st+="</div>"; 
+                       	 st+="<hr>";
+                          }
+                       	 
+                         } 
+                          
+                          st=st.replace("undefined","");
+                       	 $("#showMutualnames").html(st);
+                          
+                          $('#MutualModal').modal({
+                              show: true
+                          });
+                         
+                         
+                      
+                     
+              	   
+              	   
+              	   
+              	   
+              	   
+              	   }  
+                     
+                     else
+                  	   {
+                  	  alert("something wrong");
+                  	   }
+                   },
+  	    
+        			error: function(e){  
+          					alert('Error121212: ' + e);  
+          					alert(e.toString());
+        			}				
+          
+  	  }); 
+ 	
+ 	  
+ 	  }//mutual fun ends here
+ 
+ 
+	  
+	  
+	  
+	  
  // ajax call for event update notification
  	 $.ajax({
 	        type: "GET",
@@ -802,9 +880,44 @@ window.maybe1=function(e1){
 	   
 	   
 });// READY FUNCTION END HERE
-jQuery(document).ajaxComplete(function () {
-	 $('[data-toggle="popover"]').popover({placement:'left'})  
-	}); 
+
+
+
+//this part is for making the popup box(on hover )persists so that we can see mutual frnds with a frnd
+jQuery(document).ajaxComplete(function (e) {
+	
+	var originalLeave = $.fn.popover.Constructor.prototype.leave;
+	$.fn.popover.Constructor.prototype.leave = function(obj){
+	  var self = obj instanceof this.constructor ?
+	    obj : $(obj.currentTarget)[this.type](this.getDelegateOptions()).data('bs.' + this.type)
+	  var container, timeout;
+
+	  originalLeave.call(this, obj);
+
+	  if(obj.currentTarget) {
+	    container = $(obj.currentTarget).siblings('.popover')
+	    timeout = self.timeout;
+	    container.one('mouseenter', function(){
+	      //We entered the actual popover – call off the dogs
+	      clearTimeout(timeout);
+	      //Let's monitor popover content instead
+	      container.one('mouseleave', function(){
+	        $.fn.popover.Constructor.prototype.leave.call(self, self);
+	      });
+	    })
+	  }
+	};
+	
+	
+	
+	
+	 $('[data-toggle="popover"]').popover({
+   		 placement:'left',
+   		 delay:{show: 50, hide: 400}
+   		 })  
+   	}); 
+
+
 </SCRIPT>
 
 
@@ -1117,6 +1230,46 @@ jQuery(document).ajaxComplete(function () {
        </form>
     </div>
   </div>
+     
+     
+     
+     <div id="MutualModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog">
+		  <div class="modal-content">
+			  <div class="modal-header">
+			 
+				  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Hide</button>
+					<h4>your Mutual friends</h4>
+			  </div>
+			  <div class="modal-body">
+				  <form class="form center-block">
+					<div class="form-group" id="showMutualnames">
+					
+					 <!--  <textarea class="form-control input-lg" autofocus="" placeholder="What do you want to share?"></textarea> -->
+					</div>
+				  </form>
+			  </div>
+			  <div class="modal-footer">
+				  <div>
+				 <!--  <button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Post</button> -->
+					<!-- <ul class="pull-left list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul> -->
+				  </div>	
+			  </div>
+		  </div>
+		  </div>
+		</div> 		
+
+
+
+
+     
+     
+     
+     
+     
+     
+     
+     
      
      <div id="myModalincomingevent" class="modal fade" role="dialog">
   <div class="modal-dialog" >

@@ -292,7 +292,11 @@ margin-left:20px;
                      		  var data =JSON.parse(JSON.stringify(response));
         						 
                      		    var st;
+                     		   if(data.length==0){
+                                   st+="<div><p>No Mutual Friends Found for this friend</p></div>";
+                                   }
                                 // $("#showlikesnames").html(st);
+                                else{
                                  for (var i=0; i < data.length; i++){
                               	st+="<div>";
                               	st+="<font size="+"\"4\">"+data[i].fname+data[i].lname+"</font>";
@@ -300,7 +304,7 @@ margin-left:20px;
                               	// st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].emailID+"\""+" OnClick=\"suggestignore(this);\">Ignore</button>";
                               	 st+="</div>"; 
                               	 st+="<hr>";
-                               
+                                 }
                               	 
                                 } 
                                  
