@@ -46,11 +46,8 @@ public class LikeService {
 		    }
 		    else{
 		    	System.out.println("Inside likeIncrement service and updating like");
-		    	rs1.next();
-		    	int fl = rs1.getInt("flag");
-		    	System.out.println("flag is: "+fl);
-		    	if(fl==0)
-		    	{
+		    	
+		    	
 		    		String query3= "delete from likes where statusID=? and emailID=?";
 
 			    	PreparedStatement pstmnt3=db.con.prepareStatement(query3);
@@ -58,13 +55,9 @@ public class LikeService {
 			    	pstmnt3.setString(2,likeobj.getEmailID());
 			    	pstmnt3.executeUpdate();
 			    	 db.stop();
-		    	}
-		    	else{
-		    		
-		    		System.out.println("NO NEED TO LIKE!");
-		    			    	
-		    	}
-		    	 return 1;
+		    	
+		    	
+		    	 return 2;
 		    }
 			 
 		} catch (SQLException e) 

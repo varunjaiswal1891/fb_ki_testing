@@ -241,11 +241,15 @@
       	  
             // window.location.replace("todoPage.html");
              var group_name=$("input#group_name").val();
+
+             alert(group_name);
+
              var group_privacy=$("input#group_privacy").val();
              var obj = { group_name:group_name,group_privacy:group_privacy
               		  };  
             	var myJSON = JSON.stringify(obj);
             	
+
              $.ajax({
      	        type: "POST",
      	        contentType: "application/json",  //send data to server in this format

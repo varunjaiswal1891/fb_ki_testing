@@ -34,6 +34,62 @@
     width: 100%;
     display: block;
 }
+  /* .postedonn{
+  
+  left:500px;
+  
+  }
+   */
+  
+  
+  p.leftpadding11{
+margin-left: 27px;
+
+word-wrap: break-word;
+}
+
+
+p.leftpadding {
+    margin-left: 27px;
+    
+
+    
+    
+}
+
+
+
+ p.col-sm-2{
+margin-left: 12px;
+}
+p.col-sm-12{
+margin-left: 10px;
+}
+
+
+
+
+
+ .custom{
+  width: 94px !important;
+  height:25px  !important;
+  margin-bottom:12px !important;
+  
+ }
+ .btn{
+ padding: 0px 0px;
+ }
+
+p.comment1 {
+    margin-left: 25px;
+}
+.customtextarea{
+margin-left:20px;
+
+}
+  
+  
+  
   </style>
   
 
@@ -409,74 +465,167 @@ window.mutual=function(e1){
                   
                   var st;
                   var fname,lname;
-                  for (var i=0; i < data.length; i++){
-                      
-                      var email =data[i].emailID; 
-                     
-                      
-                      
-                      st+="<div class="+"\"panel panel-default\""+">";
-                      st+="<div class="+"\"panel-body\""+"id=\"forcomment\""+">";
-                      st+="<div class="+"\"row\""+">";
-                      st+="<div class="+"\"col-md-12\""+">";
-                      
-                      st+="<p><font size="+"\"5\""+"color="+"\"blue\""+">"+data[i].name+"</font></p>" ;
-                      /* $(status_name).appendTo('#text_color');
-                      document.getElementById("forstatus").style.color="blue"; */
-                        st+="<hr>";
-                      st+="<p id="+"\"forstatus\""+">"+data[i].status_desc+"</p>" ;
-                      st+="</div></div><hr>";
-                      st+="<div class="+"\"row\""+">";
-                      st+="<div class="+"\"col-md-12\""+">";
-                      st+="<ul class="+"\"list-inline\""+">";
-                      st+="<li>";
-                      st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+" OnClick=\"like(this);\"><span class="+"\"glyphicon glyphicon-thumbs-up\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Like</font></a>";
-                      st+="</li>";
-                      st+="<li>";
-                      st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+" OnClick=\"unlike(this);\""+"><span class="+"\"glyphicon glyphicon-thumbs-down\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Unlike</font></a>";
-                      st+="</li>";
-                      st+="<li>";
-                      st+= "<a href="+"\"#\""+ "id=\""+data[i].statusID+"\""+"><span class="+"\"glyphicon glyphicon-comment\"" +"style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Comment</font></a>";
-                      st+="</li></ul></div></div>";
-                      st+="</div>";
-                      st+="<div class="+"\"panel-footer\"" +"id="+"\"o\""+">";
-                      st+="<div class="+"\"row\""+">";
-                      st+="<div class="+"\"col-md-12\""+">";
-                      st+="<a id="+"\"likescount\""+">"+data[i].likesCount+"</a>";
-                      st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+"onmouseover=\"likehover(this)\"><span style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Likes</font></a>";
-                      st+="<p id="+"\"likescount\""+">"+data[i].unlikes_count+" Unlikes"+"</p><br></div></div>";
-                      
-                      st+="<hr>"; 
+                  for (var i=data.length-1; i >=0; i--){
+                	  
+               	   var email =data[i].emailID; 
                	   
-                      st+="<div class="+"\"pre-scrollable\""+" style="+"\"height:100px;\""+">";
-                      for(var j=0;j<data[i].a.length;j++)
+               	  /*  <a href='#target2' id='target2' class='target'>Target 2</a>
+                	   */
+            	   st+="<div class="+"\"panel panel-default\""+">";
+            	   st+="<div class="+"\"panel-body\""+"id=\"forcomment\""+">";
+            	   st+="<div class="+"\"row\""+">";
+            	   st+="<div class="+"\"col-md-12\""+">";
+            		 st+="<p class=\" col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></p>";
+                     st+="<div class=\" col-sm-5\"><p><font size="+"\"4\""+"color="+"\"blue\""+">"+data[i].name+"</font></p></div>" ;
                      
-                              
-                      {
-                          st+= "<p id="+"\"outputname\""+"><font size="+"\"3\""+"color="+"\"blue\""+">"+data[i].a[j].name+"</font></p>"; 
-                      st+= "<p id="+"\"output\""+">"+data[i].a[j].comment_desc+"</p>";
-                      st+="<br>";
-                      st+="<hr>";
-                      }
-                      st+="</div>";
+                     	  
+                     	  st+="<br><br><br>";
+                     	  
                       
-                      st+="<ul>";
-                      st+="<li class="+"\"media\""+">";
-                      st+="<div class="+"\"media-body\""+">";
-                      st+="<div class="+"\"input-group\""+">";
-                      st+="<input type="+"\"text\""+" class="+"\"form-control\""+" id=\"comment_d"+data[i].statusID+"\""+" placeholder="+"\"Write a comment...\""+">";
-                      st+="<span class="+"\"input-group-btn\""+">";
-                          st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].statusID+"\""+" OnClick=\"comment(this);\">Post Comment</button>";
-                          st+="</span>";
-                          st+="</div>";
-                          st+="</div>";
-                          st+="</li>";
-                          st+="</ul>";
-                          st+="</div>";
-                          st+="</div>";
+                          
+                      
+                     //st+="<br>";
+                     st+="</div>";
+                    // st+="<hr>";
+                     st+="<div class="+"\"row\""+">";
+                     /* if((data[i].name2==null)&&(data[i].feeling==null))
+                 	{
+                 	  
+                 	  
+                 	}
+                   else if((data[i].name2==null)&&(data[i].feeling!=null))
+                 	  {
+                   st+="<p id="+"\"feelings\""+"class="+"\"leftpadding\""+"><font size="+"\"2\""+"color="+"\"#A4A4A4\""+">"+data[i].feeling+"<font></p>" ;
+                   
+                 
+                 	  }
+                
+                   else if((data[i].name2!=null)&&(data[i].feeling!=null))
+                     {
+                	   st+="<p id="+"\"feelings\""+"class="+"\"leftpadding\""+"><font size="+"\"2\""+"color="+"\"#A4A4A4\""+">"+data[i].feeling+"<font></p>" ;
                        
-                      
-                      
+                	   
+                     }
+                 */     			st+="<br>";
+                  /*  st+="<ul type="+"\"disc\""+">";
+*/                               st+="<p id="+"\"time\""+"class="+"\"leftpadding\""+"><font size="+"\"2\""+"color="+"\"#A4A4A4\""+">"+data[i].postedon+"<font></p>" ;
+                  /*  st+="</ul>"; */
+                   /*  /* st+="<ul>";
+                     st+="<li id="+"\"time\""+">"+data[i].postedon+"</li>" ;
+                  	  st+="</ul>";
+                      */
+                     /* $(status_name).appendTo('#text_color');
+            	   document.getElementById("forstatus").style.color="blue"; */
+            	  
+
+		   st+="</div>";
+		  st+="<br>";
+            	   st+="<div class="+"\"row\""+">";
+            	 	
+            	   st+="<p id="+"\"forstatus\"class="+"\"leftpadding11\""+"><font size="+"\"3\""+"color="+"\"black\""+">"+data[i].status_desc+"</font></p>" ;
+            	 
+             	   if(data[i].flag==0)
+            	   st+="<p class=\" col-sm-12\"><img class="+"\"img-responsive\""+"alt=\"\""+"src="+"\"users/"+data[i].emailID+"/"+data[i].statusID+".jpg\""+"/></p>";
+            	   
+            		   
+            	   
+            	   st+="</div></div><hr>";
+            	   st+="<div class="+"\"row\""+">";
+            	   st+="<div class="+"\"col-md-12\""+">";
+            	   st+="<ul class="+"\"list-inline\""+">";
+            	   st+="<li>";
+        		   
+            	   
+            		   if(data[i].color==1){
+            			  // alert("testing11:  "+data[i].statusID);
+            	   		//highlight(data[i].statusID);
+            	   		
+            	   		st+="<li></li>";
+            	   		
+            	   		
+            	   		
+            	   		
+            	   		  st+="<a href="+"\"#thumbs-up\""+"id=\"like"+data[i].statusID+"\""+" OnClick=\"like(this);\"><span class="+"\"glyphicon glyphicon-thumbs-up\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"blue\""+">Like</font></a>";
+            	   		
+            		   }
+            		   else{
+           	   			st+="<li></li>";
+        	   		
+           	   		
+             	   		  st+="<a href="+"\"#thumbs-up\""+"id=\"like"+data[i].statusID+"\""+" OnClick=\"like(this);\"><span class="+"\"glyphicon glyphicon-thumbs-up\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Like</font></a>";
+             	   		
+             		   
+            			   
+            		   }
+            		   
+            	   
+
+            	   
+            	   /* st+="<li>";
+            	   st+="<a href=\""+data[i].statusID+"\""+"id=\""+data[i].statusID+"\""+"class=\""+data[i].statusID+"\""+" OnClick=\"like(this);\"><span class="+"\"glyphicon glyphicon-thumbs-up\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Like</font></a>";
+            	   st+="</li>"; */
+            	   /* st+="<li>";
+            	   st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+" OnClick=\"unlike(this);\""+"><span class="+"\"glyphicon glyphicon-thumbs-down\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Unlike</font></a>";
+            	   st+="</li>"; */
+            	 //  st+="<li>";
+            	  // st+= "<a href="+"\"#\""+ "id=\""+data[i].statusID+"\""+"><span class="+"\"glyphicon glyphicon-comment\"" +"style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Comment</font></a>";
+            	  // st+="</ul></div></div>";
+            	   //st+="</div>";
+            	   	//   st+="<div class="+"\"row\""+">";
+                 //  st+="<div class="+"\"col-md-12\""+">";
+                   
+                 st+="<a id="+"\"likescount\""+">"+"       "+data[i].likesCount+"</a>";
+                   st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+"onmouseover=\"likehover(this)\"><span style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Likes</font></a>";
+                  st+="</li>";
+                   // st+="	</div></div>";
+                   //st+="</div>";
+            	   st+="</ul></div></div></div>";
+
+                   //st+="<hr>"; 
+                   st+="<div class="+"\"panel-footer\"" +"id="+"\"o\""+">";
+                   
+            	   if(data[i].a.length==0){
+            		   st+="<div class="+"\"pre-scrollable\""+" style="+"\"height:0px;\""+">";
+            	   }
+            	   else{
+            		   st+="<div class="+"\"pre-scrollable\""+" style="+"\"height:80px;\""+">";
+            	   
+            	   for(var j=0;j<data[i].a.length;j++)
+        		  
+            			   
+        		   {
+            		    st+="<p class=\" col-sm-2\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></p>";
+            		    st+= "<div class=\" col-sm-5\"><p id="+"\"outputname\""+"><font size="+"\"3\""+"color="+"\"blue\""+">"+data[i].a[j].name+"</font></p></div>"; 
+            			/* $(status_name).appendTo('#text_color');
+                	   document.getElementById("forstatus").style.color="blue"; */
+                	 	st+="<br><br><br>";
+                	  
+            		   st+= "<p id="+"\"output\""+"class="+"\"comment1\""+"><font size="+"\"2\""+"color="+"\"black\""+">"+data[i].a[j].comment_desc+"</font></p>";
+            	  st+="<br>";
+            	   //st+="<hr>";
+        		   }
+            	   }
+            	   st+="</div>";
+        		   
+            	   //st+="<ul>";
+            	   //st+="<li class="+"\"media\""+">";
+            	   st+="<div class="+"\"media-body\""+">";
+            	   //st+="<div class="+"\"input-group\""+">";
+            	   st+="<input type="+"\"text\""+" class="+"\"form-group col-sm-9 customtextarea\""+" id=\"comment_d"+data[i].statusID+"\""+" placeholder="+"\"Write a comment...\""+">";
+                   //st+="<div class="+"\"input-group-btn\""+">";
+               		st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right  custom\""+"id=\""+data[i].statusID+"\""+" OnClick=\"comment(this);\">Comment</button>";
+               		//st+="</span>";
+               		//st+="</div>";
+               		st+="</div>";
+               		//st+="</li>";
+               		//st+="</ul>";
+               		st+="</div>";
+               		st+="</div>";
+                    
+                   
+                   
+              
+          
                  
                   st=st.replace("undefined","");
                   $("#abcd").html(st);
@@ -566,9 +715,9 @@ window.mutual=function(e1){
       
              window.like = function(e1){
                  
-                   var statusid= $(e1).attr('id');
-                   alert("cccacacaca"+statusid);
-                   var sid={statusID:statusid};
+            	 var tempid= $(e1).attr('id');
+				   var statusid = tempid.slice(4);
+                     var sid={statusID:statusid};
                    var myJSON=JSON.stringify(sid);
                    //alert(statusid);
                    
@@ -587,6 +736,7 @@ window.mutual=function(e1){
                
                // we have the response  
                if(response!=null){
+       location.reload();
        
 
                }
@@ -708,16 +858,61 @@ window.mutual=function(e1){
                    $.ajax({
             type: "POST",
             contentType: "application/json",  //send data to server in this format
-            url:"http://localhost:8080/DemoFB/webapi/status/addStatus",
-            dataType: "text",  //expect response of this type
+
+            url:"http://localhost:8085/DemoFB/webapi/status/addStatus",
+            dataType: "json",  //expect response of this type
+
             data: mahjson,
            success: function(resp){
                
               if(resp!=null){
                   
+            	  
+            	  var obj1 = JSON.parse(JSON.stringify(resp));
+           	   		 var statusid=obj1.statusID;
+           	  		alert("statusid"+statusid);
+           	   		console.log(statusid);
+         		
+           	
+              		 var file_data = $("#file-select").prop("files")[0];   // Getting the properties of file from file field
+              		
+              		var form_data = new FormData();                  // Creating object of FormData class
+              		form_data.append("file", file_data);             // Appending parameter named file with properties of file_field to form_data
+              		 //form_data.append('file', $("#file-select"+elem)[0].files[0]);
+
+              		form_data.append("status_id",statusid);  
+              		/* form_data.append('image', $('input[type=file]')[0].files[0]); 
+              		 */
+              		$.ajax({
+              	                
+              	              	type:"POST",
+              	              	contentType:false,
+              	              	url: "http://localhost:8085/DemoFB/webapi/user/uploadProfilePic2",
+              	                processData: false,
+              	                data: form_data,                         // Setting the data attribute of ajax with file_data
+              	                success: function(){
+              	      				location.reload();
+              		      	       },
+              	          	       
+              	          	      error: function(){
+              	        	            alert('status posting error');
+              	        	        }	 
+              	                     
+              		
+              		
+              		});                  
+    	                       
+
+            	  
+            	  
+            	  
+            	  
+            	  
+            	  
+            	  
                  // alert(resp);
                  $('#posttext').val('');
-                location.reload();
+                
                   
               }
               else{
@@ -1001,7 +1196,15 @@ window.mutual=function(e1){
              <div class="form-group" style="padding:14px;">
               <textarea class="form-control" placeholder="What's on your mind!" id="posttext"></textarea>
             </div>
-            <button class="btn btn-primary pull-right" type="button" id="postbutton">Post</button><ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
+            
+            
+             <br><br>
+ 	 <form id="FormId">
+        <label for="file-select">Choose photo</label>
+        <input type="file" name="upload" id="file-select">
+    </form>
+ 	
+            <button class="btn btn-primary pull-right" type="button" id="postbutton" style="width:50px;">Post</button><ul class="list-inline"><li><a href=""><!-- <i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a> --></li></ul>
            </form>
           </div>
                                    
@@ -1020,7 +1223,10 @@ window.mutual=function(e1){
       <div class="col-md-12">
       <p id="status_name"></p>
       <p id="feelings"></p>
-      
+      <ul type="disc">
+      <li id="time"></li>
+      </ul>
+        
        <p id="forstatus"></p>  <!-- status text -->
       </div>
     </div>
@@ -1207,7 +1413,7 @@ window.mutual=function(e1){
         </div>
              <br>
              
-      <div class="form-group">
+      <!-- <div class="form-group">
          <label for="bestplace">SBestPlace (select one):</label>
       <select class="form-group" name="bestplaces" id="bestplace" style="margin-left:10px;">
         <option value="Bangalore">Bangalore</option>
@@ -1216,7 +1422,7 @@ window.mutual=function(e1){
         <option value="Malasia">Malasia</option>
       </select>
         </div>
-             <br>      
+       -->       <br>      
              
        
     </div>

@@ -6,7 +6,7 @@ public class Group {
 	private String group_name;
 	private String owner;
 	private String group_privacy;
-	
+
 	public Group()
 	{
 		
@@ -27,6 +27,16 @@ public class Group {
 	}
 	public void setGroup_name(String group_name) {
 		this.group_name = group_name;
+	}
+
+
+	public String getGroup_privacy() {
+		return group_privacy;
+	}
+
+
+	public void setGroup_privacy(String group_privacy) {
+		this.group_privacy = group_privacy;
 	}
 
 
