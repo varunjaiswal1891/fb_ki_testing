@@ -243,15 +243,15 @@ margin-left:20px;
                   var data =JSON.parse(JSON.stringify(response));  
                    var allFriends;
            	 
-                 	for (var i=0; i < data.length; i++){
-               		 allFriends+="<div class=\"panel-body\">";
-               
-          	 allFriends+='<a href="friendTimeline.html" OnClick=go(this); data-html="true"  data-placement="left" data-toggle="popover"  data-trigger="click hover" data-content=\'<div class="item active"><img src="users/'+data[i].emailID+'/cover.jpg" class=" img-responsive" width="1000" height="400" style="float:left;"><div><div class="img-container" style="display:inline-block;"><img class="img-thumbnail" src="users/'+data[i].emailID+'/profilePic.jpg" style="width:60px;height:60px;/"></div><div class="text" style="display:inline-block;margin-left:0.2cm;"><p><strong>'+data[i].fname+" "+data[i].lname+'</strong></p></div><div style="margin-left:1.5cm;"><p style="color:grey"><span class="glyphicon glyphicon-home"></span> <b>'  +'Lives in: '+ '</b> '+ data[i].hometown+'<br/><br/><span class="glyphicon glyphicon-gift"></span> <b>Born on: </b> '+ data[i].date +'<br><br><a href="#" style="color:grey"; OnClick=mutual(this); id='+data[i].userID+'><span class="glyphicon glyphicon-user"></span> See Mutual Friends</p></div></div>\'>'+'<img src="users/'+data[i].emailID+'/profilePic.jpg" style="width:20px;height:20px;">'+data[i].fname+" "+data[i].lname+'</a><br/>';
+                   for (var i=0; i < data.length; i++){
+              		 allFriends+="<div class=\"panel-body\">";
+              
+         	 allFriends+='<a href="friendTimeline.html" OnClick=go(this); id="'+data[i].userID+'" data-html="true"  data-placement="left" data-toggle="popover"  data-trigger="click hover" data-content=\'<div class="item active"><img src="users/'+data[i].emailID+'/cover.jpg" class=" img-responsive" width="1000" height="400" style="float:left;"><div><div class="img-container" style="display:inline-block;"><img class="img-thumbnail" src="users/'+data[i].emailID+'/profilePic.jpg" style="width:60px;height:60px;/"></div><div class="text" style="display:inline-block;margin-left:0.2cm;"><p><strong>'+data[i].fname+" "+data[i].lname+'</strong></p></div><div style="margin-left:1.5cm;"><p style="color:grey"><span class="glyphicon glyphicon-home"></span> <b>'  +'Lives in: '+ '</b> '+ data[i].hometown+'<br/><br/><span class="glyphicon glyphicon-gift"></span> <b>Born on: </b> '+ data[i].date +'<br><br><a href="#" style="color:grey"; OnClick=mutual(this); id='+data[i].userID+'><span class="glyphicon glyphicon-user"></span> See Mutual Friends</p></div></div>\'>'+'<img src="users/'+data[i].emailID+'/profilePic.jpg" style="width:20px;height:20px;">'+data[i].fname+" "+data[i].lname+'</a><br/>';
 
-                       allFriends+="</div>";
-               		allFriends+="</div>";
-  					     	}
-               	
+                      allFriends+="</div>";
+              		allFriends+="</div>";
+ 					     	}
+
                allFriends=allFriends.replace("undefined","");
            	   $("#allFriends").html(allFriends);
           
@@ -958,60 +958,18 @@ margin-left:20px;
      	   
      	   
      	   
-     	   	$.ajax({ 
-                url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
-                type: "GET",
-                dataType: "json",
-                contentType : "application/json",
-                crossDomain: true,
-                processData: true,
-                
-                
-                success: function(response){  
-             	   
-                    // we have the response  
-             	   if(response!=null){
-                    var data =JSON.parse(JSON.stringify(response));  
-                     var allFriends;
-             	 
-                   	for (var i=0; i < data.length; i++){
-                 		 allFriends+="<div class=\"panel-body\">";
-                 		 allFriends+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
-                 		allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\" data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>";
-               // allFriends+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  " data-toggle=\"popover\" "+  "title=" +   "   \"name: " +  data[i].fname+"\""+"data-trigger="+"\"hover\""+"data-content ="+"\"Lives in  "+data[i].hometown + "\"" +" >"+data[i].fname+" "+data[i].lname + "</a>"; 		
-                 		//  allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID+"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
-                         allFriends+="</div>";
-                 		allFriends+="</div>";
-    					     	}
-                 	
-                allFriends=allFriends.replace("undefined","");
-             	   $("#allFriends").html(allFriends);
-            
-                    }  
-                    
-                    else
-                 	   {
-                 	  alert("something wrong");
-                 	   }
-                  },
-    	    
-       			error: function(e){  
-         					alert('Error121212: ' + e);  
-         					alert(e.toString());
-       			}				
-         
-    	  });//ajax call end
-    	  
-         	window.go = function(e1){
-       		 
-     		   var friendUserID= $(e1).attr('id');
-     		   $.cookie("ID1",friendUserID);
-     		   //window.location.replace("friendTimeline.html");
-         	  
-     		
-     	   }
+       	window.go = function(e1){
+      		 
+  		   var friendUserID= $(e1).attr('id');
+  		   $.cookie("ID1",friendUserID);
+  		   //window.location.replace("friendTimeline.html");
+      	  
+  		
+  	   }
 
+ 	  
     	  
+
     	  
      	   	$.ajax({ 
                 url: "http://localhost:8080/DemoFB/webapi/group/getGroupAdmin",

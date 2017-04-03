@@ -19,7 +19,32 @@ public class CommentService {
                   System.out.println("trying connection in addComment");
                  check= db.start();
               }
-              String group_name=c.getGroup_name();
+              
+              String query10="select group_name from status where statusID=?";
+              java.sql.PreparedStatement pstmnt10 = db.con.prepareStatement(query10);
+              pstmnt10.setInt(1,c.getStatusID());
+              ResultSet rs50= pstmnt10.executeQuery();
+              rs50.next();
+              String group_name=rs50.getString("group_name");
+              System.out.println("ggggggrroupnameinside query"+group_name);
+              if((rs50.getString("group_name"))==null)
+              {   System.out.println("ggggggrroupnameme agya"+group_name);
+              
+             String query = "insert into comments(comment_desc,emailID,statusID) values(?,?,?)";
+                  java.sql.PreparedStatement pstmnt=db.con.prepareStatement(query);
+                      pstmnt.setString(1,c.getComment_desc());
+                      pstmnt.setString(2,c.getEmailID());
+                      pstmnt.setInt(3,c.getStatusID());
+                      pstmnt.executeUpdate();
+                      db.stop();
+                      return true;
+             
+              }
+              else
+              {System.out.print("inside null checker *******************************");
+              
+              
+              //String group_name=c.getGroup_name();
               String query1="select privacy from Group1 where group_name=?";
                  java.sql.PreparedStatement pstmnt1 = db.con.prepareStatement(query1);
                  pstmnt1.setString(1,group_name);
@@ -50,6 +75,7 @@ public class CommentService {
                          db.stop();
                          return true;
                  }
+            }
             }
               catch (Exception e) 
               {

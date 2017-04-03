@@ -278,7 +278,7 @@ public class UserResource {
 	    fileName = fileFormDataContentDisposition.getFileName();
 	    System.out.println("fileeeeeee"+fileName);
 	    uploadFilePath=new UserImageService().uploadProfilePic(fileInputStream, fileName,token,emailID);
-	    URI url = new URI("http://localhost:8085/DemoFB/timeLine1.html");
+	    URI url = new URI("http://localhost:8080/DemoFB/timeLine1.html");
 	    return Response.temporaryRedirect(url).build();
 	
 
