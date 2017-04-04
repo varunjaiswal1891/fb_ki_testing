@@ -10,7 +10,7 @@ import com.varun.fbproj.model.SuggestUser;
 import com.varun.fbproj.model.User;
 
 public class Suggestservice{
-
+//here we are getting list of suggested friends
 	public static ArrayList<User> getSuggestedFriends(Suggest sobj)
 	{		
 		
@@ -42,6 +42,8 @@ public class Suggestservice{
 				
 				
 				//System.out.println("ddscdscdsc");
+
+//Here we are adding list people who are not my friends but are friends of my friends
 					while (result.next()) {
 						PreparedStatement prepStatement1 = connect.con.prepareStatement("select myEmailID from UserFriends where myEmailID=? and friendEmailID=? union select suggestedp from FriendSuggestion where suggestedp=? and secondp=? and firstp=?");
 						
@@ -132,7 +134,7 @@ public class Suggestservice{
 				//System.out.println("ddscdscdsc");
 					while (result.next()) {
 						SuggestUser obj = new SuggestUser();
-						 PreparedStatement prepStatement1 = connect.con.prepareStatement("select * from User where emailID=?");
+						 PreparedStatement prepStatement1 = connect.con.prepareStatement("select * from User where emailID=?");//Geeting list of people who are suggested to you by your friends
 							
 				           // System.out.println("assaxsaxsa");
 				            
@@ -227,8 +229,6 @@ public class Suggestservice{
 				ps.setString(3,suggestedid);
 				ps.executeUpdate();
 	            
-				//Iterator<User> iterator = uobj.iterator();
-				
 				return true;//System.out.println("ddscdscdsc");
 					
 		}	
@@ -240,15 +240,4 @@ public class Suggestservice{
 						
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }//class ends here

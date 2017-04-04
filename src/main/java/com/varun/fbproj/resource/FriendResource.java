@@ -51,7 +51,7 @@ public class FriendResource {
 			       .setSigningKey("secret".getBytes("UTF-8"))
 			       .parseClaimsJws(jwt).getBody();
 			    System.out.println("Subject: " + claims.getSubject());
-			   // System.out.println("Expiration: " + claims.getExpiration());
+			  
 			  String myEmailID=claims.getSubject();
 		
 		ArrayList<User> al_friends=new ArrayList<User>();
@@ -75,7 +75,7 @@ public class FriendResource {
 			       .setSigningKey("secret".getBytes("UTF-8"))
 			       .parseClaimsJws(jwt).getBody();
 			    System.out.println("Subject: " + claims.getSubject());
-			   // System.out.println("Expiration: " + claims.getExpiration());
+			  
 			  String myEmailID=claims.getSubject();
 	
 		ArrayList<User> al_friends=new ArrayList<User>();
@@ -348,16 +348,16 @@ public class FriendResource {
 			       .setSigningKey("secret".getBytes("UTF-8"))
 			       .parseClaimsJws(jwt).getBody();
 			    System.out.println("Subject: " + claims.getSubject());
-			   // System.out.println("Expiration: " + claims.getExpiration());
+			  
 			  String myEmailID=claims.getSubject();
 			  System.out.println("myEmailID is.............."+myEmailID);
-	//System.out.println(email+"------------------");
+	
 	String email=RetriveService.emailIDfromuID(userID);
 	System.out.println("------------------"+email+"------------------");
 	ArrayList<User> al_friends=new ArrayList<User>();
 		ArrayList<User> al_mutual_friends=new ArrayList<User>();
 		ArrayList<User> al_mutual_friends1=new ArrayList<User>();
-       //  System.out.println("fetching all my friends list");
+      
 		al_friends=GetMyAllFriends.getMyFriends(al_friends,myEmailID);// al_friends containg your friend list
 		al_mutual_friends=GetMyAllFriends.getMyFriends(al_mutual_friends,email);
 
@@ -425,11 +425,5 @@ public class FriendResource {
 			
 	}//findMyFriend method ends here
 
-	
-	
-	
-	
-	
-	
 	
 }//class ends here

@@ -2,6 +2,7 @@ package com.varun.fbproj.service;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+//This function is used to check if you have sent friend request to a particular person
 
 public class IsRequestAlreadySentService {
      

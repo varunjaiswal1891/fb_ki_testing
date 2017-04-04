@@ -24,7 +24,7 @@ public class UserImageService {
 
 	public String uploadProfilePic(InputStream fileInputStream,
 			String fileName, String token,String emailID) throws IOException {
-		
+		//uploading profile picture of user in his specific folder
 		Properties prop=new Properties();
         String propFileName = "config.property";
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
@@ -116,14 +116,22 @@ ImageIO.write(bi, "jpg", outputfile);
     
     
     public String uploadProfilePic2(InputStream fileInputStream,
-    		String fileName, String token, String emailID,String statusid,String timelineid,String group_name) {
-    		OutputStream outputStream=null;
+    		String fileName, String token, String emailID,String statusid,String timelineid,String group_name) throws IOException {
+    	
+    	//uploading pictures posted through status in user's specific folder
+    	Properties prop=new Properties();
+        String propFileName = "config.property";
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+        prop.load(inputStream);
+        String userName = prop.getProperty("DataFilePath");
+
+    	    OutputStream outputStream=null;
     		OutputStream outputStream1=null;
     		fileName=""+Calendar.getInstance().getTimeInMillis()+fileName;
     		
-    		String path="/home/varun/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/";
+    		String path=userName+emailID+"/";
     		
-    		String profilePicPath="/home/varun/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/";
+    		String profilePicPath=userName+emailID+"/";
     		  
     		boolean check=false;
     		   DBAccess db=new DBAccess();

@@ -312,51 +312,52 @@
          		});
     	   
 
-     	  $("#createGroup").click(function(e){
-      	  
-            // window.location.replace("todoPage.html");
-             var group_name=$("input#group_name").val();
+    		$("#createGroup").click(function(e){
+     		   var group_privacy=$("#group_privacy option:selected").val();
+                // window.location.replace("todoPage.html");
+                 var group_name=$("input#group_name").val();
+                 if((group_privacy=="")||(group_name==""))
+                 	{
+                 	alert("please fill all the fields");
+                 	window.location.replace("userHome1.html");
+                 	}
+                 var obj = { group_name:group_name,group_privacy:group_privacy
+                            };  
+                    var myJSON = JSON.stringify(obj);
+                    //document.write(myJSON);
+                 $.ajax({
+                     type: "POST",
+                     contentType: "application/json",  //send data to server in this format
+                     url:"http://localhost:8080/DemoFB/webapi/group/create_group",
+                     dataType: "text",  //expect response of this type
+                     data: myJSON,
+                     success: function(resp){
+                         
+                         if(resp!=null){
+                                          //   alert("group created");
+                                        window.location.replace("myGroups.html");
+                         }    
+                         else
+                         {
+                             alert("group creation failed ");
+                             window.location.replace("userHome1.html");
+                         }    
+                         
+                         
+                     },
+                     error: function(jqXHR, textStatus, errorThrown){
+                         alert('logout error: ' + textStatus);
+                     }
+                 });
+                 
+                              
 
-             alert(group_name);
-
-             var group_privacy=$("input#group_privacy").val();
-             var obj = { group_name:group_name,group_privacy:group_privacy
-              		  };  
-            	var myJSON = JSON.stringify(obj);
-            	
-
-             $.ajax({
-     	        type: "POST",
-     	        contentType: "application/json",  //send data to server in this format
-     	        url:"http://localhost:8080/DemoFB/webapi/group/create_group",
-     	        dataType: "text",  //expect response of this type
-     	        data: myJSON,
-     	        success: function(resp){
-     	            
-     	            if(resp!=null){
-     	   	                    	// alert("group created");
-     	                    	   window.location.replace("myGroups.html");
-     	            }	
-     	            else
-     	            {
-     	            	alert("group creation failed ");
-     	            	window.location.replace("userHome1.html");
-     	            }	
-     	            
-     	            
-     	        },
-     	        error: function(jqXHR, textStatus, errorThrown){
-     	            alert('logout error: ' + textStatus);
-     	        }
-     	    });
-     	    
-             
-             
-             
-                     
-     	   });//create group button ends ends
-     	    
-    	   
+              
+              
+              
+                      
+      	   });//create group button ends ends
+      	    
     	   
     	   
     	   
@@ -702,11 +703,13 @@ jQuery(document).ajaxComplete(function (e) {
           <label for="group_name" >Group Name:</label>
           <input type="text"  id="group_name" style="margin-left:10px;">
         </div>
-        </div>
-         <div class="form-group">
-          <label for="group_name" >Privacy:</label>
-          <input type="text"  id="group_privacy" placeholder="public or private" style="margin-left:30px;">
-        </div>
+       <div class="form-group">
+         <label for="sel1">Privacy:</label>
+      <select class="form-control" id="group_privacy" style="margin-left:110px;width:100px">
+        <option>private</option>
+        <option>public</option>
+      </select>
+        </div> 
         <br>     
     </div>
        
@@ -715,6 +718,7 @@ jQuery(document).ajaxComplete(function (e) {
        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div>
+      </div>
     
        </form>
     </div>

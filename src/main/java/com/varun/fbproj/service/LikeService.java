@@ -9,7 +9,7 @@ import com.varun.fbproj.model.Likes;
 public class LikeService {
 
 	DBAccess db= new DBAccess();
-	
+	//This function is called when user clicks like button(it increments no of likes in likes table)
 	public int incrementLike(Likes likeobj){
 		boolean check=false;
 
@@ -23,8 +23,7 @@ public class LikeService {
 			String query1="select * from likes where statusID=? and emailID=?"; 
 			
 			PreparedStatement pstmnt1=db.con.prepareStatement(query1);
-			//System.out.println("status id: "+likeobj.getStatusID());
-			//System.out.println("email id: "+likeobj.getEmailID());
+			
 			pstmnt1.setInt(1,likeobj.getStatusID());
 			pstmnt1.setString(2,likeobj.getEmailID());
 			ResultSet rs1= pstmnt1.executeQuery();
@@ -83,9 +82,7 @@ public class LikeService {
 			String query1="select * from likes where statusID=? and emailID=?"; 
 			
 			PreparedStatement pstmnt1=db.con.prepareStatement(query1);
-			//System.out.println("status id: "+likeobj.getStatusID());
-			//System.out.println("email id: "+likeobj.getEmailID());
-			pstmnt1.setInt(1,likeobj.getStatusID());
+						pstmnt1.setInt(1,likeobj.getStatusID());
 			pstmnt1.setString(2,likeobj.getEmailID());
 			ResultSet rs1= pstmnt1.executeQuery();
 				 rs1.last();

@@ -8,7 +8,7 @@ import java.util.Iterator;
 import com.varun.fbproj.model.User;
 
 public class SuggestedFriendService {
-
+		//This function is used to get list of suggested friends
 	public static ArrayList<User> getSuggestedFriends(ArrayList<User> al_suggested_users,String myEmailID)
 	{
 		
@@ -187,119 +187,7 @@ public class SuggestedFriendService {
 					connect.stop();
 		
 					
-				/*
-				System.out.println("the matched frnds are");
-				for(User u:al_friends){
-					System.out.print(u.getEmailID()+"   ");
-				}
-				System.out.println();
-				ArrayList<User> temp=new ArrayList();
-				for(int j=0;j<al_friends.size();j++)
-				{
-					String e2=al_friends.get(j).getEmailID();  // e2 will contain the email id from which some may belong to frnds or request already sent or received or people u mayknow
-					System.out.println("e2="+e2);
-					if(IsMyFriendService.isMyFriend(myEmailID, e2))
-					{
-						
-						//here we are removing mutual frnds thing 
-						temp=GetMyAllFriends.getMyFriends(temp,e2);
-						System.out.println("in suggessted frnds is my frnds case and showing rresults of all mutual frds="+temp);
-						for(int k=0;k<temp.size();k++){
-							String e3=temp.get(k).getEmailID();
-							System.out.println("e3="+e3);
-							
-							
-							Iterator<User> iter = temp.iterator();
-						}
-						
-						/*for(int j=0;j<temp.size();j++){
-						 *    if(temp.get(j).getEmailID()==myEmailID){
-						 *       temp.remove(j);
-						 * }
-					
-						
-						
-					//here we are removing the self entry i.e frnds ki frnd list me mera bhi naam rhega wo hatao
-						while (iter.hasNext()) 
-						{
-						    User user = iter.next();  
-						    if(user.getEmailID().equals(e2)) //
-						    {
-						        //Use iterator to remove this User object.
-						        iter.remove();
-						    }
-						}					
-						System.out.println("temp after="+temp);
-						
-						
-						
-						
-						
-						System.out.println("already a friend. so dont suggest this to me");
-						//al_friends.remove(j);
-						Iterator<User> iter = al_friends.iterator();
-						while (iter.hasNext()) 
-						{
-						    User user = iter.next();
-						    if(user.getEmailID().equals(e2))
-						    {
-						        //Use iterator to remove this User object.
-						        iter.remove();
-						    }
-						}
-						 
-					}
-					else 
-					 {
-						if(IsRequestAlreadySentService.isRequestAlreadySent(myEmailID,e2)){
-						
-						System.out.println("already sent request. so dont suggest this to me");
-						//al_friends.remove(j);
-						Iterator<User> iter = al_friends.iterator();
-						while (iter.hasNext()) 
-						{
-						    User user = iter.next();
-						    if(user.getEmailID().equals(e2))
-						    {
-						        //Use iterator to remove this User object.
-						        iter.remove();
-						    }
-						}
-						 
-					 	
-					 }
-					    else
-							{
-					    	if(IsRequestAlreadyReceived.isRequestAlreadyReceived(myEmailID,e2)){
-							
-							System.out.println("already received  request. so dont suggest this to me");
-							//al_friends.remove(j);
-							Iterator<User> iter = al_friends.iterator();
-							while (iter.hasNext()) 
-							{
-							    User user = iter.next();
-							    if(user.getEmailID().equals(e2))
-							    {
-							        //Use iterator to remove this User object.
-							        iter.remove();
-							    }
-							}
-							 
-							
-						  }
-					    	else{
-					          	if()	
-					    	
-					        	
-								else
-									{
-									  System.out.println(al_friends.get(j).getEmailID()+"not a frnd");}
-									}
-							}
-						}
-					
-				}//for loop j wala end
-	*/
+				
 			
 			
 			} catch (Exception e) {

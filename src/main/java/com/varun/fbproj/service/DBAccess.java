@@ -1,7 +1,7 @@
 package com.varun.fbproj.service;
 
 import java.sql.*;
-
+//Connects java page to Mysql database
 public class DBAccess {
 
 	Connection con=null;

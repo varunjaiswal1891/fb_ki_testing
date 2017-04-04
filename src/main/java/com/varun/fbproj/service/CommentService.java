@@ -11,7 +11,7 @@ public class CommentService {
 
     DBAccess db= new DBAccess();
     
-     public boolean addComment(Comment c){
+     public boolean addComment(Comment c){//This function is called to when user clicks Comment button ( insert comments into comments table)
             //String result;
             boolean check=false;
             try{
@@ -26,10 +26,9 @@ public class CommentService {
               ResultSet rs50= pstmnt10.executeQuery();
               rs50.next();
               String group_name=rs50.getString("group_name");
-              System.out.println("ggggggrroupnameinside query"+group_name);
-              if((rs50.getString("group_name"))==null)
-              {   System.out.println("ggggggrroupnameme agya"+group_name);
               
+              if((rs50.getString("group_name"))==null)
+              {                 
              String query = "insert into comments(comment_desc,emailID,statusID) values(?,?,?)";
                   java.sql.PreparedStatement pstmnt=db.con.prepareStatement(query);
                       pstmnt.setString(1,c.getComment_desc());
