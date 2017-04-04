@@ -9,11 +9,13 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Calendar;
+import java.util.Properties;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -21,7 +23,15 @@ import javax.swing.ImageIcon;
 public class UserImageService {
 
 	public String uploadProfilePic(InputStream fileInputStream,
-			String fileName, String token,String emailID) {
+			String fileName, String token,String emailID) throws IOException {
+		
+		Properties prop=new Properties();
+        String propFileName = "config.property";
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+        prop.load(inputStream);
+        String userName = prop.getProperty("DataFilePath");
+		
+		
 			OutputStream outputStream=null;
 			OutputStream outputStream1=null;
 			//getEmailId s1=new getEmailId();
@@ -29,12 +39,14 @@ public class UserImageService {
 			fileName=""+Calendar.getInstance().getTimeInMillis()+fileName;
 			//InputStream buffer=toBufferedImage(fileInputStream,100,100);
 
-			String path="/home/varun/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/images/";
-			//System.out.print("/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/images/");
-			String profilePicPath="/home/varun/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/";
-			//String path="/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/images/";
-			//System.out.print("/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/images/");
-			//String profilePicPath="/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/";
+	//		String path="/home/varun/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/images/";
+	
+		//	String profilePicPath="/home/varun/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/";
+	
+			String path=userName+emailID+"/images/";
+			
+			String profilePicPath=userName+emailID+"/";
+	
 			
 			
 			
@@ -50,10 +62,10 @@ public class UserImageService {
 			            }
 			                
 			}outputStream.close();outputStream1.close();
-			ImageIcon icon = new ImageIcon("/home/varun/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/profilePic.jpg");
+			//ImageIcon icon = new ImageIcon("/home/varun/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/profilePic.jpg");
+			ImageIcon icon = new ImageIcon(userName+emailID+"/profilePic.jpg");
 
-			//ImageIcon icon = new ImageIcon("/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/profilePic.jpg");
-
+			
 			BufferedImage bi = new BufferedImage(
 				    icon.getIconWidth(),
 				    icon.getIconHeight(),
@@ -66,9 +78,9 @@ public class UserImageService {
 
 
 
-File outputfile = new File("/home/varun/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/tn.jpg");
+//File outputfile = new File("/home/varun/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/tn.jpg");
+File outputfile = new File(userName+emailID+"/tn.jpg");
 
-//File outputfile = new File("/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/tn.jpg");
 
 ImageIO.write(bi, "jpg", outputfile);
 
@@ -107,17 +119,12 @@ ImageIO.write(bi, "jpg", outputfile);
     		String fileName, String token, String emailID,String statusid,String timelineid,String group_name) {
     		OutputStream outputStream=null;
     		OutputStream outputStream1=null;
-    		//getEmailId s1=new getEmailId();
-    		//String email=s1.getemailId(token);
     		fileName=""+Calendar.getInstance().getTimeInMillis()+fileName;
-    		//InputStream buffer=toBufferedImage(fileInputStream,100,100);
+    		
     		String path="/home/varun/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/";
-    		//System.out.print("/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/images/");
+    		
     		String profilePicPath="/home/varun/git/fb_ki_testing/src/main/webapp/users/"+emailID+"/";
-    		//String path="/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/images/";
-    		//System.out.print("/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/images/");
-    		//String profilePicPath="/home/umesh/Desktop/sem1/fb_ki_testing/src/main/webapp/users/"+emailID+"/";
-    		   
+    		  
     		boolean check=false;
     		   DBAccess db=new DBAccess();
     		try{
