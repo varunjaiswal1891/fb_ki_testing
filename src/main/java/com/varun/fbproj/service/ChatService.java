@@ -65,8 +65,8 @@ public class ChatService {
 			   
 			  String query3="update chat set status='Delivered' where senderEmail=? AND receiverEmail=?  ";	   
 			  PreparedStatement ps=db.con.prepareStatement(query3);
-			  ps.setString(2,obj.getReceiverEmail()); 
-			  ps.setString(1,obj.getSenderEmail());
+			  ps.setString(1,obj.getReceiverEmail()); 
+			  ps.setString(2,obj.getSenderEmail());
 			  
 			
 			  ps.executeUpdate();

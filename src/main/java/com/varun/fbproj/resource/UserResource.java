@@ -41,6 +41,7 @@ import com.varun.fbproj.service.RetriveNameService;
 import com.varun.fbproj.service.RetriveService;
 import com.varun.fbproj.service.SearchFriendService;
 import com.varun.fbproj.service.SignUpService;
+import com.varun.fbproj.service.StatusService;
 import com.varun.fbproj.service.TokenService;
 import com.varun.fbproj.service.UpdateService;
 import com.varun.fbproj.service.UserImageService;
@@ -142,39 +143,7 @@ public class UserResource {
 
 	}//loginuser method ends here
 	
-	/*
-	@POST
-	@Path("/uploadProfilePic")
-	@Produces(MediaType.TEXT_PLAIN)
-	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	public Response updateProfilePic(
-			
-	        @FormDataParam("file") InputStream fileInputStream,
-	        @FormDataParam("file") FormDataContentDisposition fileFormDataContentDisposition,@CookieParam("ID") String token) throws UnsupportedJwtException, MalformedJwtException, SignatureException, IllegalArgumentException, UnsupportedEncodingException {
-	    // local variables
-		
-	    String fileName = null;
-	    String uploadFilePath = null;
-	    System.out.print("backend");
-	    System.out.print(token);
-	    System.out.println("jwt="+ token);
-		Claims claims = Jwts.parser()         
-			       .setSigningKey("secret".getBytes("UTF-8"))
-			       .parseClaimsJws(token).getBody();
-			    System.out.println("Subject: " + claims.getSubject());
-			    System.out.println("Expiration: " + claims.getExpiration());
-			  String emailID=claims.getSubject();
-	    //System.out.print(userId);
-	    fileName = fileFormDataContentDisposition.getFileName();
-	    uploadFilePath = new UserImageService().uploadProfilePic(fileInputStream, fileName,token,emailID);
-	    if(uploadFilePath==null)
-	    return Response.notModified().build();
-	    
-	    return Response.ok().entity(uploadFilePath).build();    
-	}
 
-	*/
-	
 	
 
 	@PUT
@@ -308,10 +277,11 @@ public class UserResource {
    			  String emailID=claims.getSubject();
    	    System.out.print(statusid+"statusidddddddd");
    	    fileName = fileFormDataContentDisposition.getFileName();
+   	    String timelineid=new StatusService().gettimelineid(statusid);
    	   String statusid1=Integer.toString(statusid);
    	 System.out.println("fillle");
- 	   String privacy=GroupService.getPrivacy(gname);
-   	     uploadFilePath=new UserImageService().uploadProfilePic2(fileInputStream, fileName,token,emailID,statusid1,privacy);
+ 	   
+   	     uploadFilePath=new UserImageService().uploadProfilePic2(fileInputStream, fileName,token,emailID,statusid1,timelineid,gname);
    	  System.out.println("filllessss");
   	 if(uploadFilePath.equals(null))
   	 {
@@ -324,40 +294,6 @@ public class UserResource {
     
     
     
-   /* @POST  
-    @Path("/uploadProfilePic2")  
-    @Consumes(MediaType.MULTIPART_FORM_DATA)  
-    public Response uploadFile(  
-            @FormDataParam("file") InputStream uploadedInputStream,  
-            @FormDataParam("file") FormDataContentDisposition fileDetail,@CookieParam("ID") String token,@FormDataParam("status_id") int statusid) throws UnsupportedJwtException, MalformedJwtException, SignatureException, IllegalArgumentException, UnsupportedEncodingException {  
-           
-    	Claims claims = Jwts.parser()         
-			       .setSigningKey("secret".getBytes("UTF-8"))
-			       .parseClaimsJws(token).getBody();
-			    System.out.println("Subject: " + claims.getSubject());
-			    System.out.println("Expiration: " + claims.getExpiration());
-			  String emailID=claims.getSubject();
-	    
-    	
-    	String fileLocation = "/home/vishal/git/fb_ki_testing/src/main/webapp/users/"+emailID;  
-                    //saving file  
-            try {  
-                FileOutputStream out = new FileOutputStream(new File(fileLocation));  
-                int read = 0;  
-                byte[] bytes = new byte[1024];  
-                out = new FileOutputStream(new File(fileLocation));  
-                while ((read = uploadedInputStream.read(bytes)) != -1) {  
-                    out.write(bytes, 0, read);  
-                }  
-                out.flush();  
-                out.close();  
-            } catch (IOException e) {e.printStackTrace();}  
-            String output = "File successfully uploaded to : " + fileLocation;  
-            return Response.status(200).entity(output).build();  
-        }  
-    
-    
-    */
     
     
     
