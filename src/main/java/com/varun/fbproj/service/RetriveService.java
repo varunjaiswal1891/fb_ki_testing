@@ -42,16 +42,11 @@ public class RetriveService {
 					u.setHometown(result.getString(11));
 					u.setCityOfWork(result.getString(12));
 					u.setHighschool(result.getString(13));
-					//u.setBp(result.getString(14));
-					//String xx=result.getString(14);
-					//System.out.println("xx=="+xx);
+					
 					connect.stop();
 						return u;
-						//System.out.println("YES");
-					
-					
-					
-					
+						
+				
 				}
 			}
 			else

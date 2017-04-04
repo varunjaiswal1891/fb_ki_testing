@@ -52,7 +52,7 @@ margin-left: 10px;
   margin-bottom:12px !important;
   
  }
- .btn{
+ .btn1{
  padding: 0px 0px;
  }
 
@@ -141,7 +141,7 @@ margin-left:20px;
         	$(".dropdown-menu li a").click(function(){
         		  $(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="caret"></span>');
         		  feeling=  $(this).parents(".dropdown").find('.btn').val($(this).data('value')).text();
-        			alert(feeling);	 
+        			//alert(feeling);	 
         	});     
 
         	
@@ -329,7 +329,7 @@ margin-left:20px;
                         	   st+="<div class="+"\"panel-body\""+"id=\"forcomment\""+">";
                         	   st+="<div class="+"\"row\""+">";
                         	   st+="<div class="+"\"col-md-12\""+">";
-                        		 st+="<p class=\" col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></p>";
+                        		 st+="<p class=\" col-sm-3\"><img class="+"\"img-responsive img-thumbnail\" style=\"max-height:60px;\" "+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></p>";
                                  st+="<div class=\" col-sm-5\"><p><font size="+"\"4\""+"color="+"\"blue\""+">"+data[i].name+"</font></p></div>" ;
                                   if(data[i].name2==null)
                                  	  {
@@ -344,16 +344,16 @@ margin-left:20px;
                                  st+="</div>";
                                 // st+="<hr>";
                                  st+="<div class="+"\"row\""+">";
-                                 if(data[i].group_name!=null)
+                                 if(data[i].group_name!=null){st+="<br>";
                               	   st+="<p id="+"\"forstatus\"class="+"\"leftpadding11\""+"><font size="+"\"3\""+"color="+"\"blue\""+">Posted in-> "+data[i].group_name+"</font></p>" ;
-                              	   
+                                 }
                                  if((data[i].name2==null)&&(data[i].feeling==null))
                              	{
                              	  
                              	  
                              	}
                                else if((data[i].name2==null)&&(data[i].feeling!=null))
-                             	  {
+                             	  {st+="<br>";
                                st+="<p id="+"\"feelings\""+"class="+"\"leftpadding\""+"><font size="+"\"2\""+"color="+"\"#A4A4A4\""+">"+data[i].feeling+"<font></p>" ;
                                
                              
@@ -368,7 +368,9 @@ margin-left:20px;
                                  }
                                  
                               /*  st+="<ul type="+"\"disc\""+">";
- */                               st+="<p id="+"\"time\""+"class="+"\"leftpadding\""+"><font size="+"\"2\""+"color="+"\"#A4A4A4\""+">"+data[i].postedon+"<font></p>" ;
+ */ 
+ 								st+="<br>";
+ 								st+="<p id="+"\"time\""+"class="+"\"leftpadding \""+"><font size="+"\"2\""+"color="+"\"#A4A4A4\""+">"+data[i].postedon+"<font></p>" ;
                               /*  st+="</ul>"; */
                                /*  /* st+="<ul>";
                                  st+="<li id="+"\"time\""+">"+data[i].postedon+"</li>" ;
@@ -493,7 +495,7 @@ margin-left:20px;
                         		    st+= "<div class=\" col-sm-5\"><p id="+"\"outputname\""+"><font size="+"\"3\""+"color="+"\"blue\""+">"+data[i].a[j].name+"</font></p></div>"; 
                         			/* $(status_name).appendTo('#text_color');
                             	   document.getElementById("forstatus").style.color="blue"; */
-                            	 	st+="<br><br>";
+                            	 	st+="<br><br><br>";
                             	  
                         		   st+= "<p id="+"\"output\""+"class="+"\"comment1\""+"><font size="+"\"2\""+"color="+"\"black\""+">"+data[i].a[j].comment_desc+"</font></p>";
                         	  st+="<br>";
@@ -508,7 +510,7 @@ margin-left:20px;
                         	   //st+="<div class="+"\"input-group\""+">";
                         	   st+="<input type="+"\"text\""+" class="+"\"form-group col-sm-9 customtextarea\""+" id=\"comment_d"+data[i].statusID+"\""+" placeholder="+"\"Write a comment...\""+">";
                                //st+="<div class="+"\"input-group-btn\""+">";
-                           		st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right  custom\""+"id=\""+data[i].statusID+"\""+" OnClick=\"comment(this);\">Comment</button>";
+                           		st+="<button type="+"\"button\""+" class="+"\"btn1 btn-primary pull-right  custom\""+"id=\""+data[i].statusID+"\""+" OnClick=\"comment(this);\">Comment</button>";
                            		//st+="</span>";
                            		//st+="</div>";
                            		st+="</div>";
@@ -537,11 +539,11 @@ margin-left:20px;
        	
     		window.highlight = function(e1){
     		  
-    			alert("testing: "+e1);
+    			//alert("testing: "+e1);
     			 var chk="like";
 				   chk+=e1;
-				  alert(chk);
-				  
+				 // alert(chk);
+				//  
 				  document.getElementById(chk).style.color="#ff0000";
     		  
     	  }
@@ -621,7 +623,7 @@ margin-left:20px;
     	    		  
     				   var tempid= $(e1).attr('id');
     				   var statusid = tempid.slice(4);
-    				   alert(statusid);
+    				 //  alert(statusid);
     				   
     				  /*  alert("cccacacaca"+statusid);
     				   */ var sid={statusID:statusid};
@@ -751,7 +753,9 @@ margin-left:20px;
 
                  		 
                  		var statusdesc= document.getElementById("posttext").value;
-                 		
+                 		 var file_data = $("#file-select").prop("files")[0]; 
+                 		 if((file_data==null)&&(statusdesc=="")){}
+                 		 else{
                  		 //alert(x);
                  		 var obj2={status_desc:statusdesc,feeling:feeling,timelineid:timelineid};
                  		 var mahjson=JSON.stringify(obj2);
@@ -772,7 +776,7 @@ margin-left:20px;
               	   //console.log(statusid);
             		
               	
-                 		 var file_data = $("#file-select").prop("files")[0];   // Getting the properties of file from file field
+                 		  // Getting the properties of file from file field
                  		if(file_data!=null){
                  		var form_data = new FormData();                  // Creating object of FormData class
                  		form_data.append("file", file_data);             // Appending parameter named file with properties of file_field to form_data
@@ -799,7 +803,7 @@ margin-left:20px;
                  		      	       },
                  	          	       
                  	          	      error: function(){
-                 	        	            alert('status posting errorrrrrr');
+                 	        	           // alert('status posting errorrrrrr');
                  	        	        }	 
                  	                     
                  		
@@ -829,7 +833,7 @@ margin-left:20px;
                  	             
 
        	                       
-
+             }
          	
        });      	
                  	
@@ -1014,7 +1018,7 @@ margin-left:20px;
                     success: function(resp){
                         
                         if(resp!=null){
-                                            alert("group created");
+                                         //   alert("group created");
                                        window.location.replace("myGroups.html");
                         }    
                         else
@@ -1287,7 +1291,7 @@ margin-left:20px;
  	
  										
 											                  
- 											<button class="btn btn-primary pull-right col-sm-1" type="button" id="postbutton">Post</button><ul class="list-inline"><li><a href=""><!-- <i class="glyphicon glyphicon-upload"></i> --></a></li></ul>
+ 											<button class="btn1 btn-primary pull-right col-sm-1" type="button" id="postbutton">Post</button><ul class="list-inline"><li><a href=""><!-- <i class="glyphicon glyphicon-upload"></i> --></a></li></ul>
 
 											
 									<!-- 		<button class="btn btn-primary pull-right" type="button" id="postbutton">Post</button><ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>

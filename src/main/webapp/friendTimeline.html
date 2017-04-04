@@ -51,7 +51,7 @@
         	$(".dropdown-menu li a").click(function(){
         		  $(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="caret"></span>');
         		  feeling1=  $(this).parents(".dropdown").find('.btn').val($(this).data('value')).text();
-        			alert(feeling1);	 
+        			//alert(feeling1);	 
         	});        	
         	
         	
@@ -232,7 +232,7 @@
                         // we have the response  
                        if(response!=null){
                 
-                           alert(response);
+                         //  alert(response);
                           location.reload();
                        }
                        else{
@@ -262,7 +262,7 @@
                        var myJSON=JSON.stringify(sid);
                        //alert(statusid);
                        
-    				   alert(statusid);
+    				 //  alert(statusid);
     				  
                        
                        $.ajax({ 
@@ -376,7 +376,7 @@
                    
                   if(resp!=null){
                       
-                     alert(resp);
+                   //  alert(resp);
                      /* $('#posttext').val('');
    */                  location.reload();
                       
@@ -717,7 +717,7 @@ for (var i=data.length-1; i >=0; i--){
  	   st+="<div class="+"\"panel-body\""+"id=\"forcomment\""+">";
  	   st+="<div class="+"\"row\""+">";
  	   st+="<div class="+"\"col-md-12\""+">";
- 		 st+="<div class=\" col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
+ 		 st+="<div class=\" col-sm-3\"><img class="+"\"img-responsiveimg-thumbnail\" style=\"max-height:60px;\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
           st+="<div class=\" col-sm-5\"><p><font size="+"\"4\""+"color="+"\"blue\""+">"+data[i].name+"</font></p></div>" ;
            //st+="<br>";
           st+="</div>";

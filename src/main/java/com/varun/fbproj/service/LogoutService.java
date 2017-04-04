@@ -29,18 +29,7 @@ public class LogoutService {
                 System.out.println("A user was deleted successfully!");
                 return true;
             }
-            
-            
-            
-			/*PreparedStatement ps = connect.con.prepareStatement("delete from User_token where emailID = ? ");
-			ps.setString(1,emailID);
-			ResultSet result = ps.executeQuery();
-			boolean flag1=ps.execute();
-			if(flag1==true)
-			{
-				System.out.println("Logout success");
-				return true;
-			}*/
+         
 
 		} catch (Exception e) {
 			e.printStackTrace();

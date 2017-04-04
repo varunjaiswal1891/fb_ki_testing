@@ -39,7 +39,7 @@ public class FriendRequestResource {
 			       .setSigningKey("secret".getBytes("UTF-8"))
 			       .parseClaimsJws(jwt).getBody();
 			    System.out.println("Subject: " + claims.getSubject());
-			   // System.out.println("Expiration: " + claims.getExpiration());
+			  
 			  String myEmailID=claims.getSubject();
 		if(FriendRequestService.addFriendRequest(myEmailID, friendEmailID))
 		{
@@ -89,7 +89,7 @@ public class FriendRequestResource {
 			       .setSigningKey("secret".getBytes("UTF-8"))
 			       .parseClaimsJws(jwt).getBody();
 			    System.out.println("Subject: " + claims.getSubject());
-			   // System.out.println("Expiration: " + claims.getExpiration());
+		
 			  String myEmailID=claims.getSubject();
 		
 			  FriendRequestService.updateOldRequest(myEmailID, friendEmailID);
@@ -156,7 +156,6 @@ public class FriendRequestResource {
 			       .setSigningKey("secret".getBytes("UTF-8"))
 			       .parseClaimsJws(jwt).getBody();
 			    System.out.println("Subject: " + claims.getSubject());
-			   // System.out.println("Expiration: " + claims.getExpiration());
 			  String myEmailID=claims.getSubject();	
 		al_requestList=FriendRequestService.getAllFriendRequest(myEmailID, al_requestList);
 		

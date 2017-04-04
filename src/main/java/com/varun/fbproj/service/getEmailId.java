@@ -3,7 +3,7 @@ package com.varun.fbproj.service;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 
-
+//this function is used to get emailid of a person
 public class getEmailId {
 	public String getemailId(String token)
     {

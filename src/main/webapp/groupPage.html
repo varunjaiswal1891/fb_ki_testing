@@ -20,12 +20,12 @@
 }
 .img-container1 {
         position: absolute;
-    top: 300px; bottom: 10px; left:660px; right: 10px; //to place it as you want.
+    top: 250px; bottom: 10px; left:660px; right: 10px; //to place it as you want.
 
 }
 .img-container2 {
         position: absolute;
-    top: 300px; bottom: 10px; left:230px; right: 10px; //to place it as you want.
+    top: 220px; bottom: 10px; left:10px; right: 10px; //to place it as you want.
 
 }
 
@@ -54,7 +54,7 @@ p.leftpadding {
 
     
     
-}
+} 
 
 
 
@@ -75,7 +75,7 @@ margin-left: 10px;
   margin-bottom:12px !important;
   
  }
- .btn{
+ .btn1{
  padding: 0px 0px;
  }
 
@@ -130,7 +130,7 @@ margin-left:20px;
                   
                   else
                	   {
-               	  alert("something wrong");
+               	 //alert("something wrong");
                	   }
                 },
   	    
@@ -197,7 +197,7 @@ margin-left:20px;
                     
                     else
                  	   {
-                 	  alert("something wrong to get admin");
+                 	  //alert("something wrong to get admin");
                  	   }
                   },
     	    
@@ -214,7 +214,7 @@ margin-left:20px;
                       
                       else
                    	   {
-                   	  	alert("data cannot be fetched");
+                   	  	//alert("data cannot be fetched");
                    	   }
                     },
    	    
@@ -259,7 +259,7 @@ margin-left:20px;
                   
                   else
                	   {
-               	  alert("something wrong");
+               	 // alert("something wrong");
                	   }
                 },
   	    
@@ -327,7 +327,7 @@ margin-left:20px;
                             
                             else
                          	   {
-                         	  alert("something wrong");
+                         	 // alert("something wrong");
                          	   }
                           },
          	    
@@ -375,7 +375,7 @@ margin-left:20px;
     	                    
     	                    else
     	                 	   {
-    	                 	  alert("something wrong in adding member");
+    	                 	  //alert("something wrong in adding member");
     	                 	   }
     	                  },
 	       
@@ -410,7 +410,7 @@ margin-left:20px;
     	                         // we have the response  
     	                        if(response!=null){
     	                 
-    	                            alert(response);
+    	                           // alert(response);
     	                           location.reload();
     	                        }
     	                        else{
@@ -458,7 +458,7 @@ margin-left:20px;
                     	   st+="<div class="+"\"panel-body\""+"id=\"forcomment\""+">";
                     	   st+="<div class="+"\"row\""+">";
                     	   st+="<div class="+"\"col-md-12\""+">";
-                    		 st+="<p class=\" col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></p>";
+                    		 st+="<p class=\" col-sm-3\"><img class="+"\"img-responsiveimg-thumbnail\" style=\"max-height:60px;\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></p>";
                              st+="<div class=\" col-sm-5\"><p><font size="+"\"4\""+"color="+"\"blue\""+">"+data[i].name+"</font></p></div>" ;
                              
                              	  
@@ -596,7 +596,7 @@ margin-left:20px;
                     	   //st+="<div class="+"\"input-group\""+">";
                     	   st+="<input type="+"\"text\""+" class="+"\"form-group col-sm-9 customtextarea\""+" id=\"comment_d"+data[i].statusID+"\""+" placeholder="+"\"Write a comment...\""+">";
                            //st+="<div class="+"\"input-group-btn\""+">";
-                       		st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right  custom\""+"id=\""+data[i].statusID+"\""+" OnClick=\"comment(this);\">Comment</button>";
+                       		st+="<button type="+"\"button\""+" class="+"\"btn1 btn-primary pull-right  custom\""+"id=\""+data[i].statusID+"\""+" OnClick=\"comment(this);\">Comment</button>";
                        		//st+="</span>";
                        		//st+="</div>";
                        		st+="</div>";
@@ -646,7 +646,7 @@ margin-left:20px;
              	   
                     // we have the response  
              	   if(response!=null){
-            		alert("eeeeeeeeeeee");
+            		//alert("eeeeeeeeeeee");
              		   location.reload();
 				
              	   }
@@ -768,7 +768,7 @@ margin-left:20px;
     	                       
     	                       else
     	                    	   {
-    	                    	  	alert("data cannot be fetched");
+    	                    	  	//alert("data cannot be fetched");
     	                    	   }
     	                     },
     	    	    
@@ -792,13 +792,13 @@ margin-left:20px;
                   	       success: function(resp){
                   	    	   
                   	    	  if(resp!=null){
-                  	    		  alert("leave group success");
+                  	    		  //alert("leave group success");
                   	    		window.location.replace("myGroups.html");
                   	    		 		  
                   	    	  }
                   	    	  else{
                   	    		
-                  	    		  alert("null");
+                  	    		 // alert("null");
                   	    	  }
                   	    	   
                   	       },
@@ -827,7 +827,7 @@ margin-left:20px;
                    	       success: function(resp){
                    	    	   
                    	    	  if(resp!=null){
-                   	    		  alert("delete group success");
+                   	    		 // alert("delete group success");
                    	    		window.location.replace("myGroups.html");
                    	    		 		  
                    	    	  }
@@ -860,6 +860,9 @@ margin-left:20px;
                  		 
                  		var statusdesc= document.getElementById("posttext").value;
                  		 //alert(x);
+                 		 var file_data = $("#file-select").prop("files")[0]; 
+                 		 if((file_data==null)&&(statusdesc=="")){}
+                 		 else{
                  		 var obj2={status_desc:statusdesc,timelineid:timelineid};
                  		 var mahjson=JSON.stringify(obj2);
                  		 
@@ -879,7 +882,8 @@ margin-left:20px;
               	   // alert(resp);
      	    		 var statusid=obj.statusID;
               	    var file_data = $("#file-select").prop("files")[0];   // Getting the properties of file from file field
-              	  if(file_data!=null){alert("kya be");
+              	  if(file_data!=null){
+              		  //alert("kya be");
                  		var form_data = new FormData();                  // Creating object of FormData class
                  		form_data.append("file", file_data);             // Appending parameter named file with properties of file_field to form_data
                  		 //form_data.append('file', $("#file-select"+elem)[0].files[0]);
@@ -918,7 +922,7 @@ margin-left:20px;
      	    	  }
      	    	  else{
      	    		
-     	    		  alert("null");
+     	    		  //alert("null");
      	    	  }
      	    	   
      	       },
@@ -928,7 +932,8 @@ margin-left:20px;
    	        }	 
                  		 
                  		 
-                 		 });    		 
+                 		 });   
+                 		 }		 
                  		 
                  	 });    //post button   	
                  	
@@ -989,12 +994,12 @@ margin-left:20px;
                     // we have the response  
              	   if(response!=null){
                      var data =JSON.parse(JSON.stringify(response));  
-                     document.getElementById("group_admin").innerHTML=data.fname+" "+data.lname;
+                     document.getElementById("group_admin").innerHTML="Admin :"+data.fname+" "+data.lname;
                     }  
                     
                     else
                  	   {
-                 	  alert("something wrong to get admin");
+                 	 // alert("something wrong to get admin");
                  	   }
                   },
     	    
@@ -1037,7 +1042,7 @@ margin-left:20px;
                 
                 else
              	   {
-             	  alert("something wrong");
+             	  //alert("something wrong");
              	   }
               },
 	    
@@ -1164,12 +1169,12 @@ margin-left:20px;
      	        success: function(resp){
      	            
      	            if(resp!=null){
-     	   	                    	 alert("group created");
+     	   	                    	// alert("group created");
      	                    	   window.location.replace("todoPage.html");
      	            }	
      	            else
      	            {
-     	            	alert("group creation failed ");
+     	            	//alert("group creation failed ");
      	            	window.location.replace("userHome1.html");
      	            }	
      	            
@@ -1191,7 +1196,7 @@ margin-left:20px;
          modalform1.submit(function() {
          var fd1 = new FormData($('#uploadPic')[0]);
          console.log(fd1);
-         alert("uploading");
+         //alert("uploading");
          $.ajax({
          type : modalform1.attr('method'),
          url : modalform1.attr('action'),
@@ -1296,21 +1301,9 @@ jQuery(document).ajaxComplete(function (e) {
 							  <li>
 								<a href="todoPage.html" title="Notifications"><i class="glyphicon glyphicon-cloud"></i><span class="badge">5</span></a>
 							  </li>
-							  
-							  							<li role="separator" class="divider"></li>
-   
-	
-								 <li role="separator" class="divider"></li>
-   
-	                              <li>
-                                
-                                	<a type="submit" class="" id="logoutButton1">Logout</a> 
-                             	
-                             </li>
-							  
-							  
-							  
-							  
+							  <li>
+							 	<button type="submit" class="btn btn-default" id="logoutButton1" ">Logout</button>
+							  </li>
 							</ul>
 							
 							</nav>
@@ -1319,7 +1312,7 @@ jQuery(document).ajaxComplete(function (e) {
 				
 					  
 					  
-						<div class="padding">
+						
 							<div class="full col-sm-12">
 							  
 				<!--  		   <form id="uploadPic"action="http://localhost:8080/DemoFB/webapi/group/uploadPic" method="post" enctype="multipart/form-data">
@@ -1330,19 +1323,7 @@ jQuery(document).ajaxComplete(function (e) {
         
     </form> -->
     
-								<!-- content -->
-								<div class="row">
-								<label for="group_name" style="font-size:20px" >Group Name</label>
-								<b style="color:blue;" style="margin-left:20px" id="group_name"></b>
 								
-								<label for="group_admin" style="font-size:20px">Admin</label>
-								<b style="color:blue;" style="margin-left:30px" id="group_admin"></b>
-								
-								<button class="btn btn-primary pull-right"  type="button" id="deleteGroup">Delete Group</button>
-								<button class="btn btn-primary pull-right"  type="button" id="leavebutton">Leave Group</button>
-								
-								</div>
-					
 								
 									<!-- sidebar -->
 				 	<div class="column col-sm-2 col-xs-2 "   style="background-color: #E9EAED">
@@ -1425,10 +1406,57 @@ jQuery(document).ajaxComplete(function (e) {
 				  
 				
 				
-				
+				<div class="row">
 								  
 								 <!-- main col left --> 
-								 <div class="col-sm-5 col-xs-5">
+								 <div class="col-sm-8 col-xs-8">
+								   
+										<div class="row">
+				    
+			                                               
+<div class="carousel-inner">
+            <div class="item active">
+
+                    <img id="cover" src="cover.jpg"  class=" img-responsive" width="1000" height="400">    
+                                
+                
+    <div class="img-container3" >
+      <div class="img-text offset4">
+      		<h1></h1>
+		</div></div>
+		
+      <div class="img-container2" >
+      <div class="img-text offset4">
+      		<h1><b style="color:white;" style="margin-left:20px" id="group_name"></b></h1>
+		</div></div>
+		<div class="img-container1" >
+      <div class="img-text offset4">
+      						
+	  <form class="navbar-form navbar-left" action="#">
+												<div class="input-group input-group-sm" style="max-width:200px;">
+								  				
+								  				<div class="input-group-btn">
+												
+												<a href="#postModal" role="button" data-toggle="modal" id="addMemberbutton" class="btn btn-primary pull-right"> Add member</a>
+								  				</div>
+								  				<div class="list-group">
+													<div id="SearchResult"></div> 
+													<p id="SearchResult"></p>
+									 			 </div>
+												</div>
+											</form>
+										
+      </div></div></div>
+  </div>  </div>    
+				  
+				  <div class="row">
+								
+								
+	 <button class="btn btn-primary pull-right"  type="button" id="deleteGroup" style="margin-right: 30px;">Delete Group</button>
+	  <button class="btn btn-primary pull-right"  type="button" id="leavebutton">Leave Group</button>
+								
+								</div>
+																 <div class="col-sm-8 col-xs-8">
 								   
 										<div class="well"> 
 										   <form class="form-horizontal" role="form">
@@ -1513,56 +1541,74 @@ jQuery(document).ajaxComplete(function (e) {
 									 										
 								   
 								  </div>
+ <!-- panel body footer -->
+
+ 
+<!--  div of panel default for status update 1 -->
+								   
+							
+		  	   <!--like modal-->
+		 <div id="likeModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog">
+		  <div class="modal-content">
+			  <div class="modal-header">
+			 
+				  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Hide</button>
+					<h4>People Who Liked This Status</h4>
+			  </div>
+			  <div class="modal-body">
+				  <form class="form center-block">
+					<div class="form-group" id="showlikesnames">
+					
+					 <!--  <textarea class="form-control input-lg" autofocus="" placeholder="What do you want to share?"></textarea> -->
+					</div>
+				  </form>
+			  </div>
+			  <div class="modal-footer">
+				  <div>
+				 <!--  <button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Post</button> -->
+					<!-- <ul class="pull-left list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul> -->
+				  </div>	
+			  </div>
+		  </div>
+		  </div>
+		
+		
+    
+									 										
+								   
+								  </div>
 								  
 								  <!-- main col center -->
-								  <div class="col-sm-2 col-xs-2">
-									   
+								  <div class="col-sm-4 col-xs-4">
+									<h4><b id="group_admin"></b></h4>   
 								
 
 									   <div class="panel panel-default">
 										 <div class="panel-heading"> <h4>Group members</h4></div>
+ 												<div class="pre-scrollable" style="height:150px">
  												<div id="groupMembers"></div>
   	                                            <p id="groupMembers"></p>
 										
 									   </div>
 									
 									
-							        <div class="panel panel-default">
-										<div class="panel-heading"> <h4>Add Members</h4></div>
-										  <div class="panel-body">
-										  	<form class="navbar-form navbar-left" action="#">
-												<div class="input-group input-group-sm" style="max-width:200px;">
-								  				
-								  				<div class="input-group-btn">
-												
-												<a href="#postModal" role="button" data-toggle="modal" id="addMemberbutton" class="btn btn-primary pull-right"> Add member</a>
-								  				</div>
-								  				<div class="list-group">
-													<div id="SearchResult"></div> 
-													<p id="SearchResult"></p>
-									 			 </div>
-												</div>
-											</form>
-												
-										  </div>
-										
-									  </div>
+							       
 
 									
 								  </div>
+								  </div>
 								  
-								  
-								  
+				</div>				  
 								   <!-- main col right -->
-								  <div class="col-sm-3 col-xs-3" >
-									<div class="pre-scrollable" style="background-color: #d8dfea;margin-bottom:.5cm; margin-top:.5cm; min-height:95%;">   
-									   <div class="panel panel-default">
-										 <div class="panel-heading"><h4>My Friends</h4></div>
-										 	<div id="allFriends"></div>
-  	                                            <p id="allFriends"></p>
-										
-									   </div>
-									</div>
+								 <div class=" col-sm-3 col-xs-3 affix" style="float:right; left:990px; top:20px;" >
+    	 <br>
+	   <div class="panel panel-primary" style="float:right; left:1000px; top:30px; min-height: 2000px">
+	   <div class="panel-heading"><h4>My Friends</h4></div>
+		<div class="pre-scrollable" style="max-height:580px;overflow-y: scroll;">   
+		<p id="allFriends"></p>
+			</div>
+		  </div>			    
 									   
 									
 								  </div>
@@ -1603,6 +1649,13 @@ jQuery(document).ajaxComplete(function (e) {
           <label for="group_name" >Group Name:</label>
           <input type="text"  id="group_name" style="margin-left:10px;">
         </div>
+         <div class="form-group">
+         <label for="sel1">Privacy:</label>
+      <select class="form-control" id="group_privacy" style="margin-left:110px;width:100px">
+        <option>private</option>
+        <option>public</option>
+      </select>
+        </div> 
         <br>     
     </div>
        

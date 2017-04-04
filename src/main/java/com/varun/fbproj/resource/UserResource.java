@@ -261,7 +261,7 @@ public class UserResource {
    			
    	        @FormDataParam("file") InputStream fileInputStream,
    	        @FormDataParam("file") FormDataContentDisposition fileFormDataContentDisposition,@CookieParam("ID") String token,@FormDataParam("status_id") int statusid,@CookieParam("ID_group") String group_name
-   	   		) throws UnsupportedJwtException, MalformedJwtException, SignatureException, IllegalArgumentException, UnsupportedEncodingException, URISyntaxException {
+   	   		) throws UnsupportedJwtException, MalformedJwtException, SignatureException, IllegalArgumentException, URISyntaxException, IOException {
    	    	
    	    String fileName = null;
    	 String gname=group_name.replaceAll("%20", " ");

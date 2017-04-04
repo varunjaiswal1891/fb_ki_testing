@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import com.varun.fbproj.model.User;
-
+//This fuction is used to check if a particular person is my friend or not
 public class IsMyFriendService {
 
 	public static boolean isMyFriend(String emailID1,String emailID2)

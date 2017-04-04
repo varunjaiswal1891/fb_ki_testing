@@ -126,42 +126,51 @@ $(document).ready(function() {
 	   });//logout button ends ends
 	   
 	   $("#createGroup").click(function(e){
-	      	  
+		   var group_privacy=$("#group_privacy option:selected").val();
            // window.location.replace("todoPage.html");
             var group_name=$("input#group_name").val();
+            if((group_privacy=="")||(group_name==""))
+            	{
+            	alert("please fill all the fields");
+            	window.location.replace("userHome1.html");
+            	}
+            var obj = { group_name:group_name,group_privacy:group_privacy
+                       };  
+               var myJSON = JSON.stringify(obj);
+               //document.write(myJSON);
             $.ajax({
-    	        type: "POST",
-    	        contentType: "text/plain",  //send data to server in this format
-    	        url:"http://localhost:8080/DemoFB/webapi/group/create_group",
-    	        dataType: "text",  //expect response of this type
-    	        data: group_name,
-    	        success: function(resp){
-    	            
-    	            if(resp!=null){
-    	   	                    	 alert("group created");
-    	                    	   window.location.replace("myGroups.html");
-    	            }	
-    	            else
-    	            {
-    	            	alert("group creation failed ");
-    	            	window.location.replace("userHome1.html");
-    	            }	
-    	            
-    	            
-    	        },
-    	        error: function(jqXHR, textStatus, errorThrown){
-    	            alert('logout error: ' + textStatus);
-    	        }
-    	    });
-    	    
-            
-            
-            
-            
+                type: "POST",
+                contentType: "application/json",  //send data to server in this format
+                url:"http://localhost:8080/DemoFB/webapi/group/create_group",
+                dataType: "text",  //expect response of this type
+                data: myJSON,
+                success: function(resp){
                     
-    	   });//create group button ends ends
-    	       
-	   
+                    if(resp!=null){
+                                     //   alert("group created");
+                                   window.location.replace("myGroups.html");
+                    }    
+                    else
+                    {
+                        alert("group creation failed ");
+                        window.location.replace("userHome1.html");
+                    }    
+                    
+                    
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    alert('logout error: ' + textStatus);
+                }
+            });
+            
+                         
+
+         
+         
+         
+                 
+ 	   });//create group button ends ends
+ 	    
 	   
 	   
 	$.ajax({ 
@@ -999,8 +1008,11 @@ jQuery(document).ajaxComplete(function (e) {
 							<b>Create</b>
 							<br>
 							<ul class="nav hidden-xs" id="xs-menu">
+							<li><input type="button" id ="popup1" class="btn btn-primary" value="Ad" data-toggle="modal" onclick="location.href='todoPage.html'" data-target="" style="min-width:80px;"></li>		
+				<li><input type="button" id ="popup2" class="btn btn-primary" value="Page" data-toggle="modal" onclick="location.href='todoPage.html'" data-target=""  data-target="" style="min-width:80px;"></li>
 							<li> <input type="button" id ="popup1" class="btn btn-primary" style="min-width :80px"  value="Event" data-toggle="modal" data-target="#myModalevent"></li>
-			
+							<li><input type="button" id ="popup3" class="btn btn-primary" value="Group" data-toggle="modal" data-target="#groupModal" style="min-width:80px;"></li>
+							
 							<li><a href="#"  data-toggle="modal" data-target="#myModalincomingevent"><i class="glyphicon glyphicon-refresh"></i> Upcoming-Event</a></li>
 							<li><a href="#"  data-toggle="modal" data-target="#myModalincomingbirthday"><i class="glyphicon glyphicon-refresh"></i> Incoming-Birthday</a></li>
 						</ul>
@@ -1327,9 +1339,11 @@ jQuery(document).ajaxComplete(function (e) {
      
       <div id="groupModal" class="modal fade" role="dialog">
   <div class="modal-dialog" >
+
     <!-- Modal content-->
 <form action="" id="updateInfo">
     <div class="modal-content">
+
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Create group here</h4>
@@ -1341,6 +1355,13 @@ jQuery(document).ajaxComplete(function (e) {
           <label for="group_name" >Group Name:</label>
           <input type="text"  id="group_name" style="margin-left:10px;">
         </div>
+       <div class="form-group">
+         <label for="sel1">Privacy:</label>
+      <select class="form-control" id="group_privacy" style="margin-left:110px;width:100px">
+        <option>private</option>
+        <option>public</option>
+      </select>
+        </div> 
         <br>     
     </div>
        
@@ -1353,8 +1374,10 @@ jQuery(document).ajaxComplete(function (e) {
     
        </form>
     </div>
+
   </div>
-     
+		
+ 
      
      
      

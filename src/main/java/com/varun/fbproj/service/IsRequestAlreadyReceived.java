@@ -2,9 +2,9 @@ package com.varun.fbproj.service;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
 public class IsRequestAlreadyReceived {
-    public static boolean isRequestAlreadyReceived(String emailID1,String emailID2)
+    public static boolean isRequestAlreadyReceived(String emailID1,String emailID2)//This function is used to check if you have received friend request by a particular person
+
     {
     try {
     	int i=0;

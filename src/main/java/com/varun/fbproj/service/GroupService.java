@@ -31,7 +31,7 @@ try {
            ps.setString(1,group_name);
 ps.setString(2,emailID);
 ps.setString(3,privacy);
-//it is the emailID of owner 
+ 
            ps.executeUpdate(); 
            
            

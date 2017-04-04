@@ -4,7 +4,7 @@ package com.varun.fbproj.service;
 import com.varun.fbproj.model.User;
 
 public class UpdateService {
-
+//This service is used to update user profile in timeline page
 	public static boolean UpdateUserService(User u1)
 	{
 		 int count=0;
@@ -42,26 +42,7 @@ public class UpdateService {
               	check=connect.start();
               	System.out.println("trying connection in update");
               }
-           /* String query = "UPDATE User SET "
-            		+ "mob_no=?,college=?,placeOfWork=?,"
-            		+ "hometown=?,cityOfWork=?,highschool=? , bestplace=? where emailID = ?";
            
-            PreparedStatement ps = connect.con.prepareStatement(query);
-            //ResultSet rs = stmt.getGeneratedKeys();
-            
-            //ps.setInt(1,110);
-           
-			//ps.setString(1,u1.getDate());
-			ps.setString(1,u1.getMob_no());
-			ps.setString(2,u1.getCollege());
-			ps.setString(3,u1.getPlaceOfWork());
-			ps.setString(4, u1.getHometown());
-			ps.setString(5,u1.getCityOfWork());
-			ps.setString(6, u1.getHighschool());
-			ps.setString(7, u1.getBestplace());
-			ps.setString(8,u1.getEmailID());
-			
-			ps.executeUpdate();*/
               if(count>0)
                   connect.con.createStatement().executeUpdate(str);  
               

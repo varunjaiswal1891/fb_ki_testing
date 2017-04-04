@@ -30,17 +30,9 @@ public class getfriendemailidservice {
 			if (result != null) {
 				while (result.next()) {
 				
-					
-					
 					return result.getString("emailID");
 					
-					
-						//System.out.println("YES");
-					
-					
-					
-					
-				}
+									}
 			}
 			else
 				return null;

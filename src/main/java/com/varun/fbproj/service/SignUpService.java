@@ -1,17 +1,20 @@
 package com.varun.fbproj.service;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Properties;
+
+import org.apache.tomcat.util.http.fileupload.UploadContext;
 
 import com.varun.fbproj.model.User;
 public class SignUpService {
 	
 	public boolean checkEmailAlreadyUsed(String email1)
 	{
-		
+		//checking if email already exists.
         try 
         {
             DBAccess connect = new DBAccess();
@@ -49,7 +52,9 @@ public class SignUpService {
 
 	public boolean addUserService(User u1)
 	{
-		
+		/*creating a account for user and creating a creating a unique user id for him as well.
+		creates a folder for user to save pictures uploaded by him.
+		*/
         try 
         {
             DBAccess connect = new DBAccess();
@@ -94,7 +99,9 @@ public class SignUpService {
            prop.load(inputStream);
            String userName = prop.getProperty("DataFilePath");
            new File(userName+u1.getEmailID()+"/images/").mkdirs();
-           
+           FileInputStream fis = new FileInputStream(new File(userName+"fb_default.jpg"));
+       UserImageService uis = new UserImageService();
+       uis.uploadProfilePic(fis, "blah", "blah", u1.getEmailID());
            
            
 
