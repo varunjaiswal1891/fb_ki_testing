@@ -504,6 +504,45 @@ return userobjlist;
      }
  return userobjlist; 
   }//method ends here
+
+public  String gettimelineid(int statusid) {
+String timelineid;
+boolean check=false;
+try{
+while(check!=true){
+System.out.println("trying connection");
+check= db.start();
+}
+ 
+//System.out.println("resultset"+rs15.getString("emailID"));
+String query116= "select timelineid from status where statusID=?";
+PreparedStatement pstmnt116 = db.con.prepareStatement(query116);
+//System.out.println(rs15.getString("emailID"));
+pstmnt116.setInt(1,statusid);
+//System.out.println("qazwsxedcrfvtgb");
+ResultSet rs116= pstmnt116.executeQuery();
+//System.out.println("qwerty");
+rs116.next();
+// System.out.println(rs116.getString("fname"));
+timelineid=rs116.getString("timelineid");
+db.stop();
+return timelineid;
+ 
+ 
+ 
+ 
+ 
+}
+catch (Exception e) 
+    {
+        System.out.println(e.getMessage());
+    }
+ 
+
+return null;
+}
+ 
+
  
  
  
