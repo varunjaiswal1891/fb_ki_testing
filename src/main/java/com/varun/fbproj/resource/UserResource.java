@@ -229,7 +229,7 @@ public class UserResource {
 	public Response updateProfilePic(
 			
 	        @FormDataParam("file") InputStream fileInputStream,
-	        @FormDataParam("file") FormDataContentDisposition fileFormDataContentDisposition,@CookieParam("ID") String token) throws UnsupportedJwtException, MalformedJwtException, SignatureException, IllegalArgumentException, UnsupportedEncodingException, URISyntaxException {
+	        @FormDataParam("file") FormDataContentDisposition fileFormDataContentDisposition,@CookieParam("ID") String token) throws UnsupportedJwtException, MalformedJwtException, SignatureException, IllegalArgumentException, URISyntaxException, IOException {
 	    // local variables
 		
 	    String fileName = null;

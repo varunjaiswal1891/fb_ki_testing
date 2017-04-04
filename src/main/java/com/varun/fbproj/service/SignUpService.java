@@ -1,8 +1,10 @@
 package com.varun.fbproj.service;
 
 import java.io.File;
+import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Properties;
 
 import com.varun.fbproj.model.User;
 public class SignUpService {
@@ -77,8 +79,24 @@ public class SignUpService {
 						
 						//System.out.println("YES");
             check=connect.stop();
-            new File("/home/varun/git/fb_ki_testing/src/main/webapp/users/"+u1.getEmailID()+"/images/").mkdirs();
-            new File("/home/varun/git/fb_ki_testing/src/main/webapp/users/"+u1.getEmailID()+"/groups/").mkdirs();
+            //new File("/home/varun/git/fb_ki_testing/src/main/webapp/users/"+u1.getEmailID()+"/images/").mkdirs();
+            //new File("/home/varun/git/fb_ki_testing/src/main/webapp/users/"+u1.getEmailID()+"/groups/").mkdirs();
+        //    new File("/home/varun/src/main/webapp/users/"+u1.getEmailID()+"/images/").mkdirs();
+            
+            System.out.println("uuuuuuuuuuuuuuuuuuuuuuuuuuuuggggg");
+           // String file = new File("git").getAbsolutePath();
+            //System.out.println(file+"/main/webapp/users/"+u1.getEmailID()+"/images/");
+           //System.out.println(new File(file+"/main/webapp/users/"+u1.getEmailID()+"/images/").mkdir());
+           
+           Properties prop=new Properties();
+           String propFileName = "config.property";
+           InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+           prop.load(inputStream);
+           String userName = prop.getProperty("DataFilePath");
+           new File(userName+u1.getEmailID()+"/images/").mkdirs();
+           
+           
+           
 
             return true;
         }}
