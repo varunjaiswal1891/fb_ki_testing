@@ -35,7 +35,7 @@ $(document).ready(function() {
 	 $.ajax({
 	        type: "GET",
 	       contentType: "text/plain",  //send data to server in this format
-	       url:"http://localhost:8080/DemoFB/webapi/user/retrive",
+	       url:"http://localhost:8080/facebook_group2/webapi/user/retrive",
 	       dataType: "JSON",  //expect response of this type
 	       data: x,
 	         
@@ -74,7 +74,7 @@ $(document).ready(function() {
 	
 	 
 	$.ajax({ 
-        url: "http://localhost:8080/DemoFB/webapi/event/yourevent",
+        url: "http://localhost:8080/facebook_group2/webapi/event/yourevent",
         type: "GET",
         dataType: "json",
         contentType : "application/json",
@@ -142,7 +142,7 @@ $(document).ready(function() {
 		
 		
 		$.ajax({ 
-        url: "http://localhost:8080/DemoFB/webapi/event/userListForEvent",
+        url: "http://localhost:8080/facebook_group2/webapi/event/userListForEvent",
         type: "GET",
         dataType: "json",
         contentType : "application/json",
@@ -194,7 +194,7 @@ $(document).ready(function() {
 		///ajax call ends here*/
 //-----------------------------------------------------------------------------------------------------------
 	$.ajax({ 
-        url: "http://localhost:8080/DemoFB/webapi/event/userListFor_may_be_coming_in_Event",
+        url: "http://localhost:8080/facebook_group2/webapi/event/userListFor_may_be_coming_in_Event",
         type: "GET",
         dataType: "json",
         contentType : "application/json",
@@ -253,7 +253,7 @@ $(document).ready(function() {
                  		 $.ajax({
      	        type: "POST",
      	        contentType: "text/plain",  //send data to server in this format
-     	        url:"http://localhost:8080/DemoFB/webapi/event/addReview",
+     	        url:"http://localhost:8080/facebook_group2/webapi/event/addReview",
      	        dataType: "text",  //expect response of this type
      	        data: statusdesc,
      	       success: function(resp){
@@ -287,7 +287,7 @@ $(document).ready(function() {
 //---------------------------------------------------------------------------------------------------------------		
 	
 		$.ajax({ 
-        url: "http://localhost:8080/DemoFB/webapi/event/userListFor_not_coming_in_Event",
+        url: "http://localhost:8080/facebook_group2/webapi/event/userListFor_not_coming_in_Event",
         type: "GET",
         dataType: "json",
         contentType : "application/json",
@@ -350,7 +350,7 @@ $(document).ready(function() {
 		
 //------------------------------------------------------------------------------------------------------------
 		  $.ajax({ 
-	          url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
+	          url: "http://localhost:8080/facebook_group2/webapi/friend/getMyAllFriends",
 	          type: "GET",
 	          dataType: "json",
 	          contentType : "application/json",
@@ -397,7 +397,7 @@ $(document).ready(function() {
 	 		   $.cookie("ID5",foo); 
 	 		  //  alert(foo);
 	 		  $.ajax({ 
-	 		                 url: "http://localhost:8080/DemoFB/webapi/friend/count_of_MutualFriends",
+	 		                 url: "http://localhost:8080/facebook_group2/webapi/friend/count_of_MutualFriends",
 	 		                 type: "GET",
 	 		                 dataType: "json",
 	 		                 contentType : "application/json",
@@ -476,7 +476,7 @@ $(document).ready(function() {
 	$.cookie("ID3",uid);
 	
 	$.ajax({ 
-		url: "http://localhost:8080/DemoFB/webapi/event/requestforinvite",
+		url: "http://localhost:8080/facebook_group2/webapi/event/requestforinvite",
 		type: "POST",
 		crossDomain: true,
 		processData: true,
@@ -515,7 +515,7 @@ $(document).ready(function() {
 		
 		  
 		$.ajax({ 
-	        url: "http://localhost:8080/DemoFB/webapi/event/youreventreviewlist",
+	        url: "http://localhost:8080/facebook_group2/webapi/event/youreventreviewlist",
 	        type: "GET",
 	        dataType: "json",
 	        crossDomain: true,
@@ -587,7 +587,7 @@ $(document).ready(function() {
 	 var obj={eID:eid};
 	 var myJSON=JSON.stringify(obj);
 	  $.ajax({ 
-		  url: "http://localhost:8080/DemoFB/webapi/event/deleteEvent",
+		  url: "http://localhost:8080/facebook_group2/webapi/event/deleteEvent",
 		  type: "DELETE",
 		  dataType: "text",
 		  contentType : "application/json",

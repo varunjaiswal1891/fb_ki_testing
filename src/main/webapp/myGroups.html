@@ -17,7 +17,7 @@
         
         $(document).ready(function() {
       	  $.ajax({ 
-              url: "http://localhost:8080/DemoFB/webapi/chat/getMyAllConversations",
+              url: "http://localhost:8080/facebook_group2/webapi/chat/getMyAllConversations",
               type: "GET",
               dataType: "json",
               
@@ -66,7 +66,7 @@
          	$.ajax({
         		 type: "GET",
     	        contentType: "text/plain",  //send data to server in this format
-    	        url:"http://localhost:8080/DemoFB/webapi/user/retrive",
+    	        url:"http://localhost:8080/facebook_group2/webapi/user/retrive",
     	        dataType: "JSON",  //expect response of this type
     	        data: ID,
                   
@@ -108,7 +108,7 @@
      	   
      	   
      	   	$.ajax({ 
-                url: "http://localhost:8080/DemoFB/webapi/group/show_my_groups",
+                url: "http://localhost:8080/facebook_group2/webapi/group/show_my_groups",
                 type: "GET",
                 dataType: "json",
                 contentType : "application/json",
@@ -161,7 +161,7 @@
     	  
      	   
      	   	$.ajax({ 
-                url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
+                url: "http://localhost:8080/facebook_group2/webapi/friend/getMyAllFriends",
                 type: "GET",
                 dataType: "json",
                 contentType : "application/json",
@@ -219,7 +219,7 @@
         		  $.cookie("ID5",foo); 
         		//  alert(foo);
         			$.ajax({ 
-                        url: "http://localhost:8080/DemoFB/webapi/friend/count_of_MutualFriends",
+                        url: "http://localhost:8080/facebook_group2/webapi/friend/count_of_MutualFriends",
                         type: "GET",
                         dataType: "json",
                         contentType : "application/json",
@@ -328,7 +328,7 @@
                  $.ajax({
                      type: "POST",
                      contentType: "application/json",  //send data to server in this format
-                     url:"http://localhost:8080/DemoFB/webapi/group/create_group",
+                     url:"http://localhost:8080/facebook_group2/webapi/group/create_group",
                      dataType: "text",  //expect response of this type
                      data: myJSON,
                      success: function(resp){

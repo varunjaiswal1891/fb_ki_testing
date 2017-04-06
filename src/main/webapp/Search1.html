@@ -33,7 +33,7 @@ $(document).ready(function() {
 		 $.ajax({
              		 type: "GET",
          	       // contentType: "text/plain",  //send data to server in this format
-         	        url:"http://localhost:8080/DemoFB/webapi/user/retrive",
+         	        url:"http://localhost:8080/facebook_group2/webapi/user/retrive",
          	        dataType: "JSON",  //expect response of this type
          	        //data: foo,
 	                   
@@ -65,7 +65,7 @@ $(document).ready(function() {
 		 	 $.ajax({
         		 type: "GET",
     	       // contentType: "text/plain",  //send data to server in this format
-    	        url:"http://localhost:8080/DemoFB/webapi/friend/findFriends",
+    	        url:"http://localhost:8080/facebook_group2/webapi/friend/findFriends",
     	        dataType: "JSON",  //expect response of this type
     	       // data: foo,
                   
@@ -151,7 +151,7 @@ $(document).ready(function() {
 				   
 				   //alert(friendEmailID);
 					$.ajax({ 
-		                url: "http://localhost:8080/DemoFB/webapi/friendRequest/addFriend",
+		                url: "http://localhost:8080/facebook_group2/webapi/friendRequest/addFriend",
 		                type: "POST",
 		                dataType: "text",
 		                contentType : "text/plain",
@@ -204,7 +204,7 @@ $(document).ready(function() {
 	   /* $.ajax({
 	        type: "DELETE",
 	        contentType: "text/plain",  //send data to server in this format
-	        url:"http://localhost:8080/DemoFB/webapi/user/logout",
+	        url:"http://localhost:8080/facebook_group2/webapi/user/logout",
 	        dataType: "text",  //expect response of this type
 	        data: foo,
 	        success: function(resp){
@@ -244,7 +244,7 @@ $(document).ready(function() {
             
  	   });//search button ends ends
  	   	$.ajax({ 
-            url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
+            url: "http://localhost:8080/facebook_group2/webapi/friend/getMyAllFriends",
             type: "GET",
             dataType: "json",
             contentType : "application/json",

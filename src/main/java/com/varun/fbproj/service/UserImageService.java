@@ -20,18 +20,20 @@ import java.util.Properties;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
+import com.varun.fbproj.resource.Pathuse;
+
 public class UserImageService {
 
 	public String uploadProfilePic(InputStream fileInputStream,
 			String fileName, String token,String emailID) throws IOException {
 		//uploading profile picture of user in his specific folder
-		Properties prop=new Properties();
+		/*Properties prop=new Properties();
         String propFileName = "config.property";
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
         prop.load(inputStream);
-        String userName = prop.getProperty("DataFilePath");
+        String userName = prop.getProperty("DataFilePath");*/
 		
-		
+	     String userName=Pathuse.USER_PATH;
 			OutputStream outputStream=null;
 			OutputStream outputStream1=null;
 			//getEmailId s1=new getEmailId();
@@ -119,12 +121,13 @@ ImageIO.write(bi, "jpg", outputfile);
     		String fileName, String token, String emailID,String statusid,String timelineid,String group_name) throws IOException {
     	
     	//uploading pictures posted through status in user's specific folder
-    	Properties prop=new Properties();
+    	/*Properties prop=new Properties();
         String propFileName = "config.property";
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
         prop.load(inputStream);
-        String userName = prop.getProperty("DataFilePath");
+        String userName = prop.getProperty("DataFilePath");*/
 
+        String userName=Pathuse.USER_PATH;
     	    OutputStream outputStream=null;
     		OutputStream outputStream1=null;
     		fileName=""+Calendar.getInstance().getTimeInMillis()+fileName;
