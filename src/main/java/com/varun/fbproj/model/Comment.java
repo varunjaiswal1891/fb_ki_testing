@@ -11,9 +11,17 @@ public class Comment {
 	private Date comment_Date;
 	private String name;
 	private String group_name;
+	private String timelineid;
 	
 	
-	
+	public String getTimelineid() {
+		return timelineid;
+	}
+
+	public void setTimelineid(String timelineid) {
+		this.timelineid = timelineid;
+	}
+
 	public String getGroup_name() {
 		return group_name;
 	}
@@ -30,15 +38,17 @@ public class Comment {
 		this.name = name;
 	}
 
-	public Comment(int commentID,int statusID,int flag,String comment_desc,String comment_Date,String emailID,String name){
+	public Comment(int commentID,int statusID,String group_name,int flag,String comment_desc,String timelineid,String comment_Date,String emailID,String name){
 		this.commentID=commentID;
 		this.statusID=statusID;
 		this.flag=flag;
 		this.name=name;
+		this.group_name=group_name;
 		this.emailID=emailID;
 		this.comment_desc=comment_desc;
 		this.comment_Date=new Date();
 		this.name=name;
+		this.timelineid=timelineid;
 	}
 
 	public Comment() {

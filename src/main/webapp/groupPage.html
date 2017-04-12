@@ -820,7 +820,7 @@ margin-left:20px;
     			 window.like = function(e1){
     				 var tempid= $(e1).attr('id');
   				   var statusid = tempid.slice(4);
-                       var sid={statusID:statusid};
+                       var sid={statusID:statusid,timelineid:timelineid};
                     var myJSON=JSON.stringify(sid);
     				   //alert(statusid);
     				   
@@ -904,7 +904,7 @@ margin-left:20px;
     				  // alert(chk);
     				   var comment_desc=document.getElementById(chk).value;
     				   
-    				   var cobj={statusID:statusid,comment_desc:comment_desc};
+    				   var cobj={statusID:statusid,comment_desc:comment_desc,timelineid:timelineid};
     				   var myJSON=JSON.stringify(cobj);
     				   //alert(statusid);
     				   
