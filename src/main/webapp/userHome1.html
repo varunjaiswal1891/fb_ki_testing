@@ -165,7 +165,7 @@ margin-left:20px;
 
         		 type: "GET",
     	        contentType: "text/plain",  //send data to server in this format
-    	        url:"http://localhost:8080/DemoFB/webapi/user/retrive",
+    	        url:"http://localhost:8080/facebook_group2/webapi/user/retrive",
     	        dataType: "JSON",  //expect response of this type
     	        data: foo,
                   
@@ -198,7 +198,7 @@ margin-left:20px;
     		 		
     		
     			  $.ajax({ 
-              url: "http://localhost:8080/DemoFB/webapi/chat/getMyAllConversations",
+              url: "http://localhost:8080/facebook_group2/webapi/chat/getMyAllConversations",
               type: "GET",
               dataType: "json",
               
@@ -264,7 +264,7 @@ margin-left:20px;
 			 $.ajax({
     	        type: "PUT",
     	        contentType: "application/json",  //send data to server in this format
-    	        url:"http://localhost:8080/DemoFB/webapi/event/create_event",
+    	        url:"http://localhost:8080/facebook_group2/webapi/event/create_event",
     	        dataType: "text",  //expect response of this type
     	        data: myJSON,
     	        success: function(resp){
@@ -290,13 +290,13 @@ margin-left:20px;
     	    }); 
 	        	
 	       
-	   }); // create ajax call end
+	   }); // create event ajax call end
 
     		
     		
     		
     			$.ajax({ 
-                   url: "http://localhost:8080/DemoFB/webapi/status/getAllStatus",
+                   url: "http://localhost:8080/facebook_group2/webapi/status/getAllStatus",
                    type: "GET",
                    dataType: "json",
                    contentType : "application/json",
@@ -371,50 +371,7 @@ margin-left:20px;
  */ 
  								st+="<br>";
  								st+="<p id="+"\"time\""+"class="+"\"leftpadding \""+"><font size="+"\"2\""+"color="+"\"#A4A4A4\""+">"+data[i].postedon+"<font></p>" ;
-                              /*  st+="</ul>"; */
-                               /*  /* st+="<ul>";
-                                 st+="<li id="+"\"time\""+">"+data[i].postedon+"</li>" ;
-                              	  st+="</ul>";
-                                  */
-                                 /* $(status_name).appendTo('#text_color');
-                        	   document.getElementById("forstatus").style.color="blue"; */
-
-                             /* $(status_name).appendTo('#text_color');
-                    	   document.getElementById("forstatus").style.color="blue"; */
-  /*                  	 	st+="<br><br><br>";
-                    	   st+="<p id="+"\"forstatus\""+">"+data[i].status_desc+"</p>" ;
-                    	   st+="</div></div><hr>";
-                    	   st+="<div class="+"\"row\""+">";
-                    	   st+="<div class="+"\"col-md-12\""+">";
-                    	   st+="<ul class="+"\"list-inline\""+">";
-                    	   st+="<li>";
-                    	   st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+" OnClick=\"like(this);\"><span class="+"\"glyphicon glyphicon-thumbs-up\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Like</font></a>";
-                    	   st+="</li>";
-                    	   /* st+="<li>";
-                    	   st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+" OnClick=\"unlike(this);\""+"><span class="+"\"glyphicon glyphicon-thumbs-down\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Unlike</font></a>";
-                    	   st+="</li>"; 
-                    	   st+="<li>";
-                    	   st+= "<a href="+"\"#\""+ "id=\""+data[i].statusID+"\""+"><span class="+"\"glyphicon glyphicon-comment\"" +"style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Comment</font></a>";
-                    	   st+="</li></ul></div></div>";
-                    	   st+="</div>";
-                    	   st+="<div class="+"\"panel-footer\"" +"id="+"\"o\""+">";
-                    	   st+="<div class="+"\"row\""+">";
-                           st+="<div class="+"\"col-md-12\""+">";
-                           st+="<a id="+"\"likescount\""+">"+data[i].likesCount+"</a>";
-                           st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+"onmouseover=\"likehover(this)\"><span style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Likes</font></a>";
-                           st+="<p id="+"\"likescount\""+">"+data[i].unlikes_count+" Unlikes"+"</p><br></div></div>";
-                           
-                           st+="<hr>"; 
-                    	   st+="<div class="+"\"pre-scrollable\""+" style="+"\"height:100px;\""+">";
-                    	   for(var j=0;j<data[i].a.length;j++)
-                		  
-                    			   
-                		   {
-                    		    st+="<div class=\" col-sm-2\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
-                    		    st+= "<div class=\" col-sm-5\"><p id="+"\"outputname\""+"><font size="+"\"3\""+"color="+"\"blue\""+">"+data[i].a[j].name+"</font></p></div>"; 
-                        	 	st+="<br><br><br>";
-*/
-                        	  
+                                              	  
 
          		   st+="</div>";
          		  st+="<br>";
@@ -458,19 +415,7 @@ margin-left:20px;
                         	   
 
                         	   
-                        	   /* st+="<li>";
-                        	   st+="<a href=\""+data[i].statusID+"\""+"id=\""+data[i].statusID+"\""+"class=\""+data[i].statusID+"\""+" OnClick=\"like(this);\"><span class="+"\"glyphicon glyphicon-thumbs-up\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Like</font></a>";
-                        	   st+="</li>"; */
-                        	   /* st+="<li>";
-                        	   st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+" OnClick=\"unlike(this);\""+"><span class="+"\"glyphicon glyphicon-thumbs-down\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Unlike</font></a>";
-                        	   st+="</li>"; */
-                        	 //  st+="<li>";
-                        	  // st+= "<a href="+"\"#\""+ "id=\""+data[i].statusID+"\""+"><span class="+"\"glyphicon glyphicon-comment\"" +"style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Comment</font></a>";
-                        	  // st+="</ul></div></div>";
-                        	   //st+="</div>";
-                        	   	//   st+="<div class="+"\"row\""+">";
-                             //  st+="<div class="+"\"col-md-12\""+">";
-                               
+                                
                              st+="<a id="+"\"likescount\""+">"+"       "+data[i].likesCount+"</a>";
                                st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+"onmouseover=\"likehover(this)\"><span style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Likes</font></a>";
                               st+="</li>";
@@ -504,18 +449,10 @@ margin-left:20px;
                         	   }
                         	   st+="</div>";
                     		   
-                        	   //st+="<ul>";
-                        	   //st+="<li class="+"\"media\""+">";
                         	   st+="<div class="+"\"media-body\""+">";
-                        	   //st+="<div class="+"\"input-group\""+">";
                         	   st+="<input type="+"\"text\""+" class="+"\"form-group col-sm-9 customtextarea\""+" id=\"comment_d"+data[i].statusID+"\""+" placeholder="+"\"Write a comment...\""+">";
-                               //st+="<div class="+"\"input-group-btn\""+">";
                            		st+="<button type="+"\"button\""+" class="+"\"btn1 btn-primary pull-right  custom\""+"id=\""+data[i].statusID+"\""+" OnClick=\"comment(this);\">Comment</button>";
-                           		//st+="</span>";
-                           		//st+="</div>";
                            		st+="</div>";
-                           		//st+="</li>";
-                           		//st+="</ul>";
                            		st+="</div>";
                            		st+="</div>";
                                 
@@ -536,7 +473,186 @@ margin-left:20px;
 			}		
             
     	  }); //ajax call ends
-       	
+       	window.refresh = function(){
+       		$.ajax({ 
+                url: "http://localhost:8080/facebook_group2/webapi/status/getAllStatus",
+                type: "GET",
+                dataType: "json",
+                contentType : "application/json",
+                crossDomain: true,
+                processData: true,
+                
+                
+                success: function(response){  
+             	   
+                    // we have the response  
+             	   if(response!=null){
+                    var data =JSON.parse(JSON.stringify(response));  
+
+                    //alert("This is th email id: "+emailID);
+                    //console.log("dekho ise: "+data);
+
+               //     console.log(data);
+                	              
+                    
+                    var st;
+                    var fname,lname;
+                    
+                    for (var i=data.length-1; i >=0; i--){
+                 	   var email =data[i].emailID; 
+                    	   
+                     	  /*  <a href='#target2' id='target2' class='target'>Target 2</a>
+                      	   */
+                      	   
+                     	   st+="<div class="+"\"panel panel-default\""+">";
+                     	   st+="<div class="+"\"panel-body\""+"id=\"forcomment\""+">";
+                     	   st+="<div class="+"\"row\""+">";
+                     	   st+="<div class="+"\"col-md-12\""+">";
+                     		 st+="<p class=\" col-sm-3\"><img class="+"\"img-responsive img-thumbnail\" style=\"max-height:60px;\" "+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></p>";
+                              st+="<div class=\" col-sm-5\"><p><font size="+"\"4\""+"color="+"\"blue\""+">"+data[i].name+"</font></p></div>" ;
+                               if(data[i].name2==null)
+                              	  {
+                              	  st+="<br><br><br>";
+                              	  }
+                                else{
+                                   st+="<div id="+"\"status_name2\""+"><font size="+"\"2\""+"color="+"\"blue\""+">"+data[i].name2+"</font></div>" ;
+                                   st+="<br>";
+                                
+                                }
+                              //st+="<br>";
+                              st+="</div>";
+                             // st+="<hr>";
+                              st+="<div class="+"\"row\""+">";
+                              if(data[i].group_name!=null){st+="<br>";
+                           	   st+="<p id="+"\"forstatus\"class="+"\"leftpadding11\""+"><font size="+"\"3\""+"color="+"\"blue\""+">Posted in-> "+data[i].group_name+"</font></p>" ;
+                              }
+                              if((data[i].name2==null)&&(data[i].feeling==null))
+                          	{
+                          	  
+                          	  
+                          	}
+                            else if((data[i].name2==null)&&(data[i].feeling!=null))
+                          	  {st+="<br>";
+                            st+="<p id="+"\"feelings\""+"class="+"\"leftpadding\""+"><font size="+"\"2\""+"color="+"\"#A4A4A4\""+">"+data[i].feeling+"<font></p>" ;
+                            
+                          
+
+                          	  }
+                         
+                            else if((data[i].name2!=null)&&(data[i].feeling!=null))
+                              {
+                         	   st+="<p id="+"\"feelings\""+"class="+"\"leftpadding\""+"><font size="+"\"2\""+"color="+"\"#A4A4A4\""+">"+data[i].feeling+"<font></p>" ;
+                                
+                         	   
+                              }
+                              
+                           /*  st+="<ul type="+"\"disc\""+">";
+*/ 
+								st+="<br>";
+								st+="<p id="+"\"time\""+"class="+"\"leftpadding \""+"><font size="+"\"2\""+"color="+"\"#A4A4A4\""+">"+data[i].postedon+"<font></p>" ;
+                                           	  
+
+      		   st+="</div>";
+      		  st+="<br>";
+                     	   st+="<div class="+"\"row\""+">";
+                     	   
+                     	   st+="<p id="+"\"forstatus\"class="+"\"leftpadding11\""+"><font size="+"\"3\""+"color="+"\"black\""+">"+data[i].status_desc+"</font></p>" ;
+                     	   if(data[i].flag==0)
+                     	   st+="<p class=\" col-sm-12\"><img class="+"\"img-responsive\""+"alt=\"\""+"src="+"\"users/"+data[i].emailID+"/"+data[i].statusID+".jpg\""+"/></p>";
+                     	   
+                     		   
+                     	   
+                     	   st+="</div></div><hr>";
+                     	   st+="<div class="+"\"row\""+">";
+                     	   st+="<div class="+"\"col-md-12\""+">";
+                     	   st+="<ul class="+"\"list-inline\""+">";
+                     	   st+="<li>";
+                 		   
+                     	   
+                     		   if(data[i].color==1){
+                     			  // alert("testing11:  "+data[i].statusID);
+                     	   		//highlight(data[i].statusID);
+                     	   		
+                     	   		st+="<li></li>";
+                     	   		
+                     	   		
+                     	   		
+                     	   		
+                     	   		  st+="<a href="+"\"#thumbs-up\""+"id=\"like"+data[i].statusID+"\""+" OnClick=\"like(this);\"><span class="+"\"glyphicon glyphicon-thumbs-up\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"blue\""+">Like</font></a>";
+                     	   		
+                     		   }
+                     		   else{
+                    	   			st+="<li></li>";
+                 	   		
+                    	   		
+                      	   		  st+="<a href="+"\"#thumbs-up\""+"id=\"like"+data[i].statusID+"\""+" OnClick=\"like(this);\"><span class="+"\"glyphicon glyphicon-thumbs-up\""+ "style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Like</font></a>";
+                      	   		
+                      		   
+                     			   
+                     		   }
+                     		   
+                     	   
+
+                     	   
+                             
+                          st+="<a id="+"\"likescount\""+">"+"       "+data[i].likesCount+"</a>";
+                            st+="<a href="+"\"#thumbs-up\""+"id=\""+data[i].statusID+"\""+"onmouseover=\"likehover(this)\"><span style="+"\"color:#3b5998\""+"></span> <font color="+"\"#3b5998\""+">Likes</font></a>";
+                           st+="</li>";
+                            // st+="	</div></div>";
+                            //st+="</div>";
+                     	   st+="</ul></div></div></div>";
+
+                            //st+="<hr>"; 
+                            st+="<div class="+"\"panel-footer\"" +"id="+"\"o\""+">";
+                            
+                     	   if(data[i].a.length==0){
+                     		   st+="<div class="+"\"pre-scrollable\""+" style="+"\"height:0px;\""+">";
+                     	   }
+                     	   else{
+                     		   st+="<div class="+"\"pre-scrollable\""+" style="+"\"height:80px;\""+">";
+                     	   
+                     	   for(var j=0;j<data[i].a.length;j++)
+                 		  
+                     			   
+                 		   {
+                     		    st+="<p class=\" col-sm-2\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></p>";
+                     		    st+= "<div class=\" col-sm-5\"><p id="+"\"outputname\""+"><font size="+"\"3\""+"color="+"\"blue\""+">"+data[i].a[j].name+"</font></p></div>"; 
+                     			/* $(status_name).appendTo('#text_color');
+                         	   document.getElementById("forstatus").style.color="blue"; */
+                         	 	st+="<br><br><br>";
+                         	  
+                     		   st+= "<p id="+"\"output\""+"class="+"\"comment1\""+"><font size="+"\"2\""+"color="+"\"black\""+">"+data[i].a[j].comment_desc+"</font></p>";
+                     	  st+="<br>";
+                     	   //st+="<hr>";
+                 		   }
+                     	   }
+                     	   st+="</div>";
+                 		   
+                     	   st+="<div class="+"\"media-body\""+">";
+                     	   st+="<input type="+"\"text\""+" class="+"\"form-group col-sm-9 customtextarea\""+" id=\"comment_d"+data[i].statusID+"\""+" placeholder="+"\"Write a comment...\""+">";
+                        		st+="<button type="+"\"button\""+" class="+"\"btn1 btn-primary pull-right  custom\""+"id=\""+data[i].statusID+"\""+" OnClick=\"comment(this);\">Comment</button>";
+                        		st+="</div>";
+                        		st+="</div>";
+                        		st+="</div>";
+                             
+                            
+                            
+                       
+                   
+                    st=st.replace("undefined","");
+             	   $("#abcd").html(st);
+                    
+             	   }    //outer for ends        
+             	   }//if ends 
+             	   },//success ends  
+             	 
+ 			error: function(e){  
+					alert('Error121212: ' + e);  
+					alert(e.toString());
+			}		
+         
+ 	  }); //ajax call ends
+    	  }
     		window.highlight = function(e1){
     		  
     			//alert("testing: "+e1);
@@ -559,7 +675,7 @@ margin-left:20px;
     	    		 
     	    			
     	    			$.ajax({ 
-    	                    url: "http://localhost:8080/DemoFB/webapi/status/getAllLikeName",
+    	                    url: "http://localhost:8080/facebook_group2/webapi/status/getAllLikeName",
     	                    type: "POST",
     	                    dataType: "json",
     	                    contentType : "application/json",
@@ -632,7 +748,7 @@ margin-left:20px;
     				   
     				   
     				   $.ajax({ 
-                url: "http://localhost:8080/DemoFB/webapi/status/incrementLike",
+                url: "http://localhost:8080/facebook_group2/webapi/status/incrementLike",
                 type: "POST",
                 dataType: "text",
                 contentType : "application/json",
@@ -646,7 +762,7 @@ margin-left:20px;
                     // we have the response  
              	   if(response!=null){
 
-             		  location.reload();
+             		  refresh();
                       
              	   }
              	   else{
@@ -670,7 +786,7 @@ margin-left:20px;
   				   
   				   
   				   $.ajax({ 
-              url: "http://localhost:8080/DemoFB/webapi/status/decrementLike",
+              url: "http://localhost:8080/facebook_group2/webapi/status/decrementLike",
               type: "POST",
               dataType: "text",
               contentType : "application/json",
@@ -715,7 +831,7 @@ margin-left:20px;
     				   
     			   
     				   $.ajax({ 
-                url: "http://localhost:8080/DemoFB/webapi/status/addComment",
+                url: "http://localhost:8080/facebook_group2/webapi/status/addComment",
                 type: "POST",
                 dataType: "text",
                 contentType : "application/json",
@@ -730,7 +846,7 @@ margin-left:20px;
              	   if(response!=null){
              		  $('#comment_d').val('');
              		   //alert(response);
-             		  location.reload();
+             		 refresh();
              	   }
              	   else{
              		   }
@@ -763,7 +879,7 @@ margin-left:20px;
      	        type: "POST",
      	        contentType: "application/json",  //send data to server in this format
 
-     	        url:"http://localhost:8080/DemoFB/webapi/status/addStatus",
+     	        url:"http://localhost:8080/facebook_group2/webapi/status/addStatus",
      	        dataType: "json",  //expect response of this type
 
      	        data: mahjson,
@@ -788,7 +904,7 @@ margin-left:20px;
                  	                
                  	              	type:"POST",
                  	              	contentType:false,
-                 	              	url: "http://localhost:8080/DemoFB/webapi/user/uploadProfilePic2",
+                 	              	url: "http://localhost:8080/facebook_group2/webapi/user/uploadProfilePic2",
                  	                processData: false,
                  	                data: form_data,                         // Setting the data attribute of ajax with file_data
                  	                success: function(){
@@ -862,7 +978,7 @@ margin-left:20px;
      	   
 
      	  $.ajax({ 
-              url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
+              url: "http://localhost:8080/facebook_group2/webapi/friend/getMyAllFriends",
               type: "GET",
               dataType: "json",
               contentType : "application/json",
@@ -920,7 +1036,7 @@ margin-left:20px;
         		  $.cookie("ID5",foo); 
         		//  alert(foo);
         			$.ajax({ 
-                        url: "http://localhost:8080/DemoFB/webapi/friend/count_of_MutualFriends",
+                        url: "http://localhost:8080/facebook_group2/webapi/friend/count_of_MutualFriends",
                         type: "GET",
                         dataType: "json",
                         contentType : "application/json",
@@ -1012,7 +1128,7 @@ margin-left:20px;
                 $.ajax({
                     type: "POST",
                     contentType: "application/json",  //send data to server in this format
-                    url:"http://localhost:8080/DemoFB/webapi/group/create_group",
+                    url:"http://localhost:8080/facebook_group2/webapi/group/create_group",
                     dataType: "text",  //expect response of this type
                     data: myJSON,
                     success: function(resp){

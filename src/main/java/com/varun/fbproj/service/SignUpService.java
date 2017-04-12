@@ -10,6 +10,7 @@ import java.util.Properties;
 import org.apache.tomcat.util.http.fileupload.UploadContext;
 
 import com.varun.fbproj.model.User;
+import com.varun.fbproj.resource.Pathuse;
 public class SignUpService {
 	
 	public boolean checkEmailAlreadyUsed(String email1)
@@ -93,12 +94,13 @@ public class SignUpService {
             //System.out.println(file+"/main/webapp/users/"+u1.getEmailID()+"/images/");
            //System.out.println(new File(file+"/main/webapp/users/"+u1.getEmailID()+"/images/").mkdir());
            
-           Properties prop=new Properties();
+          /* Properties prop=new Properties();
            String propFileName = "config.property";
            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
            prop.load(inputStream);
-           String userName = prop.getProperty("DataFilePath");
-           new File(userName+u1.getEmailID()+"/images/").mkdirs();
+           String userName = prop.getProperty("DataFilePath");*/
+            String userName=Pathuse.USER_PATH;
+            new File(userName+u1.getEmailID()+"/images/").mkdirs();
            FileInputStream fis = new FileInputStream(new File(userName+"fb_default.jpg"));
        UserImageService uis = new UserImageService();
        uis.uploadProfilePic(fis, "blah", "blah", u1.getEmailID());

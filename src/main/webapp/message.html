@@ -45,7 +45,7 @@
         			 $.ajax({
            	        type: "PUT",
            	        contentType: "application/json",  //send data to server in this format
-           	        url:"http://localhost:8080/DemoFB/webapi/event/create_event",
+           	        url:"http://localhost:8080/facebook_group2/webapi/event/create_event",
            	        dataType: "text",  //expect response of this type
            	        data: myJSON,
            	        success: function(resp){
@@ -77,7 +77,7 @@
         	
         	             	
       	  $.ajax({ 
-              url: "http://localhost:8080/DemoFB/webapi/chat/getMyAllConversations",
+              url: "http://localhost:8080/facebook_group2/webapi/chat/getMyAllConversations",
               type: "GET",
               dataType: "json",
               
@@ -126,7 +126,7 @@
          	$.ajax({
         		 type: "GET",
     	        contentType: "text/plain",  //send data to server in this format
-    	        url:"http://localhost:8080/DemoFB/webapi/user/retrive",
+    	        url:"http://localhost:8080/facebook_group2/webapi/user/retrive",
     	        dataType: "JSON",  //expect response of this type
     	        data: foo,
                   
@@ -175,7 +175,7 @@
 			 $.ajax({
     	        type: "PUT",
     	        contentType: "application/json",  //send data to server in this format
-    	        url:"http://localhost:8080/DemoFB/webapi/event/create_event",
+    	        url:"http://localhost:8080/facebook_group2/webapi/event/create_event",
     	        dataType: "text",  //expect response of this type
     	        data: myJSON,
     	        success: function(resp){
@@ -221,7 +221,7 @@
      	   
      	   
      	   	$.ajax({ 
-                url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
+                url: "http://localhost:8080/facebook_group2/webapi/friend/getMyAllFriends",
                 type: "GET",
                 dataType: "json",
                 contentType : "application/json",
@@ -282,7 +282,7 @@
        		  $.cookie("ID5",foo); 
        		//  alert(foo);
        			$.ajax({ 
-                       url: "http://localhost:8080/DemoFB/webapi/friend/count_of_MutualFriends",
+                       url: "http://localhost:8080/facebook_group2/webapi/friend/count_of_MutualFriends",
                        type: "GET",
                        dataType: "json",
                        contentType : "application/json",
@@ -353,7 +353,7 @@
    	  
     	  
     	  $.ajax({ 
-              url: "http://localhost:8080/DemoFB/webapi/chat/getMyAllConversations",
+              url: "http://localhost:8080/facebook_group2/webapi/chat/getMyAllConversations",
               type: "GET",
               dataType: "json",
               
@@ -416,7 +416,7 @@
              $.ajax({
      	        type: "POST",
      	        contentType: "text/plain",  //send data to server in this format
-     	        url:"http://localhost:8080/DemoFB/webapi/group/create_group",
+     	        url:"http://localhost:8080/facebook_group2/webapi/group/create_group",
      	        dataType: "text",  //expect response of this type
      	        data: group_name,
      	        success: function(resp){
@@ -451,7 +451,7 @@
     	   
     		   $("#suggestfriendsbutton").click(function(e){
     			   	$.ajax({ 
-    	                url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
+    	                url: "http://localhost:8080/facebook_group2/webapi/friend/getMyAllFriends",
     	                type: "GET",
     	                dataType: "json",
     	                contentType : "application/json",
@@ -471,7 +471,7 @@
                              for (var i=0; i < data.length; i++){
                            	st+="<div>";
                            	//st+="<div class=\"pull-left col-sm-3\"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
-                           	st+="<font size="+"\"4\">"+data[i].fname+data[i].lname+"</font>";
+                           	st+="<font size="+"\"4\">"+data[i].fname+" "+data[i].lname+"</font>";
                            	 st+="<button type="+"\"button\""+"href=\"personalChat.html\" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].emailID+"\""+" OnClick=\"message(this)"+";\">Send a Message</button>";
                            	// st+="<button type="+"\"button\""+" class="+"\"btn btn-primary pull-right\""+"id=\""+data[i].emailID+"\""+" OnClick=\"suggestignore(this);\">Ignore</button>";
                            	 st+="</div>"; 

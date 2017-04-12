@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: DemoFB
-Bundle-SymbolicName: DemoFB
+Bundle-SymbolicName: facebook_group2
 Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: DemoFB.jar,
  varun/Desktop/OOAD/jarsFB/commons-codec-1.6.jar,

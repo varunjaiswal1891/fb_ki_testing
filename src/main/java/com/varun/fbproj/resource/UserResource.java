@@ -34,7 +34,9 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.google.gson.*;
 import com.varun.fbproj.model.User;
+import com.varun.fbproj.service.FriendRequestService;
 import com.varun.fbproj.service.GroupService;
+import com.varun.fbproj.service.IsMyFriendService;
 import com.varun.fbproj.service.LoginService;
 import com.varun.fbproj.service.LogoutService;
 import com.varun.fbproj.service.RetriveNameService;
@@ -247,7 +249,7 @@ public class UserResource {
 	    fileName = fileFormDataContentDisposition.getFileName();
 	    System.out.println("fileeeeeee"+fileName);
 	    uploadFilePath=new UserImageService().uploadProfilePic(fileInputStream, fileName,token,emailID);
-	    URI url = new URI("http://localhost:8080/DemoFB/timeLine1.html");
+	    URI url = new URI("http://localhost:8080/facebook_group2/timeLine1.html");
 	    return Response.temporaryRedirect(url).build();
 	
 
@@ -317,19 +319,21 @@ public class UserResource {
     @Path("/retrive_other")
     @Consumes({MediaType.TEXT_PLAIN})
 	@Produces({MediaType.APPLICATION_JSON})
-    public User retrive_friendData(@CookieParam("ID1") int userID) throws JsonParseException, JsonMappingException, IOException 
+    public User retrive_friendData(@CookieParam("ID1") int userID, @CookieParam("ID") String jwt) throws JsonParseException, JsonMappingException, IOException 
     {
     	
     	System.out.println("friend user id ="+ userID);
-    	/*System.out.println("jwt string other="+ femail);
+    	
     	Claims claims = Jwts.parser()         
 			       .setSigningKey("secret".getBytes("UTF-8"))
-			       .parseClaimsJws(femail).getBody();
+			       .parseClaimsJws(jwt).getBody();
     	System.out.println("Subject: " + claims.getSubject());	
-		String emailID=claims.getSubject();		*/
+		String emailID=claims.getSubject();		
     	User u1=RetriveService.getUserAllDataByUserID(userID);
-		
-	
+		if(IsMyFriendService.isMyFriend(emailID, u1.getEmailID()))
+				u1.setPic("1");
+		else
+			u1.setPic("0");
 		return u1;
 	 
     }//retrive other method ends here

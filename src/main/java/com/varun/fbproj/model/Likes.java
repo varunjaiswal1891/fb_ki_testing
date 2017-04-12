@@ -6,16 +6,32 @@ public class Likes {
 	private int statusID;
 	private String emailID;
 	private int lflag;
+	private String timelineid;
+	private String group_name;
 	
+	public String getGroup_name() {
+		return group_name;
+	}
+	public void setGroup_name(String group_name) {
+		this.group_name = group_name;
+	}
 	public Likes(){
 		
 	}
-	public Likes(int likeID,int statusID,String emailID,int flag)
+	public Likes(int likeID,int statusID,String emailID,int flag,String timelineid,String group_name)
 	{
 		this.likeID=likeID;
 		this.statusID=statusID;
 		this.emailID=emailID;	
 		this.lflag=flag;
+		this.timelineid=timelineid;
+		this.group_name=group_name;
+	}
+	public String getTimelineid() {
+		return timelineid;
+	}
+	public void setTimelineid(String timelineid) {
+		this.timelineid = timelineid;
 	}
 	public int getLikeID() {
 		return likeID;

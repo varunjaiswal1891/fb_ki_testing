@@ -19,12 +19,12 @@
   label { width: 100px; }
  .img-container {
         position: absolute;
-    top: 160px; bottom: 10px; left: 10px; right: 10px; //to place it as you want.
+    top: 160px; bottom: 10px; left: 10px; right: 10px; /* to place it as you want. */
 
 }
 .img-container1 {
         position: absolute;
-    top: 300px; bottom: 10px; left:660px; right: 10px; //to place it as you want.
+    top: 300px; bottom: 10px; left:660px; right: 10px; /* //to place it as you wan */t.
 
 }
 .img-container2 {
@@ -111,7 +111,7 @@ $(document).ready(function() {
              $.ajax({
                   type: "GET",
                  contentType: "text/plain",  //send data to server in this format
-                 url:"http://localhost:8080/DemoFB/webapi/user/retrive",
+                 url:"http://localhost:8080/facebook_group2/webapi/user/retrive",
                  dataType: "JSON",  //expect response of this type
                  data: foo,
                    
@@ -146,7 +146,7 @@ $(document).ready(function() {
              $.ajax({
                       type: "GET",
                      contentType: "text/plain",  //send data to server in this format
-                     url:"http://localhost:8080/DemoFB/webapi/user/retrive",
+                     url:"http://localhost:8080/facebook_group2/webapi/user/retrive",
                      dataType: "JSON",  //expect response of this type
                      data: foo,
                        
@@ -204,7 +204,7 @@ $(document).ready(function() {
             
             //ajax call to show my all friends on my friend ki timeline
                         $.ajax({ 
-              url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
+              url: "http://localhost:8080/facebook_group2/webapi/friend/getMyAllFriends",
               type: "GET",
               dataType: "json",
               contentType : "application/json",
@@ -263,7 +263,7 @@ window.mutual=function(e1){
 	  $.cookie("ID5",foo); 
 	//  alert(foo);
 		$.ajax({ 
-           url: "http://localhost:8080/DemoFB/webapi/friend/count_of_MutualFriends",
+           url: "http://localhost:8080/facebook_group2/webapi/friend/count_of_MutualFriends",
            type: "GET",
            dataType: "json",
            contentType : "application/json",
@@ -378,7 +378,7 @@ window.mutual=function(e1){
         $.ajax({
             type: "PUT",
             contentType: "application/json",  //send data to server in this format
-            url:"http://localhost:8080/DemoFB/webapi/user/updateAllData",
+            url:"http://localhost:8080/facebook_group2/webapi/user/updateAllData",
             dataType: "text",  //expect response of this type
             data: myJSON,
             success: function(resp){
@@ -455,7 +455,7 @@ window.mutual=function(e1){
           });          
           });
           $.ajax({ 
-              url: "http://localhost:8080/DemoFB/webapi/status/getMyStatus",
+              url: "http://localhost:8080/facebook_group2/webapi/status/getMyStatus",
               type: "GET",
               dataType: "json",
               contentType : "application/json",
@@ -660,7 +660,7 @@ window.mutual=function(e1){
 	    		 
 	    			
 	    			$.ajax({ 
-	                    url: "http://localhost:8080/DemoFB/webapi/status/getAllLikeName",
+	                    url: "http://localhost:8080/facebook_group2/webapi/status/getAllLikeName",
 	                    type: "POST",
 	                    dataType: "json",
 	                    contentType : "application/json",
@@ -731,7 +731,7 @@ window.mutual=function(e1){
                    
                    
                    $.ajax({ 
-           url: "http://localhost:8080/DemoFB/webapi/status/incrementLike",
+           url: "http://localhost:8080/facebook_group2/webapi/status/incrementLike",
            type: "POST",
            dataType: "text",
            contentType : "application/json",
@@ -771,7 +771,7 @@ window.mutual=function(e1){
                    
                    
                    $.ajax({ 
-         url: "http://localhost:8080/DemoFB/webapi/status/decrementLike",
+         url: "http://localhost:8080/facebook_group2/webapi/status/decrementLike",
          type: "POST",
          dataType: "text",
          contentType : "application/json",
@@ -819,7 +819,7 @@ window.mutual=function(e1){
                    
                
                    $.ajax({ 
-           url: "http://localhost:8080/DemoFB/webapi/status/addComment",
+           url: "http://localhost:8080/facebook_group2/webapi/status/addComment",
            type: "POST",
            dataType: "text",
            contentType : "application/json",
@@ -851,7 +851,7 @@ window.mutual=function(e1){
             	  $.ajax({
             	        type: "POST",
             	        contentType: "text/plain",  //send data to server in this format
-            	        url:"http://localhost:8080/DemoFB/webapi/friend/getmyemail",
+            	        url:"http://localhost:8080/facebook_group2/webapi/friend/getmyemail",
             	        dataType: "text",  //expect response of this type
             	        data: x,
             	       success: function(resp){
@@ -867,7 +867,7 @@ window.mutual=function(e1){
             type: "POST",
             contentType: "application/json",  //send data to server in this format
 
-            url:"http://localhost:8080/DemoFB/webapi/status/addStatus",
+            url:"http://localhost:8080/facebook_group2/webapi/status/addStatus",
             dataType: "json",  //expect response of this type
 
             data: mahjson,
@@ -895,7 +895,7 @@ window.mutual=function(e1){
               	                
               	              	type:"POST",
               	              	contentType:false,
-              	              	url: "http://localhost:8080/DemoFB/webapi/user/uploadProfilePic2",
+              	              	url: "http://localhost:8080/facebook_group2/webapi/user/uploadProfilePic2",
               	                processData: false,
               	                data: form_data,                         // Setting the data attribute of ajax with file_data
               	                success: function(){
@@ -1106,7 +1106,7 @@ window.mutual=function(e1){
   </button>
   <ul class="dropdown-menu">
     <li>
-    <form id="uploadPic"action="http://localhost:8080/DemoFB/webapi/user/uploadProfilePic" method="post" enctype="multipart/form-data">
+    <form id="uploadPic"action="http://localhost:8080/facebook_group2/webapi/user/uploadProfilePic" method="post" enctype="multipart/form-data">
         <p id="uploadPhoto">
         Change profile pic:<input type="file" name="file" size="45" onchange="this.form.submit()" class="filestyle" data-classButton="btn btn-primary" data-input="false" data-classIcon="icon-plus" data-buttonText="Your label here."/>
         </p>
