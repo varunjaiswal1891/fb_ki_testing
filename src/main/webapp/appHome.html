@@ -13,6 +13,49 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
+
+	// ajax call for getting all user list
+	   
+	  $.ajax({ 
+		  url: "http://localhost:8080/facebook_group2/webapi/user/allUserList1",
+		  type: "GET",
+		  crossDomain: true,
+		  processData: true,
+		  
+		  
+		  success: function(response){  
+			   
+		      // we have the response  
+			   if(response!=null){
+				   var data =JSON.parse(JSON.stringify(response)); 
+				
+			        
+				   var str = '';
+		    		 for(var i=0;i<data.length;i++){
+		    			 j=i+1;
+		    			 str = str + '<tr><td>'+j+'</td><td>'+data[i].emailID+'</td><td>'+data[i].password+'</td> </tr>';
+		    		 }
+		    		 
+		    		 
+		    		 
+		    		 var s= ' <table class="table table-bordered"><thead><tr><th>S.no</th><th>Email ID</th><th>Password</th></tr></thead>'+
+		    		   ' <tbody>'+str+'</tbody></table>';
+			        
+			    	   $("#alluserList").html(s);
+			    	   
+			 
+			   }
+			   else{
+				   }
+			   
+			},
+			error: function(e){  
+				//alert('Error121212: ' + e);  
+		}				
+		}); // ajax call end	
+	
+	
+	
 	
 $("#signupForm").submit(function(e){
         e.preventDefault();
@@ -173,7 +216,7 @@ $("#loginForm").submit(function(e){
                	   }
                 },  
                 error: function(e){  
-                  alert('Error121212: ' + e);  
+                  //alert('Error121212: ' + e);  
                  
                 } 
        	   
@@ -199,6 +242,7 @@ $("#loginForm").submit(function(e){
         </div>
       </form>
 
+	
      <form class="navbar-form navbar-right" action="#" id="loginForm">
         <div class="form-group">
         <input type="text" class="form-control" placeholder="Email" id="emailID1" style="margin-top:40px">
@@ -207,6 +251,8 @@ $("#loginForm").submit(function(e){
         <button type="submit" id="loginButton" class="btn btn-default" style="margin-top:40px">Log In</button>
       	<div id="incorrectLogin" style="color:white;" ></div>
       </form>
+      
+       <button type="submit" data-toggle="modal" data-target="#userList" class="btn btn-default"" style="margin-top:40px">user List</button>
     </div>
 
 </nav>
@@ -396,9 +442,106 @@ $("#loginForm").submit(function(e){
 					<small>that you have read our Data Policy, including our Cookie Use Policy.You may</small></br>
 					<small> receive SMS message notifications from Facebook and can opt out at any time.
 				</small></br>
-				<input type="button" id = "create_account" class="btn btn-success" value="Create account" style="height:40px; width:60%;">	 
-				
+				<input type="button" id = "create_account" class="btn btn-primary" value="Create account" style="height:40px; width:40%;">	 
+				<input type="button" id ="" class="btn btn-primary" value="About Project" data-toggle="modal" data-target="#myModalevent" style="height:40px; width:40%;">
 	</form>
+	
 </nav>
+
+
+
+    
+        
+  <div id="myModalevent" class="modal fade" role="dialog">
+  <div class="modal-dialog" >
+    <!-- Modal content-->
+<form action="" id="">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">About Project</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+       
+        <br>
+        <div class="form-group-item">
+          <label for="title" >Title:</label>
+          <input type="text"  id="title" value="Prototype of a part of facebook" readonly style="margin-left:20px; width:250px;">
+        </div>
+     <br>
+      <div class="form-group-item">
+          <label for="class1" >Class:</label>
+          <input type="text"  id="class1" value="OOAD 2017(Jan-Apr)" readonly style="margin-left:10px; width:250px;">
+        </div>
+             <br>
+             <div class="form-group-item">
+          <label for="group_no" >Group Number:</label>
+          <input type="text"  id="group_no" value="2" readonly style="margin-left:10px; width:200px;">
+        </div>
+             <br>
+      
+        <div class="form-group-item">
+          <label for="inst" >Instructor:</label>
+          <input type="text"  id="inst" value="K.V.Dinesha" readonly style="margin-left:10px; width:250px;">
+        </div>
+             <br>
+             <div class="form-group">
+          
+    			<div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Group Members
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      <li><a href="#">Varun Jaiswal  MT2016150</a></li>
+      <li><a href="#">Shubham Sharma MT2016132</a></li>
+      <li><a href="#">Umesh S        MT2016146</a></li>
+      <li><a href="#">Vishal Bhurangi MT2016154</a></li>
+      <li><a href="#">Siddharth Dewangan  MT2016133</a></li>
+      <li><a href="#">Subham Kandoi   MT2016136</a></li>
+      <li><a href="#">Soumya Jain   MT2016135</a></li>
+      <li><a href="#">Harsha Neekhra  MT2016057</a></li>
+      <li><a href="#">Athira P      MT2016029</a></li>
+  
+    </ul>
+  </div>      
+	          
+        </div>
+             <br>
+   
+        
+             <br>
+             
+    </div>
+    
+    </div>
+      </div>
+    
+       </form>
+    </div>
+  </div>
+
+
+<div class="modal fade" id="userList" style="postition:fixed;margin-top:20px">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: #f7f7f7;">
+				 <button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title" ">
+							<span>User Credentials</span>
+					</h4>
+				</div>
+				<div class = "modal-body" id = "alluserList">
+				
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-group" onclick="closeModal()" data-dismiss="modal">Close</button>
+				</div>
+			
+		</div>
+	</div>
+	
+</div>
+
+
 </body>
 </html>

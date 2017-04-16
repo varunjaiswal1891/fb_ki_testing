@@ -82,6 +82,16 @@ public class EventResource {
 	
 	// get all events created by you
 	@GET
+	@Path("/eventSummary")
+	@Produces({MediaType.TEXT_PLAIN})
+    public static  String  getEventSummary(@CookieParam("ID2") int eID){
+		String summary=null;
+		summary=EventService.getEventSummary(eID);
+		return summary;
+	}
+	
+	
+	@GET
 	@Path("/retrive_event")
 	@Produces({MediaType.APPLICATION_JSON})
     public static  ArrayList<Event>  getAllEvent(@CookieParam("ID") String jwt)throws    UnsupportedEncodingException{
@@ -96,6 +106,7 @@ public class EventResource {
 			  e1=EventService.retriveAllEvent(id);
 		return e1;
 	}
+	
 	
 	
 	  @POST
@@ -117,6 +128,25 @@ public class EventResource {
 	    		return s;
 	    } // end of addStatus
 	
+	  
+	  @POST
+	    @Path("/addSummary")
+	    @Consumes({MediaType.TEXT_PLAIN})
+	    @Produces({MediaType.TEXT_PLAIN})
+	    public String addSummary(@CookieParam("ID") String jwt,String status_desc,@CookieParam("ID2") int eID)throws JsonParseException, JsonMappingException, IOException{
+
+	    
+	    	System.out.println("token: "+jwt);
+	    	Claims claims = Jwts.parser()         
+				       .setSigningKey("secret".getBytes("UTF-8"))
+				       .parseClaimsJws(jwt).getBody();
+				    System.out.println("Subject: " + claims.getSubject());
+				   // System.out.println("Expiration: " + claims.getExpiration());
+				  String myEmailID=claims.getSubject();
+            int userID=RetriveService.uidfromEmailID(myEmailID);
+          String s= EventService.insertSummary(eID,userID,status_desc);  
+	    		return s;
+	    } // end of addStatus  
 	
 	
 	
@@ -129,6 +159,29 @@ public class EventResource {
 		eobj=EventService.getYourEventDetail(eID);
 		return eobj;
 	}
+
+	// checking admin or not
+	@GET
+	@Path("/adminornot")
+	@Produces({MediaType.TEXT_PLAIN})
+	public static int  adminorNot(@CookieParam("ID") String jwt,@CookieParam("ID2") int eID)throws JsonParseException, JsonMappingException, IOException{
+
+	    
+    	System.out.println("token: "+jwt);
+    	Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(jwt).getBody();
+			    System.out.println("Subject: " + claims.getSubject());
+			   // System.out.println("Expiration: " + claims.getExpiration());
+			  String myEmailID=claims.getSubject();
+        int userID=RetriveService.uidfromEmailID(myEmailID);
+        int s= EventService.IsadminorNot(eID,userID);
+        System.out.println("your userID is"+userID+" email ID is "+myEmailID);
+        
+    		return s;
+    } // end of function
+	
+	
 	
 	
 	@GET
@@ -282,6 +335,25 @@ public static ArrayList<Event> getEventList(@CookieParam("ID") String jwt)throws
 }
 
 
+@GET
+@Path("/retriveyourpastevent") // your past event is come where you had gone
+@Produces({MediaType.APPLICATION_JSON})
+public static ArrayList<Event> getPastEvent(@CookieParam("ID") String jwt)throws    UnsupportedEncodingException
+{
+	Claims claims = Jwts.parser()         
+		       .setSigningKey("secret".getBytes("UTF-8"))
+		       .parseClaimsJws(jwt).getBody();
+		    System.out.println("Subject: " + claims.getSubject());
+	  String myEmailID=claims.getSubject();
+	
+	 ArrayList<Event> eal=new ArrayList<Event>();
+	 int userID=RetriveService.uidfromEmailID(myEmailID);
+	 //System.out.println("userid is "+userID);
+	 eal=EventService.retriveInvitaionList2(userID);
+	 //System.out.println("getEventList end");
+	 return eal;
+}
+
 
 
 @GET
@@ -302,6 +374,26 @@ public static ArrayList<Event> getEvent(@CookieParam("ID") String jwt)throws    
 	 //System.out.println("getEventList end");
 	 return eal;
 }
+
+@GET
+@Path("/retriveincomingInvitaionlist1") // your incomin event is come where you are going
+@Produces({MediaType.APPLICATION_JSON})
+public static ArrayList<Event> getYourEvent(@CookieParam("ID") String jwt)throws    UnsupportedEncodingException
+{
+	Claims claims = Jwts.parser()         
+		       .setSigningKey("secret".getBytes("UTF-8"))
+		       .parseClaimsJws(jwt).getBody();
+		    System.out.println("Subject: " + claims.getSubject());
+	  String myEmailID=claims.getSubject();
+	
+	 ArrayList<Event> eal=new ArrayList<Event>();
+	 int userID=RetriveService.uidfromEmailID(myEmailID);
+	 //System.out.println("userid is "+userID);
+	 eal=EventService.retriveInvitaionList3(userID);
+	 //System.out.println("getEventList end");
+	 return eal;
+}
+
 
 @GET
 @Path("/MonthBirthdayList") // geting all user birthdaylisy of this month

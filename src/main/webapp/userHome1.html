@@ -85,6 +85,53 @@ margin-left:20px;
         $(document).ready(function() {
         	
         	
+        	 $("#resetPassword").click(function(e){
+      		   
+      		   var current_password=$("input#cpass").val();
+      		   var new_password=$("input#npass").val();
+      		 //  alert(current_password);
+      		  // alert(new_password);
+      		   if((current_password=="")||(new_password==""))
+               	{
+             	       alert("please fill both the fields");
+             	       window.location.replace("userHome1.html");
+             	    }
+      		   else if((new_password.length)<6){
+      			   alert("Password should be minimum 6 characters");
+             	       window.location.replace("userHome1.html");
+      		   }
+      		   else{ 
+      		   $.cookie("cpass",current_password);
+      		   $.cookie("npass",new_password);
+      		   $.ajax({
+                     type: "POST",  //send data to server in this format
+                     url:"http://localhost:8080/facebook_group2/webapi/user/resetpassword",
+                     dataType: "text",  //expect response of this type
+                     success: function(resp){
+                         
+                         if(resp!=null){
+                      	   window.location.replace("userHome1.html");
+                         }    
+                         else
+                         {
+                      	   alert("current password is not correct");
+                      	   window.location.replace("userHome1.html");
+                         }    
+                         
+                         
+                     },
+                     error: function(jqXHR, textStatus, errorThrown){
+                         //alert('logout error: ' + textStatus);
+                     }
+                 }); // ajax call end
+      		   
+      		   }
+      		   
+      	   });//reset paasword ajax call ends
+        	
+        	
+        	
+        	
             /*
             News API is a simple and easy-to-use API that returns JSON metadata for the headlines currently published on a
             range of news sources and blogs. It is used to display live news headlines in our site!
@@ -115,7 +162,7 @@ margin-left:20px;
               			  //alert(i);
               			  
               		  trend +="<a href=\""+data.articles[i].url+"\""+"class="+"\" glyphicon glyphicon-globe list-group-item\""+"target="+"\"_blank\""+">"+data.articles[i].title+"</a>";
-              		 // <a href="todoPage.html" class="list-group-item">Virat Kohli</a>
+              		 
               		  }
               		  trend = trend.replace("undefined","");
                       	   $("#trending").html(trend);
@@ -184,13 +231,13 @@ margin-left:20px;
                       
                       else
                    	   {
-                   	  	alert("data cannot be fetched");
+                   	  	//alert("data cannot be fetched");
                    	   }
                     },
    	    
          			error: function(e){  
-           					alert('Error121212: ' + e);  
-           					alert(e.toString());
+           					//alert('Error121212: ' + e);  
+           					//alert(e.toString());
          			}				
            
    	  });
@@ -227,7 +274,7 @@ margin-left:20px;
                   
                   else
                	   {
-               	  alert("something wrong");
+               	  //alert("something wrong");
                	   }
                 },
   	    
@@ -278,14 +325,14 @@ margin-left:20px;
     	            }	
     	            else
     	            {
-    	            	alert("update failed.. ")
+    	            	//alert("update failed.. ")
     	            	//window.location.replace("timeLine1.html");
     	            }	
     	            
     	            
     	        },
     	        error: function(jqXHR, textStatus, errorThrown){
-    	            alert('logout error: ' + textStatus);
+    	            //alert('logout error: ' + textStatus);
     	        }
     	    }); 
 	        	
@@ -468,8 +515,8 @@ margin-left:20px;
                 	   },//success ends  
                 	 
     			error: function(e){  
-					alert('Error121212: ' + e);  
-					alert(e.toString());
+					//alert('Error121212: ' + e);  
+					//alert(e.toString());
 			}		
             
     	  }); //ajax call ends
@@ -647,8 +694,8 @@ margin-left:20px;
              	   },//success ends  
              	 
  			error: function(e){  
-					alert('Error121212: ' + e);  
-					alert(e.toString());
+					//alert('Error121212: ' + e);  
+					//alert(e.toString());
 			}		
          
  	  }); //ajax call ends
@@ -717,8 +764,8 @@ margin-left:20px;
     	                    },
     	                    
     	                    error: function(e){  
-    	    					alert('Errorinsidelikehover: ' + e);  
-    	    					alert(e.toString());
+    	    					//alert('Errorinsidelikehover: ' + e);  
+    	    					//alert(e.toString());
     	    			}		
     	                
     	        	  }); //ajax call ends
@@ -770,8 +817,8 @@ margin-left:20px;
              	   
     			},
     			error: function(e){  
- 					alert('Error in like: ' + e);  
- 					alert(e.toString());
+ 					//alert('Error in like: ' + e);  
+ 					//alert(e.toString());
 			}				
  
 }); 
@@ -806,8 +853,8 @@ margin-left:20px;
            	   
   			},
   			error: function(e){  
-					alert('Error121212: ' + e);  
-					alert(e.toString());
+					//alert('Error121212: ' + e);  
+					//alert(e.toString());
 			}				
 }); 
 }//unlike fun ends
@@ -845,7 +892,7 @@ margin-left:20px;
                     // we have the response  
              	   if(response!=null){
              		  $('#comment_d').val('');
-             		   //alert(response);
+             		 // alert(response);
              		 refresh();
              	   }
              	   else{
@@ -853,8 +900,8 @@ margin-left:20px;
              	   
     			},
     			error: function(e){  
- 					alert('Error121212: ' + e);  
- 					alert(e.toString());
+ 					//alert('Error121212: ' + e);  
+ 					//alert(e.toString());
 			}				
  
 }); 
@@ -931,7 +978,7 @@ margin-left:20px;
                  		}//file data not null
                  		else
                  		{
-                 			alert('hre');	
+                 			//alert('hre');	
                  		}
      	    	  
                  		 
@@ -1009,13 +1056,13 @@ margin-left:20px;
                   
                   else
                	   {
-               	  alert("something wrong");
+               	  //alert("something wrong");
                	   }
                 },
   	    
      			error: function(e){  
-       					alert('Error121212: ' + e);  
-       					alert(e.toString());
+       					//alert('Error121212: ' + e);  
+       					//alert(e.toString());
      			}				
        
   	  });//ajax call end
@@ -1087,7 +1134,7 @@ margin-left:20px;
                             
                             else
                          	   {
-                         	  alert("something wrong");
+                         	  //alert("something wrong");
                          	   }
                           },
          	    
@@ -1139,14 +1186,14 @@ margin-left:20px;
                         }    
                         else
                         {
-                            alert("group creation failed ");
+                            //alert("group creation failed ");
                             window.location.replace("userHome1.html");
                         }    
                         
                         
                     },
                     error: function(jqXHR, textStatus, errorThrown){
-                        alert('logout error: ' + textStatus);
+                        //alert('logout error: ' + textStatus);
                     }
                 });
                 
@@ -1249,15 +1296,11 @@ margin-left:20px;
                                 <a href="userFriend.html"><i class="glyphicon glyphicon-user"></i> Find Friends</a>
                               </li>
                               
+                              
                               <li>
-                                <a href="todoPage.html" title="Friend Requests"><i class="glyphicon glyphicon-user"></i><span class="badge">9</span></a>
-                              </li>
-                                <li>
-                                <a href="todoPage.html" title="Mesages"><i class="glyphicon glyphicon-envelope"></i><span class="badge">3</span></a>
-                              </li>
-                              <li>
-                                <a href="todoPage.html" title="Notifications"><i class="glyphicon glyphicon-cloud"></i><span class="badge">5</span></a>
-                              </li>
+<a href="#" data-toggle="modal" data-target="#ModalresetPassword">Reset Passoword</a> 
+</li>
+                              
                              
 							 <li role="separator" class="divider"></li>
    
@@ -1301,66 +1344,20 @@ margin-left:20px;
 							<ul class="nav hidden-xs see-more" id="xs-menu" >
 							<li><a href="Event.html"><i class="glyphicon glyphicon-refresh"></i> Events</a></li>
 							<li><a href="myGroups.html"><i class="glyphicon glyphicon-refresh"></i> Groups</a></li>
-							<li><a href="todoPage.html"><i class="glyphicon glyphicon-refresh"></i> Pages</a></li>
 											</ul>
-							
-							<div class="accordion-group">
-    							<div id="collapseTwo" class="accordion-body collapse">
-     								 <div class="accordion-inner">
-      									<ul class="nav hidden-xs see-more" id="xs-menu">
-      	    			  					<li><a href="todoPage.html"><i class="glyphicon glyphicon-refresh"></i> Friend List</a></li>
-											<li><a href="todoPage.html"><i class="glyphicon glyphicon-refresh"></i> Pokes</a></li>
-											<li><a href="todoPage.html"><i class="glyphicon glyphicon-refresh"></i> On This Day</a></li>
-											<li><a href="todoPage.html"><i class="glyphicon glyphicon-refresh"></i> Find Friends</a></li>
-											<li><a href="todoPage.html"><i class="glyphicon glyphicon-refresh"></i> Games</a></li>
-											<li><a href="todoPage.html"><i class="glyphicon glyphicon-refresh"></i> Suggested/Edit</a></li>
-										</ul>	
-      
-     								 </div>
-    							</div>
-    							<div class="accordion-heading">
-      								<ul class="nav hidden-xs see-more" id="xs-menu">
-      								<li><a class="accordion-toggle" id = "see-more" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo"> See More ...
-      								</li>
-      								</ul>
-      								</a>
-    							</div>
-  							</div>
+		
 							<br>
 							
 							<b>Create</b>
 							<br>
 							<ul class="nav hidden-xs" id="xs-menu">
-							
-				<input type="button" id ="popup1" class="btn btn-primary" value="Ad" data-toggle="modal" onclick="location.href='todoPage.html'" data-target="" style="min-width:80px;">	</br>		
-				<input type="button" id ="popup2" class="btn btn-primary" value="Page" data-toggle="modal" onclick="location.href='todoPage.html'" data-target=""  data-target="" style="min-width:80px;"></br>
 				<input type="button" id ="popup3" class="btn btn-primary" value="Group" data-toggle="modal" data-target="#groupModal" style="min-width:80px;"></br>
 				<input type="button" id ="popup4" class="btn btn-primary" value="Event" data-toggle="modal" data-target="#myModalevent" style="min-width:80px;">
 							
 							
 						</ul>
-						<!-- <ul class="list-unstyled hidden-xs" id="sidebar-footer" style="background-color: #E9EAED">
-							<li>
-							  <a href="http://usebootstrap.com/theme/facebook"><h3>Bootstrap</h3> <i class="glyphicon glyphicon-heart-empty"></i> Bootply</a>
-							</li>
-						</ul> -->
-					  
-						<!-- tiny only nav-->
-					   <ul class="nav visible-xs" id="lg-menu">
-							<li><a href="#featured" class="text-center"><i class="glyphicon glyphicon-list-alt"></i></a></li>
-							<li><a href="#stories" class="text-center"><i class="glyphicon glyphicon-list"></i></a></li>
-							<li><a href="#" class="text-center"><i class="glyphicon glyphicon-paperclip"></i></a></li>
-							<li><a href="#" class="text-center"><i class="glyphicon glyphicon-refresh"></i></a></li>
-							<li><a href="#" class="text-center"><i class="glyphicon glyphicon-refresh"></i></a></li>
-							<li><a href="#" class="text-center"><i class="glyphicon glyphicon-refresh"></i></a></li>
-							<li><a href="#" class="text-center"><i class="glyphicon glyphicon-refresh"></i></a></li>
-							<li><a href="#" class="text-center"><i class="glyphicon glyphicon-refresh"></i></a></li>
-							<li><a href="#" class="text-center"><i class="glyphicon glyphicon-refresh"></i></a></li>
-							<li><a href="#" class="text-center"><i class="glyphicon glyphicon-refresh"></i></a></li>
-							<li><a href="#" class="text-center"><i class="glyphicon glyphicon-refresh"></i></a></li>
-							<li><a href="#" class="text-center"><i class="glyphicon glyphicon-refresh"></i></a></li>
-						</ul>
-					  
+				
+				
 					</div>
 					<!-- /sidebar -->
 	
@@ -1776,7 +1773,51 @@ margin-left:20px;
 	  } );
   </script>
      
-		
+ <div id="ModalresetPassword" class="modal fade" role="dialog">
+  <div class="modal-dialog" >
+    <!-- Modal content-->
+<form action="" id="updateevent">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Reset-Password</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+       
+     
+     
+        <br>
+        <br>
+        <div class="form-group">
+          <label for="OLD-PASSWORD" >Current password</label>
+          <input type="password"  id="cpass" style="margin-left:10px;">
+        </div>
+     <br>
+      <div class="form-group">
+          <label for="new-password" >New password</label>
+          <input type="password"  id="npass" style="margin-left:33px;">
+        </div>
+             <br>
+          
+   
+             <br>
+             
+    </div>
+    
+     
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+       <input type="button" id ="resetPassword" class="btn btn-primary" value="Change Password" data-dismiss="modal" >
+     
+      </div>
+    </div>
+      </div>
+    
+       </form>
+    </div>
+  </div>
+  		
 		
 		
         
