@@ -115,7 +115,7 @@ margin-left:20px;
               			  //alert(i);
               			  
               		  trend +="<a href=\""+data.articles[i].url+"\""+"class="+"\" glyphicon glyphicon-globe list-group-item\""+"target="+"\"_blank\""+">"+data.articles[i].title+"</a>";
-              		 // <a href="todoPage.html" class="list-group-item">Virat Kohli</a>
+              		 
               		  }
               		  trend = trend.replace("undefined","");
                       	   $("#trending").html(trend);
@@ -184,7 +184,7 @@ margin-left:20px;
                       
                       else
                    	   {
-                   	  	alert("data cannot be fetched");
+                   	  	//alert("data cannot be fetched");
                    	   }
                     },
    	    
@@ -227,7 +227,7 @@ margin-left:20px;
                   
                   else
                	   {
-               	  alert("something wrong");
+               	  //alert("something wrong");
                	   }
                 },
   	    
@@ -845,7 +845,7 @@ margin-left:20px;
                     // we have the response  
              	   if(response!=null){
              		  $('#comment_d').val('');
-             		   //alert(response);
+             		  alert(response);
              		 refresh();
              	   }
              	   else{
