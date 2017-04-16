@@ -19,7 +19,7 @@ public class LikeService {
 				 check= db.start();
 				 
 			  }
-			  
+			  System.out.println("ttt="+likeobj.getTimelineid());
 			  if(likeobj.getTimelineid().equals("home"))
 			  {
 				  String query1="select * from likes where statusID=? and emailID=?"; 

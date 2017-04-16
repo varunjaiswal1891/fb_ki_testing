@@ -133,8 +133,9 @@ status.setTimelineid(obj.getTimelineid());
      
    System.out.println("status id in resource: "+statusobj.getStatusID());
     int sid=statusobj.getStatusID();
-      likeobj.setEmailID(myEmailID);
+    likeobj.setEmailID(myEmailID);
     likeobj.setStatusID(sid);
+    likeobj.setTimelineid("home");
     int x = l1.incrementLike(likeobj);
     if (x==1){
     return "liked";

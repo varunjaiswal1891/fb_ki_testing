@@ -227,8 +227,8 @@ cobj.setGroup_name(gname);
    @Consumes({MediaType.APPLICATION_JSON})
    @Produces({MediaType.TEXT_HTML})
    public String incrementLike(@CookieParam("ID") String jwt,Status statusobj)throws JsonParseException, JsonMappingException, IOException{
-    System.out.println("inside increment like resource");
-     
+    System.out.println("inside increment like resource in GROUP");
+    System.out.println("oooo+"+statusobj.getTimelineid()); 
      
     Claims claims = Jwts.parser()         
       .setSigningKey("secret".getBytes("UTF-8"))
@@ -242,6 +242,7 @@ cobj.setGroup_name(gname);
     int sid=statusobj.getStatusID();
     likeobj.setEmailID(myEmailID);
     likeobj.setStatusID(sid);
+    likeobj.setTimelineid(statusobj.getTimelineid());
     if(l1.incrementLike(likeobj)==1){
     return "like incremented";
     }
