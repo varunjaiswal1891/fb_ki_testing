@@ -1,6 +1,10 @@
 package com.varun.fbproj.service;
 
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import com.varun.fbproj.model.User;
 
 public class UpdateService {
@@ -55,6 +59,45 @@ public class UpdateService {
         }
         return false;
     }//update method ends here
+
+	public static String updatePassword(String emailID, String cpassword,
+			String npassword) throws SQLException  {
+		 DBAccess connect = new DBAccess();
+	        boolean check=false;
+	        while(check==false)
+	        {
+	        	check=connect.start();
+	        	System.out.println("trying connection for Event service");
+	        }
+	        
+	    String query1="select password from User where emailID=?";
+	    PreparedStatement ps1 = connect.con.prepareStatement(query1);  
+	    ps1.setString(1,emailID);
+		ResultSet rs=ps1.executeQuery();
+		while(rs.next()){
+			String pass=rs.getString(1);
+			if(pass.equals(cpassword))
+			{
+				String query = "UPDATE User SET password=? where emailID=?";
+				ps1 = connect.con.prepareStatement(query);
+				ps1.setString(1,npassword);
+				ps1.setString(2, emailID);
+				ps1.executeUpdate();
+			}
+			else {
+				connect.stop();
+				return null;
+			}
+			
+		}
+	       //String query = "UPDATE Event SET summary=? where eID=? and userID=?";
+	      
+	       
+				
+			
+	        connect.stop();
+		return "changed";
+	}
 	
 	
 }//class ends here

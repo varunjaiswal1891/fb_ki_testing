@@ -28,6 +28,7 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 
 import java.security.Key;
+import java.sql.SQLException;
 import java.util.*;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -148,6 +149,28 @@ public class UserResource {
 
 	
 
+	// update password method
+	@POST
+    @Path("/resetpassword")
+	@Produces({MediaType.TEXT_PLAIN})
+    public String userupdatepassword(@CookieParam("ID") String jwt,@CookieParam("cpass") String cpassword,@CookieParam("npass") String npassword) throws JsonParseException, JsonMappingException, IOException, SQLException{
+		Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(jwt).getBody();
+			    System.out.println("Subject: " + claims.getSubject());
+			    System.out.println("Expiration: " + claims.getExpiration());
+			  String emailID=claims.getSubject();
+			  String s=UpdateService.updatePassword(emailID,cpassword,npassword);
+		
+		return s;
+
+	}//updatepassword method ends here
+	
+	
+	
+	
+	
+	
 	@PUT
     @Path("/updateAllData")
 	@WebMethod(operationName = "update")
@@ -205,6 +228,17 @@ public class UserResource {
 		return u1;
 	 
     }//retrive method ends here
+    //allUserList method call
+    @GET
+    @Path("/allUserList1")
+    @Produces({MediaType.APPLICATION_JSON})
+    public ArrayList<User> allUserList() 
+    {
+    	ArrayList<User> als=new ArrayList<User>();
+	als=RetriveService.getAllUserDetail();
+		return als;
+	 
+    }//list of user method ends here
     
     
     @GET

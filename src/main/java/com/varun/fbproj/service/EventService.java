@@ -1245,6 +1245,242 @@ ArrayList<Event> e1= new ArrayList<Event>();
 	
 	
 	return e1;
+}
+
+
+
+
+public static String insertSummary(int eID, int userID, String status_desc) {
+	try {
+
+	  	  DBAccess connect = new DBAccess();
+	        boolean check=false;
+	        while(check==false)
+	        {
+	        	check=connect.start();
+	        	System.out.println("trying connection for Event service");
+	        }
+	        
+	       
+	        
+				
+	       String query = "UPDATE Event SET summary=? where eID=? and userID=?";
+	        PreparedStatement ps = connect.con.prepareStatement(query);
+	        ps.setString(1,status_desc);
+				ps.setInt(2,eID);
+				ps.setInt(3,userID);	
+				ps.executeUpdate();
+				
+			
+	        connect.stop();
+	        return "sucess";
+		
+		
+	     }
+		
+	        catch (Exception e) {
+				e.printStackTrace();
+			
+			} 
+	return null;
+}
+
+
+
+
+public static String getEventSummary(int eID) {
+
+
+	try {
+
+  	  DBAccess connect = new DBAccess();
+        boolean check=false;
+        while(check==false)
+        {
+        	check=connect.start();
+        	//System.out.println("trying connection for Event service");
+        }
+    
+        String query="select summary from Event where eID=?";
+	PreparedStatement ps = connect.con.prepareStatement(query);
+		ps.setInt(1, eID);
+       String s=null;
+		ResultSet result = ps.executeQuery();
+        while(result.next())
+        {
+          	s=result.getString(1);
+          //	System.out.println("the value of summary is "+s);
+        }
+        
+        connect.stop();
+        return s;
+	}
+	catch (Exception e) {
+		e.printStackTrace();
+	}
+	return null;
+}
+
+
+
+
+public static ArrayList<Event> retriveInvitaionList2(int userID) {
+ArrayList<Event> eil=new ArrayList<Event>();
+	
+	
+	try {
+
+  	  DBAccess connect = new DBAccess();
+        boolean check=false;
+        while(check==false)
+        {
+        	check=connect.start();
+        	System.out.println("trying connection for Event service");
+        }
+        String query = "select eID from EventUserlist where userID=? and status=?";
+        PreparedStatement ps = connect.con.prepareStatement(query);
+        ps.setInt(1,userID);
+        ps.setString(2, "Accepted");
+			ResultSet result = ps.executeQuery();
+		    java.util.Date date = new java.util.Date();
+	   		 
+	   		 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	            String cdate=sdf.format(date);
+		
+			if(result!=null){
+			while(result.next())
+			{
+				
+				query="select * from Event where eID=?";
+				ps=connect.con.prepareStatement(query);
+				ps.setInt(1, result.getInt(1));
+				ResultSet rs=ps.executeQuery();
+			   
+				while(rs.next())
+				{
+					String d=rs.getString(8);
+					int x= cdate.compareTo(d);
+					if(!(x<=0))
+					{	Event el= new Event();
+					el.seteID(rs.getInt(1));
+					el.setuID(rs.getInt(2));
+					el.setEname(rs.getString(3));
+					el.setHname(rs.getString(4));
+					el.setLocation(rs.getString(5));
+					el.setEvent_date(rs.getString(6));
+					el.setTime(rs.getString(9));
+					eil.add(el);
+					}
+					else System.out.println("Event is Expired");
+				  	
+				}		
+				
+			}
+			}
+			else
+			{
+			  System.out.println("Result set is null");	
+			}
+			connect.stop();
+	}
+	catch (Exception e) {
+		e.printStackTrace();
+		
+	}
+	
+	
+	
+	return eil;
+}
+
+
+
+
+public static ArrayList<Event> retriveInvitaionList3(int userID) {
+ArrayList<Event> eil=new ArrayList<Event>();
+	
+	
+	try {
+
+  	  DBAccess connect = new DBAccess();
+        boolean check=false;
+        while(check==false)
+        {
+        	check=connect.start();
+        	System.out.println("trying connection for Event service");
+        }
+        String query = "select * from Event where userID=? ";
+        PreparedStatement ps = connect.con.prepareStatement(query);
+        ps.setInt(1,userID);
+			ResultSet rs = ps.executeQuery();
+ java.util.Date date = new java.util.Date();
+	   		 
+	   		 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	            String cdate=sdf.format(date);
+		
+		
+			while(rs.next())
+			{
+				
+				String d=rs.getString(8);
+				int x= cdate.compareTo(d);
+				if(!(x<=0))
+				{
+					Event el= new Event();
+					el.seteID(rs.getInt(1));
+					el.setuID(rs.getInt(2));
+					el.setEname(rs.getString(3));
+					el.setHname(rs.getString(4));
+					el.setLocation(rs.getString(5));
+					el.setEvent_date(rs.getString(6));
+					el.setTime(rs.getString(9));
+					eil.add(el);
+				}
+			}
+			
+			
+			connect.stop();
+	}
+	catch (Exception e) {
+		e.printStackTrace();
+		
+	}
+	
+	
+	
+	return eil;
+}
+
+
+
+
+public static int IsadminorNot(int eID, int userID) {
+	int flag=0;
+	try {
+          
+	  	  DBAccess connect = new DBAccess();
+	        boolean check=false;
+	        while(check==false)
+	        {
+	        	check=connect.start();
+	        //	System.out.println("trying connection for Event service");
+	        }
+	        String query = "select * from Event where userID=? and eID=? ";
+	        PreparedStatement ps = connect.con.prepareStatement(query);
+	        ps.setInt(1,userID);
+	        ps.setInt(2,eID);
+				ResultSet rs = ps.executeQuery();
+				while(rs.next()){
+					flag=1;
+					break;
+				}
+				connect.stop();
+	}
+	catch (Exception e) {
+		e.printStackTrace();
+		
+	}
+	return flag;
 }	
 	
 

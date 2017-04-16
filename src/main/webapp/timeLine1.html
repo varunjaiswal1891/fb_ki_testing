@@ -530,7 +530,7 @@ window.mutual=function(e1){
 		  st+="<br>";
             	   st+="<div class="+"\"row\""+">";
             	 	
-            	   st+="<p id="+"\"forstatus\"class="+"\"leftpadding11\""+"><font size="+"\"3\""+"color="+"\"black\""+">"+data[i].status_desc+"</font></p>" ;
+            	   st+="<p id="+"\"forstatus\""+"class="+"\"leftpadding11\""+"><font size="+"\"3\""+"color="+"\"black\""+">"+data[i].status_desc+"</font></p>" ;
             	 
              	   if(data[i].flag==0)
             	   st+="<p class=\" col-sm-12\"><img class="+"\"img-responsive\""+"alt=\"\""+"src="+"\"users/"+data[i].emailID+"/"+data[i].statusID+".jpg\""+"/></p>";
@@ -878,7 +878,7 @@ window.mutual=function(e1){
             	  
             	  var obj1 = JSON.parse(JSON.stringify(resp));
            	   		 var statusid=obj1.statusID;
-           	  		alert("statusid"+statusid);
+           	  		//alert("statusid"+statusid);
            	   		console.log(statusid);
          		
            	
@@ -1045,7 +1045,7 @@ window.mutual=function(e1){
                               <li>
                                 <a href="userFriend.html"><i class="glyphicon glyphicon-user"></i> Find Friends</a>
                               </li>
-                              <li>
+                             <!--  <li>
                                 <a href="todoPage.html" title="Friend Requests"><i class="glyphicon glyphicon-user"></i><span class="badge">9</span></a>
                               </li>
                                 <li>
@@ -1053,7 +1053,7 @@ window.mutual=function(e1){
                               </li>
                               <li>
                                 <a href="todoPage.html" title="Notifications"><i class="glyphicon glyphicon-cloud"></i><span class="badge">5</span></a>
-                              </li>
+                              </li> -->
                              
  						 <li role="separator" class="divider"></li>
    
@@ -1119,9 +1119,9 @@ window.mutual=function(e1){
       </div></div></div>
       <div class="img-container1" >
       <div class="img-text offset4">
-      <a class="btn btn-default active" href="timeLine1.html">TimeLine</a>
-      <a class="btn btn-default" href="todoPage.html">About</a>
-      <a class="btn btn-default" href="todoPage.html">Photos</a>
+      <a class="btn btn-default active" style="float:right;" href="timeLine1.html">TimeLine</a>
+     <!--  <a class="btn btn-default" href="todoPage.html">About</a>
+      <a class="btn btn-default" href="todoPage.html">Photos</a> -->
       </div></div></div>
   </div>  </div>    </div>    </div>
     </div></div></div>

@@ -23,6 +23,23 @@
     top: 160px; bottom: 10px; left: 10px; right: 10px; //to place it as you want.
 
 }
+p.leftpadding11{
+margin-left: 27px;
+
+word-wrap: break-word;
+}
+
+p.leftpadding {
+    margin-left: 27px;
+    
+
+    
+    
+}
+
+
+
+
 .img-container1 {
         position: absolute;
     top: 300px; bottom: 10px; left:540px; right: 10px; //to place it as you want.
@@ -33,6 +50,11 @@
     top: 300px; bottom: 10px; left:230px; right: 10px; //to place it as you want.
 
 }
+p.comment1 {
+    margin-left: 16px;
+}
+
+
 
 .img-text {
     width: 100%;
@@ -363,6 +385,7 @@
                     	 
                         var statusdesc= document.getElementById("posttext").value;
                          //alert(x);
+                          $('#posttext').val('');
                          var obj2={status_desc:statusdesc,feeling:feeling1,timelineid:friendemail};
                  		 var mahjson=JSON.stringify(obj2);
                  		 
@@ -735,10 +758,10 @@ for (var i=data.length-1; i >=0; i--){
           
           st+="<br><br>";
         	  }
-        st+="<br>";
-          st+="<ul type="+"\"disc\""+">";
-          st+="<div id="+"\"time\""+"><font size="+"\"2\""+"color="+"\"#A4A4A4\""+">"+data[i].postedon+"<font></div>" ;
-          st+="</ul>";
+        st+="<br>";/* 
+          st+="<ul type="+"\"disc\""+">"; */
+          st+="<p id="+"\"time\""+"class="+"\"leftpadding\""+"><font size="+"\"2\""+"color="+"\"#A4A4A4\""+">"+data[i].postedon+"<font></p>" ;
+       /*    st+="</ul>"; */
           /* st+="<ul>";
           st+="<li id="+"\"time\""+">"+data[i].postedon+"</li>" ;
        	  st+="</ul>";
@@ -748,7 +771,7 @@ for (var i=data.length-1; i >=0; i--){
  	   st+="</div>";
  	   st+="<div class="+"\"row\""+">";
  	 	st+="<br>";
- 	   st+="<div id="+"\"forstatus\""+"><font size="+"\"3\""+"color="+"\"black\""+">"+data[i].status_desc+"</font></div>" ;
+ 	   st+="<p id="+"\"forstatus\""+"class="+"\"leftpadding11\""+"><font size="+"\"3\""+"color="+"\"black\""+">"+data[i].status_desc+"</font></p>" ;
  	   st+="</div></div><hr>";
  	   st+="<div class="+"\"row\""+">";
  	   st+="<div class="+"\"col-md-12\""+">";
@@ -808,7 +831,7 @@ for (var i=data.length-1; i >=0; i--){
      	   document.getElementById("forstatus").style.color="blue"; */
      	 	st+="<br><br>";
      	  
- 		   st+= "<p id="+"\"output\""+"><font size="+"\"2\""+"color="+"\"black\""+">"+data[i].a[j].comment_desc+"</font></p>";
+ 		   st+= "<p id="+"\"output\""+"class="+"\"comment1\""+"><font size="+"\"2\""+"color="+"\"black\""+">"+data[i].a[j].comment_desc+"</font></p>";
  	  st+="<br>";
  	   //st+="<hr>";
 		   }
@@ -1008,7 +1031,7 @@ jQuery(document).ajaxComplete(function (e) {
                               <li>
                                 <a href="userFriend.html"><i class="glyphicon glyphicon-user"></i> Find Friends</a>
                               </li>
-                              <li>
+                              <!-- <li>
                                 <a href="todoPage.html" title="Friend Requests"><i class="glyphicon glyphicon-user"></i><span class="badge">9</span></a>
                               </li>
                                 <li>
@@ -1016,7 +1039,7 @@ jQuery(document).ajaxComplete(function (e) {
                               </li>
                               <li>
                                 <a href="todoPage.html" title="Notifications"><i class="glyphicon glyphicon-cloud"></i><span class="badge">5</span></a>
-                              </li>
+                              </li> -->
                              
 							 <li role="separator" class="divider"></li>
    
@@ -1060,9 +1083,9 @@ jQuery(document).ajaxComplete(function (e) {
   	
   	<div class="img-container1" >
   	<div class="img-text offset4">
-  	<a class="btn btn-default active" href="friendTimeline.html">TimeLine</a>
-  	<a class="btn btn-default" href="todoPage.html">About</a>
-  	<a class="btn btn-default" href="todoPage.html">Photos</a>
+  	<a class="btn btn-default active" style="float:right;" href="friendTimeline.html">TimeLine</a>
+  	<!-- <a class="btn btn-default" href="todoPage.html">About</a>
+  	<a class="btn btn-default" href="todoPage.html">Photos</a> -->
   	<a href="#postModal" role="button" data-toggle="modal" id="suggestfriendsbutton" class="btn btn-default pull-right"> Suggest Friends</a>
   	</div></div></div>
   </div>  </div>    </div>    </div>

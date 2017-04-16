@@ -2,6 +2,7 @@ package com.varun.fbproj.service;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import com.varun.fbproj.model.Group;
 import com.varun.fbproj.model.User;
@@ -224,6 +225,41 @@ public class RetriveService {
 				e.printStackTrace();
 			}
 			return email;
+	}
+
+
+
+	public static ArrayList<User> getAllUserDetail() {
+	  ArrayList<User> ais= new ArrayList<User>();
+	  try {
+
+      	  DBAccess connect = new DBAccess();
+            boolean check=false;
+            while(check==false)
+            {
+            	check=connect.start();
+            	System.out.println("trying connection");
+            }
+            PreparedStatement prepStatement = connect.con
+					.prepareStatement("select emailID,password from User");
+			
+			
+			ResultSet result = prepStatement.executeQuery();
+		
+			while(result.next()){
+				User obj= new User();
+			obj.setEmailID(result.getString("emailID"));
+			obj.setPassword(result.getString(2));
+				ais.add(obj);
+			}
+			
+            connect.stop();
+            
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ais;
 	}
 
 	

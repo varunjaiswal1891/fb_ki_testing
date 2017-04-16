@@ -29,8 +29,8 @@ try {
            String query = "insert into Group1(group_name,owner,privacy) values (?,?,?)";
            PreparedStatement ps = connect.con.prepareStatement(query);
            ps.setString(1,group_name);
-ps.setString(2,emailID);
-ps.setString(3,privacy);
+           ps.setString(2,emailID);
+          ps.setString(3,privacy);
  
            ps.executeUpdate(); 
            

@@ -20,8 +20,8 @@ public class LikeService {
 				 
 			  }
 			  
-			  if(likeobj.getTimelineid().equals("home"))
-			  {
+			/*  if(likeobj.getTimelineid().equals("home"))
+			  {*/
 				  String query1="select * from likes where statusID=? and emailID=?"; 
 					
 					PreparedStatement pstmnt1=db.con.prepareStatement(query1);
@@ -63,7 +63,7 @@ public class LikeService {
 					 
 				  
 				  
-			  }
+			 /* }
 			  else{ 
 				  if(likeobj.getTimelineid().equals("group")){
 				  
@@ -164,7 +164,7 @@ public class LikeService {
 				  
 			  
 			  
-			/*String query1="select * from likes where statusID=? and emailID=?"; 
+			String query1="select * from likes where statusID=? and emailID=?"; 
 			
 			PreparedStatement pstmnt1=db.con.prepareStatement(query1);
 			
@@ -201,9 +201,9 @@ public class LikeService {
 		    	
 		    	
 		    	 return 2;
-		    }*/
+		    }
 			 
-		} catch (SQLException e) 
+*/		} catch (SQLException e) 
 	    {
 	        e.printStackTrace();
 	    }

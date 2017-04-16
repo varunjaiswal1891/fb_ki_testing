@@ -21,6 +21,8 @@
   </style>
 
 <script type="text/javascript">
+
+
 $(document).ready(function() {
 	var x=$.cookie("ID");//current user logged in cookie
 	var y=$.cookie("ID1");//friend timeline ki cookie
@@ -31,6 +33,42 @@ $(document).ready(function() {
 	        e.preventDefault();
 	 });
 	
+
+	 $("#postbutton1").click(function(e){
+ 		 
+ 		 
+  		var statusdesc= document.getElementById("posttext1").value;
+  		 //alert(statusdesc);
+  		  $.ajax({
+  type: "POST",
+  contentType: "text/plain",  //send data to server in this format
+  url:"http://localhost:8080/facebook_group2/webapi/event/addSummary",
+  dataType: "text",  //expect response of this type
+  data: statusdesc,
+ success: function(resp){
+	   
+	  if(resp!=null){
+		  
+		// alert(resp);
+	  //$('#posttext').val('');
+		location.reload(); 
+		  
+	  }
+	  else{
+		
+		  alert("null");
+	  }
+	   
+ },
+ 
+error: function(jqXHR, textStatus, errorThrown){
+    alert('status posting error: ' + textStatus);
+}	 
+  		 
+  		 
+  		 });    		  
+  		 
+  	 });    //post button end		
 	
 	
   $("#logoutButton1").click(function(e){
@@ -248,6 +286,39 @@ $(document).ready(function() {
  
   });//ajax call end for user coming on particular event
 		///ajax call ends here*/
+// ajax call for getting event summary
+		$.ajax({ 
+	        url: "http://localhost:8080/facebook_group2/webapi/event/eventSummary",
+	        type: "GET",
+	        dataType: "text",
+	        crossDomain: true,
+	        processData: true,
+	        
+	        
+	        success: function(response){  
+	     	   var data="";
+	            // we have the response  
+	     	   if(response!=null){
+	     		   data+="<p id="+"\"forstatus\"class="+"\"leftpadding11\">"
+	     		   data+="<font size=\"4\">";
+	     		   data+=response;
+	     		   data+="</font></p>";
+	              $("#eventSummarylist").html(data);
+	     	   
+	     	   }//if ends
+	     	   else {
+	     		  $("#eventSummarylist").html("<font size=\"4\">NO Summary YET</font>");
+	     	   }
+	     	   },//success ends  
+	     	 
+			error: function(e){  
+				alert('Error121212: ' + e);  
+				alert(e.toString());
+		}		
+	 
+	}); //ajax call ends		
+		
+		
 //-----------------------------------------------------------------------------------------------------------
 	$.ajax({ 
         url: "http://localhost:8080/facebook_group2/webapi/event/userListFor_may_be_coming_in_Event",
@@ -337,9 +408,9 @@ $(document).ready(function() {
                  		 });    		 
                  		 
                  	 });    //post button end
-		
-		
-		
+//--------------------------------------------------------------------------------------------------------
+// ajax call for adding summary of event by user
+ 
 				
 //---------------------------------------------------------------------------------------------------------------		
 	
@@ -735,7 +806,7 @@ jQuery(document).ajaxComplete(function (e) {
 								<a href="userFriend.html">Find Friends</a>
 							  </li>
 							  
-							  <li>
+							  <!-- <li>
 								<a href="todoPage.html" title="Friend Requests"><i class="glyphicon glyphicon-user"></i><span class="badge">9</span></a>
 							  </li>
 							    <li>
@@ -744,7 +815,7 @@ jQuery(document).ajaxComplete(function (e) {
 							  
 							   <li>
 								<a href="todoPage.html" title="Notifications"><i class="glyphicon glyphicon-cloud"></i><span class="badge">5</span></a>
-							  </li>
+							  </li> -->
 							
 												 
 <li role="separator" class="divider"></li>
@@ -825,6 +896,17 @@ jQuery(document).ajaxComplete(function (e) {
  
  
 </div> <!--  div of panel default for status update 1 -->
+  
+    <div class="well"> 
+										   <form class="form-horizontal" role="form">
+											<h4>Summary for event</h4>
+											 <div class="form-group" style="padding:14px;">
+											  <textarea class="form-control" placeholder="Event Summary" id="posttext1"></textarea>
+											  <button class="btn btn-primary pull-right" type="button" id="postbutton1">Submit</button>
+											</div>
+											
+										   </form>
+									  </div> 
    <div class="well"> 
 										   <form class="form-horizontal" role="form">
 											<h4>Review for event</h4>
@@ -840,6 +922,7 @@ jQuery(document).ajaxComplete(function (e) {
 										 	
 										   </form>
 									  </div>
+									 
    
 <div id="abcd1">
   <div class="panel-body" id="forcomment">
@@ -873,7 +956,7 @@ jQuery(document).ajaxComplete(function (e) {
 										 <div class="panel-heading"><h4>My Friends</h4></div>
 										  <div class="panel-body">
 											<div class="list-group">
-										  	<div class="pre-scrollable" style="min-height:100px; max-height:500px;overflow-y: scroll;">   
+										  	<div class="pre-scrollable" style="min-height:100px; max-height:300px;overflow-y: scroll;">   
 									
 										  
 										  <p id="allFriends"></p>
@@ -884,6 +967,30 @@ jQuery(document).ajaxComplete(function (e) {
 									   
 									
 								  </div>
+								  
+									  <div class="col-sm-3 col-xs-3 " >
+									   
+									  
+									   <div class="panel panel-primary">
+										 <div class="panel-heading"><h4>Event Summary</h4></div>
+										  <div class="panel-body">
+											<div class="list-group">
+										  <div class="pre-scrollable" style="min-height:100px; max-height:200px; width:220px;overflow-y: scroll;">   
+									
+										  <p id="eventSummarylist"></p>
+										  	</div>  </div>
+									   	  
+									   </div>
+								     
+								      </div>
+									  
+									
+										  	  
+										  
+									
+								  </div>
+								  
+								  
 								  
 								  </div><!--/row-->
 							  
@@ -906,7 +1013,7 @@ jQuery(document).ajaxComplete(function (e) {
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal">&times;</button>
-      <h4 class="modal-title">Create Event</h4>
+      <h4 class="modal-title">Update Event</h4>
     </div>
     <div class="modal-body">
       <div class="container">
@@ -951,7 +1058,7 @@ jQuery(document).ajaxComplete(function (e) {
           <div id="container">
 		<div class="multibox" id="day" style="float:left;">
 		<select class="form-control" name="hours" id="hour" style="width: 80px;margin-top:3px">
-					 		<option>hour</option>
+					 	
 					 		<option value="00">00</option>
 					 		<option value="01">01</option>
 							<option value="02">02</option>
@@ -969,7 +1076,7 @@ jQuery(document).ajaxComplete(function (e) {
 					</div>
 					   <div class="multibox" id="month" style="float:left">
 					 	<select class="form-control" name="minute" id="minute" style="width: 80px; margin-top:3px">
-					 		<option>Minute</option>
+					 	
 					 		<option value="00">00</option>
 							<option value="10">10</option>
 							<option value="20">20</option>
@@ -981,7 +1088,7 @@ jQuery(document).ajaxComplete(function (e) {
 					 	
 					 	<div class="multibox" id="year" style="float:left">
 		<select class="form-control" name="hours" id="hour" style="width: 80px;margin-top:3px">
-					 		<option>select</option>
+					 	
 					 		<option value="AM">AM</option>
 					 		<option value="PM">PM</option>
 							

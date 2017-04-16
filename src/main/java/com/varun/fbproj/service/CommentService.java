@@ -18,8 +18,8 @@ public class CommentService {
                   System.out.println("trying connection in addComment");
                  check= db.start();
               }
-              if(c.getTimelineid().equals("home")){
-            	  String query = "insert into comments(comment_desc,emailID,statusID,group_name) values(?,?,?,?)";
+             /* if(c.getTimelineid().equals("home")){
+            	 */ String query = "insert into comments(comment_desc,emailID,statusID,group_name) values(?,?,?,?)";
                   java.sql.PreparedStatement pstmnt=db.con.prepareStatement(query);
                       pstmnt.setString(1,c.getComment_desc());
                       pstmnt.setString(2,c.getEmailID());
@@ -31,7 +31,7 @@ public class CommentService {
              
             	  
             	  
-              }
+             /* }
               else if(c.getTimelineid().equals("group")){
             	  
             	  String privacy=GroupService.getPrivacy(c.getGroup_name());
@@ -79,7 +79,7 @@ public class CommentService {
             	  
             	  
               }
-              /*String query10="select group_name from status where statusID=?";
+              String query10="select group_name from status where statusID=?";
               java.sql.PreparedStatement pstmnt10 = db.con.prepareStatement(query10);
               pstmnt10.setInt(1,c.getStatusID());
               ResultSet rs50= pstmnt10.executeQuery();
@@ -133,8 +133,8 @@ public class CommentService {
                          db.stop();
                          return true;
                  }
-            }*/
             }
+*/            }
               catch (Exception e) 
               {
                   System.out.println(e.getMessage());
