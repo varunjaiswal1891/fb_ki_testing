@@ -85,6 +85,53 @@ margin-left:20px;
         $(document).ready(function() {
         	
         	
+        	 $("#resetPassword").click(function(e){
+      		   
+      		   var current_password=$("input#cpass").val();
+      		   var new_password=$("input#npass").val();
+      		 //  alert(current_password);
+      		  // alert(new_password);
+      		   if((current_password=="")||(new_password==""))
+               	{
+             	       alert("please fill both the fields");
+             	       window.location.replace("userHome1.html");
+             	    }
+      		   else if((new_password.length)<6){
+      			   alert("Password should be minimum 6 characters");
+             	       window.location.replace("userHome1.html");
+      		   }
+      		   else{ 
+      		   $.cookie("cpass",current_password);
+      		   $.cookie("npass",new_password);
+      		   $.ajax({
+                     type: "POST",  //send data to server in this format
+                     url:"http://localhost:8080/facebook_group2/webapi/user/resetpassword",
+                     dataType: "text",  //expect response of this type
+                     success: function(resp){
+                         
+                         if(resp!=null){
+                      	   window.location.replace("userHome1.html");
+                         }    
+                         else
+                         {
+                      	   alert("current password is not correct");
+                      	   window.location.replace("userHome1.html");
+                         }    
+                         
+                         
+                     },
+                     error: function(jqXHR, textStatus, errorThrown){
+                         //alert('logout error: ' + textStatus);
+                     }
+                 }); // ajax call end
+      		   
+      		   }
+      		   
+      	   });//reset paasword ajax call ends
+        	
+        	
+        	
+        	
             /*
             News API is a simple and easy-to-use API that returns JSON metadata for the headlines currently published on a
             range of news sources and blogs. It is used to display live news headlines in our site!
@@ -189,8 +236,8 @@ margin-left:20px;
                     },
    	    
          			error: function(e){  
-           					alert('Error121212: ' + e);  
-           					alert(e.toString());
+           					//alert('Error121212: ' + e);  
+           					//alert(e.toString());
          			}				
            
    	  });
@@ -278,14 +325,14 @@ margin-left:20px;
     	            }	
     	            else
     	            {
-    	            	alert("update failed.. ")
+    	            	//alert("update failed.. ")
     	            	//window.location.replace("timeLine1.html");
     	            }	
     	            
     	            
     	        },
     	        error: function(jqXHR, textStatus, errorThrown){
-    	            alert('logout error: ' + textStatus);
+    	            //alert('logout error: ' + textStatus);
     	        }
     	    }); 
 	        	
@@ -468,8 +515,8 @@ margin-left:20px;
                 	   },//success ends  
                 	 
     			error: function(e){  
-					alert('Error121212: ' + e);  
-					alert(e.toString());
+					//alert('Error121212: ' + e);  
+					//alert(e.toString());
 			}		
             
     	  }); //ajax call ends
@@ -647,8 +694,8 @@ margin-left:20px;
              	   },//success ends  
              	 
  			error: function(e){  
-					alert('Error121212: ' + e);  
-					alert(e.toString());
+					//alert('Error121212: ' + e);  
+					//alert(e.toString());
 			}		
          
  	  }); //ajax call ends
@@ -717,8 +764,8 @@ margin-left:20px;
     	                    },
     	                    
     	                    error: function(e){  
-    	    					alert('Errorinsidelikehover: ' + e);  
-    	    					alert(e.toString());
+    	    					//alert('Errorinsidelikehover: ' + e);  
+    	    					//alert(e.toString());
     	    			}		
     	                
     	        	  }); //ajax call ends
@@ -770,8 +817,8 @@ margin-left:20px;
              	   
     			},
     			error: function(e){  
- 					alert('Error in like: ' + e);  
- 					alert(e.toString());
+ 					//alert('Error in like: ' + e);  
+ 					//alert(e.toString());
 			}				
  
 }); 
@@ -806,8 +853,8 @@ margin-left:20px;
            	   
   			},
   			error: function(e){  
-					alert('Error121212: ' + e);  
-					alert(e.toString());
+					//alert('Error121212: ' + e);  
+					//alert(e.toString());
 			}				
 }); 
 }//unlike fun ends
@@ -845,7 +892,7 @@ margin-left:20px;
                     // we have the response  
              	   if(response!=null){
              		  $('#comment_d').val('');
-             		  alert(response);
+             		 // alert(response);
              		 refresh();
              	   }
              	   else{
@@ -853,8 +900,8 @@ margin-left:20px;
              	   
     			},
     			error: function(e){  
- 					alert('Error121212: ' + e);  
- 					alert(e.toString());
+ 					//alert('Error121212: ' + e);  
+ 					//alert(e.toString());
 			}				
  
 }); 
@@ -931,7 +978,7 @@ margin-left:20px;
                  		}//file data not null
                  		else
                  		{
-                 			alert('hre');	
+                 			//alert('hre');	
                  		}
      	    	  
                  		 
@@ -1009,13 +1056,13 @@ margin-left:20px;
                   
                   else
                	   {
-               	  alert("something wrong");
+               	  //alert("something wrong");
                	   }
                 },
   	    
      			error: function(e){  
-       					alert('Error121212: ' + e);  
-       					alert(e.toString());
+       					//alert('Error121212: ' + e);  
+       					//alert(e.toString());
      			}				
        
   	  });//ajax call end
@@ -1087,7 +1134,7 @@ margin-left:20px;
                             
                             else
                          	   {
-                         	  alert("something wrong");
+                         	  //alert("something wrong");
                          	   }
                           },
          	    
@@ -1139,14 +1186,14 @@ margin-left:20px;
                         }    
                         else
                         {
-                            alert("group creation failed ");
+                            //alert("group creation failed ");
                             window.location.replace("userHome1.html");
                         }    
                         
                         
                     },
                     error: function(jqXHR, textStatus, errorThrown){
-                        alert('logout error: ' + textStatus);
+                        //alert('logout error: ' + textStatus);
                     }
                 });
                 
@@ -1248,6 +1295,11 @@ margin-left:20px;
                                 <li>
                                 <a href="userFriend.html"><i class="glyphicon glyphicon-user"></i> Find Friends</a>
                               </li>
+                              
+                              
+                              <li>
+<a href="#" data-toggle="modal" data-target="#ModalresetPassword">Reset Passoword</a> 
+</li>
                               
                              
 							 <li role="separator" class="divider"></li>
@@ -1721,7 +1773,51 @@ margin-left:20px;
 	  } );
   </script>
      
-		
+ <div id="ModalresetPassword" class="modal fade" role="dialog">
+  <div class="modal-dialog" >
+    <!-- Modal content-->
+<form action="" id="updateevent">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Reset-Password</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+       
+     
+     
+        <br>
+        <br>
+        <div class="form-group">
+          <label for="OLD-PASSWORD" >Current password</label>
+          <input type="password"  id="cpass" style="margin-left:10px;">
+        </div>
+     <br>
+      <div class="form-group">
+          <label for="new-password" >New password</label>
+          <input type="password"  id="npass" style="margin-left:33px;">
+        </div>
+             <br>
+          
+   
+             <br>
+             
+    </div>
+    
+     
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+       <input type="button" id ="resetPassword" class="btn btn-primary" value="Change Password" data-dismiss="modal" >
+     
+      </div>
+    </div>
+      </div>
+    
+       </form>
+    </div>
+  </div>
+  		
 		
 		
         

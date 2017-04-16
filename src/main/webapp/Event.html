@@ -105,7 +105,7 @@ $(document).ready(function() {
               
               else
            	   {
-           	  //alert("something wrong");
+           	  alert("something wrong");
            	   }
             },
 	    
@@ -126,13 +126,13 @@ $(document).ready(function() {
 	   });//logout button ends ends
 	   
 	   $("#createGroup").click(function(e){
-		   var group_privacy=$("#group_privacy option:selected").val();
+		   var group_privacy="public";
            // window.location.replace("todoPage.html");
             var group_name=$("input#group_name").val();
-            if((group_privacy=="")||(group_name==""))
+            if((group_name==""))
             	{
-            	alert("please fill all the fields");
-            	window.location.replace("userHome1.html");
+            	alert("please fill  the fields");
+            	window.location.replace("Event.html");
             	}
             var obj = { group_name:group_name,group_privacy:group_privacy
                        };  
@@ -235,7 +235,7 @@ $(document).ready(function() {
      	    
             else
          	   {
-         	  //alert("something wrong");
+         	  alert("something wrong");
          	   }
           },
     
@@ -269,6 +269,7 @@ $(document).ready(function() {
 				  if(data.length==0){
 	                   	 $("#allinvitationlist").html("<font size=\"4\"> NO Invitation Yet</font>");
 	                   }
+				  else{
 				   for(var i=0;i<data.length;i++)
 					  {
 					
@@ -285,12 +286,12 @@ $(document).ready(function() {
 				        	   alllist1+="<p><font size="+"\"3\"color=\"Green\""+">"+"Location: "+data[i].location+"</font></p><br>" ;
 				        	   alllist1+="<p><font size="+"\"3\"color=\"Green\""+">"+"Event-date: "+data[i].event_date+"</font></p><br>" ;
 				        	   alllist1+="<p><font size="+"\"3\"color=\"Green\""+">"+"Event-time: "+data[i].time+"</font></p><br>";
-				        	   alllist1+="<button type="+"\"button\""+" class="+"\"btn btn-success btn-sm pull-left \""+"id=\""+data[i].eID+"\""+" OnClick=\"accept1(this);\">Going</button>"; 
+				        	   alllist1+="<button type="+"\"button\""+" class="+"\"btn btn-success btn-xs pull-left \""+"id=\""+data[i].eID+"\""+" OnClick=\"accept1(this);\">Going</button>"; 
 				        	  // alllist1+="<a href=\"#\" id=\""+data[i].eID+"\" OnClick=\"accept1(this);\">Going</a> &ensp; &ensp;";
 			        	   //alllist1+="<a href=\"#\" id=\""+data[i].eID+"\" OnClick=\"reject1(this);\"> NOT Going</a><br>";
 			        	   //alllist1+="<a href=\"#\" id=\""+data[i].eID+"\" OnClick=\"maybe1(this);\"> May-be</a><br>";
-			        	   alllist1+="<button type="+"\"button\""+" class="+"\"btn btn-warning btn-sm   \""+"id=\""+data[i].eID+"\""+" OnClick=\"maybe1(this);\">Maybe</button>"; 
-			        	   alllist1+="<button type="+"\"button\""+" class="+"\" btn btn-danger btn-sm pull-right \""+"id=\""+data[i].eID+"\""+" OnClick=\"reject1(this);\">NotGoing</button>"; 
+			        	   alllist1+="<button type="+"\"button\""+" class="+"\"btn btn-warning btn-xs   \""+"id=\""+data[i].eID+"\""+" OnClick=\"maybe1(this);\">Maybe</button>"; 
+			        	   alllist1+="<button type="+"\"button\""+" class="+"\" btn btn-danger btn-xs  \""+"id=\""+data[i].eID+"\""+" OnClick=\"reject1(this);\">NotGoing</button>"; 
 				        	 	   
 			        	//alllist+="<hr>";
 			        	   alllist1+="</div>";
@@ -298,11 +299,12 @@ $(document).ready(function() {
 			                alllist1+="</div>";
 			                //allevent+="</div>";
 					  }
-				  	
+				  
 			        alllist1=alllist1.replace("undefined","");
 			        
 			    	   $("#allinvitationlist").html(alllist1);
-			    	 //  alert( $("#allEvent1").html());
+				  }
+			    	   //  alert( $("#allEvent1").html());
 			   }
 			   else{
 				   }
@@ -314,6 +316,76 @@ $(document).ready(function() {
 		}				
 		}); 
 		
+  
+  
+  
+  
+  
+  
+  
+  
+  
+	// ajax call for retriving your owns event
+	  $.ajax({ 
+		  url: "http://localhost:8080/facebook_group2/webapi/event/retriveincomingInvitaionlist1",
+		  type: "GET",
+	        dataType: "json",
+	        contentType : "application/json",
+		  crossDomain: true,
+		  processData: true,
+		  
+		  
+		  success: function(response){  
+			   
+		      // we have the response  
+			   if(response!=null){
+				   var data =JSON.parse(JSON.stringify(response)); 
+				    var alllist2;
+				    //alert("in the invitation");
+				   
+				   for(var i=0;i<data.length;i++)
+					  {
+					
+					   
+					  // alllist2+="<div class=\"panel \">";
+			        	//   allevent+="<div class="+"\"panel-body\""+"id=\"forcomment\""+">";
+			        	  // alllist2+="<div class="+"\"row\""+">";
+			        	   //alllist2+="<div class="+"\"\""+">";
+			        	 alllist2+="<a href=\"EventDetail1.html\" id=\""+data[i].eID+"\" OnClick=\"go3(this);\"><p><font size="+"\"3\""+"color="+"\"blue\""+">"+"Event name:"+data[i].ename+"</font></p></a>" ;
+			            alllist2+="<hr class=\"myhrline\">";
+        	           alllist2+="<br>";
+			            alllist2+="<p><font size="+"\"3\" color=\"Green\" "+">"+"Host-Name: "+data[i].hname+"</font></p><br>" ;
+			        	   alllist2+="<p><font size="+"\"3\"color=\"Green\""+">"+"Location: "+data[i].location+"</font></p><br>" ;
+			        	   alllist2+="<p><font size="+"\"3\"color=\"Green\""+">"+"Event-date: "+data[i].event_date+"</font></p><br>" ;
+			        	   alllist2+="<p><font size="+"\"3\"color=\"Green\""+">"+"Event-time: "+data[i].time+"</font></p><br>";
+			        	//alllist2+="<hr>";
+			        	
+			        	   //alllist2+="</div>";
+			        	   //alllist2+="<hr>";
+			               // alllist2+="</div>";
+			              //  alllist2+="</div>";
+			         alllist2+="<hr class=\"myhrline\">";    
+			                
+					  }
+				  	
+			        alllist2=alllist2.replace("undefined","");
+			        
+			    	   $("#yoursAllevent").html(alllist2);
+			    	 //  alert( $("#allEvent1").html());
+			   }
+			   else{
+				   }
+			   
+			},
+			error: function(e){  
+				alert('Error121212: ' + e);  
+				alert(e.toString()+"error in invitation");
+		}				
+		}); 
+  
+  // ajax call for retriving your owns event
+  
+  
   
   
   
@@ -382,7 +454,67 @@ $(document).ready(function() {
 		}				
 		}); 
   
-	// ajax call for retriving your incoimg event
+  // ajax call for retriving your past event
+  // ajax call for retriving your incoimg event
+	  $.ajax({ 
+		  url: "http://localhost:8080/facebook_group2/webapi/event/retriveyourpastevent",
+		  type: "GET",
+	        dataType: "json",
+	        contentType : "application/json",
+		  crossDomain: true,
+		  processData: true,
+		  
+		  
+		  success: function(response){  
+			   
+		      // we have the response  
+			   if(response!=null){
+				   var data =JSON.parse(JSON.stringify(response)); 
+				    var alllist2;
+				    //alert("in the invitation");
+				   
+				   for(var i=0;i<data.length;i++)
+					  {
+					
+					   
+					  // alllist2+="<div class=\"panel \">";
+			        	//   allevent+="<div class="+"\"panel-body\""+"id=\"forcomment\""+">";
+			        	  // alllist2+="<div class="+"\"row\""+">";
+			        	   //alllist2+="<div class="+"\"\""+">";
+			        	 alllist2+="<a href=\"EventDetail1.html\" id=\""+data[i].eID+"\" OnClick=\"go1(this);\"><p><font size="+"\"3\""+"color="+"\"blue\""+">"+"Event name:"+data[i].ename+"</font></p></a>" ;
+			            alllist2+="<hr class=\"myhrline\">";
+        	           alllist2+="<br>";
+			            alllist2+="<p><font size="+"\"3\" color=\"Green\" "+">"+"Host-Name: "+data[i].hname+"</font></p><br>" ;
+			        	   alllist2+="<p><font size="+"\"3\"color=\"Green\""+">"+"Location: "+data[i].location+"</font></p><br>" ;
+			        	   alllist2+="<p><font size="+"\"3\"color=\"Green\""+">"+"Event-date: "+data[i].event_date+"</font></p><br>" ;
+			        	   alllist2+="<p><font size="+"\"3\"color=\"Green\""+">"+"Event-time: "+data[i].time+"</font></p><br>";
+			        	//alllist2+="<hr>";
+			        	
+			        	   //alllist2+="</div>";
+			        	   //alllist2+="<hr>";
+			               // alllist2+="</div>";
+			              //  alllist2+="</div>";
+			         alllist2+="<hr class=\"myhrline\">";    
+			             alllist2+="<br>";   
+					  }
+				  	
+			        alllist2=alllist2.replace("undefined","");
+			        
+			    	   $("#youroverevent").html(alllist2);
+			    	 //  alert( $("#allEvent1").html());
+			   }
+			   else{
+				   }
+			   
+			},
+			error: function(e){  
+				alert('Error121212: ' + e);  
+				alert(e.toString()+"error in invitation");
+		}				
+		}); // ajax call end
+  
+  
+	// ajax call for retriving your incoimg birthday
 	  $.ajax({ 
 		  url: "http://localhost:8080/facebook_group2/webapi/event/friendBirthdayList",
 		  type: "GET",
@@ -604,6 +736,14 @@ window.maybe1=function(e1){
 		
 	   }
   
+	window.go3 = function(e1){
+		 
+		   var friendUserID= $(e1).attr('id');
+		   $.cookie("ID2",friendUserID);
+		   window.location.replace("EventDetail1.html");
+	  
+		
+	   }
   
 	  // create event call	 
  	  $("#createEvent").click(function(e){
@@ -732,7 +872,7 @@ window.maybe1=function(e1){
               
               else
               {
-             //alert("something wrong");
+             alert("something wrong");
               }
             },
    
@@ -801,7 +941,7 @@ window.maybe1=function(e1){
  		                     
  		                     else
  		                    {
- 		                 //  alert("something wrong");
+ 		                   alert("something wrong");
  		                    }
  		                   },
  		     
@@ -929,7 +1069,7 @@ jQuery(document).ajaxComplete(function (e) {
 								<a href="userFriend.html">Find Friends</a>
 							  </li>
 							  
-							 
+							
 							 
 <li role="separator" class="divider"></li>
    
@@ -968,19 +1108,23 @@ jQuery(document).ajaxComplete(function (e) {
 							<ul class="nav hidden-xs see-more" id="xs-menu" >
 							<li><a href="Event.html"  ><i class="glyphicon glyphicon-refresh"></i> Events</a></li>
 							<li><a href="myGroups.html"><i class="glyphicon glyphicon-refresh"></i> Groups</a></li>
-																		</ul>
+							
+											</ul>
+							
 		
 							<br>
 							
 							<b>Create</b>
 							<br>
 							<ul class="nav hidden-xs" id="xs-menu">
-			
 							<li> <input type="button" id ="popup1" class="btn btn-primary" style="min-width :80px"  value="Event" data-toggle="modal" data-target="#myModalevent"></li>
 							<li><input type="button" id ="popup3" class="btn btn-primary" value="Group" data-toggle="modal" data-target="#groupModal" style="min-width:80px;"></li>
 							
 							<li><a href="#"  data-toggle="modal" data-target="#myModalincomingevent"><i class="glyphicon glyphicon-refresh"></i> Upcoming-Event</a></li>
 							<li><a href="#"  data-toggle="modal" data-target="#myModalincomingbirthday"><i class="glyphicon glyphicon-refresh"></i> Incoming-Birthday</a></li>
+						    <li><a href="#"  data-toggle="modal" data-target="#myModaloverevent"><i class="glyphicon glyphicon-refresh"></i> Past-Event</a></li>
+							 <li><a href="#"  data-toggle="modal" data-target="#yoursevent"><i class="glyphicon glyphicon-refresh"></i> your-past-Event</a></li>
+							
 						</ul>
 						<!-- <ul class="list-unstyled hidden-xs" id="sidebar-footer" style="background-color: #E9EAED">
 							<li>
@@ -1034,22 +1178,39 @@ jQuery(document).ajaxComplete(function (e) {
 		
                                     </div>
 										   <!-- main col right -->
-							  <div class="col-sm-3 col-xs-3" >
+							  <div class="col-sm-3 col-xs-3 affix " style="left:720px; top:90px;" >
 									   
-									    <div class="panel panel-primary">
-									 
+									  
+									  <div class="panel panel-primary" style="width:265px">
 										 <div class="panel-heading"><h4>Event Invitation list</h4></div>
 										  <div class="panel-body">
 											<div class="list-group">
-									 <div class="pre-scrollable" style="min-height:200px; max-height:200px;overflow-y: scroll;">   
-										
+								<div class="pre-scrollable" style="min-height:100px; max-height:200px;overflow-y: scroll;">     
+									
 										  <p id="allinvitationlist"></p>
-										</div>  	  </div>
-										  	
-									   	  </div>
+										  	</div>  </div>
+									   	  
 									   </div>
+								     
+								      </div> 
+								      
+								     <!--   <div class="panel panel-primary">
+										 <div class="panel-heading"><h4>May-be-coming</h4></div>
+										  <div class="panel-body">
+											<div class="list-group">
+										 	  <div class="pre-scrollable" style="min-height:70px; max-height:70px;overflow-y: scroll;">   
+									
+										 
+										  <p id="allUserList1"></p>
+										 </div> 	  </div>
+									   	  
+									   </div>
+								     
+								      </div> -->
+								     
+									   
 									  
-									<div class="panel panel-primary">
+									<div class="panel panel-primary" style="width:265px">
 										 <div class="panel-heading"><h4>Event-Delete-Notification</h4></div>
 										  <div class="panel-body">
 									     <div class="list-group">
@@ -1058,7 +1219,7 @@ jQuery(document).ajaxComplete(function (e) {
 										  	  </div>
 										  	  </div></div>
 										  	  
-										  	  <div class="panel panel-primary">
+										  	  <div class="panel panel-primary" style="width:265px">
 										 <div class="panel-heading"><h4>Event-Update-Notification</h4></div>
 										  <div class="panel-body">
 									     <div class="list-group">
@@ -1071,9 +1232,9 @@ jQuery(document).ajaxComplete(function (e) {
 									
 									 <div class=" col-sm-3 col-xs-3 affix" style="float:right; left:980px; top:20px;" >
     <br>
-  <div class="panel panel-primary" style="float:right;  top:30px; min-height: 2000px ; width:250px">
+  <div class="panel panel-primary" style="float:right;  top:30px; min-height: 2000px ; width:265px">
   <div class="panel-heading"><h4>My Friends</h4></div>
-	<div class="pre-scrollable" style="min-height:100px; max-height:500px;overflow-y: scroll;">   
+	<div class="pre-scrollable" style="min-height:2000px; overflow-y: scroll;">   
 									 
 <p id="allFriends"></p>
 </div>
@@ -1275,6 +1436,60 @@ jQuery(document).ajaxComplete(function (e) {
        </form>
     </div>
   </div>
+     <div id="myModaloverevent" class="modal fade" role="dialog">
+  <div class="modal-dialog" >
+    <!-- Modal content-->
+<form action="" id="updateevent">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Your Past Event</h4>
+      </div>
+      <div class="modal-body" >
+        <div class="container" id="youroverevent">
+       
+    </div>
+    
+     
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+       
+     
+      </div>
+    </div>
+      </div>
+    
+       </form>
+    </div>
+  </div>
+  
+   
+      <div id="yoursevent" class="modal fade" role="dialog">
+  <div class="modal-dialog" >
+    <!-- Modal content-->
+<form action="" id="yourevent">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Yours-own-Events</h4>
+      </div>
+      <div class="modal-body" >
+        <div class="container" id="yoursAllevent">
+       
+    </div>
+    
+     
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+       
+     
+      </div>
+    </div>
+      </div>
+    
+       </form>
+    </div>
+  </div>
    
         <div id="myModalincomingbirthday" class="modal fade" role="dialog">
   <div class="modal-dialog" >
@@ -1321,13 +1536,13 @@ jQuery(document).ajaxComplete(function (e) {
           <label for="group_name" >Group Name:</label>
           <input type="text"  id="group_name" style="margin-left:10px;">
         </div>
-       <div class="form-group">
+     <!--   <div class="form-group">
          <label for="sel1">Privacy:</label>
       <select class="form-control" id="group_privacy" style="margin-left:110px;width:100px">
         <option>private</option>
         <option>public</option>
       </select>
-        </div> 
+        </div>  -->
         <br>     
     </div>
        

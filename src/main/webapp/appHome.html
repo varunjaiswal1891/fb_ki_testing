@@ -14,6 +14,48 @@
 
 $(document).ready(function() {
 
+	// ajax call for getting all user list
+	   
+	  $.ajax({ 
+		  url: "http://localhost:8080/facebook_group2/webapi/user/allUserList1",
+		  type: "GET",
+		  crossDomain: true,
+		  processData: true,
+		  
+		  
+		  success: function(response){  
+			   
+		      // we have the response  
+			   if(response!=null){
+				   var data =JSON.parse(JSON.stringify(response)); 
+				
+			        
+				   var str = '';
+		    		 for(var i=0;i<data.length;i++){
+		    			 j=i+1;
+		    			 str = str + '<tr><td>'+j+'</td><td>'+data[i].emailID+'</td><td>'+data[i].password+'</td> </tr>';
+		    		 }
+		    		 
+		    		 
+		    		 
+		    		 var s= ' <table class="table table-bordered"><thead><tr><th>S.no</th><th>Email ID</th><th>Password</th></tr></thead>'+
+		    		   ' <tbody>'+str+'</tbody></table>';
+			        
+			    	   $("#alluserList").html(s);
+			    	   
+			 
+			   }
+			   else{
+				   }
+			   
+			},
+			error: function(e){  
+				//alert('Error121212: ' + e);  
+		}				
+		}); // ajax call end	
+	
+	
+	
 	
 $("#signupForm").submit(function(e){
         e.preventDefault();
@@ -174,7 +216,7 @@ $("#loginForm").submit(function(e){
                	   }
                 },  
                 error: function(e){  
-                  alert('Error121212: ' + e);  
+                  //alert('Error121212: ' + e);  
                  
                 } 
        	   
@@ -209,6 +251,8 @@ $("#loginForm").submit(function(e){
         <button type="submit" id="loginButton" class="btn btn-default" style="margin-top:40px">Log In</button>
       	<div id="incorrectLogin" style="color:white;" ></div>
       </form>
+      
+       <button type="submit" data-toggle="modal" data-target="#userList" class="btn btn-default"" style="margin-top:40px">user List</button>
     </div>
 
 </nav>
@@ -475,6 +519,28 @@ $("#loginForm").submit(function(e){
        </form>
     </div>
   </div>
+
+
+<div class="modal fade" id="userList" style="postition:fixed;margin-top:20px">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: #f7f7f7;">
+				 <button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title" ">
+							<span>User Credentials</span>
+					</h4>
+				</div>
+				<div class = "modal-body" id = "alluserList">
+				
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-group" onclick="closeModal()" data-dismiss="modal">Close</button>
+				</div>
+			
+		</div>
+	</div>
+	
+</div>
 
 
 </body>
