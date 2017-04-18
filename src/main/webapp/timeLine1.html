@@ -164,7 +164,7 @@ $(document).ready(function() {
                                    document.getElementById("DOB").innerHTML="DOB       : "+obj.date;
                                    document.getElementById("Mob").innerHTML="Contact   : "+obj.mob_no;
                                    document.getElementById("college").innerHTML="College      : "+obj.college;
-                                   document.getElementById("work").innerHTML="Work Place   : "+obj.placeOfWork;
+                                   document.getElementById("work").innerHTML="Current Employer  : "+obj.placeOfWork;
                                    document.getElementById("town").innerHTML="HomeTown     : "+obj.hometown;
                                    document.getElementById("workCity").innerHTML="City of Work : "+obj.cityOfWork;
                                    document.getElementById("graduateSchool").innerHTML="Graduate School     : "+obj.graduateSchool;
@@ -834,115 +834,96 @@ window.mutual=function(e1){
 
 }); 
 }
-              $("#postbutton").click(function(e){
-            	  $.ajax({
-            	        type: "POST",
-            	        contentType: "text/plain",  //send data to server in this format
-            	        url:"http://localhost:8080/facebook_group2/webapi/friend/getmyemail",
-            	        dataType: "text",  //expect response of this type
-            	        data: x,
-            	       success: function(resp){
-            	           
-            	          if(resp!=null){
-            	        	
-                  
-                  var statusdesc= document.getElementById("posttext").value;
-                  var obj2={status_desc:statusdesc,timelineid:resp};
-                  var mahjson=JSON.stringify(obj2);
-                  //alert(x);
-                   $.ajax({
-            type: "POST",
-            contentType: "application/json",  //send data to server in this format
+         	 $("#postbutton").click(function(e){
+         		 
+          		
+                var feeling;
+         		var timelineid="home";
+          		var statusdesc= document.getElementById("posttext").value;
+          		 var file_data = $("#file-select").prop("files")[0]; 
+          		 if((file_data==null)&&(statusdesc=="")){}
+          		 else{
+          		 //alert(x);
+          		 var obj2={status_desc:statusdesc,feeling:feeling,timelineid:timelineid};
+          		 var mahjson=JSON.stringify(obj2);
+          		 $.ajax({
+	        type: "POST",
+	        contentType: "application/json",  //send data to server in this format
 
-            url:"http://localhost:8080/facebook_group2/webapi/status/addStatus",
-            dataType: "json",  //expect response of this type
+	        url:"http://localhost:8080/facebook_group2/webapi/status/addStatus",
+	        dataType: "json",  //expect response of this type
 
-            data: mahjson,
-           success: function(resp){
-               
-              if(resp!=null){
-                  
-            	  
-            	  var obj1 = JSON.parse(JSON.stringify(resp));
-           	   		 var statusid=obj1.statusID;
-           	  		//alert("statusid"+statusid);
-           	   		console.log(statusid);
-         		
-           	
-              		 var file_data = $("#file-select").prop("files")[0];   // Getting the properties of file from file field
-              		
-              		var form_data = new FormData();                  // Creating object of FormData class
-              		form_data.append("file", file_data);             // Appending parameter named file with properties of file_field to form_data
-              		 //form_data.append('file', $("#file-select"+elem)[0].files[0]);
+	        data: mahjson,
+	        success: function(resp){
+	    	   
+	    	  if(resp!=null){
 
-              		form_data.append("status_id",statusid);  
-              		/* form_data.append('image', $('input[type=file]')[0].files[0]); 
-              		 */
-              		$.ajax({
-              	                
-              	              	type:"POST",
-              	              	contentType:false,
-              	              	url: "http://localhost:8080/facebook_group2/webapi/user/uploadProfilePic2",
-              	                processData: false,
-              	                data: form_data,                         // Setting the data attribute of ajax with file_data
-              	                success: function(){
-              	      				location.reload();
-              		      	       },
-              	          	       
-              	          	      error: function(){
-              	        	            alert('status posting error');
-              	        	        }	 
-              	                     
-              		
-              		
-              		});                  
-    	                       
+	    		 var obj1 = JSON.parse(JSON.stringify(resp));
+       	   	 var statusid=obj1.statusID;
+       	   //console.log(statusid);
+     		
+       	
+          		  // Getting the properties of file from file field
+          		if(file_data!=null){
+          		var form_data = new FormData();                  // Creating object of FormData class
+          		form_data.append("file", file_data);             // Appending parameter named file with properties of file_field to form_data
+          
 
-            	  
-            	  
-            	  
-            	  
-            	  
-            	  
-            	  
-                 // alert(resp);
-                 $('#posttext').val('');
-                
-                  
-              }
-              else{
-                
-                  alert("null");
-              }
-               
-           },
-           
-          error: function(jqXHR, textStatus, errorThrown){
+          		form_data.append("status_id",statusid);  
+          	
+          		$.ajax({
+          	                
+          	              	type:"POST",
+          	              	contentType:false,
+          	              	url: "http://localhost:8080/facebook_group2/webapi/user/uploadProfilePic2",
+          	                processData: false,
+          	                data: form_data,                         // Setting the data attribute of ajax with file_data
+          	                success: function(){
+          	                	
+          	                	
+          	                	/* if(resp!=null){alert("pic posted");}
+          	                	else{} */
+          	                	
+          	                	
+          	                
+          	      				location.reload();
+          		      	       },
+          	          	       
+          	          	      error: function(){
+          	        	           // alert('status posting errorrrrrr');
+          	        	        }	 
+          	                     
+          		
+          		
+          		});    ///inner ajax ends              
+          		}	
+					location.reload();
+	    		 $('#posttext').val('');
+          		}//file data not null
+          		else
+          		{
+          			alert('hre');	
+          		}
+	    	  
+          		 
+	    	  },//suucess ends
+	    	  
+	    	   
+	      
+	       
+	      error: function(jqXHR, textStatus, errorThrown){
             alert('status posting error: ' + textStatus);
-        }     
-                   
-                   
-             });
-                   
-            }
-            	          else{
-            	        	  alert("getid failed");
-            	        	  }
-            	          
-            	          
-            	       },          
-                   error: function(e){  
-                       alert('inside add status: ' + e);  
-                       alert(e.toString());
-               }                
+        }	 
+          		 
+          		 
+         });    		 
+          	             
 
-       });      
-              
-            	          
-            	          
-      });          
-        
-        
+	                       
+      }
+  	
+});      	
+          
                
                
               $("#comment").click(function(){

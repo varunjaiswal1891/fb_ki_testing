@@ -244,15 +244,14 @@ $(function () {
             		allFriends+="</div>";
 					     	}
             	
-               	/*for (var i=0; i < data.length; i++){
+               	for (var i=0; i < data.length; i++){
                		showFriends+="<label><input type=\"checkbox\" value=\""+data[i].fname+" "+data[i].lname+"\" name=\"tick\">"+data[i].fname+" "+data[i].lname+"</label>";
                		showFriends+="<br>"
-					     	}*/
-             allFriends=allFriends.replace("undefined","");
-             //showFriends=showFriends.replace("undefined","");
-         	   $("#allFriends").html(allFriends);
-        		//$("#showFriends").html(showFriends);
-                }  
+					     	}
+                allFriends=allFriends.replace("undefined","");
+          	   $("#allFriends").html(allFriends);
+          	  showFriends=showFriends.replace("undefined","");
+          		$("#showFriends").html(showFriends);    }  
                 
                 else
              	   {
