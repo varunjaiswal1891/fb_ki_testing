@@ -92,6 +92,57 @@ try {
            ps.setString(1,emailID);
            
              ResultSet result = ps.executeQuery();
+             while(result.next()){
+            	 String gname=result.getString(1);
+              query = "select * from Group1 where owner=? and group_name=? ";
+             PreparedStatement ps1 = connect.con.prepareStatement(query);
+             ps1.setString(1,emailID);
+             ps1.setString(2,gname);
+             ResultSet result1 = ps1.executeQuery();
+              
+             
+             
+while (!result1.next()) {
+	
+	
+	
+String e1=gname;
+System.out.println("e1="+e1);
+//al_groups.add(e1);
+Group g1=new Group();
+g1=RetriveService.getGroupAllData(e1);
+al_groups.add(g1);
+break;
+}
+            
+             }       
+connect.stop();
+} catch (Exception e) {
+e.printStackTrace();
+}
+
+System.out.println("Group list="+al_groups);
+return al_groups;
+}//method addUserGroup ends here
+//This function is used to get group name of all groups
+
+
+public static ArrayList<Group> getMyAllGroupsasAdmin(String emailID,ArrayList<Group> al_groups)
+{
+try {
+
+     DBAccess connect = new DBAccess();
+         boolean check=false;
+         while(check==false)
+         {
+          check=connect.start();
+          System.out.println("trying connection for getting all my groups");
+         }
+         String query = "select group_name from Group1 where owner=?";
+         PreparedStatement ps = connect.con.prepareStatement(query);
+         ps.setString(1,emailID);
+         
+           ResultSet result = ps.executeQuery();
 while (result.next()) {
 String e1=result.getString("group_name");
 System.out.println("e1="+e1);
@@ -100,7 +151,7 @@ Group g1=new Group();
 g1=RetriveService.getGroupAllData(e1);
 al_groups.add(g1);
 }
-           
+         
 connect.stop();
 } catch (Exception e) {
 e.printStackTrace();

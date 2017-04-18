@@ -118,34 +118,36 @@ $(document).ready(function() {
 	                    	  // document.getElementById("userName").innerHTML=obj.fname+" "+obj.lname;
 	                    	  // document.getElementById("srch-term").defaultValue =key;
 	                    	  var data =JSON.parse(JSON.stringify(response));  
-	                    	   var SearchResult;
+	                    	   var SearchResult1="";
+	                    	   var SearchResult2="";
+	                    	   var SearchResult3="";
 	                           
 	                         	for (var i=0; i < data.length; i++){
 	                         	
 	                         		if(data[i].mob_no=="0")
 	                         		{
-	                     		    SearchResult+="<div class="+"\"panel-body\""+">";
-	                     		    SearchResult+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive  img-thumbnail\"width=\"100px\" height=\"100px\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
-	                     			SearchResult+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
-	                     			SearchResult+="<div class="+"\"text-right\""+">";
-	                     			SearchResult+="<button type="+"\"button\""+" class="+"\"btn btn-primary\" id=\""+data[i].emailID+"\" OnClick=\"add(this);\""+" \">Add Friend<span class="+"\"glyphicon glyphicon-plus\""+"></span></button>";
-	                     			SearchResult+="<a class="+"\"btn btn-primary\""+" id="+"\"SentReq"+data[i].emailID+"\" "+" style=\"visibility: hidden\";>Request Sent<span class="+"\"glyphicon glyphicon-ok\""+"></span></a></div></div>";
+	                     		    SearchResult1+="<div class="+"\"panel-body\""+">";
+	                     		    SearchResult1+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-thumbnail\" height=\"50\"max-width=\"100px\" max-height=\"50px\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
+	                     			SearchResult1+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
+	                     			SearchResult1+="<div class="+"\"text-right\""+">";
+	                     			SearchResult1+="<button type="+"\"button\""+" class="+"\"btn btn-primary\" id=\""+data[i].emailID+"\" OnClick=\"add(this);\""+" \">Add Friend<span class="+"\"glyphicon glyphicon-plus\""+"></span></button>";
+	                     			SearchResult1+="<a class="+"\"btn btn-primary\""+" id="+"\"SentReq"+data[i].emailID+"\" "+" style=\"visibility: hidden\";>Request Sent<span class="+"\"glyphicon glyphicon-ok\""+"></span></a></div></div>";
 	                      			
 	                         		}
 	                         	else if(data[i].mob_no=="1"){
-	                         		SearchResult+="<div class="+"\"panel-body\""+">";
-	                     		    SearchResult+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive img-thumbnail\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
-	                     			SearchResult+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
-	                     			SearchResult+="<div class="+"\"text-right\""+">";
-	                     			SearchResult+="<button type="+"\"button\""+" class="+"\"btn btn-primary\">Friends<span class="+"\"glyphicon glyphicon-ok\""+"></span></button></div></div>";
+	                         		SearchResult2+="<div class="+"\"panel-body\""+">";
+	                     		    SearchResult2+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive img-thumbnail\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
+	                     			SearchResult2+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
+	                     			SearchResult2+="<div class="+"\"text-right\""+">";
+	                     			SearchResult2+="<button type="+"\"button\""+" class="+"\"btn btn-primary\">Friends<span class="+"\"glyphicon glyphicon-ok\""+"></span></button></div></div>";
 	                     				
 	                         	}
 	                         	else{
-	                         	   SearchResult+="<div class="+"\"panel-body\""+">";
-	                    		    SearchResult+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
-	                    			SearchResult+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
-	                    			SearchResult+="<div class="+"\"text-right\""+">";
-	                    			SearchResult+="<a class="+"\"btn btn-primary\""+" id="+"\"SentReq"+data[i].emailID+"\" "+" >Request Sent<span class="+"\"glyphicon glyphicon-ok\""+"></span></a></div></div>";
+	                         	   SearchResult3+="<div class="+"\"panel-body\""+">";
+	                         	  SearchResult3+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive  img-thumbnail\"max-width=\"100px\" max-height=\"50px\""+"alt="+"\"logo\""+"src="+"\"users/"+data[i].emailID+"/profilePic.jpg\""+" /></div>";
+		                     			SearchResult3+="<a href=\"friendTimeline.html\" OnClick=\"go(this);\" id=\""+data[i].userID +  "\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
+	                    			SearchResult3+="<div class="+"\"text-right\""+">";
+	                    			SearchResult3+="<a class="+"\"btn btn-primary\""+" id="+"\"SentReq"+data[i].emailID+"\" "+" >Request Sent<span class="+"\"glyphicon glyphicon-ok\""+"></span></a></div></div>";
 	                     			
 	                         	}
 	                         	}
@@ -158,19 +160,31 @@ $(document).ready(function() {
 					            $.cookie("cityOfWork","");
 							    $.cookie("highschool","");
 							    $.cookie("friends","");
-	                         	SearchResult=SearchResult.replace("undefined","");
+	                         	if(SearchResult1=="")
+	                         		SearchResult1="<h3>No Results Found</h3>";
+	                         	if(SearchResult2=="")
+	                         		SearchResult2="<h3>No Results Found</h3>";
+	                         	if(SearchResult3=="")
+	                         		SearchResult3="<h3>No Results Found</h3>";
+	                         		
+	                         		
 	                         
-	                     	   $("#SearchResult").html(SearchResult);
+	                     	   $("#SearchResult1").html(SearchResult1);
+	                     	  $("#SearchResult2").html(SearchResult2);
+	                     	 $("#SearchResult3").html(SearchResult3);
 	                     	   
 	                    
 	                         }  
 	                         
 	                         else
 	                      	   {
-	                       	  var SearchResult;
-	                       	  SearchResult="<h3>No Record Found</h3>";
-	                       	  $("#SearchResult").html(SearchResult);
-	                      	   }
+	                        	SearchResult1="<h3>No Record Found</h3>";
+	                       	SearchResult2="<h3>No Record Found</h3>";
+	                       	SearchResult3="<h3>No Record Found</h3>";
+	                        $("#SearchResult1").html(SearchResult1);
+	                     	  $("#SearchResult2").html(SearchResult2);
+	                     	 $("#SearchResult3").html(SearchResult3);
+	                     }
 	                       },
 	      	    
 	            			error: function(e){  
@@ -564,17 +578,40 @@ $(document).ready(function() {
 				  
 				  
 				<div class="col-sm-6 col-xs-6">
+				<div class="row">
+								
+				<div class="col-sm-12 col-xs-12">
+					<div class="panel panel-default"  >
+										<div class="panel-heading"><h4>Not Your Friends:</h4></div>
+										   <div class="pre-scrollable" style="height:220px;margin-bottom:.5cm;" >
+									<p id="SearchResult1"></p>
+									  
+									  </div>	
+				</div>
+				</div></div>
+				<div class="row">
+				<div class="col-sm-12 col-xs-12">
+					<div class="panel panel-default" style="height:300px;">
+										<div class="panel-heading"><h4>Already Friends:</h4></div>
+										 <div class="pre-scrollable" style="height:220px;margin-bottom:.5cm;" >
 				
-					<div class="panel panel-default">
-										<div class="panel-heading"><h4>Search Result:</h4></div>
-										 <div class="list-group">
-										<div id="SearchResult"></div> 
-										<p id="SearchResult"></p>
+										<p id="SearchResult2"></p>
 									  </div>
 									  </div>	
 				</div>
+				</div>
+				<div class="row">
+				<div class="col-sm-12 col-xs-12">
+					<div class="panel panel-default" style="height:300px;">
+										<div class="panel-heading"><h4>Request Pending:</h4></div>
+										 <div class="pre-scrollable" style="height:220px;margin-bottom:.5cm;" >
 				
-				
+										<p id="SearchResult3"></p>
+									  </div>
+									  </div>	
+				</div>
+				</div>
+				</div>
 								   <!-- main col right -->
 								  <div class=" col-sm-3 col-xs-3 affix" style="float:right; left:970px; top:20px;" >
     	 <br>

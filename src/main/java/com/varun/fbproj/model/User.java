@@ -19,7 +19,7 @@ public class User {
 		private String hometown;
 		private String cityOfWork;
 		private String highschool;
-		
+		private String graduateSchool;
 		
 		public User()
 		{
@@ -31,8 +31,8 @@ public class User {
 				String fname,String lname,String date,String pic,
 				String mob_no,String college,
 				String placeOfWork,String hometown,
-				String cityOfWork,String highschool			
-				
+				String cityOfWork,String highschool,			
+				String graduateSchool
 				) {
 			super();
 			this.userID=userID;
@@ -48,7 +48,7 @@ public class User {
 			this.hometown = hometown;
 			this.cityOfWork=cityOfWork;
 			this.highschool=highschool;
-			
+			this.graduateSchool=graduateSchool;
 		}
 
 		@JsonProperty(value = "userID")
@@ -184,6 +184,16 @@ public class User {
 
 		public void setHighschool(String highschool) {
 			this.highschool = highschool;
+		}
+
+
+		public String getGraduateSchool() {
+			return graduateSchool;
+		}
+
+
+		public void setGraduateSchool(String graduateSchool) {
+			this.graduateSchool = graduateSchool;
 		}
 
 /*		@Override

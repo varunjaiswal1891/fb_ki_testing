@@ -29,27 +29,27 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/subham/Desktop/OOAD/latestjar/jarsFB/commons-codec-1.6.jar">
+	<classpathentry kind="lib" path="/home/varun/Desktop/jarsFB/commons-codec-1.6.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/subham/Desktop/OOAD/latestjar/jarsFB/gson-1.4.jar">
+	<classpathentry kind="lib" path="/home/varun/Desktop/jarsFB/gson-1.4.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/subham/Desktop/OOAD/latestjar/jarsFB/java-json.jar">
+	<classpathentry kind="lib" path="/home/varun/Desktop/jarsFB/java-json.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/subham/Desktop/OOAD/latestjar/jarsFB/jersey-core-1.19.jar">
+	<classpathentry kind="lib" path="/home/varun/Desktop/jarsFB/jersey-core-1.19.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/subham/Desktop/OOAD/latestjar/jarsFB/mysql-connector-java-5.1.40-bin.jar">
+	<classpathentry kind="lib" path="/home/varun/Desktop/jarsFB/mysql-connector-java-5.1.40-bin.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>

@@ -11,6 +11,7 @@ public class UpdateService {
 //This service is used to update user profile in timeline page
 	public static boolean UpdateUserService(User u1)
 	{
+		System.out.println("lllllllll+"+u1.getGraduateSchool());
 		 int count=0;
 			StringBuilder sb= new StringBuilder("UPDATE User SET ");
 			if(u1.getMob_no().length()>0)
@@ -28,7 +29,9 @@ public class UpdateService {
 			{	sb.append("cityOfWork='"+u1.getCityOfWork()+ "',"); count++;}
 			if(u1.getHighschool().length()>0)
 			{	sb.append("highschool='"+u1.getHighschool()+ "',"); count++;}
-		
+			if(u1.getGraduateSchool().length()>0)
+			{	sb.append("graduateSchool='"+u1.getGraduateSchool()+ "',"); count++;}
+			
 			sb.append("where emailID='"+u1.getEmailID()+"'");
 		    if(count>0){
 			   int index= sb.lastIndexOf(",");

@@ -93,8 +93,25 @@ Claims claims = Jwts.parser()
    System.out.println("Subject: " + claims.getSubject());
  String myEmailID=claims.getSubject();
  ArrayList<Group> al_groups=new ArrayList<Group>();
- al_groups=GroupService.getMyAllGroups(myEmailID, al_groups);
+ al_groups=GroupService.getMyAllGroupsasAdmin(myEmailID, al_groups);
  System.out.println("Group list1="+al_groups);
+return al_groups;
+}//show my groups ends here
+
+@GET
+@Path("/show_my_groups1")
+@Produces({MediaType.APPLICATION_JSON})
+public ArrayList<Group> showMyAllGroupsnotAdmin(@CookieParam("ID") String jwt) throws IOException{
+System.out.println("jwt="+ jwt);
+Claims claims = Jwts.parser()         
+  .setSigningKey("secret".getBytes("UTF-8"))
+  .parseClaimsJws(jwt).getBody();
+System.out.println("Subject: " + claims.getSubject());
+String myEmailID=claims.getSubject();
+
+ArrayList<Group> al_groups=new ArrayList<Group>();
+al_groups=GroupService.getMyAllGroups(myEmailID, al_groups);
+System.out.println("Group list1="+al_groups);
 return al_groups;
 }//show my groups ends here
 

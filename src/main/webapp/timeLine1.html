@@ -167,6 +167,8 @@ $(document).ready(function() {
                                    document.getElementById("work").innerHTML="Work Place   : "+obj.placeOfWork;
                                    document.getElementById("town").innerHTML="HomeTown     : "+obj.hometown;
                                    document.getElementById("workCity").innerHTML="City of Work : "+obj.cityOfWork;
+                                   document.getElementById("graduateSchool").innerHTML="Graduate School     : "+obj.graduateSchool;
+                                   
                                   // document.getElementById("bestplace").innerHTML="Best Place : "+obj.bestPlace;
                                    
                                    document.getElementById("mob_no").defaultValue =obj.mob_no;
@@ -178,6 +180,8 @@ $(document).ready(function() {
                                    document.getElementById("userName").innerHTML=obj.fname+" "+obj.lname;
                                   
                                    //document.getElementById("sportID").defaultValue =obj.sport;
+                                   document.getElementById("graduateSchool").defaultValue =obj.graduateSchool;
+                                   
                                    
                                    //alert(obj.emailID);
                                    var email=obj.emailID;
@@ -346,6 +350,7 @@ window.mutual=function(e1){
       $("#logoutButton1").click(function(e){
            var foo = $.cookie("ID");
           // alert("logout success");
+            $.cookie("ID",null); 
           window.location.replace("appHome.html");      
            
        });//logout button ends ends
@@ -367,10 +372,11 @@ window.mutual=function(e1){
           var hometown=$("input#hometown").val();
           var cityOfWork=$("input#workcity").val();
           var highschool=$("input#highschool").val();
-         // var bestplace=$('select#bestplace option:selected').text();
-          //alert("bestplace"+bestplace);
+          var highschool=$("input#highschool").val();
+          var graduateSchool=$("input#graduateSchool").val();
+        
           var obj = { mob_no:mob_no,college:college,placeOfWork:placeOfWork,
-                  hometown:hometown,cityOfWork:cityOfWork,highschool:highschool
+                  hometown:hometown,cityOfWork:cityOfWork,highschool:highschool,graduateSchool:graduateSchool
                   };  
           var myJSON = JSON.stringify(obj);
               
@@ -389,26 +395,7 @@ window.mutual=function(e1){
                               // var obj = JSON.parse(JSON.stringify(resp));
                                //window.location.replace("timeLine1.html");
                      var obj1 = JSON.parse(JSON.stringify(resp));
-                       //alert(obj.emailID);
-                       //alert(obj.fname);
-                      /*  alert(obj1);
-                           document.getElementById("email").innerHTML=obj1.emailID;
-                           document.getElementById("School").innerHTML=obj1.highschool;
-                           document.getElementById("name").innerHTML=obj1.fname+" "+obj.lname;;
-                           document.getElementById("DOB").innerHTML= obj1.date;
-                           document.getElementById("Mob").innerHTML= obj1.mob_no;
-                           document.getElementById("college").innerHTML=obj1.college;
-                           document.getElementById("work").innerHTML=obj1.placeOfWork;
-                           document.getElementById("town").innerHTML=obj1.hometown;
-                           document.getElementById("workCity").innerHTML=obj1.cityOfWork;
-                           document.getElementById("School").innerHTML=obj1.highschool;
-                           document.getElementById("mob_no").defaultValue =obj1.mob_no;
-                           document.getElementById("college").defaultValue =obj1.college;
-                           document.getElementById("highschool").defaultValue =obj1.highschool;
-                           document.getElementById("workplace").defaultValue =obj1.placeOfWork;
-                           document.getElementById("hometown").defaultValue =obj1.hometown;
-                           document.getElementById("workcity").defaultValue =obj1.cityOfWork;
-                            */
+                       
                             window.location.replace("timeLine1.html");
                               
                 }    
@@ -1045,15 +1032,7 @@ window.mutual=function(e1){
                               <li>
                                 <a href="userFriend.html"><i class="glyphicon glyphicon-user"></i> Find Friends</a>
                               </li>
-                             <!--  <li>
-                                <a href="todoPage.html" title="Friend Requests"><i class="glyphicon glyphicon-user"></i><span class="badge">9</span></a>
-                              </li>
-                                <li>
-                                <a href="todoPage.html" title="Mesages"><i class="glyphicon glyphicon-envelope"></i><span class="badge">3</span></a>
-                              </li>
-                              <li>
-                                <a href="todoPage.html" title="Notifications"><i class="glyphicon glyphicon-cloud"></i><span class="badge">5</span></a>
-                              </li> -->
+                             
                              
  						 <li role="separator" class="divider"></li>
    
@@ -1185,6 +1164,7 @@ window.mutual=function(e1){
       <pre class="media-left" id="town"></pre>        <br>
       <pre class="media-left" id="workCity"></pre>    <br>
       <pre class="media-left" id="School"></pre><br>
+      <pre class="media-left" id="graduateSchool"></pre><br>
       <br>
                                             
                                             
@@ -1418,7 +1398,10 @@ window.mutual=function(e1){
           <label for="highschool" >HighSchool:</label>
           <input type="text"  id="highschool" style="margin-left:10px;">
         </div>
-                 
+       <div class="form-group">
+          <label for="graduateSchool" >GraduateSchool:</label>
+          <input type="text"  id="graduateSchool" style="margin-left:10px;">
+        </div>          
              
        
     </div>

@@ -151,6 +151,51 @@
          
     	  });//ajax call end for get my all groups list
      	   
+    	 	$.ajax({ 
+                url: "http://localhost:8080/facebook_group2/webapi/group/show_my_groups1",
+                type: "GET",
+                dataType: "json",
+                contentType : "application/json",
+                crossDomain: true,
+                processData: true,
+                
+                
+                success: function(response){  
+             	   
+                    // we have the response  
+             	   if(response!=null){
+                    var data =JSON.parse(JSON.stringify(response));  
+                     var myGroups="";
+             	 
+                   	for (var i=0; i < data.length; i++){
+                   		myGroups+="<div class=\"panel-body\">"; 
+                   		//myGroups+="<a OnClick=\"go_group(this);\">"+data[i].group_name+"</a>";
+                   		myGroups+="<a href=\"groupPage.html\" OnClick=\"go_group(this);\" id=\""+data[i].group_name +"\">"+   data[i].group_name+"</a>"	
+                   		myGroups+="</div>";
+    					     	}
+                 	
+                   
+                   	if(data.length==0)
+                   		myGroups="<h3>No Groups Yet</h3>";
+                   	//alert(myGroups);
+             	   $("#myGroups1").html(myGroups);
+            
+                    }  
+                    
+                    else
+                 	   {
+                 	  alert("something wrong");
+                 	   }
+                  },
+    	    
+       			error: function(e){  
+         					alert('Error121212: ' + e);  
+         					alert(e.toString());
+       			}				
+         
+    	  });//ajax call end for get my all groups list
+     	   
+    	  
     	  
      	   window.go_group = function(e1){
          		 
@@ -574,10 +619,10 @@ jQuery(document).ajaxComplete(function (e) {
 				
 								  
 								 <!-- main col left --> 
-								 <div class="col-sm-7 col-xs-7">
+								   <div class="col-sm-3 col-xs-3">
 								   <div class="pre-scrollable" style="background-color: #d8dfea;margin-bottom:.5cm; margin-top:.5cm; min-height:95%;">   
 									   <div class="panel panel-primary">
-										 <div class="panel-heading"><h4>My Groups</h4></div>
+										 <div class="panel-heading"><h4>As an Admin</h4></div>
 										 	<div id="myGroups"></div>
   	                                            
 										
@@ -586,8 +631,20 @@ jQuery(document).ajaxComplete(function (e) {
 									 										
 								   
 								  </div>
+								 <div class="col-sm-4 col-xs-4">
+								   <div class="pre-scrollable" style="background-color: #d8dfea;margin-bottom:.5cm; margin-top:.5cm; min-height:95%;">   
+									   <div class="panel panel-primary">
+										 <div class="panel-heading"><h4>As a Member</h4></div>
+										 	<div id="myGroups1"></div>
+  	                                            
+										
+									   </div>
+									</div>
+									 										
+								   
+								  </div>
 								  
-								  
+								
 								  
 								  
 								  

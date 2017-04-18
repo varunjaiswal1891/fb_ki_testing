@@ -33,36 +33,12 @@ public class AuthenticationFilter  implements ContainerRequestFilter{
 	@Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
 
-		/*IProject project=ResourcesPlugin.getWorkspace().getRoot().getProject("/home/varun/git/fb_ki_testing");
-		//IProject project = root.getProject(currentProjectName);
-		try {
-			project.refreshLocal(IResource.DEPTH_INFINITE, null);
-		} catch (CoreException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}*/	
-		
-		/*IResource dfile = ResourcesPlugin.getWorkspace().getRoot().getProject("/home/varun/git/fb_ki_testing");
-		try {
-			dfile.refreshLocal(IResource.DEPTH_ZERO, null);
-		} catch (CoreException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}*/
-		
-		/*for(IProject project : ResourcesPlugin.getWorkspace().getRoot().getProjects()){
-		    try {
-				project.refreshLocal(IResource.DEPTH_INFINITE, null);
-			} catch (CoreException e) {
-				
-				e.printStackTrace();
-			}
-		}*/
+
 		
 		// Get the HTTP Authorization header from the request
 		String s1=requestContext.getUriInfo().getPath();
 		System.out.println("s1="+s1);
-        if(!s1.contains("signup")&&!s1.contains("login"))
+        if(!s1.contains("signup")&&!s1.contains("login")&&!s1.contains("allUserList1"))
         {
         	Map<String, Cookie> cookies  = requestContext.getCookies();
             Cookie cookie = cookies.get("ID");

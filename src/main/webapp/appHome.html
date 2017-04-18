@@ -245,8 +245,8 @@ $("#loginForm").submit(function(e){
       	<div id="incorrectLogin" style="color:white;" ></div>
       </form>
       
-       <button type="submit" data-toggle="modal" data-target="#userList" class="btn btn-default"" style="margin-top:40px">user List</button>
-    </div>
+    <!--    <button type="submit" data-toggle="modal" data-target="#userList" class="btn btn-default"" style="margin-top:40px">user List</button>
+    --> </div>
 </nav>
 <nav class="navbar navbar-default" style="background-color:white;min-height:500px; background-color:#e1e8ed;">
 	<img src="148670969337123.png" alt="connecting people" width="580" height="380" style="margin-left:10em; margin-top:30px">
@@ -441,9 +441,9 @@ $("#loginForm").submit(function(e){
 </nav>
     
         
-  <div id="myModalevent" class="modal fade" role="dialog">
+ <!--  <div id="myModalevent" class="modal fade" role="dialog">
   <div class="modal-dialog" >
-    <!-- Modal content-->
+    Modal content
 <form action="" id="">
     <div class="modal-content">
       <div class="modal-header">
@@ -495,6 +495,7 @@ $("#loginForm").submit(function(e){
   </div>      
 	          
         </div>
+        
              <br>
    
         
@@ -507,8 +508,8 @@ $("#loginForm").submit(function(e){
     
        </form>
     </div>
-  </div>
-<div class="modal fade" id="userList" style="postition:fixed;margin-top:20px">
+  </div> -->
+<div class="modal fade" id="myModalevent" style="postition:fixed;margin-top:20px">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header" style="background-color: #f7f7f7;">
@@ -516,6 +517,70 @@ $("#loginForm").submit(function(e){
 					<h4 class="modal-title" ">
 							<span>User Credentials</span>
 					</h4>
+					   <div class="form-group-item">
+          <label for="title" >Title:</label>
+          <input type="text"  id="title" value="Prototype of a part of facebook" readonly style="margin-left:85px; width:250px;">
+        </div>
+     <br>
+      <div class="form-group-item">
+          <label for="class1" >Course:</label>
+          <input type="text"  id="class1" value="Introduction to Web Development OOAD 2017(Jan-Apr)" readonly style="margin-left:70px; width:400px;">
+        </div>
+             <br>
+             <div class="form-group-item">
+          <label for="group_no" >Group Number:</label>
+          <input type="text"  id="group_no" value="2" readonly style="margin-left:20px; width:200px;">
+        </div>
+             <br>
+      
+        <div class="form-group-item">
+          <label for="inst" >Instructor:</label>
+          <input type="text"  id="inst" value="Prof. K.V.Dinesha" readonly style="margin-left:50px; width:250px;">
+        </div>
+             <br>
+             <div class="form-group">
+          
+    			<div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Group Members
+    <span class="caret"></span></button>
+    <div class="dropdown-menu">
+    <table class="table table-bordered"><thead><tr><th>S.no</th><th>Name</th><th>Roll no</th></tr></thead>
+		    		    <tbody>
+		    		    <tr><td>1.</td><td>Varun Jaiswal</td><td>MT2016150</td></tr>
+<tr><td>2.</td><td>Shubham Sharma</td><td>MT2016132</td></tr>
+<tr><td>3.</td><td>Umesh S</td><td>MT2016146</td></tr>
+<tr><td>4.</td><td>Vishal Bhurangi</td><td>MT2016154</td></tr>
+<tr><td>5.</td><td>Siddharth Dewangan</td><td>MT2016133</td></tr>
+<tr><td>6.</td><td>Subham Kandoi</td><td>MT2016136</td></tr>
+<tr><td>7.</td><td>Soumya Jain</td><td>MT2016135</td></tr>
+<tr><td>8.</td><td>Harsha Neekhra</td><td>MT2016057</td></tr>
+<tr><td>9.</td><td>Athira P</td><td>MT2016029</td></tr>
+</tbody></table>
+     <!--  <li><a href="#"><span>Name: Varun Jaiswal</span><span>	Roll no: MT2016150</span></a></li>
+      <li><a href="#"><span>Name: Shubham Sharma</span><span>	Roll no: MT2016132</span></a></li>
+      <li><a href="#"><span>Name: Umesh S</span><span>	Roll no: MT2016146</span></a></li>
+      <li><a href="#"><span>Name: Vishal Bhurangi</span><span>	Roll no: MT2016154</span></a></li>
+      <li><a href="#"><span>Name: Siddharth Dewangan</span><span>	Roll no: MT2016133</span></a></li>
+      <li><a href="#"><span>Name: Subham Kandoi</span><span>	Roll no: MT2016136</span></a></li>
+      <li><a href="#"><span>Name: Soumya Jain</span><span>	Roll no: MT2016135</span></a></li>
+      <li><a href="#"><span>Name: Harsha Neekhral</span><span>	Roll no: MT2016057</span></a></li>
+      <li><a href="#"><span>Name: Athira P </span><span>	Roll no: MT2016029</span></a></li> -->
+     <!--  <li><a href="#">Shubham Sharma MT2016132</a></li>
+      <li><a href="#">Umesh S        MT2016146</a></li>
+      <li><a href="#">Vishal Bhurangi MT2016154</a></li>
+      <li><a href="#">Siddharth Dewangan  MT2016133</a></li>
+      <li><a href="#">Subham Kandoi   MT2016136</a></li>
+      <li><a href="#">Soumya Jain   MT2016135</a></li>
+      <li><a href="#">Harsha Neekhra  MT2016057</a></li>
+      <li><a href="#">Athira P      MT2016029</a></li> -->
+  
+    </div>
+  </div>      
+	          
+        </div>
+        
+             <br>
+  
 				</div>
 				<div class = "modal-body" id = "alluserList">
 				

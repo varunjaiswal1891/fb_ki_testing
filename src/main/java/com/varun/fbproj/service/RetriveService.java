@@ -43,7 +43,7 @@ public class RetriveService {
 					u.setHometown(result.getString(11));
 					u.setCityOfWork(result.getString(12));
 					u.setHighschool(result.getString(13));
-					
+					u.setGraduateSchool(result.getString(14));
 					connect.stop();
 						return u;
 						
@@ -94,7 +94,7 @@ public class RetriveService {
 					u.setHometown(result.getString(11));
 					u.setCityOfWork(result.getString(12));
 					u.setHighschool(result.getString(13));
-				
+					u.setGraduateSchool(result.getString(14));
 					
 					connect.stop();
 						return u;
